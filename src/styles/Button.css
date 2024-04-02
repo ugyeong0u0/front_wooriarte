@@ -1,9 +1,9 @@
 .Button {
-  background-color: rgb(236, 236, 236);
+  background-color: rgb(255, 255, 255);
   cursor: pointer;
   border: none;
   border-radius: 5px;
   padding: 10px, 20px; /**/
-  font-size: 30px;
+  font-size: 10px;
   white-space: nowrap; /* 화면이 줄어도 글자 줄바꿈x */
 }

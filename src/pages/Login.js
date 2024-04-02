@@ -6,8 +6,8 @@ const Login = () => {
     <>
       <h2>Login</h2>
       <div>
-        <Button text={"개인"} />
-        <Button text={"사업자"} />
+        <Button text={"개인"} isVisible={true} />
+        <Button text={"사업자"} isVisible={true} />
       </div>
 
       <LoginEditor />
