@@ -9,8 +9,9 @@ const Login = () => {
         <Button text={"개인"} isVisible={true} />
         <Button text={"사업자"} isVisible={true} />
       </div>
-
+       {/* 로그인 폼 */}
       <LoginEditor />
+
     </>
   );
 };

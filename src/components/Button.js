@@ -7,7 +7,11 @@ onClick : 버튼에 따른 클릭 이벤트
 */
 const Button = ({ text, type, isVisible, onClick }) => {
   return (
-    isVisible && <button className={`Button Button_${type}`}>{text}</button>
+    isVisible && (
+      <button className={`Button Button_${type}`} onClick={onClick}>
+        {text}
+      </button>
+    )
   );
 };
 export default Button;
