@@ -1,12 +1,16 @@
+import { BrowserRouter } from "react-router-dom";
 import "./App.css";
 import Header from "./components/Header";
-import Login from "./pages/Login";
+
+import Routers from "./components/Routers";
 
 function App() {
   return (
     <div className="App">
-      <Header isLogin={true} />
-      <Login />
+      <BrowserRouter>
+        <Header isLogin={false} />
+        <Routers />
+      </BrowserRouter>
     </div>
   );
 }

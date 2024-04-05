@@ -1,7 +1,6 @@
 import Button from "../components/Button";
-import LoginEditor from "../components/LoginEditor";
 
-const Login = () => {
+const LoginAuthor = () => {
   return (
     <>
       <h2>Login</h2>
@@ -9,10 +8,12 @@ const Login = () => {
         <Button text={"개인"} isVisible={true} />
         <Button text={"사업자"} isVisible={true} />
       </div>
-       {/* 로그인 폼 */}
-      <LoginEditor />
 
+      <div>
+        <Button text={"작가"} isVisible={true} />
+        <Button text={"임대사업자"} isVisible={true} />
+      </div>
     </>
   );
 };
-export default Login;
+export default LoginAuthor;
