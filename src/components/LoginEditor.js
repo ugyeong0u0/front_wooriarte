@@ -2,7 +2,9 @@ import Button from "./Button";
 import EditText from "./EditText";
 import "../styles/LoginEditor.css";
 import { useState } from "react";
-const LoginEditor = () => {
+import { onLoginButtonHandler } from "../apis/servicehandeler/clickhandler";
+// whatUser 프롭은 개인, 작가, 프로젝트 매니저 알기 위함 -> todo("부모 컴포넌트에서 값 나누기")
+const LoginEditor = ({ whatUser }) => {
   const [state, setState] = useState({
     id: "",
     pw: "",
@@ -21,6 +23,16 @@ const LoginEditor = () => {
   // 로그인 버튼 클릭 이벤트 핸들러
   const handleLoginClick = () => {
     console.log("로그인 정보:", state);
+
+    // 로그인 양식 맞는지 확인 todo("더 구체적으로 작성하기 ")
+    if (state.id != "" && state.pw != "") {
+      // 로그인 통신
+      onLoginButtonHandler({ id: state.id, pw: state.pw });
+    }
+  };
+
+  const registerClick = () => {
+    console.log("회원가입 이동");
   };
 
   return (
@@ -43,6 +55,7 @@ const LoginEditor = () => {
         />
       </div>
       <div>
+        <Button text={"회원가입"} isVisible={true} onClick={registerClick} />
         <Button text={"로그인"} isVisible={true} onClick={handleLoginClick} />
       </div>
     </>
