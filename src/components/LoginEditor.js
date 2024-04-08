@@ -2,9 +2,12 @@ import Button from "./Button";
 import EditText from "./EditText";
 import "../styles/LoginEditor.css";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { onLoginButtonHandler } from "../apis/servicehandeler/clickhandler";
 // whatUser 프롭은 개인, 작가, 프로젝트 매니저 알기 위함 -> todo("부모 컴포넌트에서 값 나누기")
 const LoginEditor = ({ whatUser }) => {
+  const nav = useNavigate();
+
   const [state, setState] = useState({
     id: "",
     pw: "",
@@ -33,6 +36,7 @@ const LoginEditor = ({ whatUser }) => {
 
   const registerClick = () => {
     console.log("회원가입 이동");
+    nav(`/signupuser`);
   };
 
   return (

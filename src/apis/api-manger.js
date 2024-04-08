@@ -1,26 +1,4 @@
 import axios from "axios";
-
-// // 변수명 막 지음 -임시
-// const DOMAIN ='http//127.0.0.1:3306' //  TODO("도메인 부족 ")
-
-// const LoginSpace_URL = ()=> `${DOMAIN}/space-rental/login`;
-
-// export const LogInRequest =async(requestBody : LoginDTO)=>{
-//     const result = await axios.post(LoginSpace_URL(), requestBody)
-//     .then(response=>{
-//         const responseDate: string = response.data;
-//         return responseDate;
-//     })
-//     .catch(error=>{
-//         if(!error.response.data) return null;
-//         const responseBody : ErrorResponseDTO =error.response.data;
-//         return responseBody;
-//         // 에러 DTO api 반환시
-//     })
-
-//     return result;
-// }
-
 // 변수명 임시 지정
 const DOMAIN = "http://127.0.0.1:3306"; // TODO: 도메인 주소 확인 필요
 
