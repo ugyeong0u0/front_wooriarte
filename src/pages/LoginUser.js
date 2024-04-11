@@ -1,6 +1,8 @@
 import Button from "../components/Button";
 import LoginEditor from "../components/LoginEditor";
 import { useNavigate } from "react-router-dom";
+import { useContext } from "react";
+import { loginContext } from "../App";
 const LoginUser = () => {
   const nav = useNavigate();
   return (

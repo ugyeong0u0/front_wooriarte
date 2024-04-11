@@ -3,6 +3,7 @@
   flex-direction: column; /* 자식 요소들을 세로 방향으로 쌓습니다. */
   align-items: center; /* 세로 방향의 중앙 정렬을 위해 align-items 사용 */
   width: 100%; /* header의 너비를 부모 요소의 100%로 설정합니다. */
+  cursor: pointer;
 }
 
 .header > div {
