@@ -35,8 +35,13 @@ const SignupUser = () => {
     <>
       <span>signup</span>
       <div>
-        <Button text={"개인"} isVisible={true} />
-        <Button text={"사업자"} isVisible={true} />
+        <Button text={"개인"} isVisible={true} type={"bold"} />
+        <Button
+          text={"사업자"}
+          isVisible={true}
+          type={"thin"}
+          onClick={() => nav(`/loginbusiness`)}
+        />
       </div>
       <div>
         <span>이름 </span>

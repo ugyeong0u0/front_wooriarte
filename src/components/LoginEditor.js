@@ -28,25 +28,109 @@ const LoginEditor = ({ whatUser }) => {
   const handleLoginClick = () => {
     console.log("로그인 정보:", state);
     // 로그인 양식 맞는지 확인 todo("더 구체적으로 작성하기 ")
-    if (state.id !== "" && state.pw !== "") {
-      // // 로그인 통신
-      onLoginButtonHandler({ id: state.id, pw: state.pw }, () => {
+    // todo 임시로 각 사이트 보기위함임!!!!
+    switch (whatUser) {
+      case "user": {
         nav(`/`);
         changeUserLoginState(true);
+        return;
+      }
+      case "space": {
+        nav(`/mainbusiness`);
+        changeUserLoginState(true);
+        return;
+      }
+      case "author": {
+        nav(`/mainbusiness`);
+        changeUserLoginState(true);
+        return;
+      }
+      default: {
+        alert("잘못된 접근");
+        return;
+      }
+    }
+    // if (state.id !== "" && state.pw !== "") {
+    //   // 로그인 통신
+    //   onLoginButtonHandler({ id: state.id, pw: state.pw }, () => {
+    //     switch (whatUser) {
+    //       case "user": {
+    //         nav(`/`);
+    //         changeUserLoginState(true);
+    //         return;
+    //       }
+    //       case "space": {
+    //         nav(`/mainbusiness`);
+    //         changeUserLoginState(true);
+    //         return;
+    //       }
+    //       case "author": {
+    //         nav(`/mainbusiness`);
+    //         changeUserLoginState(true);
+    //         return;
+    //       }
+    //       default: {
+    //         alert("잘못된 접근");
+    //         return;
+    //       }
+    //     }
+    //   });
+    // }
+  };
+
+  // todo 로그인 종류에 따라 다르게 분기해야함
+  const registerClick = () => {
+    console.log("회원가입 이동" + whatUser);
+
+    if (String(whatUser) === String("user"))
+      nav(`/signupuser`, { replace: true });
+    if (String(whatUser) === String("space"))
+      nav(`/signupbusiness`, {
+        replace: true,
+        state: {
+          userInfo: whatUser,
+        },
+      });
+    if (String(whatUser) === String("author"))
+      nav(`/signupbusiness`, {
+        replace: true,
+        state: {
+          userInfo: whatUser,
+        },
+      });
+  };
+  const goFindId = () => {
+    const userInfo = whatUser;
+    if (String(whatUser) === String("user")) nav(`/findiduser`);
+    if (String(whatUser) === String("space"))
+      nav(`/findidbusiness`, {
+        state: {
+          userInfo: whatUser,
+        },
+      });
+    if (String(whatUser) === String("author")) {
+      nav(`/findidbusiness`, {
+        state: {
+          userInfo: whatUser,
+        },
       });
     }
   };
 
-  const registerClick = () => {
-    console.log("회원가입 이동");
-    nav(`/signupuser`);
-  };
-  const goFindId = () => {
-    nav(`/findiduser`);
-  };
-
   const goFindpwd = () => {
-    nav(`/findpassuser`);
+    if (String(whatUser) === String("user")) nav(`/findpwuser`);
+    if (String(whatUser) === String("space"))
+      nav(`/findpwbusiness`, {
+        state: {
+          userInfo: whatUser,
+        },
+      });
+    if (String(whatUser) === String("author"))
+      nav(`/findpwbusiness`, {
+        state: {
+          userInfo: whatUser,
+        },
+      });
   };
 
   return (
@@ -73,8 +157,18 @@ const LoginEditor = ({ whatUser }) => {
         <Button text={"비밀번호 찾기"} isVisible={true} onClick={goFindpwd} />
       </div>
       <div>
-        <Button text={"회원가입"} isVisible={true} onClick={registerClick} />
-        <Button text={"로그인"} isVisible={true} onClick={handleLoginClick} />
+        <Button
+          text={"회원가입"}
+          isVisible={true}
+          onClick={registerClick}
+          type={"black-background-white-text"}
+        />
+        <Button
+          text={"로그인"}
+          isVisible={true}
+          onClick={handleLoginClick}
+          type={"black-background-white-text"}
+        />
       </div>
     </>
   );

@@ -31,7 +31,7 @@ const Exhibits = ({ type, items }) => {
   return (
     <div className="exhibitsPosterItemContainer">
       {mockData.map((item) => {
-        return <PosterItem key={item.id} {...item} isVisible={true} />;
+        return <PosterItem key={item.id} {...item} />;
       })}
     </div>
   );

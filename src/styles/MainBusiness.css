@@ -1,0 +1,18 @@
+/* 필터링 섹션의 포지셔닝 및 스택 컨텍스트 설정 */
+.filtering {
+  position: relative;
+}
+
+/* 캘린더 스타일 */
+.calendar {
+  position: absolute; /* 절대적 포지셔닝으로 설정 */
+  z-index: 1; /* 캘린더를 위로 */
+  width: 100%; /* 전체 너비 사용 */
+}
+
+/* 전시 스타일 */
+.exhibits {
+  position: absolute; /* 절대적 포지셔닝으로 설정 */
+  z-index: 0; /* 전시를 아래로 */
+  width: 100%; /* 전체 너비 사용 */
+}

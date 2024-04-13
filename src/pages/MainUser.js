@@ -1,7 +1,7 @@
 // 추후 useEffect로 초기 설정하기
 import { useEffect } from "react";
 import image1 from "../assets/image 1.png";
-import Poster from "../components/PosterItem";
+import PosterItem from "../components/PosterItem";
 import "../styles/MainUser.css";
 
 const mockData = [
@@ -33,7 +33,7 @@ const MainUser = () => {
   return (
     <div className="postContainer">
       {mockData.map((item) => (
-        <Poster key={item.id} {...item} date={item.createdDate} />
+        <PosterItem key={item.id} {...item} date={item.createdDate} />
       ))}
     </div>
   );

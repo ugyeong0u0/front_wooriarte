@@ -1,7 +1,7 @@
 import Button from "./Button";
 import { useNavigate } from "react-router-dom";
 // isVisible은 마이페이지 = true , 메인이면 false로
-const Poster = ({
+const PosterItem = ({
   id,
   imageurl,
   postName,
@@ -41,4 +41,4 @@ const Poster = ({
     </div>
   );
 };
-export default Poster;
+export default PosterItem;
