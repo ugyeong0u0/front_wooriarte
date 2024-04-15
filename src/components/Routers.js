@@ -1,20 +1,24 @@
 import { Route, Routes } from "react-router-dom";
+import BusinessItemInfo from "../pages/BusinessItemInfo";
+import BuyingResult from "../pages/BuyingResult";
+import BuyingTicket from "../pages/BuyingTicket";
+import ExhibitItemInfo from "../pages/ExhibitItemInfo";
+import FindIdBusiness from "../pages/FindIdBusiness";
+import FindIdUser from "../pages/FindIdUser";
+import FindPassBusiness from "../pages/FindPassBusiness";
+import FindPassUser from "../pages/FindPassUser";
+import LoginAuthor from "../pages/LoginAuthor";
 import LoginBusiness from "../pages/LoginBusiness";
+import LoginSpace from "../pages/LoginSpace";
 import LoginUser from "../pages/LoginUser";
 import MainUser from "../pages/MainUser";
-import SignupUser from "../pages/SignupUser";
-import FindIdUser from "../pages/FindIdUser";
-import FindPassUser from "../pages/FindPassUser";
 import MypageUser from "../pages/MypageUser";
-import ExhibitItemInfo from "../pages/ExhibitItemInfo";
-import BuyingTicket from "../pages/BuyingTicket";
-import BuyingResult from "../pages/BuyingResult";
-import LoginAuthor from "../pages/LoginAuthor";
-import LoginSpace from "../pages/LoginSpace";
 import Signupbusiness from "../pages/SignupBusiness";
-import FindIdBusiness from "../pages/FindIdBusiness";
-import FindPassBusiness from "../pages/FindPassBusiness";
+import SignupUser from "../pages/SignupUser";
+import ApplyWithItems from "../pages/apply/ApplyWithItems";
 import MainBusiness from "../pages/main/MainBusiness";
+import AuthorMyPage from "../pages/mypage/AuthorMyPage";
+import AuthorEditItem from "../pages/mypage/AuthorEditItem";
 
 // 페이지 이동 경로는 여기에만 작성하기
 // 주의 : url 경로는 소문자만 작성하기
@@ -51,6 +55,18 @@ const Routers = () => {
 
         <Route path="/findpwuser" element={<FindPassUser />} />
         <Route path="/findpwbusiness" element={<FindPassBusiness />} />
+
+        {/* 사업자 메인 */}
+        {/* 사업자 아이템 자세히보기 */}
+        <Route path="/businessiteminfo/:id" element={<BusinessItemInfo />} />
+        {/*  사업자들끼리 신청하기 */}
+        <Route path="/applywithitems/:id" element={<ApplyWithItems />} />
+
+        {/* 작가마이페이지 */}
+        <Route path="/authormypage/:id" element={<AuthorMyPage />} />
+        {/* 아이템수정 */}
+        <Route path="/authoredititem/:id" element={<AuthorEditItem />} />
+        {/* space 마이페이지 */}
       </Routes>
     </>
   );

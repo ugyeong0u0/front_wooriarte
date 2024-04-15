@@ -19,7 +19,7 @@ const TicketHistory = () => {
       </div>
 
       <div className="ticketHistoryExhibitsContainer">
-        <Exhibits />
+        <Exhibits type={"user"} cancelBtnVisible={true} />
       </div>
     </div>
   );

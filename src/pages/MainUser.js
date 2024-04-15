@@ -33,7 +33,13 @@ const MainUser = () => {
   return (
     <div className="postContainer">
       {mockData.map((item) => (
-        <PosterItem key={item.id} {...item} date={item.createdDate} />
+        <PosterItem
+          key={item.id}
+          {...item}
+          date={item.createdDate}
+          whatType={"user"}
+          isVisible={false}
+        />
       ))}
     </div>
   );

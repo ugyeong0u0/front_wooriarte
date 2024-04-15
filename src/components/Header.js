@@ -8,13 +8,14 @@ import { loginContext } from "../App";
 isLogin 값이 true => 로그인 ok , mypage만 보여야함
 false => 비로그인 , 로그인 버튼만 보여야함 
 */
-const Header = ({ isLogin, whatuser, onClick }) => {
+const Header = ({ isLogin, whatuser, onClick, userId }) => {
   const changeUserLoginState = useContext(loginContext);
   const nav = useNavigate();
   const whatUserMypage = () => {
     if (whatuser === "user") {
       nav(`/mypageuser`);
     } else if (whatuser === "author") {
+      nav(`/authormypage/${userId}`);
     } else {
     }
   };

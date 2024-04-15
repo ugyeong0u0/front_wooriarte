@@ -25,10 +25,13 @@ function App() {
     <div className="App">
       <loginContext.Provider value={updateIsLoginState}>
         <BrowserRouter>
+          {/* 유저 id */}
           <Header
-            isLogin={isLoginState}
-            whatuser={"user"}
+            // isLogin={isLoginState}
+            isLogin={true}
+            whatuser={"author"}
             onClick={updateIsLoginState}
+            userId={"1"}
           />
           <Routers />
         </BrowserRouter>
