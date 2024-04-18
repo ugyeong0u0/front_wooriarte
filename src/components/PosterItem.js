@@ -1,10 +1,14 @@
 import Button from "./Button";
 import { useNavigate } from "react-router-dom";
-
+import ButtonBoot from "react-bootstrap/Button";
 // 스크롤다이어로그
 import ScrollDialog from "../libs/ScrollDialog";
 import AuthorEditItem from "../pages/mypage/AuthorEditItem";
 
+// 이미지 라이브러리
+import ImageListItem from "@mui/material/ImageListItem";
+import ImageListItemBar from "@mui/material/ImageListItemBar";
+import { LocalizationProvider } from "@mui/x-date-pickers";
 // 메인에 띄어지는 각 아이템 컴포넌트
 // isVisible은 마이페이지 = true , 메인이면 false로
 // whatType은 유저, 작가, 공간대여자 나누는거 \
@@ -87,21 +91,26 @@ const PosterItem = ({
       }}
     >
       <div>
-        <img src={imageurl} />
-        <div />
-        <div>
-          <span> {postName}</span>
-          <span>{location}</span>
-        </div>
-        <span>{date}</span>
-        {isVisible && (
-          <div>
-            <span> 예매수{totalTicket}</span>
-            <Button text={"예매취소"} isVisible={true} onClick={cancelTicket} />
-          </div>
-        )}
-        {/*  todo  아이템 정보 넣어야함 */}
-        {isDialog && <ScrollDialog />}
+        <ImageListItem key={id}>
+          <img src={imageurl} />
+          <ImageListItemBar
+            title={postName + " " + location}
+            subtitle={
+              <span>
+                {date && (
+                  <div>
+                    <span> 예매수{totalTicket}</span>
+                    <ButtonBoot variant="outline-danger" onClick={cancelTicket}>
+                      예매취소
+                    </ButtonBoot>{" "}
+                  </div>
+                )}
+              </span>
+            }
+            position="below"
+          />
+          {/* {isDialog && <ScrollDialog />}  */}
+        </ImageListItem>
       </div>
     </div>
   );

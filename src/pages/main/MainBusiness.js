@@ -1,9 +1,32 @@
 // 사업자 메인
+import * as React from "react";
+
 import { useState } from "react";
-import Button from "../../components/Button";
+import Button from "@mui/material/Button";
+import Stack from "@mui/material/Stack";
 import Exhibits from "../../components/Exhibits";
 import "../../styles/MainBusiness.css";
 import DatePickerOpenTo, { SelectSizesExample } from "../../libs/Open";
+
+// 레이아웃
+import CssBaseline from "@mui/material/CssBaseline";
+import Box from "@mui/material/Box";
+import Container from "@mui/material/Container";
+
+// 전시 보이기
+import ImageList from "@mui/material/ImageList";
+import ImageListItem from "@mui/material/ImageListItem";
+import ImageListItemBar from "@mui/material/ImageListItemBar";
+
+// 아이콘 클릭
+import SearchIcon from "@mui/icons-material/Search";
+import Tooltip from "@mui/material/Tooltip";
+import IconButton from "@mui/material/IconButton";
+
+import ButtonBoot from "react-bootstrap/Button";
+
+// 배지
+import Badge from "@mui/material/Badge";
 
 const MainBusiness = () => {
   const [projectButtonType, setProjectButtonType] = useState("bold");
@@ -37,44 +60,186 @@ const MainBusiness = () => {
     setProjectButtonType("thin"); // 프로젝트 버튼을 thin으로 설정, 필요에 따라 조정
     setExhibitsType("space");
   };
+
+  const images = [
+    {
+      img: "https://images.unsplash.com/photo-1551963831-b3b1ca40c98e",
+      title: "Breakfast",
+      author: "@bkristastucchio",
+    },
+    {
+      img: "https://images.unsplash.com/photo-1551782450-a2132b4ba21d",
+      title: "Burger",
+      author: "@rollelflex_graphy726",
+    },
+    {
+      img: "https://images.unsplash.com/photo-1522770179533-24471fcdba45",
+      title: "Camera",
+      author: "@helloimnik",
+    },
+    {
+      img: "https://images.unsplash.com/photo-1444418776041-9c7e33cc5a9c",
+      title: "Coffee",
+      author: "@nolanissac",
+    },
+    {
+      img: "https://images.unsplash.com/photo-1533827432537-70133748f5c8",
+      title: "Hats",
+      author: "@hjrc33",
+    },
+    {
+      img: "https://images.unsplash.com/photo-1558642452-9d2a7deb7f62",
+      title: "Honey",
+      author: "@arwinneil",
+    },
+    {
+      img: "https://images.unsplash.com/photo-1516802273409-68526ee1bdd6",
+      title: "Basketball",
+      author: "@tjdragotta",
+    },
+    {
+      img: "https://images.unsplash.com/photo-1518756131217-31eb79b20e8f",
+      title: "Fern",
+      author: "@katie_wasserman",
+    },
+    {
+      img: "https://images.unsplash.com/photo-1597645587822-e99fa5d45d25",
+      title: "Mushrooms",
+      author: "@silverdalex",
+    },
+    {
+      img: "https://images.unsplash.com/photo-1567306301408-9b74779a11af",
+      title: "Tomato basil",
+      author: "@shelleypauls",
+    },
+    {
+      img: "https://images.unsplash.com/photo-1471357674240-e1a485acb3e1",
+      title: "Sea star",
+      author: "@peterlaster",
+    },
+    {
+      img: "https://images.unsplash.com/photo-1589118949245-7d38baf380d6",
+      title: "Bike",
+      author: "@southside_customs",
+    },
+  ];
+
   return (
     <div className="MainBusiness">
-      <div>
-        <Button
-          text={"프로젝트"}
-          isVisible={true}
-          type={projectButtonType}
-          onClick={getProjectItems}
-        />
-        <Button
-          text={"공간"}
-          isVisible={true}
-          type={spaceButtonType}
-          onClick={getSpaceItems}
-        />
-      </div>
-      <div className="filtering">
-        <div
-          style={{
-            display: "flex",
-            flexDirection: "row",
-            alignItems: "center",
-            justifyContent: "space-between",
-            padding: "10px",
-          }}
+      <React.Fragment>
+        <CssBaseline />
+        <Container
+          maxWidth="80%"
+          style={{ display: "flex", justifyContent: "center", width: "100%" }}
         >
-          <DatePickerOpenTo calendarType="시작월" />
-          <span>~</span>
-          <DatePickerOpenTo calendarType="끝월" />
-          <SelectSizesExample size={"default"} type={"location"} />
-        </div>
+          <Box
+            component="form"
+            sx={{
+              "& .MuiTextField-root": { m: 1, width: "25ch" }, // 각 텍스트 필드의 마진과 너비 설정
+              width: "80%", // 박스 너비를 50%로 설정하여 더 작게 만듦
+              display: "flex", // flexbox 디스플레이 설정
+              justifyContent: "center", // 가로 중앙 정렬
+              flexDirection: "column", // 요소들을 세로 방향으로 배열
+              alignItems: "center", // 요소들을 가로 중앙에 위치시킴
+              marginTop: 2,
+            }}
+            noValidate
+            autoComplete="off"
+          >
+            <Stack spacing={2} direction="row" style={{ marginBottom: 15 }}>
+              <Badge color="info" badgeContent=" " variant="dot">
+                <Button color="info" size="large" onClick={getProjectItems}>
+                  프로젝트
+                </Button>
+              </Badge>
+              <Button color="inherit" size="large" onClick={getSpaceItems}>
+                공간
+              </Button>
+            </Stack>
 
-        <Exhibits
-          className="exhibits"
-          type={exhibitsType}
-          cancelBtnVisible={false}
-        />
-      </div>
+            <Stack spacing={2} direction="row" className="filterContainer">
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "row",
+                  alignItems: "center",
+                  justifyContent: "space-between",
+                  padding: "10px",
+                }}
+              >
+                <DatePickerOpenTo calendarType="시작월" />
+
+                <DatePickerOpenTo calendarType="끝월" />
+                <SelectSizesExample size={"default"} type={"location"} />
+                {/* 아이콘 */}
+                <Tooltip title="Search">
+                  <IconButton
+                    aria-label="delete"
+                    size="large"
+                    style={{
+                      backgroundColor: "black", // 배경색을 검정색으로 설정
+                      color: "white", // 아이콘 색상을 흰색으로 설정
+                      marginLeft: 10,
+                    }}
+                  >
+                    <SearchIcon fontSize="inherit" />
+                  </IconButton>
+                </Tooltip>
+              </div>
+            </Stack>
+          </Box>
+        </Container>
+        {/* 구분선 */}
+        <div class="gray-line"></div>
+
+        <Stack
+          justifyContent="center" // 가로 방향으로 중앙 정렬
+          alignItems="center" // 세로 방향으로 중앙 정렬
+          style={{ marginTop: 50 }}
+        >
+          <ImageList
+            sx={{ maxWidth: 1000, height: "auto", overflowY: "hidden" }}
+            cols={3}
+            gap={8} // 이미지 사이의 간격 설정
+          >
+            {images.map((item) => (
+              <ImageListItem key={item.img}>
+                <img
+                  srcSet={`${item.img}?w=248&fit=crop&auto=format&dpr=2 2x`}
+                  src={`${item.img}?w=248&fit=crop&auto=format`}
+                  alt={item.title}
+                  loading="lazy"
+                  style={{
+                    width: "100%",
+                    height: "100%",
+                    objectFit: "cover",
+                  }} // 모든 이미지가 동일한 가로 길이를 가지도록 가로 너비를 100%로 설정
+                />
+                <ImageListItemBar
+                  title={item.title}
+                  subtitle={<span>by: {item.author}</span>}
+                  position="below"
+                />
+              </ImageListItem>
+            ))}
+          </ImageList>
+          <ButtonBoot
+            variant="dark"
+            size="lg"
+            style={{ marginTop: 50, marginBottom: 50 }}
+          >
+            continue
+          </ButtonBoot>
+        </Stack>
+
+        <div>
+          {/* <Exhibits
+            className="exhibits"
+            type={exhibitsType}
+            cancelBtnVisible={false}
+          /> */}
+        </div>
+      </React.Fragment>
     </div>
   );
 };

@@ -1,13 +1,7 @@
-.postContainer {
-  display: flex;
-  flex-wrap: wrap;
-  /* flex-wrap 속성을 wrap으로 설정하여 아이템이 넘치면 다음 줄로 이동하도록 합니다.  */
-  gap: 5px;
-}
-.postContainer > * {
-  flex: 1 1 33%;
-  /* // flex-grow, flex-shrink 및 flex-basis 설정 */
-  /* // 최대 너비를 설정하여 한 줄에 3개 아이템이 정확히 들어가도록 합니다. */
-  max-width: 33%;
-  cursor: pointer;
+/* 회색 선 스타일 */
+.gray-line {
+  margin-top: 30px;
+  height: 0.5px;
+  background-color: #ccc; /* 선의 색상을 회색으로 설정 */
+  width: 100%; /* 선의 너비를 부모 요소의 전체 너비로 설정 */
 }

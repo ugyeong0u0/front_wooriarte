@@ -19,6 +19,7 @@ import ApplyWithItems from "../pages/apply/ApplyWithItems";
 import MainBusiness from "../pages/main/MainBusiness";
 import AuthorMyPage from "../pages/mypage/AuthorMyPage";
 import AuthorEditItem from "../pages/mypage/AuthorEditItem";
+import SpaceMyPage from "../pages/mypage/SpaceMyPage";
 
 // 페이지 이동 경로는 여기에만 작성하기
 // 주의 : url 경로는 소문자만 작성하기
@@ -56,14 +57,14 @@ const Routers = () => {
         <Route path="/findpwuser" element={<FindPassUser />} />
         <Route path="/findpwbusiness" element={<FindPassBusiness />} />
 
-        {/* 사업자 메인 */}
         {/* 사업자 아이템 자세히보기 */}
         <Route path="/businessiteminfo/:id" element={<BusinessItemInfo />} />
         {/*  사업자들끼리 신청하기 */}
         <Route path="/applywithitems/:id" element={<ApplyWithItems />} />
 
-        {/* 작가마이페이지 */}
+        {/* 마이페이지 */}
         <Route path="/authormypage/:id" element={<AuthorMyPage />} />
+        <Route path="/spacemypage/:id" element={<SpaceMyPage />} />
         {/* 아이템수정 */}
         <Route path="/authoredititem/:id" element={<AuthorEditItem />} />
         {/* space 마이페이지 */}

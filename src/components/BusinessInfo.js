@@ -1,64 +1,15 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Button from "./Button";
 import EditText from "./EditText";
-
-const BusinessInfo = ({ isSignup }) => {
-  const businessNumberRef = useRef(null);
-  const companyRef = useRef(null);
-  const ownerRef = useRef(null);
-  const idRef = useRef(null);
-  const phoneNumberRef = useRef(null);
-  const emailRef = useRef(null);
-  const passwordRef = useRef(null);
-  const authPasswordRef = useRef(null);
-
-  // todo 입력 확인 넣기
-
-  const isAllFieldsFilled = () => {
-    if (businessInfoState.businessNumber.length < 8) {
-      businessNumberRef.current.focus();
-      return;
-    }
-    if (businessInfoState.company.length < 2) {
-      companyRef.current.focus();
-      return;
-    }
-    if (businessInfoState.owner.length < 2) {
-      ownerRef.current.focus();
-      return;
-    }
-    if (businessInfoState.id.length < 2) {
-      idRef.current.focus();
-      return;
-    }
-    if (businessInfoState.phoneNumber.length < 5) {
-      phoneNumberRef.current.focus();
-      return;
-    }
-    if (businessInfoState.email.length < 5) {
-      emailRef.current.focus();
-      return;
-    }
-    if (businessInfoState.password.length < 5) {
-      passwordRef.current.focus();
-      return;
-    }
-    if (businessInfoState.authPassword.length < 5) {
-      authPasswordRef.current.focus();
-      return;
-    }
-
-    // todo ref 이용
-    const isAllFilled = Object.values(businessInfoState).every(
-      (value) => value.trim() !== ""
-    );
-    if (!isAllFilled) {
-      alert("모든 필드 채우기");
-    } else {
-      // 회원가입 통신 넣기
-      alert("모든 필드 0 회원가입 통신 넣기");
-    }
-  };
+import TextField from "@mui/material/TextField";
+import { validateEmail } from "../util/GlobalFunc"; // 이메일 형식
+import Divider from "@mui/material/Divider";
+import Stack from "@mui/material/Stack";
+//사업자 회원가입 및 정보 수정 시 사용
+// isbusinessInfo true => 회원정보 수정에 쓰임 , false =:> 회원가입 때 쓰임
+const BusinessInfo = ({ isBusinessInfo }) => {
+  // 다음 버튼 활성화
+  const [enableNextBtn, setEnableNextBtn] = useState(false);
 
   const [businessInfoState, setBusinessInfoState] = useState({
     businessNumber: "",
@@ -80,92 +31,154 @@ const BusinessInfo = ({ isSignup }) => {
       [e.target.name]: e.target.value,
     });
   };
+  useEffect(() => {
+    if (businessInfoState.authPassword === businessInfoState.password) {
+      console.log("비번일치");
+      if (
+        businessInfoState.company !== "" &&
+        businessInfoState.id !== "" &&
+        businessInfoState.owner !== "" &&
+        businessInfoState.businessNumber.length == 8 &&
+        businessInfoState.phoneNumber.length > 8
+      ) {
+        console.log("빈값없음");
+        if (validateEmail(businessInfoState.email)) {
+          console.log("이메일일치");
+          setEnableNextBtn(true); // 다음 버튼 활성화
+        } else {
+          console.log("이메일불일치");
+          setEnableNextBtn(false); // 다음 버튼 비활성화
+        }
+      } else {
+        console.log("필수 입력 필드가 비어있습니다.");
+        setEnableNextBtn(false); // 다음 버튼 비활성화
+      }
+    } else {
+      console.log("비번불일치");
+      setEnableNextBtn(false); // 다음 버튼 비활성화
+    }
+  }, [businessInfoState]); // businessInfoState 객체의 모든 변경에 반응
+
+  const submitsignup = () => {
+    // todo 회원가입 통신
+  };
+
+  // todo 비즈니스 정보 저장 통신
+  const saveInfo = () => {};
 
   return (
     <div>
-      <div>
-        <span>사업자번호 </span>
-        <EditText
-          ref={businessNumberRef}
-          name="businessNumber"
-          hint={"사업자번호"}
-          onChange={handleChangeState}
-          whatType={"number"}
-        />
-      </div>
-      <div>
-        <span>회사명 </span>
-        <EditText
-          ref={companyRef}
-          name="company"
-          hint={"회사명."}
-          onChange={handleChangeState}
-        />
-      </div>
-      <div>
-        <span>대표자명 </span>
-        <EditText
-          ref={ownerRef}
-          name="owner"
-          hint={"대표자명"}
-          onChange={handleChangeState}
-        />
-      </div>
-      <div>
-        <span>아이디</span>
-        <EditText
-          ref={idRef}
-          name="id"
-          hint={"아이디를 입력해주세요."}
-          onChange={handleChangeState}
-        />
-      </div>
-      <div>
-        <span>연락처</span>
-        <EditText
-          ref={phoneNumberRef}
-          name="phoneNumber"
-          hint={"전화번호를 입력해주세요."}
-          onChange={handleChangeState}
-          whatType={"number"}
-        />
-      </div>
-      <div>
-        <span>이메일</span>
-        <EditText
-          ref={emailRef}
-          name="email"
-          hint={"이메일을 입력해주세요."}
-          onChange={handleChangeState}
-          whatType={"email"}
-        />
-      </div>
-      <div>
-        <span>비밀번호</span>
-        <EditText
-          ref={passwordRef}
-          name="password"
-          hint={"비밀번호를 입력해주세요."}
-          onChange={handleChangeState}
-        />
-      </div>
-      <div>
-        <span>비밀번호확인</span>
-        <EditText
-          ref={authPasswordRef}
-          name="authPassword"
-          hint={"비밀번호를 재입력해주세요."}
-          onChange={handleChangeState}
-        />
-      </div>
-      <div />
-      {isSignup && (
-        <Button
-          text={"회원가입"}
-          isVisible={true}
-          onClick={isAllFieldsFilled}
-        />
-      )}
+      <Stack spacing={2}>
+        <h2>회원 정보 수정</h2>
+        <div>
+          <TextField
+            name="businessNumber"
+            id="standard-number-busi"
+            label="사업자번호"
+            type="number"
+            InputLabelProps={{
+              shrink: true,
+            }}
+            variant="standard"
+            onChange={handleChangeState}
+          />
+        </div>
+        <div>
+          <TextField
+            name="company"
+            id="standard-search-company"
+            label="회사명"
+            type="search"
+            variant="standard"
+            onChange={handleChangeState}
+          />
+        </div>
+        <div>
+          <TextField
+            name="owner"
+            id="standard-search-name"
+            label="대표자명"
+            type="search"
+            variant="standard"
+            onChange={handleChangeState}
+          />
+        </div>
+        <div>
+          <TextField
+            name="id"
+            id="standard-search-id"
+            label="아이디"
+            type="search"
+            variant="standard"
+            onChange={handleChangeState}
+          />
+        </div>
+        <div>
+          <TextField
+            name="phoneNumber"
+            id="standard-number"
+            label="전화번호"
+            type="number"
+            InputLabelProps={{
+              shrink: true,
+            }}
+            variant="standard"
+            onChange={handleChangeState}
+          />
+        </div>
+        <div>
+          <TextField
+            name="email"
+            id="standard-search-email"
+            label="이메일"
+            type="search"
+            variant="standard"
+            onChange={handleChangeState}
+          />
+        </div>
+        <div>
+          <TextField
+            name="password"
+            id="standard-search-Password"
+            label="비밀번호"
+            type="password"
+            variant="standard"
+            onChange={handleChangeState}
+          />
+        </div>
+        <div>
+          <TextField
+            name="authPassword"
+            id="standard-search-authPassword"
+            label="비밀번호확인"
+            type="password"
+            variant="standard"
+            onChange={handleChangeState}
+          />
+        </div>
+        <div />
+        {!isBusinessInfo && (
+          <button
+            type="button"
+            class="btn btn-success"
+            onClick={submitsignup}
+            disabled={!enableNextBtn}
+          >
+            회원가입
+          </button>
+        )}
+        {isBusinessInfo && (
+          <button
+            type="button"
+            class="btn btn-dark"
+            onClick={saveInfo}
+            disabled={!enableNextBtn}
+            style={{ marginTop: 15 }}
+          >
+            저장
+          </button>
+        )}
+      </Stack>
     </div>
   );
 };

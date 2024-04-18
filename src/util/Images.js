@@ -1,3 +1,35 @@
+import main1 from "../assets/main001.png";
+import main2 from "../assets/main002.png";
+import main3 from "../assets/main003.png";
+import authorimg from "../assets/authorimg.png";
+import cafe from "../assets/cafe.jpg";
+
+export const mainCarouselImage = [
+  {
+    imgURL: main1,
+
+    imgAlt: "img-1",
+  },
+  {
+    imgURL: main2,
+    imgAlt: "img-2",
+  },
+  {
+    imgURL: main3,
+    imgAlt: "img-3",
+  },
+];
+export const cardImg = [
+  {
+    imgURL: authorimg,
+
+    imgAlt: "img-1",
+  },
+  {
+    imgURL: cafe,
+    imgAlt: "img-2",
+  },
+];
 const images = [
   {
     imgURL:

@@ -7,6 +7,9 @@ import { NumericFormat } from "react-number-format";
 import Input from "@mui/material/Input";
 import InputLabel from "@mui/material/InputLabel";
 import FormControl from "@mui/material/FormControl";
+import { styled } from "@mui/material/styles";
+import Button from "@mui/material/Button";
+import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 // 작가 아이템 수정 및 등록
 // todo 작가 아이템 수정이라면 데이터 불러오는 코드 필요
 
@@ -75,9 +78,19 @@ const AuthorEditItem = () => {
   };
 
   //사진 첨부
-  const attachPhoto = () => {
-    console.log("사진 첨부하기 클릭");
-  };
+  const VisuallyHiddenInput = styled("input")({
+    clip: "rect(0 0 0 0)",
+    clipPath: "inset(50%)",
+    height: 1,
+    overflow: "hidden",
+    position: "absolute",
+    bottom: 0,
+    left: 0,
+    whiteSpace: "nowrap",
+    width: 1,
+  });
+
+  //todo 사진 첨부 로직 구성하기
 
   return (
     <div>
@@ -107,9 +120,17 @@ const AuthorEditItem = () => {
         />
       </FormControl>
 
-      <button type="button" class="btn btn-outline-dark">
-        사진 첨부
-      </button>
+      <Button
+        component="label"
+        role={undefined}
+        variant="contained"
+        tabIndex={-1}
+        startIcon={<CloudUploadIcon />}
+      >
+        사진 올리기
+        <VisuallyHiddenInput type="file" />
+      </Button>
+
       <button type="button" class="btn btn-success">
         저장
       </button>

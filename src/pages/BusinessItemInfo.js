@@ -5,7 +5,7 @@ import images from "../util/Images";
 import CustomCarousel from "../libs/CustomCarousel";
 import { useNavigate, useLocation } from "react-router-dom";
 import "../styles/BusinessItemInfo.css";
-
+// todo 예쁘게 꾸미기
 <link
   rel="stylesheet"
   href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"

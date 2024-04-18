@@ -1,15 +1,44 @@
-import { useState } from "react";
-import Button from "../components/Button";
+import { useEffect, useState } from "react";
+
 import EditText from "../components/EditText";
 import { useNavigate, useSearchParams } from "react-router-dom";
+import { onSignupUserHandler } from "../apis/servicehandeler/ApiHandler";
+
+import Stack from "@mui/material/Stack";
+import Button from "@mui/material/Button";
+
+import TextField from "@mui/material/TextField";
+
+import { validateEmail } from "../util/GlobalFunc"; // 이메일 형식
 // 회원가입 완료
 // todo("회원가입 통신 연결해야함 ")
 // todo("개인 사업자 버튼 이벤트 넣기 ")
 
 const SignupUser = () => {
   const nav = useNavigate();
+
+  // 다음 버튼 활성화
+  const [enableNextBtn, setEnableNextBtn] = useState(false);
+
   const submitsignup = () => {
-    nav(-1);
+    if (state.id !== "" && state.pw !== "") {
+      // 회원가입 통신
+      onSignupUserHandler(
+        {
+          userName: state.name,
+          id: state.id,
+          phoneNum: state.phoneNumber,
+          email: state.email,
+          pass: state.password,
+          authPass: state.authPassword,
+        },
+        () => {
+          // 성공시 콜백
+          console.log("Signup successful, navigating back");
+          nav(-1);
+        }
+      );
+    }
   };
 
   const [state, setState] = useState({
@@ -20,6 +49,32 @@ const SignupUser = () => {
     password: "",
     authPassword: "",
   });
+
+  useEffect(() => {
+    if (state.authPassword === state.password) {
+      console.log("비번일치");
+      if (
+        state.id !== "" &&
+        state.name !== "" &&
+        state.email !== "" &&
+        state.phoneNumber.length > 8
+      ) {
+        console.log("빈값없음");
+        if (validateEmail(state.email)) {
+          console.log("이메일일치");
+          setEnableNextBtn(true); // 다음 버튼 활성화
+        } else {
+          console.log("이메일불일치");
+          setEnableNextBtn(false); // 다음 버튼 비활성화
+        }
+      } else {
+        setEnableNextBtn(false); // 다음 버튼 비활성화
+      }
+    } else {
+      console.log("비번불일치");
+      setEnableNextBtn(false); // 다음 버튼 비활성화
+    }
+  }, [state]); // state 객체의 모든 변경에 반응
 
   // id, pw 입력이 달라지면 상태 감지
   const handleChangeState = (e) => {
@@ -35,63 +90,94 @@ const SignupUser = () => {
     <>
       <span>signup</span>
       <div>
-        <Button text={"개인"} isVisible={true} type={"bold"} />
-        <Button
-          text={"사업자"}
-          isVisible={true}
-          type={"thin"}
-          onClick={() => nav(`/loginbusiness`)}
-        />
+        <Stack spacing={2} direction="row">
+          <Button color="info" size="large">
+            개인
+          </Button>
+
+          <Button
+            color="inherit"
+            size="large"
+            onClick={() => {
+              console.log("비즈니스 로그인으로이동");
+              nav(`/loginbusiness`);
+            }}
+          >
+            사업자
+          </Button>
+        </Stack>
       </div>
       <div>
-        <span>이름 </span>
-        <EditText
+        <TextField
           name="name"
-          hint={"이름을 입력해주세요."}
+          id="standard-search-name"
+          label="이름"
+          type="search"
+          variant="standard"
           onChange={handleChangeState}
         />
       </div>
       <div>
-        <span>아이디</span>
-        <EditText
+        <TextField
           name="id"
-          hint={"아이디를 입력해주세요."}
+          id="standard-search-id"
+          label="아이디"
+          type="search"
+          variant="standard"
           onChange={handleChangeState}
         />
       </div>
       <div>
-        <span>연락처</span>
-        <EditText
+        <TextField
           name="phoneNumber"
-          hint={"전화번호를 입력해주세요."}
+          id="standard-number"
+          label="전화번호"
+          type="number"
+          InputLabelProps={{
+            shrink: true,
+          }}
+          variant="standard"
           onChange={handleChangeState}
         />
       </div>
       <div>
-        <span>이메일</span>
-        <EditText
+        <TextField
           name="email"
-          hint={"이메일을 입력해주세요."}
+          id="standard-search-email"
+          label="이메일"
+          type="search"
+          variant="standard"
           onChange={handleChangeState}
         />
       </div>
       <div>
-        <span>비밀번호</span>
-        <EditText
+        <TextField
           name="password"
-          hint={"비밀번호를 입력해주세요."}
+          id="standard-search-Password"
+          label="비밀번호"
+          type="password"
+          variant="standard"
           onChange={handleChangeState}
         />
       </div>
       <div>
-        <span>비밀번호확인</span>
-        <EditText
+        <TextField
           name="authPassword"
-          hint={"비밀번호를 재입력해주세요."}
+          id="standard-search-authPassword"
+          label="비밀번호확인"
+          type="password"
+          variant="standard"
           onChange={handleChangeState}
         />
       </div>
-      <Button text={"회원가입"} isVisible={true} onClick={submitsignup} />
+      <button
+        type="button"
+        class="btn btn-success"
+        onClick={submitsignup}
+        disabled={!enableNextBtn}
+      >
+        확인
+      </button>
     </>
   );
 };

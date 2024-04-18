@@ -6,6 +6,9 @@ import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import Exhibits from "../../components/Exhibits";
 
+import ModifyAuthorInfo from "../../pages/mypage/ModifyAuthorInfo";
+import Matching from "../../components/business/Matching";
+
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
 
@@ -47,42 +50,70 @@ const AuthorMyPage = () => {
   };
 
   return (
-    <Box
-      sx={{
-        flexGrow: 1,
-        bgcolor: "background.paper",
-        display: "flex",
-        height: 500,
+    <div
+      className="parentContainer"
+      style={{
+        width: "100%",
+        marginBottom: 40,
       }}
     >
-      <Tabs
-        orientation="vertical"
-        variant="scrollable"
-        value={value}
-        onChange={handleChange}
-        aria-label="Vertical tabs example"
-        sx={{ borderRight: 1, borderColor: "divider" }}
+      <Box
+        sx={{
+          flexGrow: 1,
+          bgcolor: "background.paper",
+          display: "flex",
+          height: "100%",
+          width: "100%",
+        }}
       >
-        <Tab label="아이템 관리" {...a11yProps(0)} />
-        <Tab label="회원정보 수정" {...a11yProps(1)} />
-        <Tab label="매칭 신청 현황" {...a11yProps(2)} />
-      </Tabs>
-      <TabPanel value={value} index={0}>
-        {/* 아이템관리 */}
-        <Exhibits
-          className="exhibits"
-          type={"author"}
-          cancelBtnVisible={false}
-          isEditable={true}
-        />
-      </TabPanel>
-      <TabPanel value={value} index={1}>
-        Item Two
-      </TabPanel>
-      <TabPanel value={value} index={2}>
-        Item Three
-      </TabPanel>
-    </Box>
+        <Tabs
+          orientation="vertical"
+          variant="scrollable"
+          value={value}
+          onChange={handleChange}
+          aria-label="Vertical tabs example"
+          sx={{
+            borderRight: 1,
+            borderColor: "divider",
+            width: "150px", // Tabs 너비 고정
+            minWidth: "150px", // 최소 너비 설정
+          }}
+        >
+          <Tab label="회원정보 수정" {...a11yProps(0)} />
+          <Tab label="아이템 관리" {...a11yProps(1)} />
+          <Tab label="매칭 신청 현황" {...a11yProps(2)} />
+        </Tabs>
+        <TabPanel value={value} index={1}>
+          {/*todo 사업자용 만들기 아이템관리  */}
+          <Exhibits
+            className="exhibits"
+            type={"author"}
+            cancelBtnVisible={false}
+            isEditable={true}
+          />
+          {/* 개인정보 수정 */}
+        </TabPanel>
+        <TabPanel
+          value={value}
+          index={0}
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
+            alignItems: "center",
+            marginBottom: 180,
+            marginTop: 10,
+            height: "100%", // 필요한 높이 지정
+            width: "100%", // 필요한 너비 지정
+          }}
+        >
+          <ModifyAuthorInfo />
+        </TabPanel>
+        <TabPanel value={value} index={2}>
+          <Matching />
+        </TabPanel>
+      </Box>
+    </div>
   );
 };
 export default AuthorMyPage;

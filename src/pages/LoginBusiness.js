@@ -1,7 +1,9 @@
-import Button from "../components/Button";
 import { useNavigate, useLocation } from "react-router-dom";
 import LoginSpan from "../components/LoginSpan";
-
+import * as React from "react";
+import Stack from "@mui/material/Stack";
+import Button from "@mui/material/Button";
+import ButtonBoot from "react-bootstrap/Button";
 // 사업자 로그인페이지 => 사업자버튼 글자 볼드 처리
 const LoginBusiness = () => {
   const nav = useNavigate();
@@ -24,32 +26,29 @@ const LoginBusiness = () => {
     <>
       <LoginSpan />
       <div>
-        <Button
-          text={"개인"}
-          isVisible={true}
-          onClick={goUserLogin}
-          type={"thin"}
-        />
-        <Button
-          text={"사업자"}
-          isVisible={true}
-          onClick={goBusinessLogin}
-          type={"bold"}
-        />
+        <Stack spacing={2} direction="row">
+          <Button color="inherit" size="large" onClick={goUserLogin}>
+            개인
+          </Button>
+
+          <Button color="info" size="large" onClick={goBusinessLogin}>
+            사업자
+          </Button>
+        </Stack>
       </div>
       <div>
-        <Button
-          text={"작가"}
-          isVisible={true}
-          type={"black-background-white-text"}
-          onClick={goBusinessLogin}
-        />
-        <Button
-          text={"임대 사업자"}
-          isVisible={true}
-          type={"black-background-white-text"}
-          onClick={goSpaceLogin}
-        />
+        <Stack spacing={2} direction="row">
+          <ButtonBoot
+            variant="outline-dark"
+            onClick={goBusinessLogin}
+            size="lg"
+          >
+            작가
+          </ButtonBoot>
+          <ButtonBoot variant="outline-dark" onClick={goSpaceLogin} size="lg">
+            임대 사업자
+          </ButtonBoot>
+        </Stack>
       </div>
     </>
   );
