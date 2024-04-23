@@ -6,6 +6,7 @@ import Box from "@mui/material/Box";
 import { validateEmail } from "../util/GlobalFunc"; // 이메일 형식
 import { string } from "prop-types";
 import Alert from "@mui/material/Alert"; // alert
+
 const FindPassBusiness = () => {
   const nav = useNavigate();
   const uselocation = useLocation();
@@ -70,8 +71,8 @@ const FindPassBusiness = () => {
     setEnableSuccessAlert(true);
     setTimeout(() => {
       setEnableSuccessAlert(false);
+      nav(`/resetpwbusiness`);
     }, 2000); // 성공시 alert뜨기
-    nav(-1);
   };
 
   return (

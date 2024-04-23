@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 
 import EditText from "../components/EditText";
 import { useNavigate, useSearchParams } from "react-router-dom";
+// api
 import { onSignupUserHandler } from "../apis/servicehandeler/ApiHandler";
 
 import Stack from "@mui/material/Stack";
@@ -10,6 +11,11 @@ import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 
 import { validateEmail } from "../util/GlobalFunc"; // 이메일 형식
+// 배지
+import Badge from "@mui/material/Badge";
+// 레이아웃
+import Box from "@mui/material/Box";
+
 // 회원가입 완료
 // todo("회원가입 통신 연결해야함 ")
 // todo("개인 사업자 버튼 이벤트 넣기 ")
@@ -35,7 +41,7 @@ const SignupUser = () => {
         () => {
           // 성공시 콜백
           console.log("Signup successful, navigating back");
-          nav(-1);
+          nav(-1); // 로그인 페이지로 가기
         }
       );
     }
@@ -51,7 +57,7 @@ const SignupUser = () => {
   });
 
   useEffect(() => {
-    if (state.authPassword === state.password) {
+    if (state.password.length > 3 && state.authPassword === state.password) {
       console.log("비번일치");
       if (
         state.id !== "" &&
@@ -88,96 +94,119 @@ const SignupUser = () => {
 
   return (
     <>
-      <span>signup</span>
-      <div>
-        <Stack spacing={2} direction="row">
-          <Button color="info" size="large">
-            개인
-          </Button>
-
-          <Button
-            color="inherit"
-            size="large"
-            onClick={() => {
-              console.log("비즈니스 로그인으로이동");
-              nav(`/loginbusiness`);
-            }}
-          >
-            사업자
-          </Button>
-        </Stack>
-      </div>
-      <div>
-        <TextField
-          name="name"
-          id="standard-search-name"
-          label="이름"
-          type="search"
-          variant="standard"
-          onChange={handleChangeState}
-        />
-      </div>
-      <div>
-        <TextField
-          name="id"
-          id="standard-search-id"
-          label="아이디"
-          type="search"
-          variant="standard"
-          onChange={handleChangeState}
-        />
-      </div>
-      <div>
-        <TextField
-          name="phoneNumber"
-          id="standard-number"
-          label="전화번호"
-          type="number"
-          InputLabelProps={{
-            shrink: true,
-          }}
-          variant="standard"
-          onChange={handleChangeState}
-        />
-      </div>
-      <div>
-        <TextField
-          name="email"
-          id="standard-search-email"
-          label="이메일"
-          type="search"
-          variant="standard"
-          onChange={handleChangeState}
-        />
-      </div>
-      <div>
-        <TextField
-          name="password"
-          id="standard-search-Password"
-          label="비밀번호"
-          type="password"
-          variant="standard"
-          onChange={handleChangeState}
-        />
-      </div>
-      <div>
-        <TextField
-          name="authPassword"
-          id="standard-search-authPassword"
-          label="비밀번호확인"
-          type="password"
-          variant="standard"
-          onChange={handleChangeState}
-        />
-      </div>
-      <button
-        type="button"
-        class="btn btn-success"
-        onClick={submitsignup}
-        disabled={!enableNextBtn}
+      <Box
+        sx={{
+          marginTop: 4,
+          marginBottom: 2,
+          width: "100%", // 박스 너비 설정
+          display: "flex", // flexbox 디스플레이 설정
+          justifyContent: "center", // 가로 중앙 정렬
+        }}
       >
-        확인
-      </button>
+        <h1>signup</h1>
+      </Box>
+      <Box
+        sx={{
+          marginTop: 4,
+          marginBottom: 2,
+          width: "100%", // 박스 너비 설정
+          display: "flex", // flexbox 디스플레이 설정
+          justifyContent: "center", // 가로 중앙 정렬
+        }}
+      >
+        <Stack spacing={2}>
+          <div>
+            <Stack spacing={2} direction="row">
+              <Badge color="info" badgeContent=" " variant="dot">
+                <Button color="info" size="large">
+                  개인
+                </Button>
+              </Badge>
+              <Button
+                color="inherit"
+                size="large"
+                onClick={() => {
+                  console.log("비즈니스 로그인으로이동");
+                  nav(`/loginbusiness`);
+                }}
+              >
+                사업자
+              </Button>
+            </Stack>
+          </div>
+          <div>
+            <TextField
+              name="name"
+              id="standard-search-name"
+              label="이름"
+              type="search"
+              variant="standard"
+              onChange={handleChangeState}
+            />
+          </div>
+          <div>
+            <TextField
+              name="id"
+              id="standard-search-id"
+              label="아이디"
+              type="search"
+              variant="standard"
+              onChange={handleChangeState}
+            />
+          </div>
+          <div>
+            <TextField
+              name="phoneNumber"
+              id="standard-number"
+              label="전화번호"
+              type="number"
+              InputLabelProps={{
+                shrink: true,
+              }}
+              variant="standard"
+              onChange={handleChangeState}
+            />
+          </div>
+          <div>
+            <TextField
+              name="email"
+              id="standard-search-email"
+              label="이메일"
+              type="search"
+              variant="standard"
+              onChange={handleChangeState}
+            />
+          </div>
+          <div>
+            <TextField
+              name="password"
+              id="standard-search-Password"
+              label="비밀번호"
+              type="password"
+              variant="standard"
+              onChange={handleChangeState}
+            />
+          </div>
+          <div>
+            <TextField
+              name="authPassword"
+              id="standard-search-authPassword"
+              label="비밀번호확인"
+              type="password"
+              variant="standard"
+              onChange={handleChangeState}
+            />
+          </div>
+          <button
+            type="button"
+            class="btn btn-success"
+            onClick={submitsignup}
+            disabled={!enableNextBtn}
+          >
+            확인
+          </button>
+        </Stack>
+      </Box>
     </>
   );
 };

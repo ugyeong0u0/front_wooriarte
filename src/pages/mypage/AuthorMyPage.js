@@ -8,6 +8,8 @@ import Exhibits from "../../components/Exhibits";
 
 import ModifyAuthorInfo from "../../pages/mypage/ModifyAuthorInfo";
 import Matching from "../../components/business/Matching";
+import MyPosterForBusiness from "../../components/business/MyPosterForBusiness";
+import WithDrawalUser from "../../components/user/Withdrawal";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -82,15 +84,13 @@ const AuthorMyPage = () => {
           <Tab label="회원정보 수정" {...a11yProps(0)} />
           <Tab label="아이템 관리" {...a11yProps(1)} />
           <Tab label="매칭 신청 현황" {...a11yProps(2)} />
+          <Tab label="회원탈퇴" {...a11yProps(3)} />
         </Tabs>
         <TabPanel value={value} index={1}>
           {/*todo 사업자용 만들기 아이템관리  */}
-          <Exhibits
-            className="exhibits"
-            type={"author"}
-            cancelBtnVisible={false}
-            isEditable={true}
-          />
+
+          <MyPosterForBusiness whatType={"author"} />
+
           {/* 개인정보 수정 */}
         </TabPanel>
         <TabPanel
@@ -111,6 +111,9 @@ const AuthorMyPage = () => {
         </TabPanel>
         <TabPanel value={value} index={2}>
           <Matching />
+        </TabPanel>
+        <TabPanel value={value} index={3}>
+          <WithDrawalUser />
         </TabPanel>
       </Box>
     </div>

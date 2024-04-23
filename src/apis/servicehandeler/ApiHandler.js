@@ -83,9 +83,9 @@ export const findUserIdResponse = (response, callback) => {
     return;
   }
   if (response.status >= 200 && response.status < 300) {
-    alert(response.data);
+    alert("handler" + response.data);
     console.log("아이디 찾기 성공");
-    callback();
+    callback(response);
     return;
   } else {
     alert("회원가입 실패");

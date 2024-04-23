@@ -20,6 +20,9 @@ import MainBusiness from "../pages/main/MainBusiness";
 import AuthorMyPage from "../pages/mypage/AuthorMyPage";
 import AuthorEditItem from "../pages/mypage/AuthorEditItem";
 import SpaceMyPage from "../pages/mypage/SpaceMyPage";
+import LoginAdmin from "../pages/admin/LoginAdimin";
+import MainAdmin from "../pages/admin/MainAdmin";
+import ResetPassBusiness from "../pages/login/ResetPassBusiness";
 
 // 페이지 이동 경로는 여기에만 작성하기
 // 주의 : url 경로는 소문자만 작성하기
@@ -56,8 +59,9 @@ const Routers = () => {
 
         <Route path="/findpwuser" element={<FindPassUser />} />
         <Route path="/findpwbusiness" element={<FindPassBusiness />} />
+        <Route path="/resetpwbusiness" element={<ResetPassBusiness />} />
 
-        {/* 사업자 아이템 자세히보기 */}
+        {/* 사업자 아이템(작가, 사업자 둘다) 자세히보기 */}
         <Route path="/businessiteminfo/:id" element={<BusinessItemInfo />} />
         {/*  사업자들끼리 신청하기 */}
         <Route path="/applywithitems/:id" element={<ApplyWithItems />} />
@@ -65,9 +69,12 @@ const Routers = () => {
         {/* 마이페이지 */}
         <Route path="/authormypage/:id" element={<AuthorMyPage />} />
         <Route path="/spacemypage/:id" element={<SpaceMyPage />} />
-        {/* 아이템수정 */}
+        {/* 작가 아이템수정 */}
         <Route path="/authoredititem/:id" element={<AuthorEditItem />} />
-        {/* space 마이페이지 */}
+
+        {/* 관리자 페이지 */}
+        <Route path="/loginadmin" element={<LoginAdmin />} />
+        <Route path="/mainadmin" element={<MainAdmin />} />
       </Routes>
     </>
   );

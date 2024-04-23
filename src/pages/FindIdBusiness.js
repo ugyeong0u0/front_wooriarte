@@ -8,6 +8,10 @@ import Box from "@mui/material/Box";
 import Alert from "@mui/material/Alert"; // alert
 
 import { validateEmail } from "../util/GlobalFunc"; // 이메일 형식
+
+//api
+import { onFindAuthorIdHandler } from "../apis/servicehandeler/AuthorApiHandler";
+import { onFindSpaceIdHandler } from "../apis/servicehandeler/SpaceApiHandler";
 const FindIdBusiness = () => {
   const uselocation = useLocation();
   const { userInfo } = uselocation.state;
@@ -59,8 +63,17 @@ const FindIdBusiness = () => {
     // todo 통신됐을때
     setEnableNextBtn(true); // 인증번호 확인 됐을 때 다음 버튼 활성화
   };
+
+  // 아이디 찾기 api
   const nextPage = () => {
     alert("아이디 표시");
+
+    if (userInfo === "author") {
+      onFindAuthorIdHandler({ email: state.email }, (response) => {});
+    } else if (userInfo === "space") {
+      onFindSpaceIdHandler({ email: state.email }, (response) => {});
+    } else {
+    }
 
     // todo userInfo에 author 인지 space인지
     console.log("아이디찾기 : " + userInfo);

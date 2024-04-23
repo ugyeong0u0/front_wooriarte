@@ -42,14 +42,11 @@ const ModifyAuthorInfo = () => {
     });
   };
 
-  const saveUserInfo = () => {
-    // todo rest api 통신 후 저장이 되면 alert 띄우기
-    alert("저장됨");
-  };
-
   return (
     <div className="spaceInfoContainer">
-      {authState === true && <BusinessInfo isBusinessInfo={true} />}
+      {authState === true && (
+        <BusinessInfo isBusinessInfo={true} whatUser={"author"} />
+      )}
       {authState === false && (
         <div>
           <Stack spacing={2} direction="row">

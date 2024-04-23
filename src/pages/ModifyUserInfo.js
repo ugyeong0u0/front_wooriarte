@@ -23,6 +23,7 @@ const ModifyUserInfo = () => {
 
   const setAuthStateChange = () => {
     let id = localStorage.getItem("userId");
+    // 비밀번호 확인 api
     onConfirmUserPwHandler({ userId: id, password: passwordState }, () => {
       console.log("비번확인 눌림");
       // 성공시 콜백

@@ -1,0 +1,495 @@
+import {
+  LoginAuthorRequest,
+  SignupAuthor,
+  findAuthorId,
+  findAuthorPw,
+  deleteAuthor,
+  getAuthorInfo,
+  updateAuthorInfo,
+  addAuthorProject,
+  getAllAuthorProject,
+  getAuthorItemInfo,
+  updateAuthorItemInfo,
+  deleteAuthorItem,
+  applyToSpaceItem,
+  waitingMatchingResult,
+  getOfferedMatching,
+  getSuccessMatching,
+} from "../author-api-manager";
+
+//!----------------------------작가 로그인
+// 유저 로그인 결과값
+export const LoginAuthorResponse = (response, callback) => {
+  if (!response) {
+    alert("네트워크 이상");
+    return;
+  }
+  if (response.status >= 200 && response.status < 300) {
+    alert(response.data);
+    console.log("작가 id : " + response.data);
+    // 임시로 localhost저장
+    localStorage.setItem("userId", response.data);
+    localStorage.setItem("userType", "author"); // 유저 타입으로 저장
+
+    callback(console.log("localhost저장완료"));
+    return;
+  } else {
+    alert("로그인 실패");
+    console.log(response.status);
+    return;
+  }
+};
+// 유저 로그인 editor에서 로그인 누를 시
+export const onLoginAuthorHandler = ({ id, pwd }, callback) => {
+  const requestBody = {
+    id,
+    pwd,
+  };
+  LoginAuthorRequest({ id, pwd }).then((response) =>
+    LoginAuthorResponse(response, callback)
+  );
+};
+//!----------------------------작가 회원가입
+// 작가 회원가입 응답
+export const signupAuthorResponse = (response, callback) => {
+  if (!response) {
+    alert("네트워크 이상");
+    return;
+  }
+  if (response.status >= 200 && response.status < 300) {
+    alert(response.data);
+    console.log("작가 회원가입 성공");
+    callback();
+    return;
+  } else {
+    alert("회원가입 실패");
+    console.log(response.status);
+    return;
+  }
+};
+// 스페이스 회원가입 외부에서 누를 시
+export const onsignupAuthorHandler = (
+  { businessNum, id, pwd, company, ceo, email, phone },
+  callback
+) => {
+  SignupAuthor({
+    businessNum,
+    id,
+    pwd,
+    company,
+    ceo,
+    email,
+    phone,
+  }).then((response) => signupAuthorResponse(response, callback));
+};
+
+//!----------------------------작가 아이디 찾기
+// 스페이스 아이디 찾기 응답
+export const findAuthorIdResponse = (response, callback) => {
+  if (!response) {
+    alert("네트워크 이상");
+    return;
+  }
+  if (response.status >= 200 && response.status < 300) {
+    alert(response.data);
+    console.log("작가 아이디 찾기 성공");
+    callback();
+    return;
+  } else {
+    alert("회원가입 실패");
+    console.log(response.status);
+    return;
+  }
+};
+// 작가 아이디 찾기 누를 시
+export const onFindAuthorIdHandler = ({ email }, callback) => {
+  findAuthorId({ email }).then((response) =>
+    findAuthorIdResponse(response, callback)
+  );
+};
+
+//!----------------------------작가 비번 재설정
+
+export const findAuthorPwResponse = (response, callback) => {
+  if (!response) {
+    alert("네트워크 이상");
+    return;
+  }
+  if (response.status >= 200 && response.status < 300) {
+    alert(response.data);
+    console.log("작가 비번 재설정 성공");
+    callback();
+    return;
+  } else {
+    alert("작가 비번 재설정 실패");
+    console.log(response.status);
+    return;
+  }
+};
+// 스페이스 비번 찾기 누름
+export const onFindAuthorPwHandler = ({ userId, pwd }, callback) => {
+  findAuthorPw({ id: userId, pwd }).then((response) =>
+    findAuthorPwResponse(response, callback)
+  );
+};
+
+//!---------------------------- 작가 탈퇴하기
+
+// 공간대여자 탈퇴 응답
+export const deleteAuthorResponse = (response, callback) => {
+  if (!response) {
+    alert("네트워크 이상");
+    return;
+  }
+  if (response.status >= 200 && response.status < 300) {
+    alert(response.status);
+    console.log("작가 탈퇴 성공");
+    callback();
+    return;
+  } else {
+    alert("탈퇴 실패");
+    console.log(response.status);
+    return;
+  }
+};
+// 작가 삭제누름
+export const onDeleteAuthorHandler = ({ id }, callback) => {
+  console.log("작가 아이디" + id);
+  deleteAuthor({ id }).then((response) =>
+    deleteAuthorResponse(response, callback)
+  );
+};
+//!---------------------------- 작가 마이페이지 비번 확인
+// // 공간대여자 비번 확인 응답
+// export const confirmSpacePwResponse = (response, callback) => {
+//   if (!response) {
+//     alert("네트워크 이상");
+//     return;
+//   }
+//   if (response.status >= 200 && response.status < 300) {
+//     alert(response.data);
+//     console.log("비번 확인 성공");
+//     callback();
+//     return;
+//   } else {
+//     alert("비번확인 실패");
+//     console.log(response.status);
+//     return;
+//   }
+// };
+// // 공간대여자 비번확인 누름
+// export const onConfirmSpacePwHandler = ({ userId, password }, callback) => {
+//   confirmSpacePw({ userId, password }).then((response) =>
+//   confirmSpacePwResponse(response, callback)
+//   );
+// };
+
+//!---------------------------- 작가 마이페이지 정보 조회
+// 작가 정보 조회 응답
+// todo response callback 받아야함
+export const getAuthorInfoResponse = (response, callback) => {
+  if (!response) {
+    alert("네트워크 이상");
+    return;
+  }
+  if (response.status >= 200 && response.status < 300) {
+    alert(response.data.id);
+    console.log("작가 정보 조회 성공");
+    callback(response);
+    return;
+  } else {
+    alert("작가 정보 조회 실패");
+    console.log(response.status);
+    return;
+  }
+};
+// 유저 정보조회 이벤트
+export const onGetAuthorInfoHandler = ({ id }, callback) => {
+  getAuthorInfo({ id }).then((response) =>
+    getAuthorInfoResponse(response, callback)
+  );
+};
+
+// //!---------------------------- 작가 마이페이지 정보 수정
+// 작가 정보 조회 응답
+export const updateAuthorInfoResponse = (response, callback) => {
+  if (!response) {
+    alert("네트워크 이상 ");
+    return;
+  }
+  if (response.status >= 200 && response.status < 300) {
+    alert(response.data);
+    console.log("작가 정보 수정 성공");
+    callback();
+    return;
+  } else {
+    alert("작가 정보 수정 실패");
+    console.log(response.status);
+    return;
+  }
+};
+// 작가 정보 수정 이벤트
+export const onUpdateUserInfoHandler = (
+  { authorId, businessNumber, id, pwd, company, ceo, email, phone },
+  callback
+) => {
+  updateAuthorInfo({
+    authorId,
+    businessNumber,
+    id,
+    pwd,
+    company,
+    ceo,
+    email,
+    phone,
+  }).then((response) => updateAuthorInfoResponse(response, callback));
+};
+
+//!---------------------------- 작가 아이템 생성
+// 작가 정보 조회 응답
+// todo 지역, 날짜 추가 해야함
+export const addAuthorProjectResponse = (response, callback) => {
+  if (!response) {
+    alert("네트워크 이상 ");
+    return;
+  }
+  if (response.status >= 200 && response.status < 300) {
+    alert(response.data);
+    console.log("작가 아이템 추가 성공");
+    callback();
+    return;
+  } else {
+    alert("작가 아이템 조회 실패");
+    console.log(response.status);
+    return;
+  }
+};
+// 작가 정보조회 이벤트
+export const onAddAuthorProjectHandler = (
+  { authorId, artistName, intro, phone },
+  callback
+) => {
+  addAuthorProject({
+    authorId,
+    artistName,
+    intro,
+    phone,
+  }).then((response) => addAuthorProjectResponse(response, callback));
+};
+//!---------------------------- 모든 작가 아이템 조회
+// 작가 정보 조회 응답
+export const onAllAuthorProjectResponse = (response, callback) => {
+  if (!response) {
+    alert("네트워크 이상 ");
+    return;
+  }
+  if (response.status >= 200 && response.status < 300) {
+    console.log("모든 작가 아이템 조회 성공");
+    callback(response);
+    return;
+  } else {
+    alert("모든 작가 아이템 조회 실패");
+    console.log(response.status);
+    return;
+  }
+};
+// 작가 정보조회 이벤트
+export const onAllAuthorProjectHandler = (callback) => {
+  getAllAuthorProject().then((response) =>
+    onAllAuthorProjectResponse(response, callback)
+  );
+};
+
+//!---------------------------- 작가 아이템 단건 조회
+// 작가 아이템 단건 조회 응답
+// todo 콜백 있음
+export const getAuthorItemInfoResponse = (response, callback) => {
+  if (!response) {
+    alert("네트워크 이상 ");
+    return;
+  }
+  if (response.status >= 200 && response.status < 300) {
+    console.log("작가 아이템 단건 조회 성공");
+    callback(response);
+    return;
+  } else {
+    alert("작가 아이템 단건 조회  실패");
+    console.log(response.status);
+    return;
+  }
+};
+// 작가 정보조회 이벤트
+export const onGetAuthorItemInfoHandler = ({ posterId }, callback) => {
+  getAuthorItemInfo({
+    posterId,
+  }).then((response) => getAuthorItemInfoResponse(response, callback));
+};
+
+// //!---------------------------- 작가 아이템 수정
+// 작가 아이템 수정 응답
+export const updateAuthorItemInfoResponse = (response, callback) => {
+  if (!response) {
+    alert("네트워크 이상 ");
+    return;
+  }
+  if (response.status >= 200 && response.status < 300) {
+    alert(response.data);
+    console.log("작가 아이템 수정 성공");
+    callback();
+    return;
+  } else {
+    alert("작가 아이템 수정 실패");
+    console.log(response.status);
+    return;
+  }
+};
+// 작가 아이템 수정 이벤트
+export const onUpdateAuthorItemInfoHandler = (
+  { posterId, projectManagerId, artistName, intro, phone },
+  callback
+) => {
+  updateAuthorItemInfo({
+    posterId,
+    projectManagerId,
+    artistName,
+    intro,
+    phone,
+  }).then((response) => updateAuthorItemInfoResponse(response, callback));
+};
+//!---------------------------- 작가아이템 삭제
+
+// 작가아이템 삭제 응답
+export const deleteAuthorItemResponse = (response, callback) => {
+  if (!response) {
+    alert("네트워크 이상");
+    return;
+  }
+  if (response.status >= 200 && response.status < 300) {
+    alert(response.status);
+    console.log("작가아이템 삭제 성공");
+    callback();
+    return;
+  } else {
+    alert("작가아이템 삭제 실패");
+    console.log(response.status);
+    return;
+  }
+};
+// 작가아이템 삭제누름
+export const onDeleteAuthorItemHandler = ({ posterId }, callback) => {
+  console.log("작가 아이템 삭제 " + posterId);
+  deleteAuthorItem({ posterId }).then((response) =>
+    deleteAuthorItemResponse(response, callback)
+  );
+};
+//!---------------------------- 작가 -> 공간 신청
+
+export const applyToSpaceItemResponse = (response, callback) => {
+  if (!response) {
+    alert("네트워크 이상");
+    return;
+  }
+  if (response.status >= 200 && response.status < 300) {
+    alert(response.status);
+    console.log("작가 -> 공간 신청 성공");
+    callback();
+    return;
+  } else {
+    alert("작가 -> 공간 신청 실패");
+    console.log(response.status);
+    return;
+  }
+};
+
+export const onApplyToSpaceItemHandler = (
+  { authorItemId, spaceItemId },
+  callback
+) => {
+  console.log(
+    "작가 -> 공간 신청 : authorItemId, spaceItemId " +
+      authorItemId +
+      "/" +
+      spaceItemId
+  );
+  applyToSpaceItem({ authorItemId, spaceItemId }).then((response) =>
+    applyToSpaceItemResponse(response, callback)
+  );
+};
+//!----------------------------  작가 매칭대기
+// todo callback 있음
+// 작가 매칭대기 응답
+export const waitingMatchingResultResponse = (response, callback) => {
+  if (!response) {
+    alert("작가 매칭대기데이터없음");
+    return;
+  }
+  if (response.status >= 200 && response.status < 300) {
+    alert(response.status);
+    console.log("작가 매칭대기 응답 성공");
+    callback(response);
+    return;
+  } else {
+    alert("작가 매칭대기 실패");
+    console.log(response.status);
+    return;
+  }
+};
+//  작가 매칭대기 삭제누름
+export const onWaitingMatchingAuthorHandler = ({ authorId }, callback) => {
+  console.log("작가 매칭대기 :  authorId " + authorId);
+  waitingMatchingResult({ authorId }).then((response) =>
+    waitingMatchingResultResponse(response, callback)
+  );
+};
+//!---------------------------- 작가 신청받은 조회
+// todo callback 있음
+// 작가 매칭대기 응답
+export const GetOfferedMatchingResponse = (response, callback) => {
+  if (!response) {
+    alert("작가 신청받은데이터없음 ");
+    return;
+  }
+  if (response.status >= 200 && response.status < 300) {
+    alert(response.status);
+    console.log("작가 신청받은 조회 응답 성공");
+    callback(response);
+    return;
+  } else {
+    alert("작가 신청받은 조회 실패");
+    console.log(response.status);
+    return;
+  }
+};
+//  작가 성사된 매칭 조회
+export const onGetOfferedMatchingAuthorHandler = ({ authorId }, callback) => {
+  console.log("작가 신청받은 :  authorId " + authorId);
+  getOfferedMatching({ authorId }).then((response) =>
+    GetOfferedMatchingResponse(response, callback)
+  );
+};
+//!---------------------------- 작가 성공매칭 조회
+// todo callback 있음
+// 작가 매칭대기 응답
+export const getSuccessMatchingResponse = (response, callback) => {
+  if (!response) {
+    alert("작가 성공매칭값없음");
+    return;
+  }
+  if (response.status >= 200 && response.status < 300) {
+    alert(response.status);
+    console.log("작가 성공매칭 조회 응답 성공");
+    callback(response);
+    return;
+  } else {
+    alert("작가 성공매칭 조회 실패");
+    console.log(response.status);
+    return;
+  }
+};
+//  작가 성사된 매칭 조회
+export const onGetSuccessMatchingAuthorHandler = ({ authorId }, callback) => {
+  console.log("작가 신청받은 :  authorId " + authorId);
+  getSuccessMatching({ authorId }).then((response) =>
+    getSuccessMatchingResponse(response, callback)
+  );
+};

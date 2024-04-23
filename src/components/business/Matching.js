@@ -7,19 +7,31 @@ import Container from "@mui/material/Container";
 import Stack from "@mui/material/Stack";
 
 import Button from "react-bootstrap/Button";
+import { useEffect } from "react";
+import { MapsUgcTwoTone } from "@mui/icons-material";
+import MatchingItem from "../matching/MathingItem";
+import WaitingMatchingList from "../matching/WaitingMatchingList";
+import ReceivedMatchingList from "../matching/ReceivedMatchingList";
+import AcceptedMatchingList from "../matching/AcceptedMatchingList";
+import { useState } from "react";
 
 const Matching = () => {
+  // 매칭 성사되면 재로딩
+  const [updateCount, setUpdateCount] = useState(0);
+
   return (
     <React.Fragment>
       <CssBaseline />
       <Container maxWidth="80%">
         <Box sx={{ bgcolor: "#00000000", width: "100%" }}>
           <h2>신청현황</h2>
+          <div />
           <Stack
             justifyContent="center" // 가로 방향으로 중앙 정렬
             alignItems="center" // 세로 방향으로 중앙 정렬
           >
-            {/* 신청현황아이템 */}
+            {/* 대기 매칭 리스트  */}
+            <WaitingMatchingList />
           </Stack>
 
           <h2>제안</h2>
@@ -28,15 +40,18 @@ const Matching = () => {
             alignItems="center" // 세로 방향으로 중앙 정렬
             direction="row" // 요소들을 가로 방향으로 배치
           >
-            {/* 제안 받은 것 */}
-            <Button variant="primary">수락</Button>{" "}
-            <Button variant="outline-dark">거절</Button>
+            <ReceivedMatchingList
+              setUpdateCount={setUpdateCount}
+              updateCount={updateCount}
+            />
           </Stack>
+          <h2>성사된 매칭</h2>
           <Stack
             justifyContent="center" // 가로 방향으로 중앙 정렬
             alignItems="center" // 세로 방향으로 중앙 정렬
+            direction="row" // 요소들을 가로 방향으로 배치
           >
-            <h2>성사된 매칭</h2>
+            <AcceptedMatchingList updateCount={updateCount} />
           </Stack>
         </Box>
       </Container>

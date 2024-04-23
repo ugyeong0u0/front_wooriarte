@@ -2,7 +2,12 @@ import EditText from "./EditText";
 import "../styles/LoginEditor.css";
 import { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
+
+// api
 import { onLoginButtonHandler } from "../apis/servicehandeler/ApiHandler";
+import { onLoginAuthorHandler } from "../apis/servicehandeler/AuthorApiHandler";
+import { onLoginSpaceHandler } from "../apis/servicehandeler/SpaceApiHandler";
+
 import { loginContext } from "../App";
 import * as React from "react";
 import TextField from "@mui/material/TextField";
@@ -56,32 +61,51 @@ const LoginEditor = ({ whatUser }) => {
     // }
     if (state.id !== "" && state.pw !== "") {
       // 로그인 통신
-      onLoginButtonHandler({ id: state.id, pw: state.pw }, () => {
-        switch (whatUser) {
-          case "user": {
-            nav(`/`);
+
+      switch (whatUser) {
+        case "user": {
+          // 유저 로그인
+          onLoginButtonHandler({ id: state.id, pw: state.pw }, () => {
             changeUserLoginState(true);
             let userType = localStorage.getItem("userId");
             let userId = localStorage.getItem("userType");
-            console.log("유저 번호 : " + userId + "유저타입:" + userType);
-            return;
-          }
-          case "space": {
-            nav(`/mainbusiness`);
-            changeUserLoginState(true);
-            return;
-          }
-          case "author": {
-            nav(`/mainbusiness`);
-            changeUserLoginState(true);
-            return;
-          }
-          default: {
-            alert("잘못된 접근");
-            return;
-          }
+            console.log(
+              "유저 로그인 유저 번호 : " + userId + "유저타입:" + userType
+            );
+            nav(`/`);
+          });
+          return;
         }
-      });
+        case "space": {
+          onLoginSpaceHandler({ id: state.id, pwd: state.pw }, () => {
+            changeUserLoginState(true);
+            let userType = localStorage.getItem("userId");
+            let userId = localStorage.getItem("userType");
+            console.log(
+              "유저 로그인 유저 번호 : " + userId + "유저타입:" + userType
+            );
+            nav(`/mainbusiness`);
+          });
+          return;
+        }
+        case "author": {
+          // 작가 로그인
+          onLoginAuthorHandler({ id: state.id, pwd: state.pw }, () => {
+            changeUserLoginState(true);
+            let userType = localStorage.getItem("userId");
+            let userId = localStorage.getItem("userType");
+            console.log(
+              "유저 로그인 유저 번호 : " + userId + "유저타입:" + userType
+            );
+            nav(`/mainbusiness`);
+          });
+          return;
+        }
+        default: {
+          alert("LoginEditor잘못된 접근");
+          return;
+        }
+      }
     } else {
     }
   };

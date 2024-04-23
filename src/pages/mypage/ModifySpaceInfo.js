@@ -49,7 +49,9 @@ const ModifySpaceInfo = () => {
 
   return (
     <div className="spaceInfoContainer">
-      {authState === true && <BusinessInfo isBusinessInfo={true} />}
+      {authState === true && (
+        <BusinessInfo isBusinessInfo={true} whatUser={"space"} />
+      )}
       {authState === false && (
         <div>
           <Stack spacing={2} direction="row">

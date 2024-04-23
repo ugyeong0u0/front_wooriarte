@@ -9,15 +9,16 @@ import "bootstrap/dist/css/bootstrap.min.css";
 
 // 캘린더
 //calendarLabel : 박스에 표시할 이름
-export default function DatePickerOpenTo(obj) {
-  console.log(obj.calendarType);
+export default function DatePickerOpenTo({ calendarType, onDateChange }) {
+  console.log(calendarType);
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs}>
       <DemoContainer components={["DatePicker", "DatePicker"]}>
         <DatePicker
-          label={`${obj.calendarType}`}
+          label={`${calendarType}`}
           openTo="year"
           views={["year", "month"]}
+          onChange={onDateChange}
         />
       </DemoContainer>
     </LocalizationProvider>
@@ -45,13 +46,19 @@ const locations = [
 ];
 
 // 위치 셀렉트
-export function SelectSizesExample(obj) {
+// todo 비즈니스 메인에도 이벤트함수 반영하기
+export function SelectSizesExample({
+  size,
+  type,
+  selectedLocation,
+  onLocationChange,
+}) {
   let selectComponentStyle = {
     maxWidth: "200px", // 최대 가로 길이를 200px로 설정
   };
   let selectComponent;
 
-  switch (obj.size) {
+  switch (size) {
     case "large":
       selectComponent = (
         <Form.Select size="lg">
@@ -60,11 +67,18 @@ export function SelectSizesExample(obj) {
       );
       break;
     case "default":
-      if (obj.type === "location") {
+      if (type === "location") {
         selectComponent = (
-          <Form.Select style={selectComponentStyle}>
+          <Form.Select
+            name="address"
+            style={selectComponentStyle}
+            value={selectedLocation}
+            onChange={onLocationChange}
+          >
             {locations.map((location) => (
-              <option key={location}>{location}</option>
+              <option key={location} value={location}>
+                {location}
+              </option>
             ))}
           </Form.Select>
         );

@@ -9,6 +9,15 @@ import Exhibits from "../../components/Exhibits";
 import ModifySpaceInfo from "../mypage/ModifySpaceInfo";
 import Matching from "../../components/business/Matching";
 
+// 공간 보이기
+import ImageList from "@mui/material/ImageList";
+import ImageListItem from "@mui/material/ImageListItem";
+import ImageListItemBar from "@mui/material/ImageListItemBar";
+import PosterForMain from "../../components/PosterForMain";
+import Stack from "@mui/material/Stack";
+import image1 from "../../assets/image 1.png";
+import MyPosterForBusiness from "../../components/business/MyPosterForBusiness";
+import WithDrawalUser from "../../components/user/Withdrawal";
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
 
@@ -49,6 +58,33 @@ const SpaceMyPage = () => {
     setValue(newValue);
   };
 
+  let mockData2 = [];
+  // 메인별 목데이터
+
+  mockData2 = [
+    {
+      id: 1,
+      postName: "전시1",
+      location: "서울시 마포구",
+      imageurl: image1,
+      createdDate: new Date("2024-04-19").getTime(),
+    },
+    {
+      id: 2,
+      postName: "전시2",
+      location: "서울시 마포구",
+      imageurl: image1,
+      createdDate: new Date("2024-04-19").getTime(),
+    },
+    {
+      id: 3,
+      postName: "전시3",
+      location: "서울시 마포구",
+      imageurl: image1,
+      createdDate: new Date("2024-04-19").getTime(),
+    },
+  ];
+
   return (
     <div
       className="parentContainer"
@@ -82,15 +118,34 @@ const SpaceMyPage = () => {
           <Tab label="회원정보 수정" {...a11yProps(0)} />
           <Tab label="아이템 관리" {...a11yProps(1)} />
           <Tab label="매칭 신청 현황" {...a11yProps(2)} />
+          <Tab label="회원탈퇴" {...a11yProps(3)} />
         </Tabs>
         <TabPanel value={value} index={1}>
           {/*todo 사업자용 만들기 아이템관리  */}
-          <Exhibits
-            className="exhibits"
-            type={"author"}
-            cancelBtnVisible={false}
-            isEditable={true}
-          />
+          {/* <Stack
+            justifyContent="center" // 가로 방향으로 중앙 정렬
+            alignItems="center" // 세로 방향으로 중앙 정렬
+            style={{ height: "100vh" }}
+          >
+            <ImageList
+              sx={{ maxWidth: 1000, height: 500, overflowY: "hidden" }}
+              cols={3}
+            >
+              {mockData2.map((item) => {
+                return (
+                  <PosterForMain
+                    key={item.id}
+                    {...item}
+                    date={item.createdDate}
+                    whatType={"space"}
+                  />
+                );
+              })}
+            </ImageList>
+          </Stack> */}
+
+          <MyPosterForBusiness whatType={"space"} />
+
           {/* 개인정보 수정 */}
         </TabPanel>
         <TabPanel
@@ -111,6 +166,9 @@ const SpaceMyPage = () => {
         </TabPanel>
         <TabPanel value={value} index={2}>
           <Matching />
+        </TabPanel>
+        <TabPanel value={value} index={3}>
+          <WithDrawalUser />
         </TabPanel>
       </Box>
     </div>

@@ -9,6 +9,7 @@ import { lightGreen } from "@mui/material/colors";
 isLogin 값이 true => 로그인 ok , mypage만 보여야함
 false => 비로그인 , 로그인 버튼만 보여야함 
 */
+// todo 컨텍스트 사용해서 로그인 바로 처리하기
 const Header = ({ isLogin, whatuser, onClick, userId }) => {
   const changeUserLoginState = useContext(loginContext);
   const nav = useNavigate();
@@ -34,6 +35,7 @@ const Header = ({ isLogin, whatuser, onClick, userId }) => {
       nav(`/authormypage/${savedUserId}`);
     } else {
       // 공간대여자 마이페이지
+      nav(`/spacemypage/${savedUserId}`);
     }
   };
 

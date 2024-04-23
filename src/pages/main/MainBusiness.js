@@ -27,11 +27,56 @@ import ButtonBoot from "react-bootstrap/Button";
 
 // 배지
 import Badge from "@mui/material/Badge";
+import { useEffect } from "react";
+
+//api
+import {
+  onGetAllSpaceItemHandler,
+  onGetSpaceItemInfoHandler,
+} from "../../apis/servicehandeler/SpaceApiHandler";
+import {
+  onAllAuthorProjectHandler,
+  onGetAuthorItemInfoHandler,
+} from "../../apis/servicehandeler/AuthorApiHandler";
+import { useNavigate } from "react-router-dom";
+import { DataSaverOnTwoTone } from "@mui/icons-material";
 
 const MainBusiness = () => {
   const [projectButtonType, setProjectButtonType] = useState("bold");
   const [spaceButtonType, setSpaceButtonType] = useState("thin");
   const [exhibitsType, setExhibitsType] = useState("author");
+  const [data, setData] = useState([{}]); // 받는 형식이 배열 안 객체라
+
+  // todo 달력에 디폴트값 널기
+  const [startDate, setStartDate] = useState(null);
+  const [endDate, setEndDate] = useState(null);
+  const [address, setAddress] = useState("인천광역시");
+
+  //?-------------------------달력
+  const handleStartDateChange = (newDate) => {
+    setStartDate(newDate);
+    // startDate.format("YYYY-MM-DD")
+    console.log("시작월" + startDate);
+  };
+
+  const handleEndDateChange = (newDate) => {
+    setEndDate(newDate);
+    console.log("시작월" + endDate);
+  };
+  const handleAddressChange = (e) => {
+    setAddress(e.target.value);
+    console.log("위치" + address);
+  };
+
+  //?------------------------검색
+  // 검색 조회 api
+  const goSearch = (exhibitsType) => {
+    if (exhibitsType === "author") {
+    } else if (exhibitsType === "space") {
+      console.log();
+    } else {
+    }
+  };
   // const [month, setMonth] = useState({
   //   startCalendar : false,
   //   endCalendar : false,
@@ -124,6 +169,38 @@ const MainBusiness = () => {
     },
   ];
 
+  const nav = useNavigate();
+
+  useEffect(() => {
+    if (exhibitsType == "author") {
+      // todo s3
+      onAllAuthorProjectHandler((response) => {
+        if (Array.isArray(response.data)) {
+          setData(response.data);
+        } else {
+          console.error("응답 데이터가 배열이 아닙니다.");
+        }
+      });
+    } else if (exhibitsType == "space") {
+      // todo s3
+      onGetAllSpaceItemHandler((response) => {
+        if (Array.isArray(response.data)) {
+          setData(response.data);
+        } else {
+          console.error("응답 데이터가 배열이 아닙니다.");
+        }
+      });
+    } else {
+      console.log("비즈니스 메인 아이템 조회 잘못된 접근");
+    }
+  }, [exhibitsType]); // businessInfoState 객체의 모든 변경에 반응
+
+  const getItemInfo = (id) => {
+    nav(`/businessiteminfo/${id}`, {
+      state: { userType: exhibitsType, posterId: id },
+    });
+  };
+
   return (
     <div className="MainBusiness">
       <React.Fragment>
@@ -147,14 +224,28 @@ const MainBusiness = () => {
             autoComplete="off"
           >
             <Stack spacing={2} direction="row" style={{ marginBottom: 15 }}>
-              <Badge color="info" badgeContent=" " variant="dot">
-                <Button color="info" size="large" onClick={getProjectItems}>
+              {exhibitsType === "author" ? (
+                <Badge color="info" badgeContent=" " variant="dot">
+                  <Button color="info" size="large" onClick={getProjectItems}>
+                    프로젝트
+                  </Button>
+                </Badge>
+              ) : (
+                <Button color="inherit" size="large" onClick={getProjectItems}>
                   프로젝트
                 </Button>
-              </Badge>
-              <Button color="inherit" size="large" onClick={getSpaceItems}>
-                공간
-              </Button>
+              )}
+              {exhibitsType === "space" ? (
+                <Badge color="info" badgeContent=" " variant="dot">
+                  <Button color="info" size="large" onClick={getSpaceItems}>
+                    공간
+                  </Button>
+                </Badge>
+              ) : (
+                <Button color="inherit" size="large" onClick={getSpaceItems}>
+                  공간
+                </Button>
+              )}
             </Stack>
 
             <Stack spacing={2} direction="row" className="filterContainer">
@@ -167,11 +258,23 @@ const MainBusiness = () => {
                   padding: "10px",
                 }}
               >
-                <DatePickerOpenTo calendarType="시작월" />
+                <DatePickerOpenTo
+                  calendarType="시작월"
+                  onDateChange={handleStartDateChange}
+                />
+                <DatePickerOpenTo
+                  calendarType="끝월"
+                  onDateChange={handleEndDateChange}
+                />
 
-                <DatePickerOpenTo calendarType="끝월" />
-                <SelectSizesExample size={"default"} type={"location"} />
-                {/* 아이콘 */}
+                <SelectSizesExample
+                  name="address"
+                  size={"default"}
+                  type={"location"}
+                  selectedLocation={address}
+                  onLocationChange={handleAddressChange}
+                />
+                {/* 검색 아이콘 */}
                 <Tooltip title="Search">
                   <IconButton
                     aria-label="delete"
@@ -181,6 +284,7 @@ const MainBusiness = () => {
                       color: "white", // 아이콘 색상을 흰색으로 설정
                       marginLeft: 10,
                     }}
+                    onClick={() => goSearch(exhibitsType)}
                   >
                     <SearchIcon fontSize="inherit" />
                   </IconButton>
@@ -202,12 +306,23 @@ const MainBusiness = () => {
             cols={3}
             gap={8} // 이미지 사이의 간격 설정
           >
-            {images.map((item) => (
-              <ImageListItem key={item.img}>
+            {data.map((item) => (
+              <ImageListItem
+                key={
+                  exhibitsType === "author"
+                    ? item.projectItemId
+                    : item.spaceItemId
+                }
+                onClick={() => {
+                  exhibitsType === "author"
+                    ? getItemInfo(item.projectItemId)
+                    : getItemInfo(item.spaceItemId);
+                }}
+              >
                 <img
-                  srcSet={`${item.img}?w=248&fit=crop&auto=format&dpr=2 2x`}
-                  src={`${item.img}?w=248&fit=crop&auto=format`}
-                  alt={item.title}
+                  srcSet={`https://images.unsplash.com/photo-1518756131217-31eb79b20e8f?w=248&fit=crop&auto=format?w=248&fit=crop&auto=format&dpr=2 2x`}
+                  src={`https://images.unsplash.com/photo-1518756131217-31eb79b20e8f?w=248&fit=crop&auto=format`}
+                  alt={item.intro}
                   loading="lazy"
                   style={{
                     width: "100%",
@@ -215,9 +330,20 @@ const MainBusiness = () => {
                     objectFit: "cover",
                   }} // 모든 이미지가 동일한 가로 길이를 가지도록 가로 너비를 100%로 설정
                 />
+                {/* <img
+                  srcSet={`${item.img}?w=248&fit=crop&auto=format&dpr=2 2x`}
+                  src={`https://images.unsplash.com/photo-1518756131217-31eb79b20e8f?w=248&fit=crop&auto=format`}
+                  alt={item.title}
+                  loading="lazy"
+                  style={{
+                    width: "100%",
+                    height: "100%",
+                    objectFit: "cover",
+                  }} // 모든 이미지가 동일한 가로 길이를 가지도록 가로 너비를 100%로 설정
+                /> */}
                 <ImageListItemBar
-                  title={item.title}
-                  subtitle={<span>by: {item.author}</span>}
+                  title={item.intro}
+                  subtitle={<span>by: {item.startDate}</span>}
                   position="below"
                 />
               </ImageListItem>

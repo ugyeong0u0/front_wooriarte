@@ -7,6 +7,15 @@ import {
   confirmSpacePw,
   getSpaceInfo,
   updateSpaceInfo,
+  addSpaceItem,
+  getAllSpaceItem,
+  getSpaceItemInfo,
+  updateSpaceItemInfo,
+  deleteSpaceItem,
+  applyToAuthorItem,
+  waitingMatchingForSpace,
+  getOfferedMatchingForSpace,
+  getSuccessMatchingForSpace,
 } from "../space-api-manager";
 
 //!----------------------------스페이스 로그인
@@ -77,6 +86,7 @@ export const onSignupSpaceHandler = (
 
 //!----------------------------스페이스 아이디 찾기
 // 스페이스 아이디 찾기 응답
+//? --- response 존재
 export const findfindSpaceIdResponse = (response, callback) => {
   if (!response) {
     alert("네트워크 이상");
@@ -85,7 +95,7 @@ export const findfindSpaceIdResponse = (response, callback) => {
   if (response.status >= 200 && response.status < 300) {
     alert(response.data);
     console.log("스페이스 아이디 찾기 성공");
-    callback();
+    callback(response);
     return;
   } else {
     alert("회원가입 실패");
@@ -100,7 +110,7 @@ export const onFindSpaceIdHandler = ({ email }, callback) => {
   );
 };
 
-//!----------------------------스페이스 비번찾기
+//!----------------------------스페이스 비번 재설정
 // todo 스페이스 비번 찾기 응답
 // export const findSpacePwResponse = (response, callback) => {
 //   if (!response) {
@@ -109,18 +119,18 @@ export const onFindSpaceIdHandler = ({ email }, callback) => {
 //   }
 //   if (response.status >= 200 && response.status < 300) {
 //     alert(response.data);
-//     console.log("비번 찾기 성공");
+//     console.log("비번 재설정 성공");
 //     callback();
 //     return;
 //   } else {
-//     alert("비번찾기 실패");
+//     alert("비번 재설정 실패");
 //     console.log(response.status);
 //     return;
 //   }
 // };
-// // 스페이스 비번 찾기 누름
-// export const onFindUserPwHandler = ({ userId, userName, email }, callback) => {
-//   findSpacePw({ userId, userName, email }).then((response) =>
+// // 스페이스 비번 재설정 누름
+// export const onFindUserPwHandler = ({ userId, pwd}, callback) => {
+//   findSpacePw({ id :userId , pwd }).then((response) =>
 //   findSpacePwResponse(response, callback)
 //   );
 // };
@@ -185,7 +195,7 @@ export const getSpaceInfoResponse = (response, callback) => {
     return;
   }
   if (response.status >= 200 && response.status < 300) {
-    alert(response.data.name);
+    alert("핸들러" + response.data.ph);
     console.log("스페이스 정보 조회 성공");
     callback(response);
     return;
@@ -203,63 +213,308 @@ export const onGetSpaceInfoHandler = ({ id }, callback) => {
 };
 
 // //!---------------------------- 스페이스 마이페이지 정보 수정
-// // 스페이스 정보 조회 응답
-// export const updateSpaceInfoResponse = (response, callback) => {
-//   if (!response) {
-//     alert("네트워크 이상 ");
-//     return;
-//   }
-//   if (response.status >= 200 && response.status < 300) {
-//     alert(response.data);
-//     console.log("스페이스 정보 조회 성공");
-//     callback();
-//     return;
-//   } else {
-//     alert("스페이스 정보 조회 실패");
-//     console.log(response.status);
-//     return;
-//   }
-// };
-// // 유저 정보조회 이벤트
-// export const onUpdateUserInfoHandler = (
-//   { spaceId, businessNumber, id, pwd, company, ceo, email, phone },
-//   callback
-// ) => {
-//   updateSpaceInfo({
-//     spaceId,
-//     businessNumber,
-//     id,
-//     pwd,
-//     company,
-//     ceo,
-//     email,
-//     phone,
-//   }).then((response) => updateSpaceInfoResponse(response, callback));
-// };
+// 스페이스 정보 수정 응답
+export const updateSpaceInfoResponse = (response, callback) => {
+  if (!response) {
+    alert("네트워크 이상 ");
+    return;
+  }
+  if (response.status >= 200 && response.status < 300) {
+    alert(response.data);
+    console.log("스페이스 정보 수정 성공");
+    callback();
+    return;
+  } else {
+    alert("스페이스 정보 수정 실패");
+    console.log(response.status);
+    return;
+  }
+};
+// 스페이스 정보 수정 이벤트
+export const onUpdateSpaceInfoHandler = (
+  { spaceId, businessNumber, id, pwd, company, ceo, email, phone },
+  callback
+) => {
+  updateSpaceInfo({
+    spaceId,
+    businessNumber,
+    id,
+    pwd,
+    company,
+    ceo,
+    email,
+    phone,
+  }).then((response) => updateSpaceInfoResponse(response, callback));
+};
+// todo 여기서부터 확인하기
 
-//!---------------------------- 예매자 페이지 전시 리스트 모두 가져오기
-// export const getUserMainPosterResponse = (response, callback) => {
-//   if (!response) {
-//     alert("네트워크 이상 ");
-//     return;
-//   }
-//   if (response.status >= 200 && response.status < 300) {
-//     alert(response.data);
-//     console.log("유저 정보 조회 성공");
-//     callback();
-//     return;
-//   } else {
-//     alert("유저 정보 조회 실패");
-//     console.log(response.status);
-//     return;
-//   }
-// };
-// // 유저 정보조회 이벤트
-// export const ongetUserMainPosterHandler = (
-//   { userId, id, pwd, name, email, phone },
-//   callback
-// ) => {
-//   updateUserInfo({ userId, id, pwd, name, email, phone }).then((response) =>
-//     getUserMainPosterResponse(response, callback)
-//   );
-// };
+//!---------------------------- 스페이스 아이템 생성
+// 스페이스 조회 응답
+export const addSpaceItemResponse = (response, callback) => {
+  if (!response) {
+    alert("네트워크 이상 ");
+    return;
+  }
+  if (response.status >= 200 && response.status < 300) {
+    alert(response.data);
+    console.log("스페이스 아이템 추가 성공");
+    callback();
+    return;
+  } else {
+    alert("스페이스 아이템 조회 실패");
+    console.log(response.status);
+    return;
+  }
+};
+// 스페이스 아이템 이벤트
+export const onAddSpaceItemHandler = (
+  {
+    spaceRentalId,
+    intro,
+    hostname,
+    city,
+    size,
+    parking,
+    fee,
+    phone,
+    startDate,
+    endDate,
+  },
+  callback
+) => {
+  addSpaceItem({
+    spaceRentalId,
+    intro,
+    hostname,
+    city,
+    size,
+    parking,
+    fee,
+    phone,
+    startDate,
+    endDate,
+  }).then((response) => addSpaceItemResponse(response, callback));
+};
+//!---------------------------- 모든 스페이스 아이템 조회
+// 작가 정보 조회 응답
+// todo 콜백있음
+export const onGetAllSpaceItemResponse = (response, callback) => {
+  if (!response) {
+    alert("네트워크 이상 ");
+    return;
+  }
+  if (response.status >= 200 && response.status < 300) {
+    alert("핸들러" + response.data);
+    console.log("모든 스페이스 아이템 조회 성공");
+    callback(response);
+    return;
+  } else {
+    alert("모든 스페이스 아이템 조회 실패");
+    console.log(response.status);
+    return;
+  }
+};
+// 작가 정보조회 이벤트
+export const onGetAllSpaceItemHandler = (callback) => {
+  getAllSpaceItem().then((response) =>
+    onGetAllSpaceItemResponse(response, callback)
+  );
+};
+
+//!---------------------------- 스페이스 아이템 단건 조회
+// 작가 아이템 단건 조회 응답
+// todo 콜백 있음
+export const getSpaceItemInfoResponse = (response, callback) => {
+  if (!response) {
+    alert("네트워크 이상 ");
+    return;
+  }
+  if (response.status >= 200 && response.status < 300) {
+    alert(response.data);
+    console.log("스페이스 아이템 단건 조회 성공");
+    callback(response);
+    return;
+  } else {
+    alert("스페이스 아이템 단건 조회  실패");
+    console.log(response.status);
+    return;
+  }
+};
+// 작가 정보조회 이벤트
+export const onGetSpaceItemInfoHandler = ({ posterId }, callback) => {
+  getSpaceItemInfo({
+    posterId,
+  }).then((response) => getSpaceItemInfoResponse(response, callback));
+};
+
+// //!---------------------------- 스페이스 아이템 수정
+// 프로젝트 아이템 수정 응답
+export const updateAuthorItemInfoResponse = (response, callback) => {
+  if (!response) {
+    alert("네트워크 이상 ");
+    return;
+  }
+  if (response.status >= 200 && response.status < 300) {
+    alert(response.data);
+    console.log("프로젝트 아이템 수정 성공");
+    callback();
+    return;
+  } else {
+    alert("프로젝트 아이템 수정 실패");
+    console.log(response.status);
+    return;
+  }
+};
+// 작가 아이템 수정 이벤트
+export const onUpdateSpaceItemInfoHandler = (
+  { spaceRentalId, intro, hostname, city, size, parking, fee, phone },
+  callback
+) => {
+  updateSpaceItemInfo({
+    spaceRentalId,
+    intro,
+    hostname,
+    city,
+    size,
+    parking,
+    fee,
+    phone,
+  }).then((response) => onUpdateSpaceItemInfoHandler(response, callback));
+};
+//!---------------------------- 스페이스 아이템 삭제
+
+// 프로젝트아이템 삭제 응답
+export const deleteSpaceItemResponse = (response, callback) => {
+  if (!response) {
+    alert("네트워크 이상");
+    return;
+  }
+  if (response.status >= 200 && response.status < 300) {
+    alert(response.status);
+    console.log("스페이스 아이템 삭제 성공");
+    callback();
+    return;
+  } else {
+    alert("스페이스 아이템 삭제 실패");
+    console.log(response.status);
+    return;
+  }
+};
+// 프로젝트아이템 삭제누름
+export const onDeleteSpaceItemHandler = ({ spaceId }, callback) => {
+  console.log("스페이스 아이템 삭제 " + spaceId);
+  deleteSpaceItem({ spaceId }).then((response) =>
+    deleteSpaceItemResponse(response, callback)
+  );
+};
+//!---------------------------- 공간-> 작가 신청
+
+export const applyToAuthorItemResponse = (response, callback) => {
+  if (!response) {
+    alert("네트워크 이상");
+    return;
+  }
+  if (response.status >= 200 && response.status < 300) {
+    alert(response.status);
+    console.log("공간 -> 작가 신청 성공");
+    callback();
+    return;
+  } else {
+    alert("공간 -> 작가 신청 실패");
+    console.log(response.status);
+    return;
+  }
+};
+
+export const onApplyToAuthorItemHandler = (
+  { authorItemId, spaceItemId },
+  callback
+) => {
+  console.log(
+    "공간 -> 작가 신청 : authorItemId, spaceItemId " +
+      authorItemId +
+      "/" +
+      spaceItemId
+  );
+  applyToAuthorItem({ authorItemId, spaceItemId }).then((response) =>
+    applyToAuthorItemResponse(response, callback)
+  );
+};
+//!----------------------------  공간 매칭대기
+// todo callback 있음
+// 공간 매칭대기 응답
+export const waitingMatchingForSpaceResponse = (response, callback) => {
+  if (!response) {
+    alert("공간대여자 매칭대기 데이터없음");
+    return;
+  }
+  if (response.status >= 200 && response.status < 300) {
+    alert(response.status);
+    console.log("공간 매칭대기 응답 성공");
+    callback(response);
+    return;
+  } else {
+    alert("공간 매칭대기 실패");
+    console.log(response.status);
+    return;
+  }
+};
+//  공간 매칭대기
+export const onWaitingMatchingSpaceHandler = ({ spaceId }, callback) => {
+  console.log("공간 매칭대기 :  spaceId " + spaceId);
+  waitingMatchingForSpace({ spaceId: spaceId }).then((response) =>
+    waitingMatchingForSpaceResponse(response, callback)
+  );
+};
+//!---------------------------- 스페이스 신청받은 조회
+// todo callback 있음
+//  스페이스 신청받은 조회 응답
+export const getOfferedMatchingForSpaceResponse = (response, callback) => {
+  if (!response) {
+    alert("공간대여자 신청받은거 없음");
+    return;
+  }
+  if (response.status >= 200 && response.status < 300) {
+    alert(response.status);
+    console.log(" 스페이스 신청받은 조회 응답 성공");
+    callback(response);
+    return;
+  } else {
+    alert(" 스페이스 신청받은 조회 실패");
+    console.log(response.status);
+    return;
+  }
+};
+//  작가 성사된 매칭 조회
+export const onGetOfferedMatchingSpaceHandler = ({ spaceId }, callback) => {
+  console.log("공간용 신청받은 :  spaceId " + spaceId);
+  getOfferedMatchingForSpace({ spaceId }).then((response) =>
+    getOfferedMatchingForSpaceResponse(response, callback)
+  );
+};
+//!---------------------------- 공간 성공매칭 조회
+// todo callback 있음
+// 공간 매칭대기 응답
+export const getSuccessMatchingForSpaceResponse = (response, callback) => {
+  if (!response) {
+    alert("공간대여자 성공매칭 데이터없음 ");
+    return;
+  }
+  if (response.status >= 200 && response.status < 300) {
+    alert(response.status);
+    console.log("공간 성공매칭 조회 응답 성공");
+    callback(response);
+    return;
+  } else {
+    alert("공간 성공매칭 조회 실패");
+    console.log(response.status);
+    return;
+  }
+};
+//  공간 성사된 매칭 조회
+export const onGetSuccessMatchingSpaceHandler = ({ spaceId }, callback) => {
+  console.log("공간 신청받은 :  spaceId " + spaceId);
+  getSuccessMatchingForSpace({ spaceId }).then((response) =>
+    getSuccessMatchingForSpaceResponse(response, callback)
+  );
+};

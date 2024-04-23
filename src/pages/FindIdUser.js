@@ -62,11 +62,15 @@ const FindIdUser = () => {
   };
   // 아이디 찾기에서 다음 누를 시
   const nextPage = () => {
-    onFindUserIdHandler({ userName: state.name, email: state.email }, () => {
-      // 성공시 콜백
-      console.log("Signup successful, navigating back");
-      nav(-1);
-    });
+    onFindUserIdHandler(
+      { userName: state.name, email: state.email },
+      (response) => {
+        // 성공시 콜백
+        console.log("아이디 찾기 successful, navigating back");
+
+        nav(-1);
+      }
+    );
   };
 
   return (

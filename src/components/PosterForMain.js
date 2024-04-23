@@ -13,7 +13,7 @@ import AuthorEditItem from "../pages/mypage/AuthorEditItem";
 // 이미지 라이브러리
 import ImageListItem from "@mui/material/ImageListItem";
 import ImageListItemBar from "@mui/material/ImageListItemBar";
-// 메인페이지에 나오는 전시,프로젝트, 공간리스트
+//!------------------- 메인페이지에 나오는 전시, 프로젝트, 공간리스트 메인 아이템
 // type은 누구 메인 페이지인지
 const PosterForMain = ({
   whatType,
