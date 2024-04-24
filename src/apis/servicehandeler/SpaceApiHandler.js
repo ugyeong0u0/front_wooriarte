@@ -195,7 +195,6 @@ export const getSpaceInfoResponse = (response, callback) => {
     return;
   }
   if (response.status >= 200 && response.status < 300) {
-    alert("핸들러" + response.data.ph);
     console.log("스페이스 정보 조회 성공");
     callback(response);
     return;

@@ -52,12 +52,12 @@ const BusinessInfo = ({ isBusinessInfo, whatUser }) => {
       onGetAuthorInfoHandler({ id }, (response) => {
         console.log(" 작가 개인정보 응답값 받음");
         setBusinessInfoState((prevState) => ({
-          businessNumber: response.data.businessNumber,
-          company: response.data.company,
-          owner: response.data.ceo,
-          id: response.data.id,
-          phoneNumber: response.data.phone,
-          email: response.data.email,
+          businessNumber: response.data.data.businessNumber,
+          company: response.data.data.company,
+          owner: response.data.data.ceo,
+          id: response.data.data.id,
+          phoneNumber: response.data.data.phone,
+          email: response.data.data.email,
           password: " ",
           authPassword: " ",
         }));
@@ -70,12 +70,12 @@ const BusinessInfo = ({ isBusinessInfo, whatUser }) => {
       onGetSpaceInfoHandler({ id }, (response) => {
         console.log(" 공간대여자 개인정보 응답값 받음");
         setBusinessInfoState((prevState) => ({
-          businessNumber: response.data.businessNumber,
-          company: response.data.company,
-          owner: response.data.ceo,
-          id: response.data.id,
-          phoneNumber: response.data.phone,
-          email: response.data.email,
+          businessNumber: response.data.data.businessNumber,
+          company: response.data.data.company,
+          owner: response.data.data.ceo,
+          id: response.data.data.id,
+          phoneNumber: response.data.data.phone,
+          email: response.data.data.email,
           password: " ",
           authPassword: " ",
         }));

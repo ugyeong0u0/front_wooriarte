@@ -16,6 +16,11 @@ import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 // api 통신
 import { onAddAuthorProjectHandler } from "../apis/servicehandeler/AuthorApiHandler";
 import { onAddSpaceItemHandler } from "../apis/servicehandeler/SpaceApiHandler";
+
+import {
+  onAddExhibitHandler,
+  onGetExhibitInfoHandler,
+} from "../apis/servicehandeler/AdminApiHandler";
 // 라디오 버튼
 import Radio from "@mui/material/Radio";
 import RadioGroup from "@mui/material/RadioGroup";
@@ -27,20 +32,21 @@ import FormLabel from "@mui/material/FormLabel";
 import DatePickerOpenTo, { SelectSizesExample } from "../libs/Open";
 // todo props 에 전시 생성인지 수정인지 구분 필요 create/ update, matchingId/exhibitId 들어감
 // 작가랑 공간대여자 아이템 추가하기
-export default function BootModalForAdmin(props) {
+export default function BootModalForAdmin({ show, onHide, type, id }) {
   // 전시생성 버튼 활성화
   const [enableNextBtn, setEnableNextBtn] = useState(false);
 
+  // todo 이넘값 변경됨
   //  전시 내용
   const [exhibitInfoState, setExhibitInfoState] = useState({
-    name: "",
-    intro: "",
-    startDate: "",
-    endDate: "",
-    artistName: "",
-    hostName: "",
-    price: "",
-    address: "",
+    name: "", // 전시명
+    intro: "", // 전시소개
+    startDate: "", // 시작날짜
+    endDate: "", // 끝날짜
+    artistName: "", // 직가명
+    hostName: "", // 주최자명
+    price: "", // 가격
+    address: "SEOUL", // 주소
   });
 
   // 전시 입력상태 감지
@@ -53,17 +59,54 @@ export default function BootModalForAdmin(props) {
       [e.target.name]: e.target.value,
     });
   };
+
+  // 시작 날짜 변경 핸들러
+  const handleStartDateChange = (newDate) => {
+    setExhibitInfoState((prevState) => ({
+      ...prevState,
+      startDate: newDate,
+    }));
+    console.log(
+      "시작월" +
+        (exhibitInfoState.startDate ? exhibitInfoState.startDate : "날짜 없음")
+    ); // 상태 변경 시 콘솔 로그 출력
+  };
+
+  // 끝 날짜 변경 핸들러
+  const handleEndDateChange = (newDate) => {
+    setExhibitInfoState((prevState) => ({
+      ...prevState,
+      endDate: newDate,
+    }));
+    console.log(
+      "끝월" +
+        (exhibitInfoState.endDate ? exhibitInfoState.endDate : "날짜 없음")
+    ); // 상태 변경 시 콘솔 로그 출력
+  };
+
   // 입력이 달라지면 상태 감지
 
   useEffect(() => {
-    console.log("저장 버튼 useEffect");
-    if (props.type === "create") {
+    console.log("matchingId" + id);
+    console.log(
+      "startDay : " +
+        exhibitInfoState.startDate +
+        "endDate" +
+        exhibitInfoState.endDate +
+        "location" +
+        exhibitInfoState.address
+    );
+
+    if (type === "create") {
       if (
         exhibitInfoState.name.length > 1 &&
         exhibitInfoState.intro.length > 1 &&
         exhibitInfoState.artistName.length > 1 &&
         exhibitInfoState.price.length > 1 &&
-        exhibitInfoState.address.length > 1
+        exhibitInfoState.address.length > 1 &&
+        exhibitInfoState.hostName.length > 1 &&
+        exhibitInfoState.startDate !== "" &&
+        exhibitInfoState.endDate !== ""
       ) {
         console.log("빈값없음");
         setEnableNextBtn(true); // 다음 버튼 비활성화
@@ -77,8 +120,23 @@ export default function BootModalForAdmin(props) {
   // 처음에만 전시 정보 불러오기
   useEffect(() => {
     console.log("전시정보 불러오기 useEffect");
-    if (props.type === "update") {
+
+    if (type === "update") {
       // todo 전시 정보 불러오기
+      console.log("전시 modal id " + id);
+      onGetExhibitInfoHandler({ exhibitId: id }, (Response) => {
+        console.log("전시 수정시 전시 정보 응답값 받음");
+        setExhibitInfoState((prevState) => ({
+          name: exhibitInfoState.name, // 전시명
+          intro: exhibitInfoState.intro, // 전시소개
+          startDate: exhibitInfoState.startDate, // 시작날짜
+          endDate: exhibitInfoState.endDate, // 끝날짜
+          artistName: exhibitInfoState.artistName, // 직가명
+          hostName: exhibitInfoState.hostName, // 주최자명
+          price: exhibitInfoState.price, // 가격
+          address: exhibitInfoState.city, // 주소
+        }));
+      });
     }
   }, []);
   //사진 첨부
@@ -100,24 +158,29 @@ export default function BootModalForAdmin(props) {
   // 전시 정보 수정하기 api
   const updateExhibit = () => {
     // 전시 정보 생성의 경우
-    if (props.type === "create") {
+    if (type === "create") {
       // todo 시작날짜 끝날짜 넣기 + 지역은 서버에 작가만 넣어둠
       // todo 전시 정보 생성하기 api
-      //   onAddAuthorProjectHandler(
-      //     {
-      //       authorId,
-      //       artistName: authorInfoState.name,
-      //       intro: authorInfoState.explanation,
-      //       phone: authorInfoState.phoneNumber,
-      //     },
-      //     () => {
-      //       console.log("전시 추가 성공");
-      //       props.onHide(); // 부모컴포넌트 프롭
-      //     }
-      //   );
+      onAddExhibitHandler(
+        {
+          matchingId: id,
+          name: exhibitInfoState.name,
+          intro: exhibitInfoState.intro,
+          startDate: exhibitInfoState.startDate.format("YYYY-MM-DD"),
+          endDate: exhibitInfoState.endDate.format("YYYY-MM-DD"),
+          artistName: exhibitInfoState.artistName,
+          hostName: exhibitInfoState.hostName,
+          price: exhibitInfoState.price,
+          city: exhibitInfoState.address,
+        },
+        () => {
+          console.log("전시 추가 성공");
+          onHide(); // 부모컴포넌트 프롭
+        }
+      );
       // todo 날짜 업데이트 하기
       // todo 전시 수정하기
-    } else if (props.type === "update") {
+    } else if (type === "update") {
       //   onAddSpaceItemHandler(
       //     {
       //       spaceRentalId: spaceRentalId,
@@ -143,14 +206,15 @@ export default function BootModalForAdmin(props) {
 
   return (
     <Modal
-      {...props}
+      show={show}
+      onHide={onHide}
       size="lg"
       aria-labelledby="contained-modal-title-vcenter"
       centered
     >
       <Modal.Header closeButton>
         <Modal.Title id="contained-modal-title-vcenter">
-          {props.type === "create" ? "전시생성하기" : "전시 수정하기"}
+          {type === "create" ? "전시생성하기" : "전시 수정하기"}
         </Modal.Title>
       </Modal.Header>
       <Modal.Body>
@@ -191,9 +255,19 @@ export default function BootModalForAdmin(props) {
               onChange={handleExhibitInfoStateChange}
               value={exhibitInfoState.artistName}
             />
-            {/* // todo 날짜 비즈니스 메인하고 함께 설정하기 */}
-            {/* <DatePickerOpenTo calendarType="시작월" />
-              <DatePickerOpenTo calendarType="끝월" /> */}
+            <TextField
+              name="hostName"
+              id="outlined-multiline-static"
+              label="주최자"
+              type="search"
+              InputLabelProps={{
+                shrink: true,
+              }}
+              variant="standard"
+              onChange={handleExhibitInfoStateChange}
+              value={exhibitInfoState.hostName}
+            />
+
             <Stack spacing={16} direction="row">
               <SelectSizesExample
                 name="addess"
@@ -212,7 +286,16 @@ export default function BootModalForAdmin(props) {
                 value={exhibitInfoState.price}
               />
             </Stack>
-            // todo 사진 올리기
+            <DatePickerOpenTo
+              calendarType="시작월"
+              onDateChange={handleStartDateChange}
+            />
+
+            <DatePickerOpenTo
+              calendarType="끝월"
+              onDateChange={handleEndDateChange}
+            />
+
             <Button
               component="label"
               role={undefined}
@@ -227,14 +310,14 @@ export default function BootModalForAdmin(props) {
         </Box>
       </Modal.Body>
       <Modal.Footer>
-        <Button variant="dark" onClick={props.onHide}>
+        <Button variant="dark" onClick={onHide}>
           닫기
         </Button>
 
         <ButtonBoot onClick={updateExhibit} disabled={!enableNextBtn}>
           등록하기
         </ButtonBoot>
-        {props.type === "update" && (
+        {type === "update" && (
           <Button variant="dark" onClick={() => deleteExhibits()}>
             삭제하기
           </Button>

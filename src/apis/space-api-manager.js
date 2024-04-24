@@ -6,18 +6,18 @@ import { jsx } from "react/jsx-runtime";
 const DOMAIN = "http://localhost:8080"; // TODO: 도메인 주소 확인 필요
 
 //?----------------------------- 공간대여자 url
-const LoginSpace_URL = () => `${DOMAIN}/space-rental/login`;
-const SignupSpace_URL = () => `${DOMAIN}/space-rental`;
-const FindSpaceId_URL = () => `${DOMAIN}/space-rental/find-id`;
+const LoginSpace_URL = () => `${DOMAIN}/space-rentals/login`;
+const SignupSpace_URL = () => `${DOMAIN}/space-rentals`;
+const FindSpaceId_URL = () => `${DOMAIN}/space-rentals/find-id`;
 // todo 비번 찾기
 const findSpacePass_URL = () => `${DOMAIN}/space-rentals/set-pwd`;
 
-const DeleteSpace_URL = ({ id }) => `${DOMAIN}/space-rental/${id}`;
+const DeleteSpace_URL = ({ id }) => `${DOMAIN}/space-rentals/${id}`;
 
 //todo 공간대여자 비번 확인
 // const confirmSpacePw_URL = ({ id }) => `${DOMAIN}/user/${id}/verify-pwd`;
-const getSpaceInfo_URL = ({ id }) => `${DOMAIN}/space-rental/${id}`;
-const updateSpaceInfo_URL = ({ id }) => `${DOMAIN}/space-rental/${id}`;
+const getSpaceInfo_URL = ({ id }) => `${DOMAIN}/space-rentals/${id}`;
+const updateSpaceInfo_URL = ({ id }) => `${DOMAIN}/space-rentals/${id}`;
 
 //?----------------------------- 스페이스 아이템
 const addSpaceItem_URL = () => `${DOMAIN}/space-item`;
@@ -222,7 +222,7 @@ export const getSpaceInfo = async ({ id }) => {
   console.log("스페이스 정보 조회 실행");
   console.log("스페이스 정보조회 id  :" + id);
   const url = getSpaceInfo_URL({ id: id });
-
+  console.log("스페이스정보찾기 " + url);
   const result = await axios
     .get(url)
     .then((response) => {

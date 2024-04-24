@@ -26,19 +26,22 @@ const AdminMatchingItem = ({ text, matchingId, setUpdateCount }) => {
     console.log(selectedStatus);
   }, [selectedStatus]);
 
-  // todo 전시 생성하기 -> 모달 나옴
+  // 전시 생성하기 -> 모달 나옴
   const addExhibit = () => {
-    // myposterForBusiness. js 보기
+    // myposterForBusiness. js 참고
     setModalShow(true);
   };
 
   return (
     <>
-      <Stack spacing={2} direction="row">
+      <Stack spacing={1} direction="row">
+        <>{text}</>
+        <div />
         <Form.Select
           aria-label="Default select example"
-          value={selectedStatus} // 드롭다운의 선택된 값
-          onChange={handleSelectChange} // 상태 선택 변화 처리
+          value={selectedStatus}
+          onChange={handleSelectChange}
+          style={{ width: "auto" }}
         >
           <option value="0">현재 상태</option>
           <option value="REQUESTWAITING">매칭수락대기중 </option>
@@ -48,10 +51,10 @@ const AdminMatchingItem = ({ text, matchingId, setUpdateCount }) => {
           <option value="PREPARING">전시준비중</option>
         </Form.Select>
         <Button variant="primary" onClick={() => updateState(matchingId)}>
-          수정
+          상태 변경
         </Button>{" "}
         <Button variant="outline-dark" onClick={() => addExhibit()}>
-          전시데이터 생성
+          전시생성
         </Button>{" "}
       </Stack>
       <BootModalForAdmin

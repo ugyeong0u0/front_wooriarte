@@ -19,31 +19,7 @@ import author from "../../assets/author.png";
 import { useState } from "react";
 
 import BootModalForAdmin from "../../libs/BootModalForAdmin";
-
-let mockData = [];
-mockData = [
-  {
-    id: 1,
-    postName: "아이템1",
-    location: "서울시 마포구",
-    imageurl: author,
-    createdDate: new Date("2024-04-19").getTime(),
-  },
-  {
-    id: 2,
-    postName: "아이템2",
-    location: "서울시 마포구",
-    imageurl: author,
-    createdDate: new Date("2024-04-19").getTime(),
-  },
-  {
-    id: 3,
-    postName: "아이템3",
-    location: "서울시 마포구",
-    imageurl: author,
-    createdDate: new Date("2024-04-19").getTime(),
-  },
-];
+import AdminExhibitList from "../../components/admin/AdminExhibitList";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -84,18 +60,6 @@ const MainAdmin = () => {
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
-  };
-
-  const handleItemInfo = (id) => {
-    // todo 모달 수정
-    // nav(`/authoredititem/${id}`, {
-    //   state: {
-    //     posterId: id,
-    //     isEdit: true,
-    //   },
-    // });
-
-    setModalShow(true);
   };
 
   return (
@@ -147,7 +111,8 @@ const MainAdmin = () => {
             width: "100%", // 필요한 너비 지정
           }}
         >
-          <span>매칭관리</span>
+          <h2>매칭관리</h2>
+          <div />
           <AdminMatchingList />
         </TabPanel>
         <TabPanel value={value} index={1}>
@@ -157,53 +122,8 @@ const MainAdmin = () => {
         </TabPanel>
 
         <TabPanel value={value} index={2}>
-          <span>전시정보</span>
-          <Stack
-            justifyContent="center" // 가로 방향으로 중앙 정렬
-            alignItems="center" // 세로 방향으로 중앙 정렬
-            style={{ marginTop: 50 }}
-          >
-            <ImageList
-              sx={{ maxWidth: 1000, height: "auto", overflowY: "hidden" }}
-              cols={3}
-              gap={8} // 이미지 사이의 간격 설정
-            >
-              {mockData.map((item) => (
-                <>
-                  <ImageListItem
-                    key={item.id}
-                    onClick={() => handleItemInfo(item.id)}
-                  >
-                    <img src={item.imageurl} />
-                    <hr style={{ margin: "5px 0" }} />{" "}
-                    <ImageListItemBar
-                      title={item.postName + " " + item.location}
-                      subtitle={
-                        <div>
-                          <span>{item.createdDate}</span>
-                          <div />
-                          <span>판매:</span>
-                        </div>
-                      }
-                      position="below"
-                    />
-                  </ImageListItem>
-                  <BootModalForAdmin
-                    show={modalShow}
-                    onHide={() => setModalShow(false)}
-                    type={"update"}
-                    id={item.id}
-                  />
-                </>
-              ))}
-            </ImageList>
-          </Stack>
-          {/* <BootModalForAdmin
-            show={modalShow}
-            onHide={() => setModalShow(false)}
-            type={"create"}
-            id={matchingId}
-          /> */}
+          <h2>전시정보</h2>
+          <AdminExhibitList />
         </TabPanel>
       </Box>
     </div>
