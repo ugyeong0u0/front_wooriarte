@@ -7,7 +7,6 @@ export const matchingAccDenyResponse = (response, callback) => {
     return;
   }
   if (response.status >= 200 && response.status < 300) {
-    alert(response.data);
     console.log("작가/ 스페이스 매칭 수락/거절 : " + response.data);
 
     callback();

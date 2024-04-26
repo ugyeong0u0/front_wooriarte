@@ -23,32 +23,7 @@ import { useEffect } from "react";
 //!------------------- 작가 공간 마이페이지에 나오는 프로젝트, 공간리스트 아이템=> 유저는 따로 뺌
 
 // type은 공간과 작가에 따라 아이템 양식이 달라서 분리
-let mockData = [];
-mockData = [
-  {
-    id: 1,
-    postName: "아이템1",
-    location: "서울시 마포구",
-    imageurl: author,
-    createdDate: new Date("2024-04-19").getTime(),
-  },
-  {
-    id: 2,
-    postName: "아이템2",
-    location: "서울시 마포구",
-    imageurl: author,
-    createdDate: new Date("2024-04-19").getTime(),
-  },
-  {
-    id: 3,
-    postName: "아이템3",
-    location: "서울시 마포구",
-    imageurl: author,
-    createdDate: new Date("2024-04-19").getTime(),
-  },
-];
 
-//!--------------------------------------
 const MyPosterForBusiness = ({ whatType }) => {
   console.log("MyPosterForBusiness 유저 타입" + whatType);
   const nav = useNavigate();
@@ -58,16 +33,6 @@ const MyPosterForBusiness = ({ whatType }) => {
   const addPoster = () => {
     setModalShow(true);
   };
-  // 작가 아이템 리스트 불러오기
-  useEffect(() => {
-    if (whatType == "author") {
-      // todo api 부재, 서버에 추가 후 진행
-    } else if (whatType == "space") {
-      // todo api 부재, 서버에 추가 후 진행
-    } else {
-      console.log("비즈니스 아이템 조회 잘못된 접근");
-    }
-  }, []); // businessInfoState 객체의 모든 변경에 반응
 
   const handleItemInfo = (id) => {
     switch (whatType) {
@@ -109,7 +74,7 @@ const MyPosterForBusiness = ({ whatType }) => {
             cols={3}
             gap={8} // 이미지 사이의 간격 설정
           >
-            {mockData.map((item) => (
+            {/* {mockData.map((item) => (
               <ImageListItem
                 key={item.id}
                 onClick={() => handleItemInfo(item.id)}
@@ -122,7 +87,7 @@ const MyPosterForBusiness = ({ whatType }) => {
                   position="below"
                 />
               </ImageListItem>
-            ))}
+            ))} */}
 
             <Button
               variant="outlined"

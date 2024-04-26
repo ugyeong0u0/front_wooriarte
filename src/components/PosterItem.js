@@ -14,15 +14,15 @@ import { LocalizationProvider } from "@mui/x-date-pickers";
 // whatType은 유저, 작가, 공간대여자 나누는거 \
 // id 는 posterid
 // isDialog는 작가 공간대여자가 신청할 때 자기 물건 자세히 보기 정도에 쓰임
+
+import image1 from "../assets/image 1.png";
 const PosterItem = ({
-  id,
-  imageurl,
-  postName,
-  location,
-  date,
-  isVisible,
-  totalTicket,
+  ticketId,
+  exhibitId,
+  amount,
+  ticketNo,
   whatType,
+  isVisible,
   isDialog,
   isEditable,
 }) => {
@@ -49,9 +49,9 @@ const PosterItem = ({
               case "space":
               case "author":
                 if (!isVisible)
-                  nav(`/businessiteminfo/${id}`, {
+                  nav(`/businessiteminfo/${exhibitId}`, {
                     state: {
-                      posterId: id,
+                      posterId: exhibitId,
                       userType: whatType,
                     },
                   }); // 메인엔 예매취소 버튼 보이면 x
@@ -59,7 +59,7 @@ const PosterItem = ({
 
               default: {
                 // 유저 경우
-                if (!isVisible) nav(`/exhibititeminfo/${id}`); // 메인엔 예매취소 버튼 보이면 x
+                if (!isVisible) nav(`/exhibititeminfo/${exhibitId}`); // 메인엔 예매취소 버튼 보이면 x
                 return;
               }
             }
@@ -91,20 +91,20 @@ const PosterItem = ({
       }}
     >
       <div>
-        <ImageListItem key={id}>
-          <img src={imageurl} />
+        <ImageListItem key={ticketId}>
+          <img src={image1} />
           <ImageListItemBar
-            title={postName + " " + location}
+            title={ticketId}
             subtitle={
               <span>
-                {date && (
+                {
                   <div>
-                    <span> 예매수{totalTicket}</span>
+                    <span> 예매수{amount}</span>
                     <ButtonBoot variant="outline-danger" onClick={cancelTicket}>
                       예매취소
                     </ButtonBoot>{" "}
                   </div>
-                )}
+                }
               </span>
             }
             position="below"

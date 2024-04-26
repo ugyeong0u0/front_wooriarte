@@ -4,7 +4,7 @@ import { jsx } from "react/jsx-runtime";
 const DOMAIN = "http://localhost:8080"; // TODO: 도메인 주소 확인 필요
 
 //?----------------------------- 유저 url
-const LoginSpace_URL = () => `${DOMAIN}/login`;
+const LoginSpace_URL = () => `${DOMAIN}/user/login`;
 const SignupUser_URL = () => `${DOMAIN}/user`;
 const FindUserId_URL = () => `${DOMAIN}/user/find-id`;
 const FindPassId_URL = () => `${DOMAIN}/user/find-pw`;
@@ -12,6 +12,9 @@ const DeleteUser_URL = ({ id }) => `${DOMAIN}/user/${id}`;
 const confirmUserPw_URL = ({ id }) => `${DOMAIN}/user/${id}/verify-pwd`;
 const getUserInfo_URL = ({ id }) => `${DOMAIN}/user/${id}/info`;
 const updateUserInfo_URL = ({ id }) => `${DOMAIN}/user/${id}/info`;
+// todo
+const ExhibitUser_URL = ({ id, value }) =>
+  `${DOMAIN}/user/${id}/bookings/${value}`;
 
 //!----------------------------- 유저 로그인
 export const LogInRequest = async ({ id, pw }) => {
@@ -246,6 +249,32 @@ export const updateUserInfo = async ({
     })
     .catch((error) => {
       console.error("회원정보 수정 실패: " + error);
+      if (error.response) {
+        // 에러 응답이 있는 경우
+        const { data, status } = error.response;
+        console.log(`에러 메시지: ${data.msg}, 에러 코드: ${status}`);
+        // 이곳에서 상태 코드나 에러 메시지에 따른 추가적인 에러 처리를 할 수 있습니다.
+      } else {
+        // 에러 응답이 없는 경우
+        console.log("에러 응답이 없습니다.");
+      }
+    });
+  return result;
+};
+//!---------------------------- 유저 전시 조회
+export const getExhibitTicketUser = async ({ userId, value }) => {
+  console.log("유저 전시 조회 실행");
+  console.log("유저 전시 조회 id  :" + userId);
+  const url = ExhibitUser_URL({ id: userId, value: value });
+
+  const result = await axios
+    .get(url)
+    .then((response) => {
+      console.log(response.status);
+      return response;
+    })
+    .catch((error) => {
+      console.error("유저 전시 조회 실패: " + error);
       if (error.response) {
         // 에러 응답이 있는 경우
         const { data, status } = error.response;

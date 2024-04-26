@@ -16,6 +16,7 @@ import {
   waitingMatchingForSpace,
   getOfferedMatchingForSpace,
   getSuccessMatchingForSpace,
+  getOneSpaceItems,
 } from "../space-api-manager";
 
 //!----------------------------스페이스 로그인
@@ -26,7 +27,6 @@ export const LoginSpaceResponse = (response, callback) => {
     return;
   }
   if (response.status >= 200 && response.status < 300) {
-    alert(response.data);
     console.log("스페이스 id : " + response.data);
     // 임시로 localhost저장
     localStorage.setItem("userId", response.data);
@@ -58,7 +58,6 @@ export const signupSpaceResponse = (response, callback) => {
     return;
   }
   if (response.status >= 200 && response.status < 300) {
-    alert(response.data);
     console.log("회원가입 성공");
     callback();
     return;
@@ -93,7 +92,6 @@ export const findfindSpaceIdResponse = (response, callback) => {
     return;
   }
   if (response.status >= 200 && response.status < 300) {
-    alert(response.data);
     console.log("스페이스 아이디 찾기 성공");
     callback(response);
     return;
@@ -144,7 +142,6 @@ export const deleteSpaceResponse = (response, callback) => {
     return;
   }
   if (response.status >= 200 && response.status < 300) {
-    alert(response.status);
     console.log("스페이스 탈퇴 성공");
     callback();
     return;
@@ -219,7 +216,6 @@ export const updateSpaceInfoResponse = (response, callback) => {
     return;
   }
   if (response.status >= 200 && response.status < 300) {
-    alert(response.data);
     console.log("스페이스 정보 수정 성공");
     callback();
     return;
@@ -255,7 +251,6 @@ export const addSpaceItemResponse = (response, callback) => {
     return;
   }
   if (response.status >= 200 && response.status < 300) {
-    alert(response.data);
     console.log("스페이스 아이템 추가 성공");
     callback();
     return;
@@ -303,7 +298,6 @@ export const onGetAllSpaceItemResponse = (response, callback) => {
     return;
   }
   if (response.status >= 200 && response.status < 300) {
-    alert("핸들러" + response.data);
     console.log("모든 스페이스 아이템 조회 성공");
     callback(response);
     return;
@@ -329,7 +323,6 @@ export const getSpaceItemInfoResponse = (response, callback) => {
     return;
   }
   if (response.status >= 200 && response.status < 300) {
-    alert(response.data);
     console.log("스페이스 아이템 단건 조회 성공");
     callback(response);
     return;
@@ -354,7 +347,6 @@ export const updateAuthorItemInfoResponse = (response, callback) => {
     return;
   }
   if (response.status >= 200 && response.status < 300) {
-    alert(response.data);
     console.log("프로젝트 아이템 수정 성공");
     callback();
     return;
@@ -364,13 +356,14 @@ export const updateAuthorItemInfoResponse = (response, callback) => {
     return;
   }
 };
-// 작가 아이템 수정 이벤트
+//  수정 이벤트
 export const onUpdateSpaceItemInfoHandler = (
-  { spaceRentalId, intro, hostname, city, size, parking, fee, phone },
+  { spaceId, intro, hostname, city, size, parking, fee, phone },
   callback
 ) => {
+  console.log("수정핸들러 안");
   updateSpaceItemInfo({
-    spaceRentalId,
+    spaceId,
     intro,
     hostname,
     city,
@@ -389,7 +382,6 @@ export const deleteSpaceItemResponse = (response, callback) => {
     return;
   }
   if (response.status >= 200 && response.status < 300) {
-    alert(response.status);
     console.log("스페이스 아이템 삭제 성공");
     callback();
     return;
@@ -414,7 +406,6 @@ export const applyToAuthorItemResponse = (response, callback) => {
     return;
   }
   if (response.status >= 200 && response.status < 300) {
-    alert(response.status);
     console.log("공간 -> 작가 신청 성공");
     callback();
     return;
@@ -448,7 +439,6 @@ export const waitingMatchingForSpaceResponse = (response, callback) => {
     return;
   }
   if (response.status >= 200 && response.status < 300) {
-    alert(response.status);
     console.log("공간 매칭대기 응답 성공");
     callback(response);
     return;
@@ -474,7 +464,6 @@ export const getOfferedMatchingForSpaceResponse = (response, callback) => {
     return;
   }
   if (response.status >= 200 && response.status < 300) {
-    alert(response.status);
     console.log(" 스페이스 신청받은 조회 응답 성공");
     callback(response);
     return;
@@ -500,7 +489,6 @@ export const getSuccessMatchingForSpaceResponse = (response, callback) => {
     return;
   }
   if (response.status >= 200 && response.status < 300) {
-    alert(response.status);
     console.log("공간 성공매칭 조회 응답 성공");
     callback(response);
     return;
@@ -515,5 +503,29 @@ export const onGetSuccessMatchingSpaceHandler = ({ spaceId }, callback) => {
   console.log("공간 신청받은 :  spaceId " + spaceId);
   getSuccessMatchingForSpace({ spaceId }).then((response) =>
     getSuccessMatchingForSpaceResponse(response, callback)
+  );
+};
+//!---------------------------- 공간대여자의 아이템들 조회
+//? callback 있음
+
+export const getOneSpaceItemsResponse = (response, callback) => {
+  if (!response) {
+    alert("공간대여자의 아이템들 조회없음");
+    return;
+  }
+  if (response.status >= 200 && response.status < 300) {
+    console.log("공간대여자의 아이템들 조회 성공");
+    callback(response);
+    return;
+  } else {
+    alert("공간대여자의 아이템들 조회 실패");
+    console.log(response.status);
+    return;
+  }
+};
+export const onGetOneSpaceProjectsHandler = ({ spaceId }, callback) => {
+  console.log("공간대여자 :  spaceId  " + spaceId);
+  getOneSpaceItems({ spaceId }).then((response) =>
+    getOneSpaceItemsResponse(response, callback)
   );
 };

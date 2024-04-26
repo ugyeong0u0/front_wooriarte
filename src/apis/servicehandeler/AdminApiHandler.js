@@ -4,6 +4,8 @@ import {
   getAllExhibits,
   getExhibitInfo,
   deleteSingleExhibit,
+  updateExhibit,
+  updateMatchingForAdmin,
 } from "../admin-api-manager";
 
 //!-------------------------------관리자 모든 매칭 조회
@@ -39,7 +41,6 @@ export const onAddExhibitResponse = (response, callback) => {
     return;
   }
   if (response.status >= 200 && response.status < 300) {
-    alert(response.data);
     console.log("전시생성 성공");
     callback();
     return;
@@ -102,15 +103,13 @@ export const ongetAllExhibitsHandler = (callback) => {
 };
 //!---------------------------- 전시 단건 조회
 //* response 존재
-// todo
 export const getExhibitInfoResponse = (response, callback) => {
   if (!response) {
-    alert("네트워크 이상");
+    alert("전시 단건 조회 네트워크 이상");
     return;
   }
   if (response.status >= 200 && response.status < 300) {
-    alert(response.data.name);
-    console.log("전시 단건 조회 성공");
+    console.log("전시 단건 조회 성공!!!!!!!!!!!!!!");
     callback(response);
     return;
   } else {
@@ -126,7 +125,7 @@ export const onGetExhibitInfoHandler = ({ exhibitId }, callback) => {
   );
 };
 //!-----------------------------관리자 전시 삭제
-//? 여기부터
+
 // 전시 삭제 응답
 export const deleteSingleExhibitResponse = (response, callback) => {
   if (!response) {
@@ -134,7 +133,6 @@ export const deleteSingleExhibitResponse = (response, callback) => {
     return;
   }
   if (response.status >= 200 && response.status < 300) {
-    alert(response.status);
     console.log("전시 삭제 성공");
     callback();
     return;
@@ -144,10 +142,82 @@ export const deleteSingleExhibitResponse = (response, callback) => {
     return;
   }
 };
-// 유저 삭제누름
+
 export const onDeleteSingleExhibitHandler = ({ exhibitId }, callback) => {
   console.log("전시 삭제id" + exhibitId);
   deleteSingleExhibit({ exhibitId }).then((response) =>
     deleteSingleExhibitResponse(response, callback)
+  );
+};
+//!---------------------------- 전시 정보 수정
+// todo 요청 응답 확인 필요
+export const updateExhibitResponse = (response, callback) => {
+  if (!response) {
+    alert("네트워크 이상 ");
+    return;
+  }
+  if (response.status >= 200 && response.status < 300) {
+    console.log("전시 정보 수정 성공");
+    callback();
+    return;
+  } else {
+    alert("전시 정보 수정 실패");
+    console.log(response.status);
+    return;
+  }
+};
+
+export const onUpdateExhibitHandler = (
+  {
+    exhibitId,
+    name,
+    intro,
+    startDate,
+    endDate,
+    artistName,
+    hostName,
+    price,
+    city,
+  },
+  callback
+) => {
+  updateExhibit({
+    exhibitId,
+    name,
+    intro,
+    startDate,
+    endDate,
+    artistName,
+    hostName,
+    price,
+    city,
+  }).then((response) => updateExhibitResponse(response, callback));
+};
+
+//!---------------------------- 매칭 상태 변경
+
+export const updateMatchingForAdminResponse = (response, callback) => {
+  if (!response) {
+    alert("매칭 상태 변경 조회 네트워크 이상");
+    return;
+  }
+  if (response.status >= 200 && response.status < 300) {
+    console.log("매칭 상태 변경 성공!!!!!!!!!!!!!!");
+    callback(response);
+    return;
+  } else {
+    alert("매칭 상태 변경 실패");
+    console.log(response.status);
+    return;
+  }
+};
+
+export const onUpdateMatchingForAdminHandler = (
+  { matchingId, matchingStatus },
+  callback
+) => {
+  console.log("핸들러 안 " + matchingId);
+  updateMatchingForAdmin({ matchingId, matchingStatus }).then((response) =>
+    updateMatchingForAdminResponse(response, callback)
   );
 };

@@ -6,21 +6,28 @@ import BootModalForAdmin from "../../libs/BootModalForAdmin";
 import { useState } from "react";
 import { useEffect } from "react";
 
+// api
+import { onUpdateMatchingForAdminHandler } from "../../apis/servicehandeler/AdminApiHandler";
+
 //?--- matchingId: 관리자가 매칭 상태 수정 및 생성 시 쓰임
-const AdminMatchingItem = ({ text, matchingId, setUpdateCount }) => {
+const AdminMatchingItem = ({ text, matchingId, setUpdateCount, status }) => {
   const [modalShow, setModalShow] = useState(false); // 드랍다운 숫자 저장
 
-  const [selectedStatus, setSelectedStatus] = useState(""); // 선택된 상태를 저장하기 위한 state
+  const [selectedStatus, setSelectedStatus] = useState(status); // 선택된 상태를 저장하기 위한 state
 
   // 드롭다운에서 선택된 값을 state에 저장
   const handleSelectChange = (event) => {
     setSelectedStatus(event.target.value);
   };
-  // todo 매칭 상태 변경 api
+  // 매칭 상태 변경 api
   const updateState = (matchingId) => {
-    // todo 버튼 상태 바디에 보냄
-    // todo api연결 및 성공시
-    setUpdateCount((prev) => prev + 1);
+    onUpdateMatchingForAdminHandler(
+      { matchingId, matchingStatus: selectedStatus },
+      () => {
+        console.log("매칭 상태 변경 callback");
+        setUpdateCount((prev) => prev + 1);
+      }
+    );
   };
   useEffect(() => {
     console.log(selectedStatus);

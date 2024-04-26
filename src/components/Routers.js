@@ -67,8 +67,8 @@ const Routers = () => {
         <Route path="/applywithitems/:id" element={<ApplyWithItems />} />
 
         {/* 마이페이지 */}
-        <Route path="/authormypage/:id" element={<AuthorMyPage />} />
-        <Route path="/spacemypage/:id" element={<SpaceMyPage />} />
+        <Route path="/authormypage" element={<AuthorMyPage />} />
+        <Route path="/spacemypage" element={<SpaceMyPage />} />
         {/* 작가 아이템수정 */}
         <Route path="/authoredititem/:id" element={<AuthorEditItem />} />
 

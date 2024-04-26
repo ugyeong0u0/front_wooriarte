@@ -26,7 +26,7 @@ export default function DatePickerOpenTo({ calendarType, onDateChange }) {
 }
 
 const locations = [
-  "서울특별시",
+  "SEOUL",
   "부산광역시",
   "대구광역시",
   "인천광역시",

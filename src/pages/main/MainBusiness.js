@@ -196,8 +196,9 @@ const MainBusiness = () => {
   }, [exhibitsType]); // businessInfoState 객체의 모든 변경에 반응
 
   const getItemInfo = (id) => {
+    const whatUser = localStorage.getItem("userType");
     nav(`/businessiteminfo/${id}`, {
-      state: { userType: exhibitsType, posterId: id },
+      state: { userType: whatUser, posterId: id },
     });
   };
 

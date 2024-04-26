@@ -56,7 +56,7 @@ const BusinessItemInfo = () => {
   });
 
   useEffect(() => {
-    console.log("비즈니스 아이템상세보기 " + posterId);
+    console.log("현재 보고있는  아이템상세보기 " + posterId);
     console.log("비즈니스 아이템상세보기 " + userType);
 
     if (userType === "author") {
@@ -120,7 +120,7 @@ const BusinessItemInfo = () => {
   return (
     <div className="businessItemInfo">
       <div className="infoContainer">
-        <CustomCarousel>
+        <CustomCarousel isInfo={true}>
           {images.map((image, index) => {
             return <img key={index} src={image.imgURL} alt={image.imgAlt} />;
           })}

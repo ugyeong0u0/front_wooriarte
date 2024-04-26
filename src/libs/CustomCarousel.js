@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 
 import "../styles/CustomCarousel.css";
 
-function CustomCarousel({ children }) {
+function CustomCarousel({ children, isInfo }) {
   const [activeIndex, setActiveIndex] = useState(0);
   const [slideDone, setSlideDone] = useState(true);
   const [timeID, setTimeID] = useState(null);
@@ -57,6 +57,7 @@ function CustomCarousel({ children }) {
       className="container__slider"
       onMouseEnter={AutoPlayStop}
       onMouseLeave={AutoPlayStart}
+      style={{ width: isInfo ? "400px" : "50%" }} // isInfo가 true일 경우 넓이를 200px로 설정
     >
       {children.map((item, index) => {
         return (

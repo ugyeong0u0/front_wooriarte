@@ -18,6 +18,7 @@ import Stack from "@mui/material/Stack";
 import image1 from "../../assets/image 1.png";
 import MyPosterForBusiness from "../../components/business/MyPosterForBusiness";
 import WithDrawalUser from "../../components/user/Withdrawal";
+import BusinessItemList from "../../components/business/BusinessItemList";
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
 
@@ -144,7 +145,7 @@ const SpaceMyPage = () => {
             </ImageList>
           </Stack> */}
 
-          <MyPosterForBusiness whatType={"space"} />
+          <BusinessItemList whatType={"space"} />
 
           {/* 개인정보 수정 */}
         </TabPanel>

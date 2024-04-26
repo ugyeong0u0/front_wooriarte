@@ -10,7 +10,7 @@ const LoginAuthor_URL = () => `${DOMAIN}/project-managers/login`;
 const SignupAuthor_URL = () => `${DOMAIN}/project-managers`;
 
 const FindAuthorId_URL = () => `${DOMAIN}/project-managers/find-id`;
-// todo 비번 찾기
+
 const findAuthorPass_URL = () => `${DOMAIN}/project-managers/set-pwd`;
 
 const DeleteAuthor_URL = ({ id }) => `${DOMAIN}/project-managers/${id}`;
@@ -22,12 +22,21 @@ const UpdateAuthorInfo_URL = ({ id }) => `${DOMAIN}/project-managers/${id}`;
 
 //?------------------------------작가 작품 url
 const AddAuthorProject_URL = () => `${DOMAIN}/project-item`;
+
+// 작가 작품 수정 및 조회
 const GetAuthoritem_URL = ({ posterId }) =>
   `${DOMAIN}/project-item/${posterId}`;
 
+// 작가만의 아이템 모두 조회
+const getAllAuthorProject_URL = ({ id }) =>
+  `${DOMAIN}/project-item/project-manager/${id}`;
+
+// 작가 아이템 삭제
+const DeleteAuthorProject_URL = ({ id }) => `${DOMAIN}/project-item/${id}`;
+
 //?------------------------------작가 신청 url
 const ApplyToSpaceItem_URL = ({ itemId }) =>
-  `${DOMAIN}/project${itemId}/request`;
+  `${DOMAIN}/project/${itemId}/request`;
 
 //?------------------------------작가 매칭 url
 const WaitingMatchingResult_URL = ({ id }) =>
@@ -391,7 +400,6 @@ export const getAuthorItemInfo = async ({ posterId }) => {
 //!---------------------------- 작가 아이템 수정
 export const updateAuthorItemInfo = async ({
   posterId,
-  projectManagerId,
   artistName,
   intro,
   phone,
@@ -402,13 +410,14 @@ export const updateAuthorItemInfo = async ({
 
   const result = await axios
     .put(url, {
-      posterId,
-      projectManagerId,
       artistName,
       intro,
       phone,
       approval: true,
+      startDate: "2024-04-04T11:29:26.197299",
+      endDate: "2024-04-12T11:29:26.197299",
       isDeleted: false,
+      city: "INCHEON",
     })
     .then((response) => {
       console.log("작가 작품 수정 " + response.status);
@@ -553,5 +562,55 @@ export const getSuccessMatching = async ({ authorId }) => {
         console.log("에러 응답이 없습니다.");
       }
     });
+  return result;
+};
+
+//!---------------------------- 작가의 아이템들 조회
+export const getOneAuthorProjects = async ({ authorId }) => {
+  console.log("작가의 아이템들 조회  실행");
+  console.log("작가 id  :" + authorId);
+  const url = getAllAuthorProject_URL({ id: authorId });
+
+  const result = await axios
+    .get(url)
+    .then((response) => {
+      console.log("작가의 아이템들 조회 실행 status" + response.status);
+      return response;
+    })
+    .catch((error) => {
+      console.error("작가의 아이템들 조회 실행 실패: " + error);
+      if (error.response) {
+        // 에러 응답이 있는 경우
+        const { data, status } = error.response;
+        console.log(`에러 메시지: ${data.msg}, 에러 코드: ${status}`);
+        // 이곳에서 상태 코드나 에러 메시지에 따른 추가적인 에러 처리를 할 수 있습니다.
+      } else {
+        // 에러 응답이 없는 경우
+        console.log("에러 응답이 없습니다.");
+      }
+    });
+  return result;
+};
+//!-----------------------------작가 아이템 삭제
+
+export const deleteSingleExhibit = async ({ projectItemId }) => {
+  console.log(" 작가 아이템 삭제실행");
+  console.log(" 작가 아이템 삭제 id  :" + projectItemId);
+
+  const url = DeleteAuthorProject_URL({ id: projectItemId });
+
+  console.log("작가 아이템 삭제 url" + url);
+  const result = await axios.delete(url).catch((error) => {
+    console.error("작가 아이템 삭제 실패: " + error);
+    if (error.response) {
+      // 에러 응답이 있는 경우
+      const { data, status } = error.response;
+      console.log(`에러 메시지: ${data.msg}, 에러 코드: ${status}`);
+      // 이곳에서 상태 코드나 에러 메시지에 따른 추가적인 에러 처리를 할 수 있습니다.
+    } else {
+      // 에러 응답이 없는 경우
+      console.log("에러 응답이 없습니다.");
+    }
+  });
   return result;
 };

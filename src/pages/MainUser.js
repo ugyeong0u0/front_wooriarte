@@ -7,6 +7,11 @@ import "../styles/MainUser.css";
 
 import * as React from "react";
 
+// api
+import { ongetAllExhibitsHandler } from "../apis/servicehandeler/AdminApiHandler";
+
+// 사진
+import author from "../assets/author.png";
 // 레이아웃
 import CssBaseline from "@mui/material/CssBaseline";
 import Box from "@mui/material/Box";
@@ -31,6 +36,8 @@ import ImageList from "@mui/material/ImageList";
 import ImageListItem from "@mui/material/ImageListItem";
 import ImageListItemBar from "@mui/material/ImageListItemBar";
 import PosterForMain from "../components/PosterForMain";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const mockData = [
   {
@@ -174,6 +181,25 @@ mockData2 = [
 
 // 추후 무한 스크롤로 변경
 const MainUser = () => {
+  const [mockData, setMockData] = useState([{}]); // 받는 형식이 배열 안 객체라
+  const nav = useNavigate();
+
+  // 아이템 상세 보기 api
+  const handleItemInfo = (exhibitId) => {
+    console.log("exhibitId" + exhibitId);
+    nav(`/exhibititeminfo/${exhibitId}`, { state: { exhibitId } });
+  };
+
+  useEffect(() => {
+    ongetAllExhibitsHandler((response) => {
+      if (Array.isArray(response.data)) {
+        setMockData(response.data);
+      } else {
+        console.error("응답 데이터가 배열이 아닙니다.");
+      }
+    });
+  }, []);
+
   return (
     <div>
       <React.Fragment>
@@ -188,7 +214,7 @@ const MainUser = () => {
         <Container maxWidth="80%">
           <Box sx={{ bgcolor: "#00000000", height: "100%", marginTop: 7 }}>
             {/* 추천 리스트 */}
-            <Stack
+            {/* <Stack
               justifyContent="center" // 가로 방향으로 중앙 정렬
               alignItems="center" // 세로 방향으로 중앙 정렬
               style={{ height: "100vh" }}
@@ -208,7 +234,7 @@ const MainUser = () => {
                   );
                 })}
               </ImageList>
-            </Stack>
+            </Stack> */}
             {/* 문구배너  */}
             <img
               src={artForEveryOne}
@@ -226,12 +252,15 @@ const MainUser = () => {
                 cols={3}
                 gap={8} // 이미지 사이의 간격 설정
               >
-                {images.map((item) => (
-                  <ImageListItem key={item.img}>
+                {mockData.map((item) => (
+                  <ImageListItem
+                    key={item.exhibitId}
+                    onClick={() => handleItemInfo(item.exhibitId)}
+                  >
                     <img
-                      srcSet={`${item.img}?w=248&fit=crop&auto=format&dpr=2 2x`}
-                      src={`${item.img}?w=248&fit=crop&auto=format`}
-                      alt={item.title}
+                      srcSet={`${author}?w=248&fit=crop&auto=format&dpr=2 2x`}
+                      src={`${author}?w=248&fit=crop&auto=format`}
+                      alt={item.name}
                       loading="lazy"
                       style={{
                         width: "100%",
@@ -240,8 +269,14 @@ const MainUser = () => {
                       }} // 모든 이미지가 동일한 가로 길이를 가지도록 가로 너비를 100%로 설정
                     />
                     <ImageListItemBar
-                      title={item.title}
-                      subtitle={<span>by: {item.author}</span>}
+                      title={item.name + " " + item.city}
+                      subtitle={
+                        <div>
+                          <span>{item.artistName}</span>
+                          <div />
+                          <span>{item.startDate + "~" + item.endDate}</span>
+                        </div>
+                      }
                       position="below"
                     />
                   </ImageListItem>

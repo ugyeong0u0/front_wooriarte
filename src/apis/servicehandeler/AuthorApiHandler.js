@@ -15,6 +15,8 @@ import {
   waitingMatchingResult,
   getOfferedMatching,
   getSuccessMatching,
+  getOneAuthorProjects,
+  deleteSingleExhibit,
 } from "../author-api-manager";
 
 //!----------------------------작가 로그인
@@ -25,7 +27,6 @@ export const LoginAuthorResponse = (response, callback) => {
     return;
   }
   if (response.status >= 200 && response.status < 300) {
-    alert(response.data);
     console.log("작가 id : " + response.data);
     // 임시로 localhost저장
     localStorage.setItem("userId", response.data);
@@ -57,7 +58,6 @@ export const signupAuthorResponse = (response, callback) => {
     return;
   }
   if (response.status >= 200 && response.status < 300) {
-    alert(response.data);
     console.log("작가 회원가입 성공");
     callback();
     return;
@@ -91,7 +91,6 @@ export const findAuthorIdResponse = (response, callback) => {
     return;
   }
   if (response.status >= 200 && response.status < 300) {
-    alert(response.data);
     console.log("작가 아이디 찾기 성공");
     callback();
     return;
@@ -116,7 +115,6 @@ export const findAuthorPwResponse = (response, callback) => {
     return;
   }
   if (response.status >= 200 && response.status < 300) {
-    alert(response.data);
     console.log("작가 비번 재설정 성공");
     callback();
     return;
@@ -142,7 +140,6 @@ export const deleteAuthorResponse = (response, callback) => {
     return;
   }
   if (response.status >= 200 && response.status < 300) {
-    alert(response.status);
     console.log("작가 탈퇴 성공");
     callback();
     return;
@@ -193,7 +190,6 @@ export const getAuthorInfoResponse = (response, callback) => {
     return;
   }
   if (response.status >= 200 && response.status < 300) {
-    alert(response.data.id);
     console.log("작가 정보 조회 성공");
     callback(response);
     return;
@@ -218,7 +214,6 @@ export const updateAuthorInfoResponse = (response, callback) => {
     return;
   }
   if (response.status >= 200 && response.status < 300) {
-    alert(response.data);
     console.log("작가 정보 수정 성공");
     callback();
     return;
@@ -254,7 +249,6 @@ export const addAuthorProjectResponse = (response, callback) => {
     return;
   }
   if (response.status >= 200 && response.status < 300) {
-    alert(response.data);
     console.log("작가 아이템 추가 성공");
     callback();
     return;
@@ -333,7 +327,6 @@ export const updateAuthorItemInfoResponse = (response, callback) => {
     return;
   }
   if (response.status >= 200 && response.status < 300) {
-    alert(response.data);
     console.log("작가 아이템 수정 성공");
     callback();
     return;
@@ -350,7 +343,6 @@ export const onUpdateAuthorItemInfoHandler = (
 ) => {
   updateAuthorItemInfo({
     posterId,
-    projectManagerId,
     artistName,
     intro,
     phone,
@@ -365,7 +357,6 @@ export const deleteAuthorItemResponse = (response, callback) => {
     return;
   }
   if (response.status >= 200 && response.status < 300) {
-    alert(response.status);
     console.log("작가아이템 삭제 성공");
     callback();
     return;
@@ -390,7 +381,6 @@ export const applyToSpaceItemResponse = (response, callback) => {
     return;
   }
   if (response.status >= 200 && response.status < 300) {
-    alert(response.status);
     console.log("작가 -> 공간 신청 성공");
     callback();
     return;
@@ -424,7 +414,6 @@ export const waitingMatchingResultResponse = (response, callback) => {
     return;
   }
   if (response.status >= 200 && response.status < 300) {
-    alert(response.status);
     console.log("작가 매칭대기 응답 성공");
     callback(response);
     return;
@@ -450,7 +439,6 @@ export const GetOfferedMatchingResponse = (response, callback) => {
     return;
   }
   if (response.status >= 200 && response.status < 300) {
-    alert(response.status);
     console.log("작가 신청받은 조회 응답 성공");
     callback(response);
     return;
@@ -476,7 +464,6 @@ export const getSuccessMatchingResponse = (response, callback) => {
     return;
   }
   if (response.status >= 200 && response.status < 300) {
-    alert(response.status);
     console.log("작가 성공매칭 조회 응답 성공");
     callback(response);
     return;
@@ -491,5 +478,56 @@ export const onGetSuccessMatchingAuthorHandler = ({ authorId }, callback) => {
   console.log("작가 신청받은 :  authorId " + authorId);
   getSuccessMatching({ authorId }).then((response) =>
     getSuccessMatchingResponse(response, callback)
+  );
+};
+//!---------------------------- 작가의 아이템들 조회
+//? callback 있음
+
+export const getOneAuthorProjectsResponse = (response, callback) => {
+  if (!response) {
+    alert("작가의 아이템들 조회없음");
+    return;
+  }
+  if (response.status >= 200 && response.status < 300) {
+    console.log("작가의 아이템들 조회 성공");
+    callback(response);
+    return;
+  } else {
+    alert("작가의 아이템들 조회 실패");
+    console.log(response.status);
+    return;
+  }
+};
+
+export const onGetOneAuthorProjectsHandler = ({ authorId }, callback) => {
+  console.log("작가 신청받은 :  authorId " + authorId);
+  getOneAuthorProjects({ authorId }).then((response) =>
+    getOneAuthorProjectsResponse(response, callback)
+  );
+};
+//!-----------------------------작가 전시 삭제
+
+export const deleteSingleProjectItemResponse = (response, callback) => {
+  if (!response) {
+    alert("네트워크 이상");
+    return;
+  }
+  if (response.status >= 200 && response.status < 300) {
+    console.log("작가 아이템 삭제 성공");
+    callback();
+    return;
+  } else {
+    alert("작가아이템 삭제 실패");
+    console.log(response.status);
+    return;
+  }
+};
+export const onDeleteSingleProjectItemHandler = (
+  { projectItemId },
+  callback
+) => {
+  console.log("작가 아이템 삭제id" + projectItemId);
+  deleteSingleExhibit({ projectItemId }).then((response) =>
+    deleteSingleProjectItemResponse(response, callback)
   );
 };

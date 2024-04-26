@@ -18,18 +18,7 @@ import AdminExhibitItem from "./AdminExhibitItem";
 const AdminExhibitList = () => {
   const [modalShow, setModalShow] = useState(false); // 드랍다운
   const [mockData, setMockData] = useState([{}]); // 받는 형식이 배열 안 객체라
-
-  const handleItemInfo = (id) => {
-    // todo 모달 수정
-    // nav(`/authoredititem/${id}`, {
-    //   state: {
-    //     posterId: id,
-    //     isEdit: true,
-    //   },
-    // });
-
-    setModalShow(true);
-  };
+  const [updateCount, setUpdateCount] = useState(0); // 매칭 상태 변화에 따라 리랜더링
 
   // 전시 data 가져오기
   useEffect(() => {
@@ -40,7 +29,7 @@ const AdminExhibitList = () => {
         console.error("응답 데이터가 배열이 아닙니다.");
       }
     });
-  }, []);
+  }, [updateCount]);
 
   return (
     <>
@@ -54,11 +43,23 @@ const AdminExhibitList = () => {
           cols={3}
           gap={8} // 이미지 사이의 간격 설정
         >
-          // todo 아이템 으로 또 빼보고 그 다음에 item.exhibit받아와보기 !!
           {mockData.map((item) => {
-            return <AdminExhibitItem key={item.exhibitId} {...item} />;
+            return (
+              <AdminExhibitItem
+                key={item.exhibitId}
+                {...item}
+                setUpdateCount={setUpdateCount}
+              />
+            );
           })}
         </ImageList>
+
+        {/* <BootModalForAdmin
+          show={modalShow}
+          onHide={() => setModalShow(false)}
+          type={"update"}
+          id={exhibitId}
+        /> */}
       </Stack>
     </>
   );

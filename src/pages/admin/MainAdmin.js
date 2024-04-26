@@ -55,7 +55,7 @@ function a11yProps(index) {
 }
 
 const MainAdmin = () => {
-  const [modalShow, setModalShow] = useState(false); // 드랍다운 숫자 저장
+  const [modalShow, setModalShow] = useState(false);
   const [value, setValue] = useState(0);
 
   const handleChange = (event, newValue) => {

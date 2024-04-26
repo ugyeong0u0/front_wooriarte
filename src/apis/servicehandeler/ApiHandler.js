@@ -7,6 +7,7 @@ import {
   confirmUserPw,
   getUserInfo,
   updateUserInfo,
+  getExhibitTicketUser,
 } from "../api-manger";
 
 //!----------------------------유저 로그인
@@ -17,7 +18,6 @@ export const SignInResponse = (response, callback) => {
     return;
   }
   if (response.status >= 200 && response.status < 300) {
-    alert(response.data);
     console.log("유저 id : " + response.data);
     // 임시로 localhost저장
     localStorage.setItem("userId", response.data);
@@ -49,7 +49,6 @@ export const signupUserResponse = (response, callback) => {
     return;
   }
   if (response.status >= 200 && response.status < 300) {
-    alert(response.data);
     console.log("회원가입 성공");
     callback();
     return;
@@ -83,7 +82,6 @@ export const findUserIdResponse = (response, callback) => {
     return;
   }
   if (response.status >= 200 && response.status < 300) {
-    alert("handler" + response.data);
     console.log("아이디 찾기 성공");
     callback(response);
     return;
@@ -108,7 +106,6 @@ export const findUserPwResponse = (response, callback) => {
     return;
   }
   if (response.status >= 200 && response.status < 300) {
-    alert(response.data);
     console.log("비번 찾기 성공");
     callback();
     return;
@@ -134,7 +131,6 @@ export const deleteUserResponse = (response, callback) => {
     return;
   }
   if (response.status >= 200 && response.status < 300) {
-    alert(response.status);
     console.log("유저 탈퇴 성공");
     callback();
     return;
@@ -159,7 +155,6 @@ export const confirmUserPwResponse = (response, callback) => {
     return;
   }
   if (response.status >= 200 && response.status < 300) {
-    alert(response.data);
     console.log("비번 확인 성공");
     callback();
     return;
@@ -185,7 +180,6 @@ export const getUserInfoResponse = (response, callback) => {
     return;
   }
   if (response.status >= 200 && response.status < 300) {
-    alert(response.data.name);
     console.log("유저 정보 조회 성공");
     callback(response);
     return;
@@ -210,7 +204,6 @@ export const updateUserInfoResponse = (response, callback) => {
     return;
   }
   if (response.status >= 200 && response.status < 300) {
-    alert(response.data);
     console.log("유저 정보 조회 성공");
     callback();
     return;
@@ -237,7 +230,6 @@ export const getUserMainPosterResponse = (response, callback) => {
     return;
   }
   if (response.status >= 200 && response.status < 300) {
-    alert(response.data);
     console.log("유저 정보 조회 성공");
     callback();
     return;
@@ -254,5 +246,28 @@ export const ongetUserMainPosterHandler = (
 ) => {
   updateUserInfo({ userId, id, pwd, name, email, phone }).then((response) =>
     getUserMainPosterResponse(response, callback)
+  );
+};
+//!---------------------------- 유저 전시 조회
+
+export const getExhibitTicketUserResponse = (response, callback) => {
+  if (!response) {
+    alert("네트워크 이상");
+    return;
+  }
+  if (response.status >= 200 && response.status < 300) {
+    console.log("유저 전시 조회 성공");
+    callback(response);
+    return;
+  } else {
+    alert("유저 전시 조회실패");
+    console.log(response.status);
+    return;
+  }
+};
+
+export const onGetExhibitTicketUserHandler = ({ userId, value }, callback) => {
+  getExhibitTicketUser({ userId, value }).then((response) =>
+    getExhibitTicketUserResponse(response, callback)
   );
 };

@@ -11,31 +11,25 @@ import CuFooter from "./components/CuFooter";
 export const loginContext = createContext();
 
 function App() {
-  const [isLoginState, setIsLoginStateState] = useState(false);
-  let loginUserId = "";
-  let loginUserType = "";
+  const [isLoginState, setIsLoginStateState] = useState(false); // 로그인 여부
+
+  // 로그인 여부 검사
   useEffect(() => {
-    loginUserId = localStorage.getItem("userId");
-    loginUserType = localStorage.getItem("userType");
-    setIsLoginStateState(loginUserId);
-    console.log("APP 로그인 업데이트" + isLoginState);
+    if (localStorage.getItem("userId")) {
+      setIsLoginStateState(true);
+    } else {
+      setIsLoginStateState(false);
+    }
   }, [isLoginState]);
 
-  const updateIsLoginState = () => {
-    setIsLoginStateState(false);
-    console.log("APP 로그인 상태" + isLoginState);
-  };
   return (
     <div className="wrapper">
-      <loginContext.Provider value={updateIsLoginState}>
+      <loginContext.Provider value={setIsLoginStateState}>
         <BrowserRouter>
           {/* 유저 id */}
           <Header
-            // isLogin={isLoginState}
-            isLogin={true}
-            whatuser={loginUserType}
-            onClick={updateIsLoginState}
-            userId={loginUserId}
+            isLoginState={isLoginState} // 헤더는 로그인여부 값을 받기만 함
+            isLoginHandler={setIsLoginStateState}
           />
           <Routers />
           <CuFooter className="footer" />

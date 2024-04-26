@@ -16,6 +16,7 @@ import Stack from "@mui/material/Stack";
 import Button from "@mui/material/Button";
 // whatUser 프롭은 개인, 작가, 프로젝트 매니저 알기 위함 -> todo("부모 컴포넌트에서 값 나누기")
 const LoginEditor = ({ whatUser }) => {
+  const setIsLoginStateState = useContext(loginContext);
   const nav = useNavigate();
   const changeUserLoginState = useContext(loginContext);
   const [state, setState] = useState({
@@ -72,8 +73,11 @@ const LoginEditor = ({ whatUser }) => {
             console.log(
               "유저 로그인 유저 번호 : " + userId + "유저타입:" + userType
             );
+            setIsLoginStateState(true);
+
             nav(`/`);
           });
+          setIsLoginStateState(false);
           return;
         }
         case "space": {
@@ -84,8 +88,10 @@ const LoginEditor = ({ whatUser }) => {
             console.log(
               "유저 로그인 유저 번호 : " + userId + "유저타입:" + userType
             );
+            setIsLoginStateState(true);
             nav(`/mainbusiness`);
           });
+          setIsLoginStateState(false);
           return;
         }
         case "author": {
@@ -97,12 +103,15 @@ const LoginEditor = ({ whatUser }) => {
             console.log(
               "유저 로그인 유저 번호 : " + userId + "유저타입:" + userType
             );
+            setIsLoginStateState(true);
             nav(`/mainbusiness`);
           });
+          setIsLoginStateState(false);
           return;
         }
         default: {
           alert("LoginEditor잘못된 접근");
+          setIsLoginStateState(false);
           return;
         }
       }

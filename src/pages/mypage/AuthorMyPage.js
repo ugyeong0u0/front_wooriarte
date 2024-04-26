@@ -8,8 +8,11 @@ import Exhibits from "../../components/Exhibits";
 
 import ModifyAuthorInfo from "../../pages/mypage/ModifyAuthorInfo";
 import Matching from "../../components/business/Matching";
-import MyPosterForBusiness from "../../components/business/MyPosterForBusiness";
+// import MyPosterForBusiness from "../../components/business/MyPosterForBusiness";
 import WithDrawalUser from "../../components/user/Withdrawal";
+import { Business } from "@mui/icons-material";
+import BusinessItem from "../../components/business/BusinessItem";
+import BusinessItemList from "../../components/business/BusinessItemList";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -88,9 +91,9 @@ const AuthorMyPage = () => {
         </Tabs>
         <TabPanel value={value} index={1}>
           {/*todo 사업자용 만들기 아이템관리  */}
-
-          <MyPosterForBusiness whatType={"author"} />
-
+          <h2>아이템 정보</h2>
+          {/* <MyPosterForBusiness whatType={"author"} /> */}
+          <BusinessItemList whatType={"author"} />
           {/* 개인정보 수정 */}
         </TabPanel>
         <TabPanel

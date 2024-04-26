@@ -147,7 +147,7 @@ const MypageUser = () => {
               <Tab label="관람완료" />
             </Tabs>
 
-            <TicketHistory />
+            <TicketHistory whatTab={widthValue} />
           </Box>
         </TabPanel>
         {/* 탈퇴하기 */}

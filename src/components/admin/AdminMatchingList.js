@@ -24,9 +24,10 @@ const AdminMatchingList = () => {
         mockData.map((item) => (
           <AdminMatchingItem
             key={item.matchingId}
-            text={`매칭 ID: ${item.matchingId}, 프로젝트 아이템: ${item.projectItemId}, 공간 아이템: ${item.spaceItemId}`}
+            text={`매칭 ID: ${item.matchingId}, 매칭 상태: ${item.matchingStatus}, 공간 아이템: ${item.spaceItemId}`}
             matchingId={item.matchingId}
             setUpdateCount={setUpdateCount}
+            status={item.matchingStatus}
           />
         ))
       ) : (

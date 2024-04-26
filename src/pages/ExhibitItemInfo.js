@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import Button from "@mui/material/Button";
 import "../styles/ExhibitItemInfo.css";
-import { useParams } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 import image1 from "../assets/image 1.png";
 import { useNavigate } from "react-router-dom";
 
@@ -21,15 +21,44 @@ import Container from "@mui/material/Container";
 // 구매 다이어로그로 넘김
 import { BuyingDialog } from "../libs/ScrollDialog";
 
+// api
+import { onGetExhibitInfoHandler } from "../apis/servicehandeler/AdminApiHandler";
+
 const ExhibitItemInfo = () => {
   const nav = useNavigate();
-  // 시작시 useEffect로 전시 조회하기
-  const price = 5000;
-  const explanation = "이경준 사진전";
-  const imageurl = image1;
-  const postName = "전시1";
-  const location = "강남구";
-  const date = "2024-03~2024-04";
+  const uselocation = useLocation();
+  const { exhibitId } = uselocation.state; // from mainuser.js
+
+  const [exhibitInfoState, setExhibitInfoState] = useState({
+    name: "", // 전시명
+    intro: "", // 전시소개
+    startDate: "", // 시작날짜
+    endDate: "", // 끝날짜
+    artistName: "", // 직가명
+    hostName: "", // 주최자명
+    price: "", // 가격
+    address: "", // 주소
+  });
+
+  useEffect(() => {
+    console.log("전시정보 불러오기 useEffect");
+
+    console.log("전시 modal id " + exhibitId);
+    onGetExhibitInfoHandler({ exhibitId: exhibitId }, (response) => {
+      console.log("전시 수정시 전시 정보 응답값 받음");
+      console.log(response);
+      setExhibitInfoState((prevState) => ({
+        name: response.data.name, // 전시명
+        intro: response.data.intro, // 전시소개
+        startDate: response.data.startDate, // 시작날짜
+        endDate: response.data.endDate, // 끝날짜
+        artistName: response.data.artistName, // 직가명
+        hostName: response.data.hostName, // 주최자명
+        price: response.data.price, // 가격
+        address: response.data.city, // 주소
+      }));
+    });
+  }, []);
 
   // 예매할 티켓 수
   const [ticketNumber, setTicketNumber] = useState(0);
@@ -37,7 +66,7 @@ const ExhibitItemInfo = () => {
   const param = useParams(); // parameter 번호, post번호
 
   useEffect(() => {
-    setTotalPrice(ticketNumber * price); // 총 가격 계산 후 상태 업데이트
+    setTotalPrice(ticketNumber * exhibitInfoState.price); // 총 가격 계산 후 상태 업데이트
   }, [ticketNumber]); // ticketNumber가 변경될 때마다 이 효과를 재실행
 
   const plusTicket = () => {
@@ -64,9 +93,18 @@ const ExhibitItemInfo = () => {
     // }
     // 연습용
     if (true) {
+      // todo 로그인, 티켓 개수 0이상일때 넘어갈 수 있게 하기
       // <BuyingDialog />;
+      let date = exhibitInfoState.startDate + "~" + exhibitInfoState.endDate;
       nav("/buyingticket", {
-        state: { ticketNumber: ticketNumber, price: price },
+        state: {
+          ticketNumber: ticketNumber,
+          price: exhibitInfoState.price,
+          explanation: exhibitInfoState.intro,
+          postName: exhibitInfoState.name,
+          location: exhibitInfoState.address,
+          date: date,
+        },
       });
     } else {
       alert("로그인 후 예매가능");
@@ -87,7 +125,7 @@ const ExhibitItemInfo = () => {
         >
           <Stack direction="row" spacing={2}>
             <div>
-              <img src={imageurl} />
+              <img src={image1} />
             </div>
 
             <Stack
@@ -97,23 +135,34 @@ const ExhibitItemInfo = () => {
             >
               <div className="exhibitInfoContainer">
                 <div>
-                  <h1>{postName}</h1>
+                  <h1>{exhibitInfoState.name}</h1>
                 </div>
+
+                <div>
+                  <span>작가이름 </span>
+                  <span>{exhibitInfoState.artistName}</span>
+                </div>
+
+                <div>
+                  <span>주최자 </span>
+                  <span>{exhibitInfoState.hostName}</span>
+                </div>
+
                 <div>
                   <span>관람장소 </span>
-                  <span>{location}</span>
+                  <span>{exhibitInfoState.address}</span>
                 </div>
                 <div>
                   <span>관람기간 </span>
-                  <span>{date}</span>
+                  <span>
+                    {exhibitInfoState.startDate +
+                      "~" +
+                      exhibitInfoState.endDate}
+                  </span>
                 </div>
                 <div>
                   <span>관람료 </span>
-                  <span>{price}원</span>
-                </div>
-                <div>
-                  <span>관람장소 </span>
-                  <span>{postName}</span>
+                  <span>{exhibitInfoState.price}원</span>
                 </div>
                 <div />
 
@@ -139,7 +188,8 @@ const ExhibitItemInfo = () => {
                   <div>
                     <span>총 결제 금액 : </span>
                     <span>
-                      {ticketNumber}개 x {price} ={totalPrice}원
+                      {ticketNumber}개 x {exhibitInfoState.price} ={totalPrice}
+                      원
                     </span>
                   </div>
                   <Button
@@ -177,7 +227,7 @@ const ExhibitItemInfo = () => {
               justifyContent: "center", // 수평 방향 중앙 정렬
             }}
           >
-            {explanation}
+            {exhibitInfoState.intro}
           </span>
         </Container>
       </React.Fragment>

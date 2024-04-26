@@ -6,44 +6,53 @@ import author from "../../assets/author.png";
 
 import BootModalForAdmin from "../../libs/BootModalForAdmin";
 import { useState } from "react";
+import MyVerticallyCenteredModal from "../../libs/BootModal";
+import BootModalForGetitem from "../../libs/BootModalForGetitem";
 
-const AdminExhibitItem = ({
-  exhibitId,
-  name,
-  city,
+const BusinessItem = ({
+  whatType,
+  itemId,
+  artistName,
+  intro,
+  phone,
   startDate,
   endDate,
-  price,
+  city,
   setUpdateCount,
 }) => {
   const [modalShow, setModalShow] = useState(false);
-  const handleItemInfo = (id) => {
+  const handleItemInfo = () => {
     setModalShow(true);
   };
 
+  console.log("businessitem.js 유저 타입 " + whatType);
+
   return (
     <>
-      <ImageListItem key={exhibitId} onClick={() => handleItemInfo(exhibitId)}>
+      <ImageListItem key={itemId} onClick={() => handleItemInfo()}>
         <img src={author} />
         <hr style={{ margin: "5px 0" }} />{" "}
         <ImageListItemBar
-          title={name + " " + city}
+          title={String(intro).slice(0, 10) + " " + city}
           subtitle={
             <div>
-              <span>{startDate + "~" + endDate}</span>
-              <div />
-              <span>판매:{price}</span>
+              <span>
+                {String(startDate).slice(0, 10) +
+                  "~" +
+                  String(endDate).slice(0, 10)}
+              </span>
             </div>
           }
           position="below"
         />
       </ImageListItem>
+      {/* 단건조회 */}
       {modalShow && (
-        <BootModalForAdmin
+        <BootModalForGetitem
           show={modalShow}
           onHide={() => setModalShow(false)}
-          type={"update"}
-          id={exhibitId}
+          id={itemId}
+          type={whatType}
           setUpdateCount={setUpdateCount}
         />
       )}
@@ -51,4 +60,4 @@ const AdminExhibitItem = ({
   );
 };
 
-export default AdminExhibitItem;
+export default BusinessItem;

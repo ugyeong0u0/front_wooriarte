@@ -22,10 +22,13 @@ const updateSpaceInfo_URL = ({ id }) => `${DOMAIN}/space-rentals/${id}`;
 //?----------------------------- 스페이스 아이템
 const addSpaceItem_URL = () => `${DOMAIN}/space-item`;
 const GetSpaceItem_URL = ({ id }) => `${DOMAIN}/space-item/${id}`;
+// 공간대여자의 아이템만 가져오기
+const GetSpacesSpaceItem_URL = ({ id }) =>
+  `${DOMAIN}/space-item/space-rental/${id}`;
 
 //?------------------------------공간 신청 url
 const ApplyToAuthorItem_URL = ({ itemId }) =>
-  `${DOMAIN}/space${itemId}/request`;
+  `${DOMAIN}/space/${itemId}/request`;
 
 //?------------------------------작가 매칭 url
 const WaitingMatchingForSpace_URL = ({ id }) =>
@@ -401,7 +404,7 @@ export const getSpaceItemInfo = async ({ posterId }) => {
 // todo 시작일 끝날짜 추가 필요
 //!---------------------------- 스페이스 아이템 수정
 export const updateSpaceItemInfo = async ({
-  spaceRentalId,
+  spaceId,
   intro,
   hostname,
   city,
@@ -410,9 +413,8 @@ export const updateSpaceItemInfo = async ({
   fee,
   phone,
 }) => {
-  console.log("프로젝트 아이템 수정 실행");
-  console.log("프로젝트 아이템 수정 id  :" + spaceRentalId);
-  const url = GetSpaceItem_URL({ id: spaceRentalId });
+  console.log("스페이스 아이템 수정 실행");
+  const url = GetSpaceItem_URL({ id: spaceId });
 
   const result = await axios
     .put(url, {
@@ -423,6 +425,8 @@ export const updateSpaceItemInfo = async ({
       parking,
       fee,
       phone,
+      startDate: "2024-05-01T09:00:00",
+      endDate: "2024-05-01T09:00:00",
     })
     .then((response) => {
       console.log("프로젝트 작품 수정 " + response.status);
@@ -557,6 +561,32 @@ export const getSuccessMatchingForSpace = async ({ spaceId }) => {
     })
     .catch((error) => {
       console.error(" 공간 성공매칭 조회  실행 실패: " + error);
+      if (error.response) {
+        // 에러 응답이 있는 경우
+        const { data, status } = error.response;
+        console.log(`에러 메시지: ${data.msg}, 에러 코드: ${status}`);
+        // 이곳에서 상태 코드나 에러 메시지에 따른 추가적인 에러 처리를 할 수 있습니다.
+      } else {
+        // 에러 응답이 없는 경우
+        console.log("에러 응답이 없습니다.");
+      }
+    });
+  return result;
+};
+//!---------------------------- 공간임대자의 아이템들 조회
+export const getOneSpaceItems = async ({ spaceId }) => {
+  console.log("공간임대자의 아이템들 조회 실행");
+  console.log("공간임대자 id  :" + spaceId);
+  const url = GetSpacesSpaceItem_URL({ id: spaceId });
+
+  const result = await axios
+    .get(url)
+    .then((response) => {
+      console.log("공간임대자 아이템들 조회 실행 status" + response.status);
+      return response;
+    })
+    .catch((error) => {
+      console.error("공간임대자 아이템들 조회 실행 실패: " + error);
       if (error.response) {
         // 에러 응답이 있는 경우
         const { data, status } = error.response;
