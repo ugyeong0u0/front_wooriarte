@@ -25,7 +25,7 @@ const BusinessItem = ({
     setModalShow(true);
   };
 
-  console.log("businessitem.js 유저 타입 " + whatType);
+  console.log("businessitem.js 유저 타입 " + whatType + itemId);
 
   return (
     <>
@@ -33,7 +33,7 @@ const BusinessItem = ({
         <img src={author} />
         <hr style={{ margin: "5px 0" }} />{" "}
         <ImageListItemBar
-          title={String(intro).slice(0, 10) + " " + city}
+          title={String(intro).slice(0, 15)}
           subtitle={
             <div>
               <span>

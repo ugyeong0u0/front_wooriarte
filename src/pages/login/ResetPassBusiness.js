@@ -1,11 +1,20 @@
 import { TextField } from "@mui/material";
 import { useEffect, useState } from "react";
-
+import { useNavigate, useLocation } from "react-router-dom";
 import Button from "@mui/material/Button";
 import Stack from "@mui/material/Stack";
 import Box from "@mui/material/Box";
-// todo 메일 인증으로 날아올 사이트
+
+import { onFindAuthorPwHandler } from "../../apis/servicehandeler/AuthorApiHandler";
+import { onFindSpacePwHandler } from "../../apis/servicehandeler/SpaceApiHandler";
+
+// 다이어로그
+import MuiDialog from "../../libs/MuiDialog";
+//? 비즈니스 비번 재설정 사이트
 const ResetPassBusiness = () => {
+  const uselocation = useLocation();
+  const { userInfo, id } = uselocation.state; // 작가인지 공간인지
+  const [enableDialog, setEnableDialog] = useState(false); //  다이어로그
   // 다음 버튼 활성화
   const [enableNextBtn, setEnableNextBtn] = useState(true);
 
@@ -36,25 +45,43 @@ const ResetPassBusiness = () => {
   }, [state]);
   //todo 유저별로 api 달기
   // api 연결 시 id, userType 필요함
-  const nextPage = () => {};
+  const nextPage = () => {
+    if (userInfo === "author") {
+      onFindAuthorPwHandler({ id, new_pwd: state.pass }, (responseStatus) => {
+        if (responseStatus) {
+          setEnableDialog(true);
+        }
+      });
+    } else {
+      // 공간대여자의 경우
+      onFindSpacePwHandler({ id, new_pwd: state.pass }, (responseStatus) => {
+        if (responseStatus) {
+          setEnableDialog(true);
+        }
+      });
+    }
+  };
   return (
     <>
       <Box
         component="form"
         sx={{
-          "& .MuiTextField-root": { m: 1, width: "25ch" },
-          width: "100%", // 박스 너비 설정
-          display: "flex", // flexbox 디스플레이 설정
-          justifyContent: "center", // 가로 중앙 정렬
+          display: "flex", // 사용 flexbox 레이아웃
+          flexDirection: "column", // 요소들을 세로로 정렬
+          alignItems: "center", // 가로 방향으로 가운데 정렬
+          "& .MuiTextField-root": { m: 1, width: "25ch" }, // 각 텍스트 필드 스타일 지정
+          marginBottom: 20,
         }}
         noValidate
         autoComplete="off"
       >
         <Stack spacing={2}>
-          <span>비밀번호 재설정</span>
+          <h2 style={{ marginBottom: 40, marginTop: 30, marginLeft: 10 }}>
+            비밀번호 재설정
+          </h2>
           <TextField
             name="pass"
-            id="standard-number"
+            id="standard-number1"
             label="새로운 비밀번호 "
             type="password"
             InputLabelProps={{
@@ -65,7 +92,7 @@ const ResetPassBusiness = () => {
           />
           <TextField
             name="authpass"
-            id="standard-number"
+            id="standard-number2"
             label="새로운 비밀번호 재입력 "
             type="password"
             InputLabelProps={{
@@ -84,6 +111,17 @@ const ResetPassBusiness = () => {
             확인
           </button>
         </Stack>
+        {enableDialog && (
+          <MuiDialog
+            title={"알림"}
+            content={
+              "비밀번호가 재설정되었습니다. 로그인 페이지로 이동합니다. "
+            }
+            result={true}
+            page={"goLogin"}
+            parentClick={setEnableDialog}
+          />
+        )}
       </Box>
     </>
   );

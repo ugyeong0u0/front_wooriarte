@@ -3,13 +3,13 @@ import "../styles/Footer.css";
 const CuFooter = () => {
   return (
     <div className="footerContainer">
-      <h7>ABOUT US</h7>
+      <span>ABOUT US</span>
       <div />
-      <h9>WOORI ARTE는 누구나 작가가 될 수 있고 어쩌구 신념에서 탄생함 </h9>
+      <span>WOORI ARTE는 누구나 작가가 될 수 있고 어쩌구 신념에서 탄생함 </span>
 
       <div class="horizontal-line"></div>
 
-      <h7>© 2024 WOORI ARTE. All Rights Reserved. Design by WOORI FISA</h7>
+      <span>© 2024 WOORI ARTE. All Rights Reserved. Design by WOORI FISA</span>
     </div>
   );
 };

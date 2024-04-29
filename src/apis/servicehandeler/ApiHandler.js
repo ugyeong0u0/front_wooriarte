@@ -14,7 +14,7 @@ import {
 // 유저 로그인 결과값
 export const SignInResponse = (response, callback) => {
   if (!response) {
-    alert("네트워크 이상");
+    callback(false);
     return;
   }
   if (response.status >= 200 && response.status < 300) {
@@ -22,11 +22,10 @@ export const SignInResponse = (response, callback) => {
     // 임시로 localhost저장
     localStorage.setItem("userId", response.data);
     localStorage.setItem("userType", "user"); // 유저 타입으로 저장
-
-    callback(console.log("localhost저장완료"));
+    callback(true);
     return;
   } else {
-    alert("로그인 실패");
+    callback(false);
     console.log(response.status);
     return;
   }
@@ -45,12 +44,12 @@ export const onLoginButtonHandler = ({ id, pw }, callback) => {
 // 유저 회원가입 응답
 export const signupUserResponse = (response, callback) => {
   if (!response) {
-    alert("네트워크 이상");
+    callback(false); // catch에서 잡한경우, 응답값이 없을 경우
     return;
   }
   if (response.status >= 200 && response.status < 300) {
     console.log("회원가입 성공");
-    callback();
+    callback(true);
     return;
   } else {
     alert("회원가입 실패");
@@ -78,22 +77,24 @@ export const onSignupUserHandler = (
 // 유저 아이디 찾기 응답
 export const findUserIdResponse = (response, callback) => {
   if (!response) {
-    alert("네트워크 이상");
+    callback({ result: false });
     return;
   }
   if (response.status >= 200 && response.status < 300) {
-    console.log("아이디 찾기 성공");
-    callback(response);
+    console.log("아이디 찾기 성공" + response.data);
+
+    callback({ result: response.data, status: true }); // data는 여기에 찍어야함 response를 넘긴 파일에서 . data찍으면 안먹힘
     return;
   } else {
-    alert("회원가입 실패");
+    alert("아이디 찾기실패");
+    callback({ result: false });
     console.log(response.status);
     return;
   }
 };
 // 유저 아이디 찾기 누를 시
-export const onFindUserIdHandler = ({ userName, email }, callback) => {
-  findUserId({ userName, email }).then((response) =>
+export const onFindUserIdHandler = ({ email }, callback) => {
+  findUserId({ email }).then((response) =>
     findUserIdResponse(response, callback)
   );
 };
@@ -151,15 +152,15 @@ export const onDeleteUserHandler = ({ userId }, callback) => {
 // 유저 비번 찾기 응답
 export const confirmUserPwResponse = (response, callback) => {
   if (!response) {
-    alert("네트워크 이상");
+    callback(false);
     return;
   }
   if (response.status >= 200 && response.status < 300) {
     console.log("비번 확인 성공");
-    callback();
+    callback(true);
     return;
   } else {
-    alert("비번확인 실패");
+    callback(false);
     console.log(response.status);
     return;
   }
@@ -267,6 +268,7 @@ export const getExhibitTicketUserResponse = (response, callback) => {
 };
 
 export const onGetExhibitTicketUserHandler = ({ userId, value }, callback) => {
+  console.log("핸들러 안 " + value);
   getExhibitTicketUser({ userId, value }).then((response) =>
     getExhibitTicketUserResponse(response, callback)
   );

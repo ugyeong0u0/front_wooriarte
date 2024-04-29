@@ -17,6 +17,9 @@ import {
   getOfferedMatchingForSpace,
   getSuccessMatchingForSpace,
   getOneSpaceItems,
+  findPassForSpaceByEmailRequest,
+  confirmEmailAuthForSpaceRequest,
+  getSearchSpaceProject, // 필터링
 } from "../space-api-manager";
 
 //!----------------------------스페이스 로그인
@@ -54,15 +57,15 @@ export const onLoginSpaceHandler = ({ id, pwd }, callback) => {
 // 스페이스 회원가입 응답
 export const signupSpaceResponse = (response, callback) => {
   if (!response) {
-    alert("네트워크 이상");
+    callback(false);
     return;
   }
   if (response.status >= 200 && response.status < 300) {
     console.log("회원가입 성공");
-    callback();
+    callback(true);
     return;
   } else {
-    alert("회원가입 실패");
+    callback(false);
     console.log(response.status);
     return;
   }
@@ -109,29 +112,28 @@ export const onFindSpaceIdHandler = ({ email }, callback) => {
 };
 
 //!----------------------------스페이스 비번 재설정
-// todo 스페이스 비번 찾기 응답
-// export const findSpacePwResponse = (response, callback) => {
-//   if (!response) {
-//     alert("네트워크 이상");
-//     return;
-//   }
-//   if (response.status >= 200 && response.status < 300) {
-//     alert(response.data);
-//     console.log("비번 재설정 성공");
-//     callback();
-//     return;
-//   } else {
-//     alert("비번 재설정 실패");
-//     console.log(response.status);
-//     return;
-//   }
-// };
-// // 스페이스 비번 재설정 누름
-// export const onFindUserPwHandler = ({ userId, pwd}, callback) => {
-//   findSpacePw({ id :userId , pwd }).then((response) =>
-//   findSpacePwResponse(response, callback)
-//   );
-// };
+
+export const findSpacePwResponse = (response, callback) => {
+  if (!response) {
+    callback(false);
+    return;
+  }
+  if (response.status >= 200 && response.status < 300) {
+    console.log("비번 재설정 성공");
+    callback(true);
+    return;
+  } else {
+    callback(false);
+    console.log(response.status);
+    return;
+  }
+};
+// 스페이스 비번 재설정 누름
+export const onFindSpacePwHandler = ({ id, new_pwd }, callback) => {
+  findSpacePw({ id, new_pwd }).then((response) =>
+    findSpacePwResponse(response, callback)
+  );
+};
 
 //!---------------------------- 공간대여자 탈퇴하기
 
@@ -159,29 +161,28 @@ export const onDeleteSpaceHandler = ({ id }, callback) => {
   );
 };
 //!---------------------------- 공간대여자 마이페이지 비번 확인
-// // 공간대여자 비번 확인 응답
-// export const confirmSpacePwResponse = (response, callback) => {
-//   if (!response) {
-//     alert("네트워크 이상");
-//     return;
-//   }
-//   if (response.status >= 200 && response.status < 300) {
-//     alert(response.data);
-//     console.log("비번 확인 성공");
-//     callback();
-//     return;
-//   } else {
-//     alert("비번확인 실패");
-//     console.log(response.status);
-//     return;
-//   }
-// };
-// // 공간대여자 비번확인 누름
-// export const onConfirmSpacePwHandler = ({ userId, password }, callback) => {
-//   confirmSpacePw({ userId, password }).then((response) =>
-//   confirmSpacePwResponse(response, callback)
-//   );
-// };
+// 공간대여자 비번 확인 응답
+export const confirmSpacePwResponse = (response, callback) => {
+  if (!response) {
+    callback(false);
+    return;
+  }
+  if (response.status >= 200 && response.status < 300) {
+    console.log("비번 확인 성공");
+    callback(true);
+    return;
+  } else {
+    callback(false);
+    console.log(response.status);
+    return;
+  }
+};
+// 공간대여자 비번확인 누름
+export const onConfirmSpacePwHandler = ({ userId, password }, callback) => {
+  confirmSpacePw({ userId, password }).then((response) =>
+    confirmSpacePwResponse(response, callback)
+  );
+};
 
 //!---------------------------- 공간대여자 마이페이지 정보 조회
 // 유저 정보 조회 응답
@@ -358,7 +359,18 @@ export const updateAuthorItemInfoResponse = (response, callback) => {
 };
 //  수정 이벤트
 export const onUpdateSpaceItemInfoHandler = (
-  { spaceId, intro, hostname, city, size, parking, fee, phone },
+  {
+    spaceId,
+    intro,
+    hostname,
+    city,
+    size,
+    parking,
+    fee,
+    phone,
+    startDate,
+    endDate,
+  },
   callback
 ) => {
   console.log("수정핸들러 안");
@@ -371,7 +383,9 @@ export const onUpdateSpaceItemInfoHandler = (
     parking,
     fee,
     phone,
-  }).then((response) => onUpdateSpaceItemInfoHandler(response, callback));
+    startDate,
+    endDate,
+  }).then((response) => updateAuthorItemInfoResponse(response, callback));
 };
 //!---------------------------- 스페이스 아이템 삭제
 
@@ -402,15 +416,14 @@ export const onDeleteSpaceItemHandler = ({ spaceId }, callback) => {
 
 export const applyToAuthorItemResponse = (response, callback) => {
   if (!response) {
-    alert("네트워크 이상");
+    callback(false);
     return;
   }
   if (response.status >= 200 && response.status < 300) {
-    console.log("공간 -> 작가 신청 성공");
-    callback();
+    callback(true);
     return;
   } else {
-    alert("공간 -> 작가 신청 실패");
+    callback(false);
     console.log(response.status);
     return;
   }
@@ -460,7 +473,7 @@ export const onWaitingMatchingSpaceHandler = ({ spaceId }, callback) => {
 //  스페이스 신청받은 조회 응답
 export const getOfferedMatchingForSpaceResponse = (response, callback) => {
   if (!response) {
-    alert("공간대여자 신청받은거 없음");
+    callback(null);
     return;
   }
   if (response.status >= 200 && response.status < 300) {
@@ -468,7 +481,7 @@ export const getOfferedMatchingForSpaceResponse = (response, callback) => {
     callback(response);
     return;
   } else {
-    alert(" 스페이스 신청받은 조회 실패");
+    callback(null);
     console.log(response.status);
     return;
   }
@@ -527,5 +540,79 @@ export const onGetOneSpaceProjectsHandler = ({ spaceId }, callback) => {
   console.log("공간대여자 :  spaceId  " + spaceId);
   getOneSpaceItems({ spaceId }).then((response) =>
     getOneSpaceItemsResponse(response, callback)
+  );
+};
+//!---------------------------- 비번 찾기 이메일 전송 api
+export const findPassForSpaceByEmailResponse = (response, callback) => {
+  if (!response) {
+    alert("네트워크 이상");
+    return;
+  }
+  if (response.status >= 200 && response.status < 300) {
+    console.log(" 비번 찾기 이메일 전송 : " + response.data);
+
+    callback();
+    return;
+  } else {
+    alert(" 비번 찾기 이메일 전송 실패");
+    console.log(response.status);
+    return;
+  }
+};
+
+export const onFindPassForSpaceByEmailHandler = ({ id, email }, callback) => {
+  findPassForSpaceByEmailRequest({ id, email }).then((response) =>
+    findPassForSpaceByEmailResponse(response, callback)
+  );
+};
+//!---------------------------- 비번찾기 이메일  인증번호 확인
+export const confirmEmailAuthForSpaceResponse = (response, callback) => {
+  if (!response) {
+    callback(false);
+    return;
+  }
+  if (response.status >= 200 && response.status < 300) {
+    console.log("비번 찾기 인증번호 확인 성공");
+    callback(true);
+    return;
+  } else {
+    callback(false);
+    console.log("비번 인증 실패" + response.status);
+    return;
+  }
+};
+
+export const onConfirmEmailAuthForSpaceHandler = (
+  { id, email, authNum },
+  callback
+) => {
+  confirmEmailAuthForSpaceRequest({ id, email, authNum }).then((response) =>
+    confirmEmailAuthForSpaceResponse(response, callback)
+  );
+};
+//!---------------------------- 작가 필터링 아이템 조회
+
+export const onGetSearchSpaceProjectResponse = (response, callback) => {
+  if (!response) {
+    callback(false);
+    return;
+  }
+  if (response.status >= 200 && response.status < 300) {
+    console.log("공간 필터링 아이템 조회성공");
+    callback(response);
+    return;
+  } else {
+    callback(false);
+    console.log(response.status);
+    return;
+  }
+};
+
+export const onGetSearchSpaceProjectHandler = (
+  { startDate, endDate, city },
+  callback
+) => {
+  getSearchSpaceProject({ startDate, endDate, city }).then((response) =>
+    onGetSearchSpaceProjectResponse(response, callback)
   );
 };

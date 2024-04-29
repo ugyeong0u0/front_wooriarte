@@ -2,44 +2,56 @@ import { useEffect } from "react";
 import AdminItem from "./AdminItem";
 import { useState } from "react";
 
+import { onGetAllItemAccDenyHandler } from "../../apis/servicehandeler/AdminApiHandler";
+import Stack from "@mui/material/Stack";
 //!-------------------- 관리자 아이템 승인 창
 const AdminItmeList = () => {
   const [mockData, setMockData] = useState([{}]); // 받는 형식이 배열 안 객체라
+  const [mockDataForProject, setMockDataForProject] = useState([{}]); // 받는 형식이 배열 안 객체라
+
   const [updateCount, setUpdateCount] = useState(0); // useEffect 업데이트
 
   // 관리자 아이템 관리 목록
   useEffect(() => {
-    // 관리자인지 확인하는 로직
+    onGetAllItemAccDenyHandler((response) => {
+      setMockData(response.spaceItems);
 
-    if (true) {
-      // todo 아이템 승인 정보 불러오기
-      // onGetOfferedMatchingAuthorHandler({ authorId: id }, (response) => {
-      //   if (Array.isArray(response.data)) {
-      //     setMockData(response.data);
-      //   } else {
-      //     console.error("응답 데이터가 배열이 아닙니다.");
-      //   }
-      // });
-    } else {
-      alert("관리자 외 접근");
-    }
+      setMockDataForProject(response.projectItems);
+    });
   }, [updateCount]);
 
   return (
     <>
-      {mockData.length > 0 ? (
-        mockData.map((item) => (
-          // todo 아래 값 반환값에 따라 맞게 수정해야함
-          <AdminItem
-            key={item.matchingId}
-            text={`매칭 ID: ${item.matchingId}, 프로젝트 아이템: ${item.projectItemId}, 공간 아이템: ${item.spaceItemId}`}
-            matchingId={item.matchingId}
-            setUpdateCount={setUpdateCount}
-          />
-        ))
-      ) : (
-        <span>없음</span>
-      )}
+      <Stack spacing={3}>
+        {mockData.length > 0 ? (
+          mockData.map((item) => (
+            // todo 아래 값 반환값에 따라 맞게 수정해야함
+            <AdminItem
+              key={item.spaceItemId}
+              text={`공간 아이템: ${item.spaceItemId} 승인상태: ${item.approval}`}
+              id={item.spaceItemId}
+              setUpdateCount={setUpdateCount}
+              type={"space"}
+            />
+          ))
+        ) : (
+          <span>없음</span>
+        )}
+        {mockDataForProject.length > 0 ? (
+          mockDataForProject.map((item) => (
+            // todo 아래 값 반환값에 따라 맞게 수정해야함
+            <AdminItem
+              key={item.projectItemId}
+              text={`작가 아이템: ${item.projectItemId} 승인상태: ${item.approval} `}
+              id={item.projectItemId}
+              setUpdateCount={setUpdateCount}
+              type={"author"}
+            />
+          ))
+        ) : (
+          <span>없음</span>
+        )}
+      </Stack>
     </>
   );
 };

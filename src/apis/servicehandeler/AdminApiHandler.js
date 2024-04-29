@@ -6,6 +6,11 @@ import {
   deleteSingleExhibit,
   updateExhibit,
   updateMatchingForAdmin,
+  getAllItemAccDeny,
+  acceptForAuthor,
+  acceptForSpace,
+  denyForAuthor,
+  denyForSpace,
 } from "../admin-api-manager";
 
 //!-------------------------------관리자 모든 매칭 조회
@@ -219,5 +224,125 @@ export const onUpdateMatchingForAdminHandler = (
   console.log("핸들러 안 " + matchingId);
   updateMatchingForAdmin({ matchingId, matchingStatus }).then((response) =>
     updateMatchingForAdminResponse(response, callback)
+  );
+};
+//!-------------------------------관리자 모든 아이템 조회
+
+// 콜백있음
+export const onGetAllItemAccDenyResponse = (response, callback) => {
+  if (!response) {
+    alert("네트워크 이상 ");
+    return;
+  }
+  if (response.status >= 200 && response.status < 300) {
+    console.log("관리자 모든 매칭 조회 성공");
+    callback(response.data);
+    return;
+  } else {
+    alert("관리자 모든 매칭 조회 실패");
+    console.log(response.status);
+    return;
+  }
+};
+
+export const onGetAllItemAccDenyHandler = (callback) => {
+  getAllItemAccDeny().then((response) =>
+    onGetAllItemAccDenyResponse(response, callback)
+  );
+};
+//!---------------------------- 아이템 승인 상태 변경
+
+export const acceptForAuthorResponse = (response, callback) => {
+  if (!response) {
+    console.log(response.status);
+    return;
+  }
+  if (response.status >= 200 && response.status < 300) {
+    console.log("상태 변경 성공!!!!!!!!!!!!!!");
+    callback();
+    return;
+  } else {
+    alert("매칭 상태 변경 실패");
+    console.log(response.status);
+    return;
+  }
+};
+
+export const onAcceptForAuthorHandler = ({ projectItemId }, callback) => {
+  console.log("핸들러 안 " + projectItemId);
+  acceptForAuthor({ projectItemId }).then((response) =>
+    acceptForAuthorResponse(response, callback)
+  );
+};
+//!---------------------------- 아이템 승인 상태 변경
+
+export const acceptForSpaceResponse = (response, callback) => {
+  if (!response) {
+    console.log(response.status);
+    return;
+  }
+  if (response.status >= 200 && response.status < 300) {
+    console.log("상태 변경 성공!!!!!!!!!!!!!!");
+    callback();
+    return;
+  } else {
+    alert("매칭 상태 변경 실패");
+    console.log(response.status);
+    return;
+  }
+};
+
+export const onAcceptForSpaceHandler = ({ projectItemId }, callback) => {
+  console.log("핸들러 안 " + projectItemId);
+  acceptForSpace({ projectItemId }).then((response) =>
+    acceptForSpaceResponse(response, callback)
+  );
+};
+//!---------------------------- 아이템 승인 상태 변경
+
+export const denyForAuthorResponse = (response, callback) => {
+  if (!response) {
+    console.log(response.status);
+    return;
+  }
+  if (response.status >= 200 && response.status < 300) {
+    console.log("상태 변경 성공!!!!!!!!!!!!!!");
+    callback();
+    return;
+  } else {
+    alert("매칭 상태 변경 실패");
+    console.log(response.status);
+    return;
+  }
+};
+
+export const onDenyForAuthorHandler = ({ projectItemId }, callback) => {
+  console.log("핸들러 안 " + projectItemId);
+  denyForAuthor({ projectItemId }).then((response) =>
+    denyForAuthorResponse(response, callback)
+  );
+};
+//!---------------------------- 아이템 승인 상태 변경
+
+export const denyForSpaceResponse = (response, callback) => {
+  if (!response) {
+    console.log(response.status);
+    return;
+  }
+  if (response.status >= 200 && response.status < 300) {
+    console.log("상태 변경 성공!!!!!!!!!!!!!!");
+    callback();
+    return;
+  } else {
+    alert("매칭 상태 변경 실패");
+    console.log(response.status);
+    return;
+  }
+};
+
+export const onDenyForSpaceHandler = ({ projectItemId }, callback) => {
+  console.log("핸들러 안 " + projectItemId);
+  denyForSpace({ projectItemId }).then((response) =>
+    denyForSpaceResponse(response, callback)
   );
 };

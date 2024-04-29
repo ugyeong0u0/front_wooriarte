@@ -7,6 +7,7 @@ import TextField from "@mui/material/TextField";
 
 import "../styles/ModifyUserInfo.css";
 
+import MuiDialog from "../libs/MuiDialog";
 import { validateEmail } from "../util/GlobalFunc"; // 이메일 형식
 import {
   onConfirmUserPwHandler,
@@ -20,20 +21,26 @@ const ModifyUserInfo = () => {
   const [authState, setAuthState] = useState(false);
   // 저장 버튼 활성화
   const [saveState, setSaveState] = useState(false);
+  const [enableDialog, setEnableDialog] = useState(false); //  다이어로그
 
   const setAuthStateChange = () => {
     let id = localStorage.getItem("userId");
     // 비밀번호 확인 api
-    onConfirmUserPwHandler({ userId: id, password: passwordState }, () => {
-      console.log("비번확인 눌림");
-      // 성공시 콜백
-      // todo 프로그래스 바
-      setTimeout(() => {
-        console.log("유저 비번확인 successful, navigating back");
-        setAuthState(true);
-      }, 1000); // 성공시 alert뜨기
-    });
-    setAuthState(false);
+    onConfirmUserPwHandler(
+      { userId: id, password: passwordState },
+      (responseStatus) => {
+        console.log("비번확인 눌림");
+        if (responseStatus) {
+          // 성공시 콜백
+          console.log("유저 비번확인 successful, navigating back");
+          setAuthState(true);
+          setEnableDialog(false);
+        } else {
+          setEnableDialog(true);
+          setAuthState(false);
+        }
+      }
+    );
   };
   // 비밀번호 입력
   const [passwordState, setPasswordState] = useState("");
@@ -69,12 +76,7 @@ const ModifyUserInfo = () => {
     }
   }, [authState]); // authState 변화에 따라 실행
 
-  const handleChangeState = (e) => {
-    setInfoState({
-      ...infostate,
-      [e.target.name]: e.target.value,
-    });
-    // todo 확인 필요
+  useEffect(() => {
     // 입력값이 모두 있어야함. 유효한 email이여야 가입 가능
     if (
       infostate.password.length > 4 &&
@@ -89,6 +91,13 @@ const ModifyUserInfo = () => {
     } else {
       setSaveState(false);
     }
+  }, [infostate]);
+
+  const handleChangeState = (e) => {
+    setInfoState({
+      ...infostate,
+      [e.target.name]: e.target.value,
+    });
   };
 
   const saveUserInfo = () => {
@@ -105,13 +114,11 @@ const ModifyUserInfo = () => {
       },
       () => {
         console.log("유저 정보 수정");
-        setTimeout(() => {
-          console.log("유저 정보 수정 successful, navigating back");
-          setAuthState(false); // 비밀번호 창으로
-        }, 1000); // 성공시 alert뜨기
+
+        console.log("유저 정보 수정 successful, navigating back");
+        setAuthState(false); // 비밀번호 창으로
       }
     );
-    alert("저장됨");
   };
 
   return (
@@ -217,6 +224,15 @@ const ModifyUserInfo = () => {
             </button>
           </Stack>
         </div>
+      )}
+      {enableDialog && (
+        <MuiDialog
+          title={"알림"}
+          content={"비밀번호가 틀렸습니다. 다시 입력해주세요"}
+          result={true}
+          page={"login"}
+          parentClick={setEnableDialog}
+        />
       )}
     </div>
   );

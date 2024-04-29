@@ -27,6 +27,8 @@ import {
 import { useEffect } from "react";
 
 import ImageList from "@mui/material/ImageList";
+
+import MuiDialog from "../../libs/MuiDialog";
 <link
   rel="stylesheet"
   href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
@@ -44,6 +46,7 @@ const ApplyWithItems = () => {
 
   const [showAlert, setShowAlert] = useState(false); // 신청sucessAlert 보이기 상태
   const [showErrorAlert, setErrorShowAlert] = useState(false); // errprAlert 보이기 상태
+  const [showErrorReAlert, setErrorReShowAlert] = useState(false); // 이미 신청한거 재신청시 보이기 상태
   const [abledBtn, setAbledBtn] = useState(true); // 취소하기, 신청하기 버튼 신청 후 안보이게 처리
 
   const [mockData, setMockData] = useState([{}]); // 받는 형식이 배열 안 객체라
@@ -104,7 +107,7 @@ const ApplyWithItems = () => {
     name: "color-radio-button-demo",
     inputProps: { "aria-label": item },
   });
-
+  // 신청하기
   const goApply = () => {
     console.log("신청하기눌림");
 
@@ -121,24 +124,26 @@ const ApplyWithItems = () => {
       if (userType === "author") {
         onApplyToSpaceItemHandler(
           { authorItemId: selectedItem, spaceItemId: posterId },
-          () => {
-            setShowAlert(true);
-            handleAbleBtn();
-            setTimeout(() => {
-              nav(`/mainbusiness`, { replace: true });
-            }, 1000);
+          (responseStatus) => {
+            if (responseStatus) {
+              setShowAlert(true);
+              handleAbleBtn();
+            } else {
+              setErrorReShowAlert(true);
+            }
           }
         );
       } else if (userType === "space") {
         console.log("작가 포스트 " + posterId + "공간 포스트" + selectedItem);
         onApplyToAuthorItemHandler(
           { authorItemId: posterId, spaceItemId: selectedItem },
-          () => {
-            setShowAlert(true);
-            handleAbleBtn();
-            setTimeout(() => {
-              nav(`/mainbusiness`, { replace: true });
-            }, 1000);
+          (responseStatus) => {
+            if (responseStatus) {
+              setShowAlert(true);
+              handleAbleBtn();
+            } else {
+              setErrorReShowAlert(true);
+            }
           }
         );
       }
@@ -155,47 +160,42 @@ const ApplyWithItems = () => {
 
   return (
     <div>
-      {showAlert && (
-        <Alert variant="filled" severity="success">
-          신청 성공. 메인으로 이동합니다.
-        </Alert>
-      )}
-      {showErrorAlert && (
-        <Alert variant="filled" severity="error">
-          신청할 아이템을 선택해주세요
-        </Alert>
-      )}
       <Stack
-        justifyContent="center" // 가로 방향으로 중앙 정렬
-        alignItems="center" // 세로 방향으로 중앙 정렬
-        style={{ marginTop: 50 }}
+        style={{
+          marginTop: 50,
+          justifyContent: "center",
+          alignItems: "center",
+        }}
       >
+        <h1>신청할 아이템을 골라주세요</h1>
         <ImageList
           sx={{ maxWidth: 1000, height: "auto", overflowY: "hidden" }}
-          cols={3}
+          cols={4}
           gap={8} // 이미지 사이의 간격 설정
         >
           {userType === "author" &&
             mockData.map((item) => {
               return (
                 <>
-                  <Radio
-                    {...controlProps(String(item.projectItemId))}
-                    sx={{
-                      color: pink[800],
-                      "&.Mui-checked": {
-                        color: pink[600],
-                      },
-                    }}
-                    onClick={() => handleSelectedItem(item.projectItemId)}
-                  />
-                  <BusinessItem
-                    key={item.projectItemId}
-                    {...item}
-                    itemId={item.projectItemId}
-                    whatType={"author"}
-                    setUpdateCount={setUpdateCount}
-                  />
+                  <Stack style={{ marginTop: 50 }}>
+                    <Radio
+                      {...controlProps(String(item.projectItemId))}
+                      sx={{
+                        color: pink[800],
+                        "&.Mui-checked": {
+                          color: pink[600],
+                        },
+                      }}
+                      onClick={() => handleSelectedItem(item.projectItemId)}
+                    />
+                    <BusinessItem
+                      key={item.projectItemId}
+                      {...item}
+                      itemId={item.projectItemId}
+                      whatType={"author"}
+                      setUpdateCount={setUpdateCount}
+                    />
+                  </Stack>
                 </>
               );
             })}
@@ -231,7 +231,57 @@ const ApplyWithItems = () => {
               );
             })}
         </ImageList>
+
+        {abledBtn && (
+          <div style={{ marginTop: 40, marginBottom: 100 }}>
+            <button
+              style={{ marginRight: 10, padding: 20 }}
+              className="applyBtn"
+              type="button"
+              class="btn btn-dark"
+              onClick={goBack}
+            >
+              취소하기
+            </button>
+            <button
+              className="applyBtn"
+              type="button"
+              class="btn btn-success"
+              onClick={goApply}
+              style={{ padding: 20 }}
+            >
+              신청하기
+            </button>
+          </div>
+        )}
       </Stack>
+      {showAlert && (
+        <MuiDialog
+          title={"알림"}
+          content={"신청 성공. 메인으로 이동합니다."}
+          result={true}
+          parentClick={setShowAlert}
+          page={"goMainbusiness"}
+        />
+      )}
+      {showErrorAlert && (
+        <MuiDialog
+          title={"알림"}
+          content={"신청할 아이템을 선택해주세요"}
+          parentClick={setErrorShowAlert}
+          result={true}
+          page={"login"}
+        />
+      )}
+      {showErrorReAlert && (
+        <MuiDialog
+          title={"알림"}
+          content={"이미 수락 대기중입니다. 마이페이지 매칭현황을 확인해주세요"}
+          parentClick={setErrorReShowAlert}
+          result={true}
+          page={"login"}
+        />
+      )}
 
       <div className="applyItemsContainer">
         {/* {mockData.map((item) => {
@@ -263,26 +313,6 @@ const ApplyWithItems = () => {
         })}  */}
       </div>
       {/* 아이템 목록이 있다면 함수 넣기   */}
-      {abledBtn && (
-        <div>
-          <button
-            className="applyBtn"
-            type="button"
-            class="btn btn-dark"
-            onClick={goBack}
-          >
-            취소하기
-          </button>
-          <button
-            className="applyBtn"
-            type="button"
-            class="btn btn-success"
-            onClick={goApply}
-          >
-            신청하기
-          </button>
-        </div>
-      )}
     </div>
   );
 };

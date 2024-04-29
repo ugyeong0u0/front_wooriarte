@@ -76,7 +76,7 @@ const Header = ({ isLoginState, isLoginHandler }) => {
   return (
     <div>
       <header className="header">
-        <div>
+        <div style={{ marginRight: 24 }}>
           <text
             onClick={goMainPage}
             style={{ marginLeft: 120, marginTop: 10, marginBottom: 10 }}
@@ -87,7 +87,7 @@ const Header = ({ isLoginState, isLoginHandler }) => {
 
           {!isLoginState && (
             <Button
-              text={"LOGIN"}
+              text={"Login"}
               isVisible={true}
               onClick={
                 onClickLogin
@@ -108,7 +108,7 @@ const Header = ({ isLoginState, isLoginHandler }) => {
             />
           )}
           {isLoginState && (
-            <Button text={"LOGOUT"} isVisible={true} onClick={onClickLogout} />
+            <Button text={"Logout"} isVisible={true} onClick={onClickLogout} />
           )}
 
           {isLoginState && (

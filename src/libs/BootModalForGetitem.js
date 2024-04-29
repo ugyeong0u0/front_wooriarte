@@ -22,7 +22,7 @@ import FormLabel from "@mui/material/FormLabel";
 
 // 달력 위치
 import DatePickerOpenTo, { SelectSizesExample } from "../libs/Open";
-
+import DateRangePickerValue from "./DateRangePickerValue";
 // api
 import {
   onGetAuthorItemInfoHandler,
@@ -35,7 +35,7 @@ import {
   onDeleteSpaceItemHandler,
 } from "../apis/servicehandeler/SpaceApiHandler";
 
-//!------------ 작가랑 공간대여자 아이템 수정
+//!------------ 작가랑 공간대여자 마이페이지에서 아이템 수정, 조회
 export default function MyVerticallyCenteredModal({
   show,
   onHide,
@@ -51,17 +51,22 @@ export default function MyVerticallyCenteredModal({
     name: " ",
     phoneNumber: " ",
     explanation: " ",
+    address: "",
+    startDate: "",
+    endDate: "",
   });
 
   // 공간대여자용
   const [businessInfoState, setBusinessInfoState] = useState({
     hostName: "",
     intro: " ",
-    address: "인천광역시",
+    address: "",
     size: " ",
     phoneNumber: " ",
     parking: true,
-    fee: 0,
+    fee: "",
+    startDate: "",
+    endDate: "",
   });
 
   // 공간 입력상태 감지
@@ -74,6 +79,35 @@ export default function MyVerticallyCenteredModal({
       [e.target.name]: e.target.value,
     });
   };
+  // 작가 입력상태 감지
+  const handleAuthorChangeState = (e) => {
+    // console.log(e.target.name);
+    // console.log(e.target.value);
+
+    setauthorInfoState({
+      ...authorInfoState,
+      [e.target.name]: e.target.value,
+    });
+  };
+  // 공간  날짜 변경 핸들러
+  const handleDateChange = (newStartDate, newEndDate) => {
+    console.log("부모날짜 : " + newStartDate + newEndDate);
+    setBusinessInfoState({
+      ...businessInfoState,
+      startDate: newStartDate,
+      endDate: newEndDate,
+    });
+  };
+  // 작가 날짜 변경 핸들러
+  const handleDateForAuthorChange = (newStartDate, newEndDate) => {
+    console.log("부모날짜 : " + newStartDate + newEndDate);
+    setauthorInfoState({
+      ...authorInfoState,
+      startDate: newStartDate,
+      endDate: newEndDate,
+    });
+  };
+
   // 입력이 달라지면 상태 감지
   const handleChangeState = (e) => {
     // console.log(e.target.name);
@@ -98,18 +132,19 @@ export default function MyVerticallyCenteredModal({
           phoneNumber: response.data.phone, // 전화번호
           explanation: response.data.intro, // 전시 소개
           // intro: response.data.intro, // 전시소개
-          // startDate: response.data.startDate, // 시작날짜
-          // endDate: response.data.endDate, // 끝날짜
+          startDate: response.data.startDate, // 시작날짜
+          endDate: response.data.endDate, // 끝날짜
           // artistName: response.data.artistName, // 직가명
           // hostName: response.data.hostName, // 주최자명
           // price: response.data.price, // 가격
-          // address: response.data.city, // 주소
+          address: response.data.city, // 주소
         }));
       });
     } else if (type === "space") {
       console.log("아이템 정보 id " + id);
       onGetSpaceItemInfoHandler({ posterId: id }, (response) => {
         console.log("공간대여자 아이템 정보 응답값 받음");
+        console.log("공간 조회 응답" + response.fee + typeof response.fee);
         console.log(response);
         setBusinessInfoState((prevState) => ({
           intro: response.data.intro, // 전시소개
@@ -175,6 +210,7 @@ export default function MyVerticallyCenteredModal({
 
   //? 수정 하기 api
   const submitAuthorItem = () => {
+    console.log("제출 호출");
     if (type === "author") {
       let authorId = localStorage.getItem("userId");
       // todo 시작날짜 끝날짜 넣기 + 지역은 서버에 작가만 넣어둠
@@ -184,6 +220,9 @@ export default function MyVerticallyCenteredModal({
           artistName: authorInfoState.name,
           intro: authorInfoState.explanation,
           phone: authorInfoState.phoneNumber,
+          startDate: authorInfoState.startDate,
+          endDate: authorInfoState.endDate,
+          city: authorInfoState.address,
         },
         () => {
           console.log("작가 아이템 추가 성공");
@@ -193,6 +232,7 @@ export default function MyVerticallyCenteredModal({
       );
       // todo 날짜 업데이트 하기
     } else if (type === "space") {
+      console.log("bootmodalfoegetitem의 id" + id + type);
       let newParking = businessInfoState.parking === "true" ? true : false;
       onUpdateSpaceItemInfoHandler(
         {
@@ -204,11 +244,11 @@ export default function MyVerticallyCenteredModal({
           parking: newParking,
           fee: businessInfoState.fee,
           phone: businessInfoState.phoneNumber,
-          startDate: "2024-05-01T09:00:00",
-          endDate: "2024-05-01T09:00:00",
+          startDate: businessInfoState.startDate,
+          endDate: businessInfoState.endDate,
         },
         () => {
-          console.log("스페이스 아이템 추가 성공");
+          console.log("스페이스 아이템 수정 성공");
           setUpdateCount((prev) => prev + 1);
           onHide(); // 부모컴포넌트 프롭
         }
@@ -251,7 +291,6 @@ export default function MyVerticallyCenteredModal({
         </Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        <h4>information</h4>
         {/* // todo 작가 아이템에도 달력, 위치 넣어야함 서버에도 */}
         {type === "author" ? (
           <Box>
@@ -285,6 +324,23 @@ export default function MyVerticallyCenteredModal({
                 onChange={handleChangeState}
                 value={authorInfoState.explanation}
               />
+
+              {/* 주소 */}
+              <SelectSizesExample
+                name="address"
+                size={"default"}
+                type={"location"}
+                selectedLocation={authorInfoState.address}
+                onLocationChange={handleAuthorChangeState}
+              />
+              {/* 달력 */}
+              <DateRangePickerValue
+                startDate={authorInfoState.startDate}
+                endDate={authorInfoState.endDate}
+                onDateChange={handleDateForAuthorChange}
+                isEdit={true}
+              />
+
               <Button
                 component="label"
                 role={undefined}
@@ -334,17 +390,19 @@ export default function MyVerticallyCenteredModal({
                 onChange={handleSpaceChangeState}
                 value={businessInfoState.intro}
               />
-              {/* // todo 날짜 비즈니스 메인하고 함께 설정하기 */}
-              {/* <DatePickerOpenTo calendarType="시작월" />
-              <DatePickerOpenTo calendarType="끝월" /> */}
+
               <Stack spacing={16} direction="row">
-                <SelectSizesExample
-                  name="address"
-                  size={"default"}
-                  type={"location"}
-                  selectedLocation={businessInfoState.address}
-                  onLocationChange={handleSpaceChangeState}
+                <TextField
+                  name="fee"
+                  id="fee"
+                  label="대여료/1일"
+                  type="number"
+                  variant="standard"
+                  style={{ width: 300 }} // 가로 너비를 자동으로 설정
+                  onChange={handleSpaceChangeState}
+                  value={businessInfoState.fee}
                 />
+
                 <TextField
                   name="size"
                   id="standard-search-id"
@@ -378,15 +436,21 @@ export default function MyVerticallyCenteredModal({
                   />
                 </RadioGroup>
               </FormControl>
-              <TextField
-                name="fee"
-                id="standard-search-authPassword"
-                label="대여료/1일"
-                type="number"
-                variant="standard"
-                onChange={handleSpaceChangeState}
+              {/* 주소 */}
+              <SelectSizesExample
+                name="address"
+                size={"default"}
+                type={"location"}
+                selectedLocation={businessInfoState.address}
+                onLocationChange={handleSpaceChangeState}
               />
-
+              {/* 달력 */}
+              <DateRangePickerValue
+                startDate={businessInfoState.startDate}
+                endDate={businessInfoState.endDate}
+                onDateChange={handleDateChange}
+                isEdit={true}
+              />
               <Button
                 component="label"
                 role={undefined}
@@ -406,7 +470,12 @@ export default function MyVerticallyCenteredModal({
           닫기
         </Button>
 
-        <ButtonBoot onClick={submitAuthorItem} disabled={!enableNextBtn}>
+        <ButtonBoot
+          onClick={() => {
+            submitAuthorItem();
+          }}
+          disabled={!enableNextBtn}
+        >
           수정하기
         </ButtonBoot>
         <ButtonBoot onClick={() => deleteExhibits()}>삭제하기</ButtonBoot>

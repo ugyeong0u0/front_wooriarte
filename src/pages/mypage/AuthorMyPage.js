@@ -94,6 +94,7 @@ const AuthorMyPage = () => {
           <h2>아이템 정보</h2>
           {/* <MyPosterForBusiness whatType={"author"} /> */}
           <BusinessItemList whatType={"author"} />
+
           {/* 개인정보 수정 */}
         </TabPanel>
         <TabPanel

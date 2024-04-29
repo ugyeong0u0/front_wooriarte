@@ -5,17 +5,16 @@ import MatchingItem from "../../components/matching/MathingItem";
 const AcceptedMatchingList = ({ updateCount }) => {
   const [mockData, setMockData] = useState([{}]); // 받는 형식이 배열 안 객체라
 
-  // 대기 중 매칭
+  // 성사된 매칭
   useEffect(() => {
     let id = localStorage.getItem("userId");
     let userType = localStorage.getItem("userType");
     console.log("성사된Matching 사업자 id " + id);
     console.log("성사된Matching 사업자 type " + userType);
     if (userType === "author") {
-      // 대기중인 매칭
       onGetSuccessMatchingAuthorHandler({ authorId: id }, (response) => {
-        if (Array.isArray(response.data)) {
-          setMockData(response.data);
+        if (Array.isArray(response)) {
+          setMockData(response);
         } else {
           console.error("성사된 데이터가 배열이 아닙니다.");
         }
@@ -39,14 +38,15 @@ const AcceptedMatchingList = ({ updateCount }) => {
     <>
       <>
         {mockData.length > 0 ? (
-          mockData.map((item) => (
+          mockData.map((item, index) => (
             <MatchingItem
               key={item.matchingId}
-              text={`매칭 ID: ${item.matchingId}, 프로젝트 아이템: ${item.projectItemId}, 공간 아이템: ${item.spaceItemId}`}
+              text={`${index + 1}. ${item.name} 님과 매칭이 성사되었습니다.`}
+              id={item.itemId}
             />
           ))
         ) : (
-          <span>없음</span>
+          <span>현재 성사된 매칭이 없습니다.</span>
         )}
       </>
     </>

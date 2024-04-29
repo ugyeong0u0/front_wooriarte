@@ -1,20 +1,20 @@
 import axios from "axios";
 import { jsx } from "react/jsx-runtime";
 // 변수명 임시 지정
-const DOMAIN = "http://localhost:8080"; // TODO: 도메인 주소 확인 필요
+const DOMAIN = "http://localhost:8080/api"; // TODO: 도메인 주소 확인 필요
 
 //?----------------------------- 유저 url
-const LoginSpace_URL = () => `${DOMAIN}/user/login`;
-const SignupUser_URL = () => `${DOMAIN}/user`;
-const FindUserId_URL = () => `${DOMAIN}/user/find-id`;
-const FindPassId_URL = () => `${DOMAIN}/user/find-pw`;
-const DeleteUser_URL = ({ id }) => `${DOMAIN}/user/${id}`;
-const confirmUserPw_URL = ({ id }) => `${DOMAIN}/user/${id}/verify-pwd`;
-const getUserInfo_URL = ({ id }) => `${DOMAIN}/user/${id}/info`;
-const updateUserInfo_URL = ({ id }) => `${DOMAIN}/user/${id}/info`;
+const LoginSpace_URL = () => `${DOMAIN}/users/login`; //! 로그인 수정완
+const SignupUser_URL = () => `${DOMAIN}/users`; //! 회원가입 수정완
+const FindUserId_URL = () => `${DOMAIN}/users/find-id`; //! 아이디 찾기 수정완
+const FindPassId_URL = () => `${DOMAIN}/user/find-pw`; // 비번 찾기
+const DeleteUser_URL = ({ id }) => `${DOMAIN}/users/${id}`; //! 유저 탈퇴 수정완
+const confirmUserPw_URL = ({ id }) => `${DOMAIN}/users/${id}/verify-pwd`; // 비번확인
+const getUserInfo_URL = ({ id }) => `${DOMAIN}/users/${id}/info`; // 유저 정보 가져오기
+const updateUserInfo_URL = ({ id }) => `${DOMAIN}/users/${id}/info`; // 유저 정보 수정
 // todo
 const ExhibitUser_URL = ({ id, value }) =>
-  `${DOMAIN}/user/${id}/bookings/${value}`;
+  `${DOMAIN}/tickets/users/${id}/bookings/${value}`;
 
 //!----------------------------- 유저 로그인
 export const LogInRequest = async ({ id, pw }) => {
@@ -77,8 +77,8 @@ export const SignupUser = async ({
       console.error("회원가입 실패: " + error);
       if (error.response) {
         // 에러 응답이 있는 경우
-        const { data, status } = error.response;
-        console.log(`에러 메시지: ${data.msg}, 에러 코드: ${status}`);
+        const { msg, errorCode } = error.response.data;
+        console.log(`에러 메시지: ${msg}}, 에러 코드: ${errorCode}`);
         // 이곳에서 상태 코드나 에러 메시지에 따른 추가적인 에러 처리를 할 수 있습니다.
       } else {
         // 에러 응답이 없는 경우
@@ -89,12 +89,11 @@ export const SignupUser = async ({
 };
 
 //!----------------------------- 유저 아이디 찾기
-export const findUserId = async ({ userName, email }) => {
+export const findUserId = async ({ email }) => {
   console.log("유저 아이디 찾기 실행");
-  console.log("유저 회원가입 리쿼안 :" + userName + "/" + email);
+  console.log("유저 회원가입 리쿼안 :" + "/" + email);
   const result = await axios
     .post(FindUserId_URL(), {
-      name: userName,
       email: email,
     })
     .then((response) => {

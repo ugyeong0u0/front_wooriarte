@@ -1,9 +1,9 @@
-import Button from "react-bootstrap/Button";
 import Stack from "@mui/material/Stack";
+import Button from "react-bootstrap/Button";
 // 체크박스
-import * as React from "react";
-import { red } from "@mui/material/colors";
 import Checkbox from "@mui/material/Checkbox";
+import { red } from "@mui/material/colors";
+import * as React from "react";
 
 // css
 import "../../styles/Withdrawal.css";
@@ -13,19 +13,25 @@ import { onDeleteUserHandler } from "../../apis/servicehandeler/ApiHandler";
 import { onDeleteAuthorHandler } from "../../apis/servicehandeler/AuthorApiHandler";
 import { onDeleteSpaceHandler } from "../../apis/servicehandeler/SpaceApiHandler";
 
-import { useNavigate, useSearchParams } from "react-router-dom";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+
+import MuiDialog from "../../libs/MuiDialog";
+
+import { loginContext } from "../../App";
 
 const WithDrawalUser = () => {
   const nav = useNavigate();
   // 회원탈퇴 버튼 활성화
-  const [enableBtn, setEnableBtn] = React.useState(false);
+  const [enableBtn, setEnableBtn] = useState(false);
   // 체크 상태
-  const [checked, setChecked] = React.useState(true);
-
+  const [checked, setChecked] = useState(false);
+  const changeUserLoginState = React.useContext(loginContext);
+  const [enableDialog, setEnableDialog] = useState(false);
   const handleChange = (event) => {
     setChecked(event.target.checked);
   };
+
   // 동의 한 후 탈퇴 가능하게
   useEffect(() => {
     if (checked) setEnableBtn(true);
@@ -42,14 +48,12 @@ const WithDrawalUser = () => {
       onDeleteUserHandler({ userId: id }, () => {
         console.log("탈퇴눌림");
         // 성공시 콜백
-        setTimeout(() => {
-          alert("탈퇴완료");
-          console.log("유저탈퇴 successful, navigating back");
-          localStorage.removeItem("userId");
-          localStorage.removeItem("userType");
 
-          nav(`/`);
-        }, 2000); // 성공시 alert뜨기
+        console.log("유저탈퇴 successful, navigating back");
+        localStorage.removeItem("userId");
+        localStorage.removeItem("userType");
+        changeUserLoginState(false);
+        setEnableDialog(true);
       });
     } else if (userType === "author") {
       // todo 선언하기
@@ -57,14 +61,16 @@ const WithDrawalUser = () => {
         console.log("작가 탈퇴 눌림");
         localStorage.removeItem("userId");
         localStorage.removeItem("userType");
-        nav(`/`);
+        changeUserLoginState(false);
+        setEnableDialog(true);
       });
     } else if (userType === "space") {
       onDeleteSpaceHandler({ id }, () => {
         console.log("공간대여자 탈퇴 눌림");
         localStorage.removeItem("userId");
         localStorage.removeItem("userType");
-        nav(`/`);
+        changeUserLoginState(false);
+        setEnableDialog(true);
       });
     } else {
       console.log("회원 탈퇴 잘못된 접근 ");
@@ -111,6 +117,14 @@ const WithDrawalUser = () => {
           탈퇴하기
         </Button>{" "}
       </Stack>
+      {enableDialog && (
+        <MuiDialog
+          title={"알림"}
+          content={"탈퇴 되었습니다."}
+          result={true}
+          page={"goUserMain"}
+        />
+      )}
     </div>
   );
 };

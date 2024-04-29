@@ -1,24 +1,21 @@
-import * as React from "react";
-import PropTypes from "prop-types";
-import Tabs from "@mui/material/Tabs";
-import Tab from "@mui/material/Tab";
-import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
-import Exhibits from "../../components/Exhibits";
+import Tab from "@mui/material/Tab";
+import Tabs from "@mui/material/Tabs";
+import Typography from "@mui/material/Typography";
+import PropTypes from "prop-types";
+import * as React from "react";
 
-import ModifySpaceInfo from "../mypage/ModifySpaceInfo";
 import Matching from "../../components/business/Matching";
+import ModifySpaceInfo from "../mypage/ModifySpaceInfo";
 
 // 공간 보이기
-import ImageList from "@mui/material/ImageList";
-import ImageListItem from "@mui/material/ImageListItem";
-import ImageListItemBar from "@mui/material/ImageListItemBar";
-import PosterForMain from "../../components/PosterForMain";
-import Stack from "@mui/material/Stack";
+import { useContext } from "react";
 import image1 from "../../assets/image 1.png";
-import MyPosterForBusiness from "../../components/business/MyPosterForBusiness";
-import WithDrawalUser from "../../components/user/Withdrawal";
 import BusinessItemList from "../../components/business/BusinessItemList";
+import WithDrawalUser from "../../components/user/Withdrawal";
+
+import { loginContext } from "../../App";
+
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
 
@@ -54,6 +51,8 @@ function a11yProps(index) {
 
 const SpaceMyPage = () => {
   const [value, setValue] = React.useState(0);
+
+  const setIsLoginStateState = useContext(loginContext);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);

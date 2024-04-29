@@ -85,15 +85,18 @@ const FindIdBusiness = () => {
       {enableFailAlert && (
         <Alert severity="error"> 인증번호가 틀렸습니다.</Alert>
       )}
-      <span>아이디 찾기</span>
       <Box
         component="form"
         sx={{
-          "& .MuiTextField-root": { m: 1, width: "25ch" },
+          display: "flex", // 사용 flexbox 레이아웃
+          flexDirection: "column", // 요소들을 세로로 정렬
+          alignItems: "center", // 가로 방향으로 가운데 정렬
+          "& .MuiTextField-root": { m: 1, width: "25ch" }, // 각 텍스트 필드 스타일 지정
         }}
         noValidate
         autoComplete="off"
       >
+        <h2 style={{ marginBottom: 20, marginTop: 30 }}>아이디 찾기</h2>
         <TextField
           name="businessNumber"
           id="standard-number"
@@ -107,7 +110,16 @@ const FindIdBusiness = () => {
         />
 
         <div>
-          <Stack spacing={2} direction="row">
+          <Stack
+            spacing={2}
+            direction="row"
+            style={{
+              marginLeft: 63,
+              marginTop: 10, // 위 여백 추가
+              marginBottom: 10, // 아래 여백 추가
+              alignItems: "center", // 요소들의 높이를 각 요소에 맞춤
+            }}
+          >
             <TextField
               name="email"
               id="standard-search"
@@ -122,13 +134,23 @@ const FindIdBusiness = () => {
               class="btn btn-dark"
               onClick={sendAuthNumber}
               disabled={!isEmailValid}
+              style={{ padding: 7 }}
             >
               전송
             </button>
           </Stack>
         </div>
         <div>
-          <Stack spacing={2} direction="row">
+          <Stack
+            spacing={2}
+            direction="row"
+            style={{
+              marginLeft: 63,
+              marginTop: 10, // 위 여백 추가
+              marginBottom: 10, // 아래 여백 추가
+              alignItems: "center", // 요소들의 높이를 각 요소에 맞춤
+            }}
+          >
             <TextField
               name="authnumber"
               id="standard-number"
@@ -146,6 +168,7 @@ const FindIdBusiness = () => {
               class="btn btn-success"
               onClick={certifyAuthNumber}
               disabled={!enableAuthBtn}
+              style={{ padding: 7 }}
             >
               확인
             </button>
@@ -156,6 +179,7 @@ const FindIdBusiness = () => {
           class="btn btn-dark"
           onClick={nextPage}
           disabled={!enableNextBtn}
+          style={{ marginTop: 50, marginBottom: 70 }}
         >
           다음
         </button>

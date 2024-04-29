@@ -32,6 +32,8 @@ import FormLabel from "@mui/material/FormLabel";
 //!--------------전시 생성/수정용 모달
 // 달력 위치
 import DatePickerOpenTo, { SelectSizesExample } from "../libs/Open";
+import DateRangePickerValue from "./DateRangePickerValue";
+import DateRangePickerValueForAdmin from "./DateRangePickerValueForAdmin";
 // todo props 에 전시 생성인지 수정인지 구분 필요 create/ update, matchingId/exhibitId 들어감
 // 작가랑 공간대여자 아이템 추가하기
 export default function BootModalForAdmin({
@@ -54,7 +56,7 @@ export default function BootModalForAdmin({
     artistName: "", // 직가명
     hostName: "", // 주최자명
     price: "", // 가격
-    address: "SEOUL", // 주소
+    address: "", // 주소
   });
 
   // 전시 입력상태 감지
@@ -68,28 +70,14 @@ export default function BootModalForAdmin({
     });
   };
 
-  // 시작 날짜 변경 핸들러
-  const handleStartDateChange = (newDate) => {
-    setExhibitInfoState((prevState) => ({
-      ...prevState,
-      startDate: newDate,
-    }));
-    console.log(
-      "시작월" +
-        (exhibitInfoState.startDate ? exhibitInfoState.startDate : "날짜 없음")
-    ); // 상태 변경 시 콘솔 로그 출력
-  };
-
-  // 끝 날짜 변경 핸들러
-  const handleEndDateChange = (newDate) => {
-    setExhibitInfoState((prevState) => ({
-      ...prevState,
-      endDate: newDate,
-    }));
-    console.log(
-      "끝월" +
-        (exhibitInfoState.endDate ? exhibitInfoState.endDate : "날짜 없음")
-    ); // 상태 변경 시 콘솔 로그 출력
+  //   날짜 변경 핸들러
+  const handleDateChange = (newStartDate, newEndDate) => {
+    console.log("부모날짜 : " + newStartDate + newEndDate);
+    setExhibitInfoState({
+      ...exhibitInfoState,
+      startDate: newStartDate,
+      endDate: newEndDate,
+    });
   };
 
   // 입력이 달라지면 상태 감지
@@ -112,9 +100,7 @@ export default function BootModalForAdmin({
         exhibitInfoState.artistName.length > 1 &&
         exhibitInfoState.price.length > 1 &&
         exhibitInfoState.address.length > 1 &&
-        exhibitInfoState.hostName.length > 1 &&
-        exhibitInfoState.startDate !== "" &&
-        exhibitInfoState.endDate !== ""
+        exhibitInfoState.hostName.length > 1
       ) {
         console.log("빈값없음");
         setEnableNextBtn(true); // 다음 버튼 비활성화
@@ -125,9 +111,12 @@ export default function BootModalForAdmin({
     }
     if (type === "update") {
       if (
-        // todo 날짜 길이 재기
-        exhibitInfoState.startDate !== "" &&
-        exhibitInfoState.endDate !== ""
+        exhibitInfoState.name.length > 1 &&
+        exhibitInfoState.intro.length > 1 &&
+        exhibitInfoState.artistName.length > 1 &&
+        exhibitInfoState.price.length > 1 &&
+        exhibitInfoState.address.length > 1 &&
+        exhibitInfoState.hostName.length > 1
       ) {
         console.log("빈값없음");
         setEnableNextBtn(true); // 다음 버튼 비활성화
@@ -186,15 +175,13 @@ export default function BootModalForAdmin({
   const updateExhibit = () => {
     // 전시 정보 생성의 경우
     if (type === "create") {
-      // todo 시작날짜 끝날짜 넣기 + 지역은 서버에 작가만 넣어둠
-      // todo 전시 정보 생성하기 api
       onAddExhibitHandler(
         {
           matchingId: id,
           name: exhibitInfoState.name,
           intro: exhibitInfoState.intro,
-          startDate: exhibitInfoState.startDate.format("YYYY-MM-DD"),
-          endDate: exhibitInfoState.endDate.format("YYYY-MM-DD"),
+          startDate: exhibitInfoState.startDate,
+          endDate: exhibitInfoState.endDate,
           artistName: exhibitInfoState.artistName,
           hostName: exhibitInfoState.hostName,
           price: exhibitInfoState.price,
@@ -206,16 +193,14 @@ export default function BootModalForAdmin({
           onHide(); // 부모컴포넌트 프롭
         }
       );
-      // todo 날짜 업데이트 하기
-      // todo 전시 수정하기
     } else if (type === "update") {
       onUpdateExhibitHandler(
         {
           exhibitId: id,
           name: exhibitInfoState.name,
           intro: exhibitInfoState.intro,
-          startDate: exhibitInfoState.startDate.format("YYYY-MM-DD"),
-          endDate: exhibitInfoState.endDate.format("YYYY-MM-DD"),
+          startDate: exhibitInfoState.startDate,
+          endDate: exhibitInfoState.endDate,
           artistName: exhibitInfoState.artistName,
           hostName: exhibitInfoState.hostName,
           price: exhibitInfoState.price,
@@ -246,7 +231,6 @@ export default function BootModalForAdmin({
         </Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        <h4>information</h4>
         {/* // todo 작가 아이템에도 달력, 위치 넣어야함 서버에도 */}
         <Box>
           <Stack spacing={2}>
@@ -297,13 +281,6 @@ export default function BootModalForAdmin({
             />
 
             <Stack spacing={16} direction="row">
-              <SelectSizesExample
-                name="addess"
-                size={"default"}
-                type={"location"}
-                selectedLocation={exhibitInfoState.address}
-                onLocationChange={handleExhibitInfoStateChange}
-              />
               <TextField
                 name="price"
                 id="standard-search-id"
@@ -313,15 +290,22 @@ export default function BootModalForAdmin({
                 onChange={handleExhibitInfoStateChange}
                 value={exhibitInfoState.price}
               />
-            </Stack>
-            <DatePickerOpenTo
-              calendarType="시작월"
-              onDateChange={handleStartDateChange}
-            />
 
-            <DatePickerOpenTo
-              calendarType="끝월"
-              onDateChange={handleEndDateChange}
+              {/* 주소 */}
+              <SelectSizesExample
+                name="address"
+                size={"default"}
+                type={"location"}
+                selectedLocation={exhibitInfoState.address}
+                onLocationChange={handleExhibitInfoStateChange}
+              />
+            </Stack>
+            {/* 달력 */}
+            <DateRangePickerValueForAdmin
+              startDate={exhibitInfoState.startDate}
+              endDate={exhibitInfoState.endDate}
+              onDateChange={handleDateChange}
+              isEdit={type === "update" ? true : false}
             />
 
             <Button

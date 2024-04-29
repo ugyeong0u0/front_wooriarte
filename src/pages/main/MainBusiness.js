@@ -8,6 +8,9 @@ import Exhibits from "../../components/Exhibits";
 import "../../styles/MainBusiness.css";
 import DatePickerOpenTo, { SelectSizesExample } from "../../libs/Open";
 
+// img
+import noResult from "../../assets/noResult.png";
+
 // 레이아웃
 import CssBaseline from "@mui/material/CssBaseline";
 import Box from "@mui/material/Box";
@@ -33,10 +36,12 @@ import { useEffect } from "react";
 import {
   onGetAllSpaceItemHandler,
   onGetSpaceItemInfoHandler,
+  onGetSearchSpaceProjectHandler,
 } from "../../apis/servicehandeler/SpaceApiHandler";
 import {
   onAllAuthorProjectHandler,
   onGetAuthorItemInfoHandler,
+  onGetSearchAuthorProjectHandler,
 } from "../../apis/servicehandeler/AuthorApiHandler";
 import { useNavigate } from "react-router-dom";
 import { DataSaverOnTwoTone } from "@mui/icons-material";
@@ -46,11 +51,11 @@ const MainBusiness = () => {
   const [spaceButtonType, setSpaceButtonType] = useState("thin");
   const [exhibitsType, setExhibitsType] = useState("author");
   const [data, setData] = useState([{}]); // 받는 형식이 배열 안 객체라
-
+  const [enableDialog, setEnableDialog] = useState(false); // 검색결과가 없을때 띄울이미자
   // todo 달력에 디폴트값 널기
-  const [startDate, setStartDate] = useState(null);
-  const [endDate, setEndDate] = useState(null);
-  const [address, setAddress] = useState("인천광역시");
+  const [startDate, setStartDate] = useState("");
+  const [endDate, setEndDate] = useState("");
+  const [address, setAddress] = useState("");
 
   //?-------------------------달력
   const handleStartDateChange = (newDate) => {
@@ -61,20 +66,48 @@ const MainBusiness = () => {
 
   const handleEndDateChange = (newDate) => {
     setEndDate(newDate);
-    console.log("시작월" + endDate);
+    console.log("끝월" + endDate);
   };
   const handleAddressChange = (e) => {
     setAddress(e.target.value);
     console.log("위치" + address);
   };
 
-  //?------------------------검색
-  // 검색 조회 api
+  //!------------------------검색
+  // 검색 버튼 눌러서 조회 api
   const goSearch = (exhibitsType) => {
-    if (exhibitsType === "author") {
-    } else if (exhibitsType === "space") {
-      console.log();
+    if (exhibitsType == "author") {
+      // todo s3
+      onGetSearchAuthorProjectHandler(
+        { startDate, endDate, city: address },
+        (response) => {
+          if (Array.isArray(response.data)) {
+            setData(response.data);
+          } else {
+            const emptyList = [];
+
+            setData(emptyList);
+            console.error("응답 데이터가 배열이 아닙니다.");
+          }
+        }
+      );
+    } else if (exhibitsType == "space") {
+      // todo s3
+      onGetSearchSpaceProjectHandler(
+        { startDate, endDate, city: address },
+        (response) => {
+          if (Array.isArray(response.data)) {
+            setData(response.data);
+          } else {
+            const emptyList = [];
+
+            setData(emptyList);
+            console.error("응답 데이터가 배열이 아닙니다.");
+          }
+        }
+      );
     } else {
+      console.log("비즈니스 메인 아이템 조회 잘못된 접근");
     }
   };
   // const [month, setMonth] = useState({
@@ -195,10 +228,19 @@ const MainBusiness = () => {
     }
   }, [exhibitsType]); // businessInfoState 객체의 모든 변경에 반응
 
-  const getItemInfo = (id) => {
+  // 조회 결과 없음 표시 => 작가 프로젝트 눌렀을 때
+  useEffect(() => {
+    if (data.length > 0) {
+      setEnableDialog(false);
+    } else {
+      setEnableDialog(true);
+    }
+  }, [data]);
+
+  const getItemInfo = ({ id, exhibitsType }) => {
     const whatUser = localStorage.getItem("userType");
     nav(`/businessiteminfo/${id}`, {
-      state: { userType: whatUser, posterId: id },
+      state: { userType: whatUser, posterId: id, exhibitsType },
     });
   };
 
@@ -250,21 +292,13 @@ const MainBusiness = () => {
             </Stack>
 
             <Stack spacing={2} direction="row" className="filterContainer">
-              <div
-                style={{
-                  display: "flex",
-                  flexDirection: "row",
-                  alignItems: "center",
-                  justifyContent: "space-between",
-                  padding: "10px",
-                }}
-              >
+              <>
                 <DatePickerOpenTo
-                  calendarType="시작월"
+                  calendarType={"startDate"}
                   onDateChange={handleStartDateChange}
                 />
                 <DatePickerOpenTo
-                  calendarType="끝월"
+                  calendarType={"endDate"}
                   onDateChange={handleEndDateChange}
                 />
 
@@ -283,55 +317,66 @@ const MainBusiness = () => {
                     style={{
                       backgroundColor: "black", // 배경색을 검정색으로 설정
                       color: "white", // 아이콘 색상을 흰색으로 설정
-                      marginLeft: 10,
+                      marginLeft: 15,
                     }}
                     onClick={() => goSearch(exhibitsType)}
                   >
                     <SearchIcon fontSize="inherit" />
                   </IconButton>
                 </Tooltip>
-              </div>
+              </>
             </Stack>
           </Box>
         </Container>
         {/* 구분선 */}
-        <div class="gray-line"></div>
 
+        {/* 비어있을때 값  */}
+        <div class="gray-line"></div>
         <Stack
           justifyContent="center" // 가로 방향으로 중앙 정렬
           alignItems="center" // 세로 방향으로 중앙 정렬
           style={{ marginTop: 50 }}
         >
-          <ImageList
-            sx={{ maxWidth: 1000, height: "auto", overflowY: "hidden" }}
-            cols={3}
-            gap={8} // 이미지 사이의 간격 설정
-          >
-            {data.map((item) => (
-              <ImageListItem
-                key={
-                  exhibitsType === "author"
-                    ? item.projectItemId
-                    : item.spaceItemId
-                }
-                onClick={() => {
-                  exhibitsType === "author"
-                    ? getItemInfo(item.projectItemId)
-                    : getItemInfo(item.spaceItemId);
-                }}
-              >
-                <img
-                  srcSet={`https://images.unsplash.com/photo-1518756131217-31eb79b20e8f?w=248&fit=crop&auto=format?w=248&fit=crop&auto=format&dpr=2 2x`}
-                  src={`https://images.unsplash.com/photo-1518756131217-31eb79b20e8f?w=248&fit=crop&auto=format`}
-                  alt={item.intro}
-                  loading="lazy"
-                  style={{
-                    width: "100%",
-                    height: "100%",
-                    objectFit: "cover",
-                  }} // 모든 이미지가 동일한 가로 길이를 가지도록 가로 너비를 100%로 설정
-                />
-                {/* <img
+          {enableDialog && (
+            <img src={noResult} style={{ width: 300, marginBottom: 30 }} />
+          )}
+          {!enableDialog && (
+            <ImageList
+              sx={{ maxWidth: 1000, height: "auto", overflowY: "hidden" }}
+              cols={3}
+              gap={8} // 이미지 사이의 간격 설정
+            >
+              {data.map((item) => (
+                <ImageListItem
+                  key={
+                    exhibitsType === "author"
+                      ? item.projectItemId
+                      : item.spaceItemId
+                  }
+                  onClick={() => {
+                    exhibitsType === "author"
+                      ? getItemInfo({
+                          id: item.projectItemId,
+                          exhibitsType: "author",
+                        })
+                      : getItemInfo({
+                          id: item.spaceItemId,
+                          exhibitsType: "space",
+                        });
+                  }}
+                >
+                  <img
+                    srcSet={`https://images.unsplash.com/photo-1518756131217-31eb79b20e8f?w=248&fit=crop&auto=format?w=248&fit=crop&auto=format&dpr=2 2x`}
+                    src={`https://images.unsplash.com/photo-1518756131217-31eb79b20e8f?w=248&fit=crop&auto=format`}
+                    alt={item.intro}
+                    loading="lazy"
+                    style={{
+                      width: "100%",
+                      height: "100%",
+                      objectFit: "cover",
+                    }} // 모든 이미지가 동일한 가로 길이를 가지도록 가로 너비를 100%로 설정
+                  />
+                  {/* <img
                   srcSet={`${item.img}?w=248&fit=crop&auto=format&dpr=2 2x`}
                   src={`https://images.unsplash.com/photo-1518756131217-31eb79b20e8f?w=248&fit=crop&auto=format`}
                   alt={item.title}
@@ -342,21 +387,34 @@ const MainBusiness = () => {
                     objectFit: "cover",
                   }} // 모든 이미지가 동일한 가로 길이를 가지도록 가로 너비를 100%로 설정
                 /> */}
-                <ImageListItemBar
-                  title={item.intro}
-                  subtitle={<span>by: {item.startDate}</span>}
-                  position="below"
-                />
-              </ImageListItem>
-            ))}
-          </ImageList>
-          <ButtonBoot
+                  <ImageListItemBar
+                    title={
+                      { item } && item.intro
+                        ? item.intro.slice(0, 10)
+                        : "Loading..."
+                    }
+                    subtitle={
+                      <div>
+                        <span>희망기간 :</span>
+                        <span>
+                          {item.startDate}~{item.endDate}
+                        </span>
+                      </div>
+                    }
+                    position="below"
+                  />
+                </ImageListItem>
+              ))}
+            </ImageList>
+          )}
+
+          {/* <ButtonBoot
             variant="dark"
             size="lg"
             style={{ marginTop: 50, marginBottom: 50 }}
           >
             continue
-          </ButtonBoot>
+          </ButtonBoot> */}
         </Stack>
 
         <div>

@@ -6,14 +6,28 @@ import BootModalForAdmin from "../../libs/BootModalForAdmin";
 import { useState } from "react";
 import { useEffect } from "react";
 
+// 어이콘
+import ContentPasteSearchIcon from "@mui/icons-material/ContentPasteSearch";
+import IconButton from "@mui/material/IconButton";
+
 // api
 import { onUpdateMatchingForAdminHandler } from "../../apis/servicehandeler/AdminApiHandler";
+import { useNavigate } from "react-router-dom";
 
 //?--- matchingId: 관리자가 매칭 상태 수정 및 생성 시 쓰임
-const AdminMatchingItem = ({ text, matchingId, setUpdateCount, status }) => {
+const AdminMatchingItem = ({
+  text,
+  matchingId,
+  setUpdateCount,
+  status,
+  id,
+  userType,
+}) => {
   const [modalShow, setModalShow] = useState(false); // 드랍다운 숫자 저장
 
   const [selectedStatus, setSelectedStatus] = useState(status); // 선택된 상태를 저장하기 위한 state
+
+  const nav = useNavigate();
 
   // 드롭다운에서 선택된 값을 state에 저장
   const handleSelectChange = (event) => {
@@ -37,6 +51,18 @@ const AdminMatchingItem = ({ text, matchingId, setUpdateCount, status }) => {
   const addExhibit = () => {
     // myposterForBusiness. js 참고
     setModalShow(true);
+  };
+
+  const goItemInfo = (id) => {
+    if (userType === "author") {
+      nav(`/businessiteminfo/${id}`, {
+        state: { userType: "space", posterId: id },
+      });
+    } else {
+      nav(`/businessiteminfo/${id}`, {
+        state: { userType: "author", posterId: id },
+      });
+    }
   };
 
   return (
@@ -63,6 +89,14 @@ const AdminMatchingItem = ({ text, matchingId, setUpdateCount, status }) => {
         <Button variant="outline-dark" onClick={() => addExhibit()}>
           전시생성
         </Button>{" "}
+        <IconButton
+          color="inherit"
+          aria-label="add an alarm"
+          style={{ marginLeft: 30 }}
+          onClick={() => goItemInfo(id)}
+        >
+          <ContentPasteSearchIcon />
+        </IconButton>
       </Stack>
       <BootModalForAdmin
         show={modalShow}

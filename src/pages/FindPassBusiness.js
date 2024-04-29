@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate, useSearchParams, useLocation } from "react-router-dom";
 import Stack from "@mui/material/Stack";
 import TextField from "@mui/material/TextField";
@@ -7,25 +7,34 @@ import { validateEmail } from "../util/GlobalFunc"; // 이메일 형식
 import { string } from "prop-types";
 import Alert from "@mui/material/Alert"; // alert
 
+// api
+import {
+  onFindPassForAuthorByEmailHandler,
+  onConfirmEmailAuthForAuthorHandler,
+} from "../apis/servicehandeler/AuthorApiHandler";
+import {
+  onFindPassForSpaceByEmailHandler,
+  onConfirmEmailAuthForSpaceHandler,
+} from "../apis/servicehandeler/SpaceApiHandler";
+import { containerClasses } from "@mui/material";
+
 const FindPassBusiness = () => {
   const nav = useNavigate();
   const uselocation = useLocation();
-  const { userInfo } = uselocation.state;
+  const { userInfo } = uselocation.state; // 유저 유형
 
   // todo 이메일찾기 연결하고 false로 원상복귀하기
   // 이메일 유효한지
-  const [isEmailValid, setIsEmailValid] = useState(true);
+  const [isEmailValid, setIsEmailValid] = useState(false);
   // 이메일 인증번호 버튼 제어
-  const [enableAuthBtn, setEnableAuthBtn] = useState(true);
-  // 다음 버튼 활성화
-  const [enableNextBtn, setEnableNextBtn] = useState(true);
+  const [enableAuthBtn, setEnableAuthBtn] = useState(false);
+
   // 인증번호확인 눌렀을 때 경고창 => 인증번호 확인이 잘됐고 안됐고
   const [enableSuccessAlert, setEnableSuccessAlert] = useState(false);
   const [enableFailAlert, setEnableFailAlert] = useState(false);
 
   const [state, setState] = useState({
     id: "",
-    businessNumber: "",
     email: "",
     authnumber: "",
   });
@@ -37,48 +46,96 @@ const FindPassBusiness = () => {
       ...state,
       [e.target.name]: e.target.value,
     });
-
-    if (e.target.name === "email") {
-      setIsEmailValid(validateEmail(e.target.value));
-    }
   };
-  // todo(인증번호 연결 )
+  //
+  useEffect(() => {
+    if (state.id.length > 3) {
+      setIsEmailValid(validateEmail(state.email)); // 이메일보내기 버튼 활성화
+    }
+    console.log("유저 정보" + userInfo);
+  }, [state.email, state.id]);
+
   const sendAuthNumber = () => {
     console.log("인증번호 보내기");
-    setEnableAuthBtn(true); // 이메일 인증 활성화
-  };
-  // todo 인증번호 활성화하기
-  const certifyAuthNumber = () => {
-    console.log("인증번호 확인");
-    // 사업자 번호 입력이 정상 적으로 됐으면
-    if (state.businessNumber.length === 8) {
-      setEnableNextBtn(true);
+    if (userInfo === "author") {
+      console.log("작가 인증번호보냄");
+      onFindPassForAuthorByEmailHandler(
+        { id: state.id, email: state.email },
+        () => {
+          setEnableAuthBtn(true); // 이메일 인증 활성화
+          setEnableSuccessAlert(true);
+          setTimeout(() => {
+            setEnableSuccessAlert(false);
+          }, 1000);
+        }
+      );
     } else {
-      // 인증번호 확인 됐을 때 다음 버튼 활성화
-      console.log("인증번호비활성화");
-      // 인증번호 활성화 안됐을 때
-      setEnableFailAlert(true);
-      setTimeout(() => {
-        setEnableFailAlert(false);
-      }, 2000);
+      console.log("공간 인증번호보냄");
+      onFindPassForSpaceByEmailHandler(
+        { id: state.id, email: state.email },
+        () => {
+          setEnableAuthBtn(true); // 이메일 인증 활성화
+          setEnableSuccessAlert(true);
+          setTimeout(() => {
+            setEnableSuccessAlert(false);
+          }, 1000);
+        }
+      );
     }
   };
 
-  // todo 유저별로 api연결 하기 : userInfo
-  const nextPage = () => {
-    // alert("비밀번호 찾기");
-    // console.log("비밀번호찾기 : " + userInfo);
-    setEnableSuccessAlert(true);
-    setTimeout(() => {
-      setEnableSuccessAlert(false);
-      nav(`/resetpwbusiness`);
-    }, 2000); // 성공시 alert뜨기
+  const certifyAuthNumber = () => {
+    console.log("인증번호 확인 클릭이벤트 안");
+
+    if (userInfo === "author") {
+      onConfirmEmailAuthForAuthorHandler(
+        { id: state.id, email: state.email, authNum: state.authnumber },
+        (responseStatus) => {
+          if (responseStatus) {
+            nav(`/resetpwbusiness`, {
+              replace: true,
+              state: {
+                userInfo: userInfo, // 작가인지 공간 대여자인지
+                id: state.id,
+              },
+            });
+          } else {
+            // 인증번호 틀렸을 때
+            setEnableFailAlert(true);
+            setTimeout(() => {
+              setEnableFailAlert(false);
+            }, 2000);
+          }
+        }
+      );
+    } else {
+      onConfirmEmailAuthForSpaceHandler(
+        { id: state.id, email: state.email, authNum: state.authnumber },
+        (responseStatus) => {
+          if (responseStatus) {
+            nav(`/resetpwbusiness`, {
+              replace: true,
+              state: {
+                userInfo: userInfo, // 작가인지 공간 대여자인지
+                id: state.id,
+              },
+            });
+          } else {
+            // 인증번호 틀렸을 때
+            setEnableFailAlert(true);
+            setTimeout(() => {
+              setEnableFailAlert(false);
+            }, 2000);
+          }
+        }
+      );
+    }
   };
 
   return (
     <>
       {enableSuccessAlert && (
-        <Alert severity="success">This is a success Alert.</Alert>
+        <Alert severity="success">메일로 인증번호가 전송되었습니다.</Alert>
       )}
       {enableFailAlert && (
         <Alert severity="error"> 인증번호가 틀렸습니다.</Alert>
@@ -87,26 +144,17 @@ const FindPassBusiness = () => {
       <Box
         component="form"
         sx={{
-          "& .MuiTextField-root": { m: 1, width: "25ch" },
+          display: "flex", // 사용 flexbox 레이아웃
+          flexDirection: "column", // 요소들을 세로로 정렬
+          alignItems: "center", // 가로 방향으로 가운데 정렬
+          "& .MuiTextField-root": { m: 1, width: "25ch" }, // 각 텍스트 필드 스타일 지정
+          marginBottom: 20,
         }}
         noValidate
         autoComplete="off"
       >
-        <span>비밀번호 찾기</span>
+        <h2 style={{ marginBottom: 40, marginTop: 30 }}>비밀번호 찾기</h2>
 
-        <div>
-          <TextField
-            name="businessNumber"
-            id="standard-number"
-            label="사업자번호 "
-            type="number"
-            InputLabelProps={{
-              shrink: true,
-            }}
-            variant="standard"
-            onChange={handleChangeState}
-          />
-        </div>
         <div>
           <TextField
             name="id"
@@ -115,10 +163,20 @@ const FindPassBusiness = () => {
             type="search"
             variant="standard"
             onChange={handleChangeState}
+            disabled={enableAuthBtn}
           />
         </div>
         <div>
-          <Stack spacing={2} direction="row">
+          <Stack
+            spacing={2}
+            direction="row"
+            style={{
+              marginLeft: 70,
+              marginTop: 10, // 위 여백 추가
+              marginBottom: 10, // 아래 여백 추가
+              alignItems: "center", // 요소들의 높이를 각 요소에 맞춤
+            }}
+          >
             <TextField
               name="email"
               id="standard-search"
@@ -126,6 +184,7 @@ const FindPassBusiness = () => {
               type="search"
               variant="standard"
               onChange={handleChangeState}
+              disabled={enableAuthBtn}
             />
 
             <button
@@ -139,7 +198,16 @@ const FindPassBusiness = () => {
           </Stack>
         </div>
         <div>
-          <Stack spacing={2} direction="row">
+          <Stack
+            spacing={2}
+            direction="row"
+            style={{
+              marginLeft: 70,
+              marginTop: 10, // 위 여백 추가
+              marginBottom: 10, // 아래 여백 추가
+              alignItems: "center", // 요소들의 높이를 각 요소에 맞춤
+            }}
+          >
             <TextField
               name="authnumber"
               id="standard-number"
@@ -162,14 +230,6 @@ const FindPassBusiness = () => {
             </button>
           </Stack>
         </div>
-        <button
-          type="button"
-          class="btn btn-dark"
-          onClick={nextPage}
-          disabled={!enableNextBtn}
-        >
-          다음
-        </button>
       </Box>
     </>
   );

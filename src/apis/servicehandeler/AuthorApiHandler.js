@@ -17,6 +17,10 @@ import {
   getSuccessMatching,
   getOneAuthorProjects,
   deleteSingleExhibit,
+  findPassForAuthorByEmailRequest,
+  confirmEmailAuthForAuthorRequest,
+  confirmAuthorPw, // 마이페이지 비번확인
+  getSearchAuthorProject,
 } from "../author-api-manager";
 
 //!----------------------------작가 로그인
@@ -54,15 +58,15 @@ export const onLoginAuthorHandler = ({ id, pwd }, callback) => {
 // 작가 회원가입 응답
 export const signupAuthorResponse = (response, callback) => {
   if (!response) {
-    alert("네트워크 이상");
+    callback(false);
     return;
   }
   if (response.status >= 200 && response.status < 300) {
     console.log("작가 회원가입 성공");
-    callback();
+    callback(true);
     return;
   } else {
-    alert("회원가입 실패");
+    callback(false);
     console.log(response.status);
     return;
   }
@@ -111,22 +115,22 @@ export const onFindAuthorIdHandler = ({ email }, callback) => {
 
 export const findAuthorPwResponse = (response, callback) => {
   if (!response) {
-    alert("네트워크 이상");
+    callback(false);
     return;
   }
   if (response.status >= 200 && response.status < 300) {
     console.log("작가 비번 재설정 성공");
-    callback();
+    callback(true);
     return;
   } else {
-    alert("작가 비번 재설정 실패");
+    callback(false);
     console.log(response.status);
     return;
   }
 };
-// 스페이스 비번 찾기 누름
-export const onFindAuthorPwHandler = ({ userId, pwd }, callback) => {
-  findAuthorPw({ id: userId, pwd }).then((response) =>
+// 작가 비번재설정
+export const onFindAuthorPwHandler = ({ id, new_pwd }, callback) => {
+  findAuthorPw({ id, new_pwd }).then((response) =>
     findAuthorPwResponse(response, callback)
   );
 };
@@ -157,29 +161,28 @@ export const onDeleteAuthorHandler = ({ id }, callback) => {
   );
 };
 //!---------------------------- 작가 마이페이지 비번 확인
-// // 공간대여자 비번 확인 응답
-// export const confirmSpacePwResponse = (response, callback) => {
-//   if (!response) {
-//     alert("네트워크 이상");
-//     return;
-//   }
-//   if (response.status >= 200 && response.status < 300) {
-//     alert(response.data);
-//     console.log("비번 확인 성공");
-//     callback();
-//     return;
-//   } else {
-//     alert("비번확인 실패");
-//     console.log(response.status);
-//     return;
-//   }
-// };
-// // 공간대여자 비번확인 누름
-// export const onConfirmSpacePwHandler = ({ userId, password }, callback) => {
-//   confirmSpacePw({ userId, password }).then((response) =>
-//   confirmSpacePwResponse(response, callback)
-//   );
-// };
+//  비번 확인 응답
+export const confirmAuthorPwResponse = (response, callback) => {
+  if (!response) {
+    callback(false);
+    return;
+  }
+  if (response.status >= 200 && response.status < 300) {
+    console.log("비번 확인 성공");
+    callback(true);
+    return;
+  } else {
+    callback(false);
+    console.log(response.status);
+    return;
+  }
+};
+//  비번확인 누름
+export const onConfirmAuthorPwHandler = ({ userId, password }, callback) => {
+  confirmAuthorPw({ userId, password }).then((response) =>
+    confirmAuthorPwResponse(response, callback)
+  );
+};
 
 //!---------------------------- 작가 마이페이지 정보 조회
 // 작가 정보 조회 응답
@@ -191,7 +194,7 @@ export const getAuthorInfoResponse = (response, callback) => {
   }
   if (response.status >= 200 && response.status < 300) {
     console.log("작가 정보 조회 성공");
-    callback(response);
+    callback(response.data);
     return;
   } else {
     alert("작가 정보 조회 실패");
@@ -260,7 +263,7 @@ export const addAuthorProjectResponse = (response, callback) => {
 };
 // 작가 정보조회 이벤트
 export const onAddAuthorProjectHandler = (
-  { authorId, artistName, intro, phone },
+  { authorId, artistName, intro, phone, startDate, endDate, city },
   callback
 ) => {
   addAuthorProject({
@@ -268,6 +271,9 @@ export const onAddAuthorProjectHandler = (
     artistName,
     intro,
     phone,
+    startDate,
+    endDate,
+    city,
   }).then((response) => addAuthorProjectResponse(response, callback));
 };
 //!---------------------------- 모든 작가 아이템 조회
@@ -291,6 +297,32 @@ export const onAllAuthorProjectResponse = (response, callback) => {
 export const onAllAuthorProjectHandler = (callback) => {
   getAllAuthorProject().then((response) =>
     onAllAuthorProjectResponse(response, callback)
+  );
+};
+//!---------------------------- 작가 필터링 아이템 조회
+
+export const onGetSearchAuthorProjectResponse = (response, callback) => {
+  if (!response) {
+    callback(false);
+    return;
+  }
+  if (response.status >= 200 && response.status < 300) {
+    console.log("작가 필터링 아이템 조회성공");
+    callback(response);
+    return;
+  } else {
+    callback(false);
+    console.log(response.status);
+    return;
+  }
+};
+
+export const onGetSearchAuthorProjectHandler = (
+  { startDate, endDate, city },
+  callback
+) => {
+  getSearchAuthorProject({ startDate, endDate, city }).then((response) =>
+    onGetSearchAuthorProjectResponse(response, callback)
   );
 };
 
@@ -338,7 +370,7 @@ export const updateAuthorItemInfoResponse = (response, callback) => {
 };
 // 작가 아이템 수정 이벤트
 export const onUpdateAuthorItemInfoHandler = (
-  { posterId, projectManagerId, artistName, intro, phone },
+  { posterId, artistName, intro, phone, startDate, endDate, city },
   callback
 ) => {
   updateAuthorItemInfo({
@@ -346,6 +378,9 @@ export const onUpdateAuthorItemInfoHandler = (
     artistName,
     intro,
     phone,
+    startDate,
+    endDate,
+    city,
   }).then((response) => updateAuthorItemInfoResponse(response, callback));
 };
 //!---------------------------- 작가아이템 삭제
@@ -377,15 +412,15 @@ export const onDeleteAuthorItemHandler = ({ posterId }, callback) => {
 
 export const applyToSpaceItemResponse = (response, callback) => {
   if (!response) {
-    alert("네트워크 이상");
+    callback(false);
     return;
   }
   if (response.status >= 200 && response.status < 300) {
     console.log("작가 -> 공간 신청 성공");
-    callback();
+    callback(true);
     return;
   } else {
-    alert("작가 -> 공간 신청 실패");
+    callback(false);
     console.log(response.status);
     return;
   }
@@ -415,7 +450,7 @@ export const waitingMatchingResultResponse = (response, callback) => {
   }
   if (response.status >= 200 && response.status < 300) {
     console.log("작가 매칭대기 응답 성공");
-    callback(response);
+    callback(response.data);
     return;
   } else {
     alert("작가 매칭대기 실패");
@@ -440,7 +475,7 @@ export const GetOfferedMatchingResponse = (response, callback) => {
   }
   if (response.status >= 200 && response.status < 300) {
     console.log("작가 신청받은 조회 응답 성공");
-    callback(response);
+    callback(response.data);
     return;
   } else {
     alert("작가 신청받은 조회 실패");
@@ -465,7 +500,7 @@ export const getSuccessMatchingResponse = (response, callback) => {
   }
   if (response.status >= 200 && response.status < 300) {
     console.log("작가 성공매칭 조회 응답 성공");
-    callback(response);
+    callback(response.data);
     return;
   } else {
     alert("작가 성공매칭 조회 실패");
@@ -529,5 +564,53 @@ export const onDeleteSingleProjectItemHandler = (
   console.log("작가 아이템 삭제id" + projectItemId);
   deleteSingleExhibit({ projectItemId }).then((response) =>
     deleteSingleProjectItemResponse(response, callback)
+  );
+};
+//!---------------------------- 비번 찾기 이메일 전송 api
+export const findPassForAuthorByEmailResponse = (response, callback) => {
+  if (!response) {
+    alert("네트워크 이상");
+    return;
+  }
+  if (response.status >= 200 && response.status < 300) {
+    console.log(" 비번 찾기 이메일 전송 : " + response.data);
+
+    callback();
+    return;
+  } else {
+    alert(" 비번 찾기 이메일 전송 실패");
+    console.log(response.status);
+    return;
+  }
+};
+
+export const onFindPassForAuthorByEmailHandler = ({ id, email }, callback) => {
+  findPassForAuthorByEmailRequest({ id, email }).then((response) =>
+    findPassForAuthorByEmailResponse(response, callback)
+  );
+};
+//!---------------------------- 비번찾기 이메일  인증번호 확인
+export const confirmEmailAuthForAuthorResponse = (response, callback) => {
+  if (!response) {
+    callback(false);
+    return;
+  }
+  if (response.status >= 200 && response.status < 300) {
+    console.log("비번 찾기 인증번호 확인 성공");
+    callback(true);
+    return;
+  } else {
+    callback(false);
+    console.log("비번 인증 실패" + response.status);
+    return;
+  }
+};
+
+export const onConfirmEmailAuthForAuthorHandler = (
+  { id, email, authNum },
+  callback
+) => {
+  confirmEmailAuthForAuthorRequest({ id, email, authNum }).then((response) =>
+    confirmEmailAuthForAuthorResponse(response, callback)
   );
 };

@@ -6,19 +6,50 @@ import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 
 import Form from "react-bootstrap/Form";
 import "bootstrap/dist/css/bootstrap.min.css";
+import { validateDate } from "@mui/x-date-pickers/internals";
+
+import { SingleInputDateRangeField } from "@mui/x-date-pickers-pro/SingleInputDateRangeField";
+
+import dayjs, { Dayjs } from "dayjs";
+import { useState } from "react";
+import { useEffect } from "react";
 
 // 캘린더
 //calendarLabel : 박스에 표시할 이름
 export default function DatePickerOpenTo({ calendarType, onDateChange }) {
-  console.log(calendarType);
+  console.log(calendarType); // 캘린더 유형 로깅
+  const [isDateValid, setIsDateValid] = useState(true); // 날짜 유효성 상태 관리
+  const [value, setValue] = useState(dayjs());
+
+  // 날짜 변경 처리 함수
+  const handleDateChange = (newValue) => {
+    if (calendarType == "startDate") {
+      setValue(newValue);
+      onDateChange(newValue.startOf("month").format("YYYY-MM-DD"));
+    } else if (calendarType === "endDate") {
+      setValue(newValue);
+      onDateChange(newValue.endOf("month").format("YYYY-MM-DD"));
+    }
+  };
+  useEffect(() => {
+    if (calendarType == "startDate") {
+      onDateChange(dayjs().format("YYYY-MM-DD"));
+    } else if (calendarType === "endDate") {
+      onDateChange(dayjs().format("YYYY-MM-DD"));
+    }
+  }, []);
+
   return (
-    <LocalizationProvider dateAdapter={AdapterDayjs}>
-      <DemoContainer components={["DatePicker", "DatePicker"]}>
+    <LocalizationProvider
+      dateAdapter={AdapterDayjs}
+      dateFormats={{ monthShort: `M` }}
+    >
+      <DemoContainer components={["DatePicker", "DatePicker", "DatePicker"]}>
         <DatePicker
-          label={`${calendarType}`}
-          openTo="year"
-          views={["year", "month"]}
-          onChange={onDateChange}
+          label={calendarType === "startDate" ? "시작" : "끝"}
+          views={["month", "year"]}
+          value={value} // 현재 값
+          onChange={handleDateChange} // 변경시 핸들러 호출
         />
       </DemoContainer>
     </LocalizationProvider>
@@ -26,23 +57,17 @@ export default function DatePickerOpenTo({ calendarType, onDateChange }) {
 }
 
 const locations = [
-  "SEOUL",
-  "부산광역시",
-  "대구광역시",
-  "인천광역시",
-  "광주광역시",
-  "대전광역시",
-  "울산광역시",
-  "세종특별자치시",
-  "경기도",
-  "강원도",
-  "충청북도",
-  "충청남도",
-  "전라북도",
-  "전라남도",
-  "경상북도",
-  "경상남도",
-  "제주특별자치도",
+  "서울",
+  "경기",
+  "인천",
+  "강원",
+  "충북",
+  "충남",
+  "전북",
+  "전남",
+  "경북",
+  "경남",
+  "제주",
 ];
 
 // 위치 셀렉트
@@ -54,7 +79,7 @@ export function SelectSizesExample({
   onLocationChange,
 }) {
   let selectComponentStyle = {
-    maxWidth: "200px", // 최대 가로 길이를 200px로 설정
+    maxWidth: "100px", // 최대 가로 길이를 200px로 설정
   };
   let selectComponent;
 

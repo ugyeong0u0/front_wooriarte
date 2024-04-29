@@ -52,7 +52,7 @@ const LoginBusiness = () => {
           }}
         >
           <Stack spacing={2}>
-            <Stack spacing={2} direction="row">
+            <Stack spacing={2} direction="row" style={{ marginLeft: 2 }}>
               <Button color="inherit" size="large" onClick={goUserLogin}>
                 개인
               </Button>
@@ -64,7 +64,10 @@ const LoginBusiness = () => {
             </Stack>
 
             <div>
-              <Stack spacing={2} direction="row">
+              <Stack
+                spacing={4}
+                style={{ marginTop: 20, marginLeft: 5, marginBottom: 80 }}
+              >
                 <ButtonBoot
                   variant="outline-dark"
                   onClick={goBusinessLogin}

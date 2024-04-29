@@ -14,8 +14,11 @@ import TextField from "@mui/material/TextField";
 import Box from "@mui/material/Box";
 import Stack from "@mui/material/Stack";
 import Button from "@mui/material/Button";
+
+import MuiDialog from "../libs/MuiDialog";
 // whatUser 프롭은 개인, 작가, 프로젝트 매니저 알기 위함 -> todo("부모 컴포넌트에서 값 나누기")
 const LoginEditor = ({ whatUser }) => {
+  const [enableDialog, setEnableDialog] = useState(false); //  다이어로그
   const setIsLoginStateState = useContext(loginContext);
   const nav = useNavigate();
   const changeUserLoginState = useContext(loginContext);
@@ -66,16 +69,20 @@ const LoginEditor = ({ whatUser }) => {
       switch (whatUser) {
         case "user": {
           // 유저 로그인
-          onLoginButtonHandler({ id: state.id, pw: state.pw }, () => {
-            changeUserLoginState(true);
-            let userType = localStorage.getItem("userId");
-            let userId = localStorage.getItem("userType");
-            console.log(
-              "유저 로그인 유저 번호 : " + userId + "유저타입:" + userType
-            );
-            setIsLoginStateState(true);
+          onLoginButtonHandler({ id: state.id, pw: state.pw }, (result) => {
+            if (result) {
+              changeUserLoginState(true);
+              let userType = localStorage.getItem("userId");
+              let userId = localStorage.getItem("userType");
+              console.log(
+                "유저 로그인 유저 번호 : " + userId + "유저타입:" + userType
+              );
+              setIsLoginStateState(true);
 
-            nav(`/`);
+              nav(`/`);
+            } else {
+              setEnableDialog(true);
+            }
           });
           setIsLoginStateState(false);
           return;
@@ -124,8 +131,7 @@ const LoginEditor = ({ whatUser }) => {
   const registerClick = () => {
     console.log("회원가입 이동" + whatUser);
 
-    if (String(whatUser) === String("user"))
-      nav(`/signupuser`, { replace: true });
+    if (String(whatUser) === String("user")) nav(`/signupuser`);
     if (String(whatUser) === String("space"))
       nav(`/signupbusiness`, {
         replace: true,
@@ -250,6 +256,15 @@ const LoginEditor = ({ whatUser }) => {
           <button type="button" class="btn btn-dark" onClick={handleLoginClick}>
             로그인
           </button>
+          {enableDialog && (
+            <MuiDialog
+              title={"알림"}
+              content={"아이디/비밀번호 재확인해주세요"}
+              result={true}
+              page={"login"}
+              parentClick={setEnableDialog}
+            />
+          )}
         </Box>
       </div>
     </>

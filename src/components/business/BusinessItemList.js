@@ -65,7 +65,7 @@ const BusinessItemList = ({ whatType }) => {
       >
         <ImageList
           sx={{ maxWidth: 1000, height: "auto", overflowY: "hidden" }}
-          cols={3}
+          cols={4}
           gap={8} // 이미지 사이의 간격 설정
         >
           {whatType === "author" &&

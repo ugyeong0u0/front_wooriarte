@@ -16,8 +16,8 @@ const WaitingMatchingList = () => {
     if (userType === "author") {
       // 대기중인 매칭
       onWaitingMatchingAuthorHandler({ authorId: id }, (response) => {
-        if (Array.isArray(response.data)) {
-          setMockData(response.data);
+        if (Array.isArray(response)) {
+          setMockData(response);
         } else {
           console.error("응답 데이터가 배열이 아닙니다.");
         }
@@ -40,14 +40,15 @@ const WaitingMatchingList = () => {
   return (
     <>
       {mockData.length > 0 ? (
-        mockData.map((item) => (
+        mockData.map((item, index) => (
           <MatchingItem
             key={item.matchingId}
-            text={`매칭 ID: ${item.matchingId}, 프로젝트 아이템: ${item.projectItemId}, 공간 아이템: ${item.spaceItemId}`}
+            text={`${index + 1}. ${item.name} 님에게 신청을 보냈습니다.`}
+            id={item.itemId}
           />
         ))
       ) : (
-        <span>없음</span>
+        <span> 현재 대기중인 매칭이 없습니다. </span>
       )}
     </>
   );

@@ -16,8 +16,8 @@ const ReceivedMatchingList = ({ setUpdateCount, updateCount }) => {
     if (userType === "author") {
       // 대기중인 매칭
       onGetOfferedMatchingAuthorHandler({ authorId: id }, (response) => {
-        if (Array.isArray(response.data)) {
-          setMockData(response.data);
+        if (Array.isArray(response)) {
+          setMockData(response);
         } else {
           console.error("응답 데이터가 배열이 아닙니다.");
         }
@@ -40,16 +40,19 @@ const ReceivedMatchingList = ({ setUpdateCount, updateCount }) => {
   return (
     <>
       {mockData.length > 0 ? (
-        mockData.map((item) => (
+        mockData.map((item, index) => (
           <ReceivedMatchingItem
             key={item.matchingId}
-            text={`매칭 ID: ${item.matchingId}, 프로젝트 아이템: ${item.projectItemId}, 공간 아이템: ${item.spaceItemId}`}
+            text={`${index + 1}. ${item.name} 님이 ${
+              item.matchingId
+            } 신청을 보내셨습니다.`}
             matchingId={item.matchingId}
             setUpdateCount={setUpdateCount}
+            id={item.itemId}
           />
         ))
       ) : (
-        <span>없음</span>
+        <span>현재 제안 받은 매칭이 없습니다.</span>
       )}
     </>
   );

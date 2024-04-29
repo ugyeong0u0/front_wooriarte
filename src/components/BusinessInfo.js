@@ -6,6 +6,7 @@ import { validateEmail } from "../util/GlobalFunc"; // 이메일 형식
 import Divider from "@mui/material/Divider";
 import Stack from "@mui/material/Stack";
 import { useNavigate, useSearchParams } from "react-router-dom";
+import MuiDialog from "../libs/MuiDialog";
 // api
 import {
   onsignupAuthorHandler,
@@ -24,7 +25,13 @@ import { common } from "@mui/material/colors";
 //!------1. 사업자 회원가입 2. 정보 수정 시 사용
 
 // isbusinessInfo true => 회원정보 수정에 쓰임 , false =:> 회원가입 때 쓰임
-const BusinessInfo = ({ isBusinessInfo, whatUser }) => {
+const BusinessInfo = ({
+  isBusinessInfo,
+  whatUser,
+  setDialog,
+  setAuthState,
+}) => {
+  const [enableDialog, setEnableDialog] = useState(false); //  다이어로그
   console.log("회원정보 수정?" + isBusinessInfo);
   console.log("businessInfo 회원가입 누구?" + whatUser);
 
@@ -52,12 +59,12 @@ const BusinessInfo = ({ isBusinessInfo, whatUser }) => {
       onGetAuthorInfoHandler({ id }, (response) => {
         console.log(" 작가 개인정보 응답값 받음");
         setBusinessInfoState((prevState) => ({
-          businessNumber: response.data.data.businessNumber,
-          company: response.data.data.company,
-          owner: response.data.data.ceo,
-          id: response.data.data.id,
-          phoneNumber: response.data.data.phone,
-          email: response.data.data.email,
+          businessNumber: response.businessNumber,
+          company: response.company,
+          owner: response.ceo,
+          id: response.id,
+          phoneNumber: response.phone,
+          email: response.email,
           password: " ",
           authPassword: " ",
         }));
@@ -101,19 +108,18 @@ const BusinessInfo = ({ isBusinessInfo, whatUser }) => {
       console.log("비번일치");
       if (
         businessInfoState && // null undefined
-        businessInfoState.company !== "" &&
-        businessInfoState.id !== "" &&
-        businessInfoState.owner !== "" &&
-        businessInfoState.businessNumber &&
+        businessInfoState.company.length > 2 &&
+        businessInfoState.id.length > 2 &&
+        businessInfoState.owner.length > 2 &&
         businessInfoState.businessNumber.length == 8 &&
         businessInfoState.phoneNumber &&
-        businessInfoState.phoneNumber.length > 8
+        businessInfoState.phoneNumber.length > 5
       ) {
         console.log("빈값없음");
         if (validateEmail(businessInfoState.email)) {
           console.log("이메일일치");
           if (
-            businessInfoState.password > 3 &&
+            businessInfoState.password.length > 3 &&
             businessInfoState.password === businessInfoState.authPassword
           ) {
             setEnableNextBtn(true); // 다음 버튼 활성화
@@ -147,10 +153,14 @@ const BusinessInfo = ({ isBusinessInfo, whatUser }) => {
             email: businessInfoState.email,
             phone: businessInfoState.phoneNumber,
           },
-          () => {
-            // 성공시 콜백
-            console.log("Signup successful, navigating back");
-            nav(`/loginauthor`); // 로그인 페이지로 가기
+          (responseStatus) => {
+            if (responseStatus) {
+              // 성공시 콜백
+              console.log("Signup successful, navigating back");
+              nav(`/loginauthor`); // 로그인 페이지로 가기
+            } else {
+              setDialog(true);
+            }
           }
         );
       } else if (whatUser === "space") {
@@ -164,10 +174,14 @@ const BusinessInfo = ({ isBusinessInfo, whatUser }) => {
             email: businessInfoState.email,
             phone: businessInfoState.phoneNumber,
           },
-          () => {
-            // 성공시 콜백
-            console.log("Signup successful, navigating back");
-            nav(`/loginspace`); // 로그인 페이지로 가기
+          (responseStatus) => {
+            if (responseStatus) {
+              // 성공시 콜백
+              console.log("Signup successful, navigating back");
+              nav(`/loginspace`); // 로그인 페이지로 가기
+            } else {
+              setDialog(true);
+            }
           }
         );
       } else {
@@ -177,7 +191,6 @@ const BusinessInfo = ({ isBusinessInfo, whatUser }) => {
   };
 
   // 비즈니스 정보 저장 통신
-  // todo 서버에 비번변경도 추가해야함
   const saveInfo = () => {
     if (businessInfoState.id !== "" && businessInfoState.password !== "") {
       let id = localStorage.getItem("userId");
@@ -196,6 +209,7 @@ const BusinessInfo = ({ isBusinessInfo, whatUser }) => {
           () => {
             // 성공시 콜백
             console.log("작가 정보 수정successful");
+            setEnableDialog(true);
           }
         );
       } else if (whatUser === "space") {
@@ -213,6 +227,7 @@ const BusinessInfo = ({ isBusinessInfo, whatUser }) => {
           () => {
             // 성공시 콜백
             console.log("공간대여자 정보 수정 successful");
+            setEnableDialog(true);
           }
         );
       } else {
@@ -224,8 +239,8 @@ const BusinessInfo = ({ isBusinessInfo, whatUser }) => {
   return (
     <div>
       <Stack spacing={2}>
-        {isBusinessInfo && <h2>회원 정보 수정</h2>}
-        {!isBusinessInfo && <h2>회원 가입</h2>}
+        {isBusinessInfo && <h2 style={{ marginBottom: 25 }}>myInfo</h2>}
+        {/* {!isBusinessInfo && <h2>회원 가입</h2>} */}
         <div>
           <TextField
             name="businessNumber"
@@ -335,10 +350,20 @@ const BusinessInfo = ({ isBusinessInfo, whatUser }) => {
             class="btn btn-dark"
             onClick={saveInfo}
             disabled={!enableNextBtn}
-            style={{ marginTop: 15 }}
+            style={{ marginLeft: 7, marginBottom: 30, marginTop: 40 }}
           >
             저장
           </button>
+        )}
+        {enableDialog && (
+          <MuiDialog
+            title={"알림"}
+            content={"수정되었습니다!"}
+            result={true}
+            page={"forBusinessInfo"}
+            parentClick={setEnableDialog}
+            parentAnotherClick={setAuthState}
+          />
         )}
       </Stack>
     </div>

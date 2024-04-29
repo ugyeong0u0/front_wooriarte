@@ -1,9 +1,13 @@
 import Stack from "@mui/material/Stack";
 import Button from "react-bootstrap/Button";
+// 어이콘
+import ContentPasteSearchIcon from "@mui/icons-material/ContentPasteSearch";
+import IconButton from "@mui/material/IconButton";
 
 import { onMatchingAccDenyHandler } from "../../apis/servicehandeler/MatchingApiHandler";
+import { useNavigate } from "react-router-dom";
 //!--------------------비즈니스 매칭관리 페이지
-const ReceivedMatchingItem = ({ text, matchingId, setUpdateCount }) => {
+const ReceivedMatchingItem = ({ text, matchingId, setUpdateCount, id }) => {
   // 제안 수락/ 거절
   const AcceptPropsal = (matchingId, result) => {
     console.log("눌린 매칭 버튼" + result);
@@ -14,18 +18,43 @@ const ReceivedMatchingItem = ({ text, matchingId, setUpdateCount }) => {
     });
   };
 
+  const nav = useNavigate();
+
+  const goItemInfo = (id) => {
+    let whatUser = localStorage.getItem("userType");
+    if (whatUser === "author") {
+      nav(`/businessiteminfo/${id}`, {
+        state: { userType: "space", posterId: id },
+      });
+    } else {
+      nav(`/businessiteminfo/${id}`, {
+        state: { userType: "author", posterId: id },
+      });
+    }
+  };
+
   return (
     <>
-      <Stack spacing={2} direction="row">
+      <Stack spacing={0.9} direction="row" alignItems="center">
         <span> {text}</span>
+        <IconButton
+          color="inherit"
+          aria-label="add an alarm"
+          style={{ marginLeft: 30 }}
+          onClick={() => goItemInfo(id)}
+        >
+          <ContentPasteSearchIcon />
+        </IconButton>
         <Button
           variant="primary"
+          style={{ padding: 5 }}
           onClick={() => AcceptPropsal(matchingId, true)}
         >
           수락
         </Button>{" "}
         <Button
           variant="outline-dark"
+          style={{ padding: 5 }}
           onClick={() => AcceptPropsal(matchingId, false)}
         >
           거절

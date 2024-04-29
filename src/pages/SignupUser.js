@@ -16,6 +16,9 @@ import Badge from "@mui/material/Badge";
 // 레이아웃
 import Box from "@mui/material/Box";
 
+// 다이어로그
+import MuiDialog from "../libs/MuiDialog";
+
 // 회원가입 완료
 // todo("회원가입 통신 연결해야함 ")
 // todo("개인 사업자 버튼 이벤트 넣기 ")
@@ -25,6 +28,7 @@ const SignupUser = () => {
 
   // 다음 버튼 활성화
   const [enableNextBtn, setEnableNextBtn] = useState(false);
+  const [enableDialog, setEnableDialog] = useState(false);
 
   const submitsignup = () => {
     if (state.id !== "" && state.pw !== "") {
@@ -38,10 +42,17 @@ const SignupUser = () => {
           pass: state.password,
           authPass: state.authPassword,
         },
-        () => {
-          // 성공시 콜백
-          console.log("Signup successful, navigating back");
-          nav(-1); // 로그인 페이지로 가기
+        (success) => {
+          console.log("callback 안 ");
+          if (!success) {
+            console.log("callback 실패 안 ");
+            setEnableDialog(true);
+          } else {
+            console.log("callback 성공 안 ");
+            // 성공시 콜백
+            console.log("Signup successful, navigating back");
+            nav(-1); // 로그인 페이지로 가기
+          }
         }
       );
     }
@@ -103,7 +114,7 @@ const SignupUser = () => {
           justifyContent: "center", // 가로 중앙 정렬
         }}
       >
-        <h1>signup</h1>
+        <h1>Signup</h1>
       </Box>
       <Box
         sx={{
@@ -116,7 +127,7 @@ const SignupUser = () => {
       >
         <Stack spacing={2}>
           <div>
-            <Stack spacing={2} direction="row">
+            <Stack spacing={2} direction="row" style={{ marginLeft: 20 }}>
               <Badge color="info" badgeContent=" " variant="dot">
                 <Button color="info" size="large">
                   개인
@@ -142,6 +153,7 @@ const SignupUser = () => {
               type="search"
               variant="standard"
               onChange={handleChangeState}
+              style={{ marginLeft: 10 }}
             />
           </div>
           <div>
@@ -152,6 +164,7 @@ const SignupUser = () => {
               type="search"
               variant="standard"
               onChange={handleChangeState}
+              style={{ marginLeft: 10 }}
             />
           </div>
           <div>
@@ -165,6 +178,7 @@ const SignupUser = () => {
               }}
               variant="standard"
               onChange={handleChangeState}
+              style={{ marginLeft: 10 }}
             />
           </div>
           <div>
@@ -175,6 +189,7 @@ const SignupUser = () => {
               type="search"
               variant="standard"
               onChange={handleChangeState}
+              style={{ marginLeft: 10 }}
             />
           </div>
           <div>
@@ -185,6 +200,7 @@ const SignupUser = () => {
               type="password"
               variant="standard"
               onChange={handleChangeState}
+              style={{ marginLeft: 10 }}
             />
           </div>
           <div>
@@ -195,6 +211,7 @@ const SignupUser = () => {
               type="password"
               variant="standard"
               onChange={handleChangeState}
+              style={{ marginLeft: 10 }}
             />
           </div>
           <button
@@ -202,10 +219,19 @@ const SignupUser = () => {
             class="btn btn-success"
             onClick={submitsignup}
             disabled={!enableNextBtn}
+            style={{ marginLeft: 7, marginBottom: 30, marginTop: 40 }}
           >
             확인
           </button>
         </Stack>
+        {enableDialog && (
+          <MuiDialog
+            title={"알림"}
+            content={"이미 가입 된 회원입니다!"}
+            result={true}
+            page={"userSignUp"}
+          />
+        )}
       </Box>
     </>
   );

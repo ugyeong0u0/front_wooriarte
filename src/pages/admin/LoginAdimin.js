@@ -43,7 +43,11 @@ const LoginAdmin = () => {
         noValidate
         autoComplete="off"
       >
-        <Stack direction="column" spacing={2}>
+        <Stack
+          direction="column"
+          spacing={2}
+          style={{ marginTop: 100, marginBottom: 260 }}
+        >
           <span>AdminLogin </span>
           <TextField
             name="id"

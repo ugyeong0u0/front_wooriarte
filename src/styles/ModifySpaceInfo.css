@@ -1,16 +1,13 @@
 .spaceInfoContainer {
-  display: flex;
-  flex-direction: column;
-  align-items: center; /* 모든 자식 요소를 중앙 정렬 */
-  justify-content: center; /* 세로 방향으로 중앙 정렬 */
 }
 .spaceInfoContainer {
-  padding: 10rem;
+  padding-left: 10rem;
+  padding-right: 10rem;
+  padding-top: 5rem;
+  padding-bottom: 5rem;
   background-color: var(--white);
   border-radius: 1rem;
   width: 100%;
   box-shadow: rgba(0, 0, 0, 0.1) 0px 5px 15px;
   display: flex; /* 플렉스박스 레이아웃 적용 */
-  align-items: center; /* 수직 방향 중앙 정렬 */
-  justify-content: center; /* 수평 방향 중앙 정렬 */
 }
