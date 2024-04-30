@@ -112,12 +112,18 @@ const Header = ({ isLoginState, isLoginHandler }) => {
           )}
 
           {isLoginState && (
-            <Button
-              className="mypage"
-              text={"MyPage"}
-              isVisible={true}
-              onClick={whatUserMypage}
-            ></Button>
+            <>
+              <Button
+                className="mypage"
+                text={`${
+                  localStorage.getItem("userType") === "author"
+                    ? "Author's"
+                    : "Rental's"
+                }Page`}
+                isVisible={true}
+                onClick={whatUserMypage}
+              ></Button>
+            </>
           )}
         </div>
       </header>

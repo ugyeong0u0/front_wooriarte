@@ -213,15 +213,15 @@ export const onGetSpaceInfoHandler = ({ id }, callback) => {
 // 스페이스 정보 수정 응답
 export const updateSpaceInfoResponse = (response, callback) => {
   if (!response) {
-    alert("네트워크 이상 ");
+    callback(false);
     return;
   }
   if (response.status >= 200 && response.status < 300) {
     console.log("스페이스 정보 수정 성공");
-    callback();
+    callback(true);
     return;
   } else {
-    alert("스페이스 정보 수정 실패");
+    callback(false);
     console.log(response.status);
     return;
   }

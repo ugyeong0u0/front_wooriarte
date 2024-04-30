@@ -58,6 +58,7 @@ export const onLoginAuthorHandler = ({ id, pwd }, callback) => {
 // 작가 회원가입 응답
 export const signupAuthorResponse = (response, callback) => {
   if (!response) {
+    console.log("작가 회원가입 실패");
     callback(false);
     return;
   }
@@ -66,6 +67,7 @@ export const signupAuthorResponse = (response, callback) => {
     callback(true);
     return;
   } else {
+    console.log("작가 회원가입 실패");
     callback(false);
     console.log(response.status);
     return;
@@ -213,29 +215,28 @@ export const onGetAuthorInfoHandler = ({ id }, callback) => {
 // 작가 정보 조회 응답
 export const updateAuthorInfoResponse = (response, callback) => {
   if (!response) {
-    alert("네트워크 이상 ");
+    callback(false);
     return;
   }
   if (response.status >= 200 && response.status < 300) {
     console.log("작가 정보 수정 성공");
-    callback();
+    callback(true);
     return;
   } else {
-    alert("작가 정보 수정 실패");
+    callback(false);
     console.log(response.status);
     return;
   }
 };
 // 작가 정보 수정 이벤트
 export const onUpdateUserInfoHandler = (
-  { authorId, businessNumber, id, pwd, company, ceo, email, phone },
+  { authorId, businessNumber, company, ceo, email, phone },
   callback
 ) => {
   updateAuthorInfo({
     authorId,
     businessNumber,
-    id,
-    pwd,
+
     company,
     ceo,
     email,

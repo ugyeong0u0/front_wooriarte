@@ -274,8 +274,7 @@ export const getAuthorInfo = async ({ id }) => {
 export const updateAuthorInfo = async ({
   authorId,
   businessNumber,
-  id,
-  pwd,
+
   company,
   ceo,
   email,
@@ -286,11 +285,6 @@ export const updateAuthorInfo = async ({
     "작가 정보수정 id  :" +
       authorId +
       businessNumber +
-      id +
-      "비번" +
-      pwd +
-      "비번타입" +
-      typeof pwd +
       company +
       ceo +
       email +
@@ -301,8 +295,6 @@ export const updateAuthorInfo = async ({
   const result = await axios
     .put(url, {
       businessNumber: businessNumber,
-      id: id,
-      pwd: pwd,
       company: company,
       ceo: ceo,
       email: email,
