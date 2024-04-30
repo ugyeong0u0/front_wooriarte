@@ -22,8 +22,8 @@
 
 .header > div > Button {
   margin-bottom: 10px; /* Button 아래에 마진을 추가하여 여백 조정 */
+  margin-right: 25px;
 }
-
 body {
   line-height: 1.7;
   color: black;

@@ -28,6 +28,7 @@ import Container from "@mui/material/Container";
 
 import ImageList from "@mui/material/ImageList";
 import ImageListItem from "@mui/material/ImageListItem";
+import { grey } from "@mui/material/colors";
 
 <link
   rel="stylesheet"
@@ -239,22 +240,25 @@ const BusinessItemInfo = () => {
               <h1 style={{ marginBottom: 10, marginTop: 10 }}>
                 작가: {projectInfo.artistName}
               </h1>
-              <p>
+              <span style={{ marginLeft: 10, color: "gray", fontSize: "12px" }}>
                 {" "}
+                {projectInfo.city}
+              </span>
+              <span style={{ color: "gray", fontSize: "12px" }}>
                 {projectInfo.startDate} ~ {projectInfo.endDate}
-              </p>
-              <p> {projectInfo.city}</p>
+              </span>
             </div>
           ) : (
             <div>
               <h1 style={{ marginBottom: 10, marginTop: 10 }}>
                 공간대여자: {spaceInfo.hostName}
               </h1>
-              <p>
-                {spaceInfo.startDate} ~ {spaceInfo.endDate}
-              </p>
-
-              <p>{spaceInfo.city}</p>
+              <span style={{ marginLeft: 10, color: "gray", fontSize: "12px" }}>
+                {spaceInfo.city}
+              </span>
+              <span style={{ color: "gray", fontSize: "12px" }}>
+                : {spaceInfo.startDate} ~ {spaceInfo.endDate}
+              </span>
             </div>
           )
         ) : exhibitsType === "author" ? (
@@ -262,22 +266,24 @@ const BusinessItemInfo = () => {
             <h2 style={{ marginBottom: 10, marginTop: 10 }}>
               작가: {projectInfo.artistName}
             </h2>
-            <p>
-              {" "}
+            <span style={{ marginLeft: 10, color: "gray", fontSize: "12px" }}>
+              {projectInfo.city}
+            </span>
+            <span style={{ color: "gray", fontSize: "12px" }}>
               {projectInfo.startDate} ~ {projectInfo.endDate}
-            </p>
-
-            <p>{projectInfo.city}</p>
+            </span>
           </div>
         ) : (
           <div>
             <h2 style={{ marginBottom: 10, marginTop: 10 }}>
               공간대여자: {spaceInfo.hostName}
             </h2>
-            <p>
+            <span style={{ marginLeft: 10, color: "gray", fontSize: "12px" }}>
+              {spaceInfo.city}
+            </span>
+            <span style={{ color: "gray", fontSize: "12px" }}>
               {spaceInfo.startDate} ~ {spaceInfo.endDate}
-            </p>
-            <p>{spaceInfo.city}</p>
+            </span>
           </div>
         )}
 
@@ -324,7 +330,9 @@ const BusinessItemInfo = () => {
               userType === "author" ? (
                 <div className="info">
                   <p>연락처: {projectInfo.phone}</p>
-                  <p>프로젝트 소개: {projectInfo.intro}</p>
+
+                  <p>프로젝트 소개 </p>
+                  <p> {projectInfo.intro}</p>
 
                   <button
                     className="applyBtn"
@@ -334,7 +342,8 @@ const BusinessItemInfo = () => {
                       marginTop: 20,
                       marginBottom: 50,
                       padding: 20,
-                      marginLeft: 25,
+                      marginLeft: 0, // 왼쪽에 정렬되도록 marginLeft 제거
+                      float: "right", // 버튼을 왼쪽으로 정렬
                     }}
                     onClick={() => {
                       if (userType === "author")
@@ -353,7 +362,9 @@ const BusinessItemInfo = () => {
                   <p>주차 가능: {spaceInfo.parking ? "예" : "아니오"}</p>
                   <p>요금: {spaceInfo.fee}원</p>
                   <p>연락처: {spaceInfo.phone}</p>
-                  <p>소개: {spaceInfo.intro}</p>
+
+                  <p>소개</p>
+                  <p>{spaceInfo.intro}</p>
 
                   <button
                     className="applyBtn"
@@ -362,8 +373,9 @@ const BusinessItemInfo = () => {
                     style={{
                       marginTop: 20,
                       marginBottom: 50,
-                      padding: 20,
-                      marginLeft: 25,
+
+                      marginLeft: 0, // 왼쪽에 정렬되도록 marginLeft 제거
+                      float: "right", // 버튼을 왼쪽으로 정렬
                     }}
                     onClick={() => {
                       if (userType === "author")
@@ -380,7 +392,9 @@ const BusinessItemInfo = () => {
             ) : exhibitsType === "author" ? (
               <div className="info">
                 <p>연락처: {projectInfo.phone}</p>
-                <p>프로젝트 소개: {projectInfo.intro}</p>
+
+                <p>프로젝트 소개</p>
+                <p>{projectInfo.intro}</p>
 
                 <button
                   className="applyBtn"
@@ -388,7 +402,7 @@ const BusinessItemInfo = () => {
                   style={{
                     marginTop: 20,
                     marginBottom: 50,
-                    padding: 20,
+
                     marginLeft: 25,
                   }}
                   class="btn btn-dark"
@@ -409,7 +423,9 @@ const BusinessItemInfo = () => {
                 <p>주차 가능: {spaceInfo.parking ? "예" : "아니오"}</p>
                 <p>요금: {spaceInfo.fee}원</p>
                 <p>연락처: {spaceInfo.phone}</p>
-                <p>소개: {spaceInfo.intro}</p>
+
+                <p>소개 </p>
+                <p> {spaceInfo.intro}</p>
 
                 <button
                   className="applyBtn"
@@ -418,8 +434,9 @@ const BusinessItemInfo = () => {
                   style={{
                     marginTop: 20,
                     marginBottom: 50,
-                    padding: 20,
-                    marginLeft: 25,
+
+                    marginLeft: 0, // 왼쪽에 정렬되도록 marginLeft 제거
+                    float: "right", // 버튼을 왼쪽으로 정렬
                   }}
                   onClick={() => {
                     if (userType === "author")

@@ -337,7 +337,7 @@ export const addSpaceItem = async ({
     .post(addSpaceItem_URL(), {
       spaceRentalId,
       intro,
-      hostname,
+      hostName: hostname,
       city,
       size,
       parking,
@@ -430,12 +430,13 @@ export const updateSpaceItemInfo = async ({
   endDate,
 }) => {
   console.log("스페이스 아이템 수정 실행: " + startDate + endDate);
+  console.log("스페이스 아이템 api 통신부 호스트네임: " + hostname);
   const url = GetSpaceItem_URL({ id: spaceId });
   console.log("스페이스 아이템 수정" + url);
   const result = await axios
     .put(url, {
       intro,
-      hostname,
+      hostName: hostname,
       city,
       size,
       parking,

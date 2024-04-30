@@ -1,7 +1,7 @@
 // 추후 useEffect로 초기 설정하기
 import { useEffect } from "react";
 import image1 from "../assets/image 1.png";
-import artForEveryOne from "../assets/artForEveryOne.png";
+import mainAdBanner from "../assets/mainAdBanner.png";
 import PosterItem from "../components/PosterItem";
 import "../styles/MainUser.css";
 
@@ -235,12 +235,7 @@ const MainUser = () => {
                 })}
               </ImageList>
             </Stack> */}
-            {/* 문구배너  */}
-            <img
-              src={artForEveryOne}
-              style={{ width: "100%", height: "auto", display: "block" }}
-              alt="Responsive image"
-            />
+
             {/* 모든리스트 */}
             <Stack
               justifyContent="center" // 가로 방향으로 중앙 정렬
@@ -249,8 +244,8 @@ const MainUser = () => {
             >
               <ImageList
                 sx={{ maxWidth: 1000, height: "auto", overflowY: "hidden" }}
-                cols={3}
-                gap={8} // 이미지 사이의 간격 설정
+                cols={4}
+                gap={20} // 이미지 사이의 간격 설정
               >
                 {mockData.map((item) => (
                   <ImageListItem
@@ -283,28 +278,13 @@ const MainUser = () => {
                 ))}
               </ImageList>
             </Stack>
-            {/* 구분선 */}
-            <div class="gray-line"></div>
-            {/* 광고배너 */}
-            <Stack
-              direction="row"
-              divider={<Divider orientation="vertical" flexItem />}
-              spacing={2}
-              justifyContent="center" // 가로 방향으로 중앙 정렬
-              alignItems="center" // 세로 방향으로 중앙 정렬
-              style={{ height: "80vh" }}
-            >
-              <ParticipateCard
-                title="작품 개시 하러가기"
-                content="작가로 가입 후 전시 공간을 골라보세요"
-                img={cardImg[0].imgURL}
-              />
-              <ParticipateCard
-                title="전시 공간 개시하러가기"
-                content="공간임대자로 가입 후 작품을 골라보세요"
-                img={cardImg[1].imgURL}
-              />
-            </Stack>
+            <div class="gray-line" style={{ marginBottom: 10 }}></div>
+            {/* 문구배너  */}
+            <img
+              src={mainAdBanner}
+              style={{ width: "100% ", height: "80%", display: "block" }}
+              alt="Responsive image"
+            />
           </Box>
         </Container>
       </React.Fragment>

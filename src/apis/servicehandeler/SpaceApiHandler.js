@@ -523,7 +523,6 @@ export const onGetSuccessMatchingSpaceHandler = ({ spaceId }, callback) => {
 
 export const getOneSpaceItemsResponse = (response, callback) => {
   if (!response) {
-    alert("공간대여자의 아이템들 조회없음");
     return;
   }
   if (response.status >= 200 && response.status < 300) {
@@ -531,7 +530,6 @@ export const getOneSpaceItemsResponse = (response, callback) => {
     callback(response);
     return;
   } else {
-    alert("공간대여자의 아이템들 조회 실패");
     console.log(response.status);
     return;
   }

@@ -108,7 +108,9 @@ export default function MyVerticallyCenteredModal(props) {
         "시작 날짜: " +
           businessInfoState.startDate +
           "끝날짜" +
-          businessInfoState.endDate
+          businessInfoState.endDate +
+          "호스트이름" +
+          businessInfoState.hostName
       );
       if (
         businessInfoState.address.length > 1 &&

@@ -113,6 +113,7 @@ const Header = ({ isLoginState, isLoginHandler }) => {
 
           {isLoginState && (
             <Button
+              className="mypage"
               text={"MyPage"}
               isVisible={true}
               onClick={whatUserMypage}

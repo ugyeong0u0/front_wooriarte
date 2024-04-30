@@ -15,6 +15,9 @@ import Stack from "@mui/material/Stack";
 import "../../styles/apply/ApplyWithItems.css";
 import BusinessItem from "../../components/business/BusinessItem";
 
+// items
+import noItems from "../../assets/noItems.png";
+
 // api
 import {
   onGetOneAuthorProjectsHandler,
@@ -29,6 +32,7 @@ import { useEffect } from "react";
 import ImageList from "@mui/material/ImageList";
 
 import MuiDialog from "../../libs/MuiDialog";
+import { Mp } from "@mui/icons-material";
 <link
   rel="stylesheet"
   href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
@@ -39,6 +43,8 @@ import MuiDialog from "../../libs/MuiDialog";
 const ApplyWithItems = () => {
   const uselocation = useLocation();
   const nav = useNavigate();
+
+  const [enableDialog, setEnableDialog] = useState(false); // 검색결과가 없을때 띄울이미자
 
   const { userType, posterId } = uselocation.state; // 작가인지 공간대여자인지 신청하기 눌렀을 때 정보 가져올 api 다름
 
@@ -75,6 +81,8 @@ const ApplyWithItems = () => {
         if (Array.isArray(response.data)) {
           setMockData(response.data);
         } else {
+          const emptyList = [];
+          setMockData(emptyList);
           console.error("응답 데이터가 배열이 아닙니다.");
         }
       });
@@ -83,6 +91,8 @@ const ApplyWithItems = () => {
         if (Array.isArray(response.data)) {
           setMockData(response.data);
         } else {
+          const emptyList = [];
+          setMockData(emptyList);
           console.error("응답 데이터가 배열이 아닙니다.");
         }
       });
@@ -90,6 +100,14 @@ const ApplyWithItems = () => {
       console.log("비즈니스 아이템 조회 잘못된 접근");
     }
   }, [updateCount, selectedItem]); // businessInfoState 객체의 모든 변경에 반응
+
+  useEffect(() => {
+    if (mockData.length > 0) {
+      setEnableDialog(false);
+    } else {
+      setEnableDialog(true);
+    }
+  }, [mockData]);
 
   // 취소하기, 신청하기 버튼 신청 후 안보이게 처리
   const handleAbleBtn = () => {
@@ -160,24 +178,35 @@ const ApplyWithItems = () => {
 
   return (
     <div>
+      <h3 style={{ marginLeft: 130, marginTop: 50 }}>
+        {" "}
+        신청할 아이템을 골라주세요
+      </h3>
       <Stack
         style={{
-          marginTop: 50,
           justifyContent: "center",
           alignItems: "center",
         }}
       >
-        <h1>신청할 아이템을 골라주세요</h1>
+        <div
+          style={{
+            height: 0.5,
+            backgroundColor: "black",
+            width: "80%",
+            marginBottom: 50,
+          }}
+        />
         <ImageList
           sx={{ maxWidth: 1000, height: "auto", overflowY: "hidden" }}
           cols={4}
-          gap={8} // 이미지 사이의 간격 설정
+          gap={20} // 이미지 사이의 간격 설정
         >
           {userType === "author" &&
+            !enableDialog &&
             mockData.map((item) => {
               return (
                 <>
-                  <Stack style={{ marginTop: 50 }}>
+                  <Stack style={{ marginBottom: 150 }}>
                     <Radio
                       {...controlProps(String(item.projectItemId))}
                       sx={{
@@ -201,6 +230,7 @@ const ApplyWithItems = () => {
             })}
 
           {userType === "space" &&
+            !enableDialog &&
             mockData.map((item) => {
               return (
                 <div
@@ -230,9 +260,27 @@ const ApplyWithItems = () => {
                 </div>
               );
             })}
+          {enableDialog && (
+            <img src={noItems} style={{ marginLeft: 290, width: 400 }} />
+          )}
         </ImageList>
+        {enableDialog && (
+          <button
+            style={{
+              marginRight: 10,
+              padding: 20,
 
-        {abledBtn && (
+              marginBottom: 100,
+            }}
+            className="applyBtn"
+            type="button"
+            class="btn btn-dark"
+            onClick={goBack}
+          >
+            뒤로가기
+          </button>
+        )}
+        {abledBtn && !enableDialog && (
           <div style={{ marginTop: 40, marginBottom: 100 }}>
             <button
               style={{ marginRight: 10, padding: 20 }}

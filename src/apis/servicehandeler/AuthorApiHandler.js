@@ -520,7 +520,6 @@ export const onGetSuccessMatchingAuthorHandler = ({ authorId }, callback) => {
 
 export const getOneAuthorProjectsResponse = (response, callback) => {
   if (!response) {
-    alert("작가의 아이템들 조회없음");
     return;
   }
   if (response.status >= 200 && response.status < 300) {
@@ -528,7 +527,6 @@ export const getOneAuthorProjectsResponse = (response, callback) => {
     callback(response);
     return;
   } else {
-    alert("작가의 아이템들 조회 실패");
     console.log(response.status);
     return;
   }
