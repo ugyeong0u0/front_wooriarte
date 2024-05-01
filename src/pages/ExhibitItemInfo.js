@@ -17,6 +17,7 @@ import Stack from "@mui/material/Stack";
 import CssBaseline from "@mui/material/CssBaseline";
 import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
+import Payment from "../payment";
 
 // 구매 다이어로그로 넘김
 import { BuyingDialog } from "../libs/ScrollDialog";
@@ -78,36 +79,6 @@ const ExhibitItemInfo = () => {
   const minusTicket = () => {
     if (ticketNumber - 1 >= 0) {
       setTicketNumber((ticketNumber) => ticketNumber - 1);
-    }
-  };
-
-  const getTicket = () => {
-    // todo("예매하기 클릭이벤트 넣기")
-
-    // if (localStorage.getItem("login-result") !== null) {
-    //   nav("/buyingticket", {
-    //     state: { ticketNumber: ticketNumber, price: price },
-    //   });
-    // } else {
-    //   alert("로그인 후 예매가능");
-    // }
-    // 연습용
-    if (true) {
-      // todo 로그인, 티켓 개수 0이상일때 넘어갈 수 있게 하기
-      // <BuyingDialog />;
-      let date = exhibitInfoState.startDate + "~" + exhibitInfoState.endDate;
-      nav("/buyingticket", {
-        state: {
-          ticketNumber: ticketNumber,
-          price: exhibitInfoState.price,
-          explanation: exhibitInfoState.intro,
-          postName: exhibitInfoState.name,
-          location: exhibitInfoState.address,
-          date: date,
-        },
-      });
-    } else {
-      alert("로그인 후 예매가능");
     }
   };
 
@@ -192,21 +163,7 @@ const ExhibitItemInfo = () => {
                       원
                     </span>
                   </div>
-                  <Button
-                    variant="contained"
-                    endIcon={<AddShoppingCartIcon />}
-                    onClick={getTicket}
-                    style={{
-                      marginTop: 10,
-                      backgroundColor: "black", // 버튼 배경색을 검정으로 설정
-                      color: "white", // 텍스트 색상을 흰색으로 설정
-                      "&:hover": {
-                        backgroundColor: "darkgrey", // 호버 상태의 배경색 변경
-                      },
-                    }}
-                  >
-                    예매하기
-                  </Button>
+                  <Payment exhibitId={exhibitId} ticketNumber={ticketNumber}></Payment>
                 </div>
               </div>
             </Stack>

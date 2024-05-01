@@ -1,7 +1,9 @@
 import React, { useEffect } from 'react';
 import axios from 'axios';
+import Button from "@mui/material/Button";
+import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
 
-const Payment = () => {
+const Payment = ({exhibitId, ticketNumber}) => {
   useEffect(() => {
     const jquery = document.createElement("script");
     jquery.src = "http://code.jquery.com/jquery-1.12.4.min.js";
@@ -17,7 +19,7 @@ const Payment = () => {
 
   const fetchMerchantUid = async (exhibitId, amount) => {
     try {
-      const response = await axios.post('http://127.0.0.1/payment', {
+      const response = await axios.post('http://127.0.0.1:8080/api/payment', {
         exhibit_id: exhibitId,
         amount: amount,
       });
@@ -29,8 +31,18 @@ const Payment = () => {
   };
 
   const requestPay = async (exhibitId, amount) => {
+    if(amount == 0) {
+      alert("티켓 매수가 0입니다");
+      return;
+    }
+    const userId = localStorage.getItem("userId");
+    if(userId == undefined) {
+      alert("로그인 후 이용해주세요");
+      return;
+    }
+
     const orderInfo = await fetchMerchantUid(exhibitId, amount);
-    alert(orderInfo.merchantUid + " " + orderInfo.amount);
+
     if (!orderInfo) {
       alert('결제 정보를 가져오는데 실패했습니다.');
       return;
@@ -41,27 +53,29 @@ const Payment = () => {
     
     IMP.request_pay({
       pg: 'kakaopay.TC0ONETIME',
-      pay_method: 'card',
       merchant_uid: orderInfo.merchantUid,
       name: '테스트 상품',
-      amount: orderInfo.amount,
-      buyer_email: 'test@naver.com',
-      buyer_name: '코드쿡',
-      buyer_tel: '010-1234-5678',
-      buyer_addr: '서울특별시',
-      buyer_postcode: '123-456'
+      amount: orderInfo.amount
     }, async (rsp) => {
       try {
-        const { data } = await axios.post('http://127.0.0.1/payment/verifyIamport/' + rsp.imp_uid);
+        const { data } = await axios.post('http://127.0.0.1:8080/api/payment/verifyIamport/' + rsp.imp_uid);
         console.log(data.verified); 
         if (data.verified) { 
           alert('결제 성공');
-          const {ticket} = await axios.post('http://127.0.0.1/ticket')
+          const {ticket} = await axios.post('http://127.0.0.1:8080/api/tickets', {
+            "amount": ticketNumber,
+            "exhibitId":exhibitId,
+            "userId":localStorage.userId,
+            "paymentId": data.paymentId,
+            "status": false,
+            "canceled": false
+          });
         } else {
           alert('결제 실패');
         }
       } catch (error) {
         console.error('결제 검증 중 에러 발생:', error);
+        await axios.post('http://127.0.0.1:8080/api/payment/cancel/' + orderInfo.merchantUid);
         alert('결제 실패');
       }
     });
@@ -69,7 +83,19 @@ const Payment = () => {
 
   return (
     <div>
-      <button onClick={() => requestPay(1, 5)}>결제하기</button>
+      <Button
+        variant="contained"
+        endIcon={<AddShoppingCartIcon />}
+        onClick={() => requestPay(exhibitId, ticketNumber)}
+        style={{
+        marginTop: 10,
+        backgroundColor: "black", // 버튼 배경색을 검정으로 설정
+        color: "white", // 텍스트 색상을 흰색으로 설정
+        "&:hover": {
+          backgroundColor: "darkgrey", // 호버 상태의 배경색 변경
+          },
+        }}
+      >결제하기</Button>
     </div>
   );
 };
