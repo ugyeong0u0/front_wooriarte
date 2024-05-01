@@ -52,6 +52,9 @@ const FindPassForSpacebyEmail_URL = () =>
 const FindPassAuthForSpacebyEmail_URL = () =>
   `${DOMAIN}/email/space-rentals/email-auth-check`; //!-> url 수정함
 
+//? ------------------------------- 사진 업로드
+const uploadImg_URL = ({ id }) => `${DOMAIN}/space-photos/${id}`; //!-> url 수정함
+
 //!----------------------------- 스페이스 로그인
 export const LoginSpaceRequest = async ({ id, pwd }) => {
   console.log("스페이스 LoginRequest실행");
@@ -741,27 +744,110 @@ export const getSearchSpaceProject = async ({ startDate, endDate, city }) => {
   return result;
 };
 // //!---------------------------- 공간작품 사진 올리기
-// export const uploadSpacePhoto = async ({ }) => {
-//   console.log(" 공간 필터링 아이템 가져오기 실행");
-//   const url = GetFilteredSpaceProject_URL({ startDate, endDate, city });
-//   console.log("공간 필터링 url" + url);
-//   const result = await axios
-//     .get(url)
-//     .then((response) => {
-//       console.log("공간 필터링 아이템 조회 " + response.status);
-//       return response;
-//     })
-//     .catch((error) => {
-//       console.error("공간 필터링 아이템 조회 실패: " + error);
-//       if (error.response) {
-//         // 에러 응답이 있는 경우
-//         const { data, status } = error.response;
-//         console.log(`에러 메시지: ${data.msg}, 에러 코드: ${status}`);
-//         // 이곳에서 상태 코드나 에러 메시지에 따른 추가적인 에러 처리를 할 수 있습니다.
-//       } else {
-//         // 에러 응답이 없는 경우
-//         console.log("에러 응답이 없습니다.");
-//       }
-//     });
-//   return result;
-// };
+export const uploadSpacePhoto = async ({ id, formData }) => {
+  console.log(" 공간작품 사진 올리기 실행");
+  const url = uploadImg_URL({ id });
+  console.log("공간작품 사진 올리기 url" + url);
+  const result = await axios
+    .post(url, formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    })
+    .then((response) => {
+      console.log("공간작품 사진 올리기조회 " + response.status);
+      return response;
+    })
+    .catch((error) => {
+      console.error("공간작품 사진 올리기 실패: " + error);
+      if (error.response) {
+        // 에러 응답이 있는 경우
+        const { data, status } = error.response;
+        console.log(`에러 메시지: ${data.msg}, 에러 코드: ${status}`);
+        // 이곳에서 상태 코드나 에러 메시지에 따른 추가적인 에러 처리를 할 수 있습니다.
+      } else {
+        // 에러 응답이 없는 경우
+        console.log("에러 응답이 없습니다.");
+      }
+    });
+  return result;
+};
+// //!---------------------------- 공간작품 사진 삭제
+export const deleteSpacePhoto = async ({ id }) => {
+  console.log(" 공간작품 사진 삭제 실행");
+  const url = uploadImg_URL({ id });
+  console.log("공간작품 사진 삭제 url" + url);
+  const result = await axios
+    .delete(url)
+    .then((response) => {
+      console.log("공간작품 사진 삭제 " + response.status);
+      return response;
+    })
+    .catch((error) => {
+      console.error("공간작품 사진 삭제 실패: " + error);
+      if (error.response) {
+        // 에러 응답이 있는 경우
+        const { data, status } = error.response;
+        console.log(`에러 메시지: ${data.msg}, 에러 코드: ${status}`);
+        // 이곳에서 상태 코드나 에러 메시지에 따른 추가적인 에러 처리를 할 수 있습니다.
+      } else {
+        // 에러 응답이 없는 경우
+        console.log("에러 응답이 없습니다.");
+      }
+    });
+  return result;
+};
+// //!---------------------------- 공간 사진 조회
+export const getSpacePhoto = async ({ id }) => {
+  console.log(" 공간 사진 조회 실행");
+  const url = uploadImg_URL({ id });
+  console.log("공간 사진 조회 url" + url);
+  const result = await axios
+    .get(url)
+    .then((response) => {
+      console.log("공간 사진 조회 " + response.status);
+      return response;
+    })
+    .catch((error) => {
+      console.error("공간 사진 조회 실패: " + error);
+      if (error.response) {
+        // 에러 응답이 있는 경우
+        const { data, status } = error.response;
+        console.log(`에러 메시지: ${data.msg}, 에러 코드: ${status}`);
+        // 이곳에서 상태 코드나 에러 메시지에 따른 추가적인 에러 처리를 할 수 있습니다.
+      } else {
+        // 에러 응답이 없는 경우
+        console.log("에러 응답이 없습니다.");
+      }
+    });
+  return result;
+};
+// //!---------------------------- 공간작품 사진 수정하기
+export const updateSpacePhoto = async ({ id, formData }) => {
+  console.log(" 공간작품 사진 수정하기 실행");
+  const url = uploadImg_URL({ id });
+  console.log("공간작품 사진 수정하기 url" + url);
+  const result = await axios
+    .put(url, formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    })
+    .then((response) => {
+      console.log("공간작품 사진 수정하기 " + response.status);
+      return response;
+    })
+    .catch((error) => {
+      console.error("공간작품 사진 수정하기 실패: " + error);
+      if (error.response) {
+        // 에러 응답이 있는 경우
+        const { data, status } = error.response;
+        console.log(`에러 메시지: ${data.msg}, 에러 코드: ${status}`);
+        // 이곳에서 상태 코드나 에러 메시지에 따른 추가적인 에러 처리를 할 수 있습니다.
+      } else {
+        // 에러 응답이 없는 경우
+        console.log("에러 응답이 없습니다.");
+      }
+    });
+  return result;
+};

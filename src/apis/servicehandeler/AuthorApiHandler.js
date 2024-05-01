@@ -21,13 +21,17 @@ import {
   confirmEmailAuthForAuthorRequest,
   confirmAuthorPw, // 마이페이지 비번확인
   getSearchAuthorProject,
+  uploadAuthorPhoto,
+  deleteAuthorPhoto,
+  getAuthorPhoto,
+  updateAuthorPhoto,
 } from "../author-api-manager";
 
 //!----------------------------작가 로그인
 // 유저 로그인 결과값
 export const LoginAuthorResponse = (response, callback) => {
   if (!response) {
-    alert("네트워크 이상");
+    callback(false);
     return;
   }
   if (response.status >= 200 && response.status < 300) {
@@ -36,10 +40,10 @@ export const LoginAuthorResponse = (response, callback) => {
     localStorage.setItem("userId", response.data);
     localStorage.setItem("userType", "author"); // 유저 타입으로 저장
 
-    callback(console.log("localhost저장완료"));
+    callback(true);
     return;
   } else {
-    alert("로그인 실패");
+    callback(false);
     console.log(response.status);
     return;
   }
@@ -254,7 +258,7 @@ export const addAuthorProjectResponse = (response, callback) => {
   }
   if (response.status >= 200 && response.status < 300) {
     console.log("작가 아이템 추가 성공");
-    callback();
+    callback(response.data);
     return;
   } else {
     alert("작가 아이템 조회 실패");
@@ -611,5 +615,97 @@ export const onConfirmEmailAuthForAuthorHandler = (
 ) => {
   confirmEmailAuthForAuthorRequest({ id, email, authNum }).then((response) =>
     confirmEmailAuthForAuthorResponse(response, callback)
+  );
+};
+//!---------------------------- 작가 사진 올리기
+
+export const onUploadAuthorPhotoResponse = (response, callback) => {
+  if (!response) {
+    callback(false);
+    return;
+  }
+  if (response.status >= 200 && response.status < 300) {
+    console.log("작가 사진 올리기 성공");
+    callback(response);
+    return;
+  } else {
+    callback(false);
+    console.log(response.status);
+    return;
+  }
+};
+
+export const onUploadAuthorPhotoHandler = ({ id, formData }, callback) => {
+  uploadAuthorPhoto({ id, formData }).then((response) =>
+    onUploadAuthorPhotoResponse(response, callback)
+  );
+};
+//!---------------------------- 작가 사진 삭제
+
+export const onDeleteAuthorPhotoResponse = (response, callback) => {
+  if (!response) {
+    callback(false);
+    return;
+  }
+  if (response.status >= 200 && response.status < 300) {
+    console.log("작가 사진 삭제성공");
+    callback(response);
+    return;
+  } else {
+    callback(false);
+    console.log(response.status);
+    return;
+  }
+};
+
+export const onDeleteAuthorPhotoHandler = ({ id }, callback) => {
+  deleteAuthorPhoto({ id }).then((response) =>
+    onDeleteAuthorPhotoResponse(response, callback)
+  );
+};
+//!---------------------------- 작가 사진 조회
+
+export const onGetAuthorPhotoResponse = (response, callback) => {
+  if (!response) {
+    callback(false);
+    return;
+  }
+  if (response.status >= 200 && response.status < 300) {
+    console.log("작가 사진 조회");
+    callback(response);
+    return;
+  } else {
+    callback(false);
+    console.log(response.status);
+    return;
+  }
+};
+
+export const onGetAuthorPhotoHandler = ({ id }, callback) => {
+  getAuthorPhoto({ id }).then((response) =>
+    onGetAuthorPhotoResponse(response, callback)
+  );
+};
+//!---------------------------- 작가 사진 수정
+
+export const onUpdateAuthorPhotoResponse = (response, callback) => {
+  if (!response) {
+    callback(false);
+    return;
+  }
+  if (response.status >= 200 && response.status < 300) {
+    console.log("작가 사진 수정 성공");
+    callback(true);
+    return;
+  } else {
+    callback(false);
+    console.log(response.status);
+    return;
+  }
+};
+
+export const onUpdateAuthorPhotoHandler = ({ id, formData }, callback) => {
+  updateAuthorPhoto({ id, formData }).then((response) =>
+    onUpdateAuthorPhotoResponse(response, callback)
   );
 };

@@ -14,6 +14,7 @@ import {
 import {
   onAllAuthorProjectHandler,
   onGetAuthorItemInfoHandler,
+  onGetAuthorPhotoHandler,
 } from "../apis/servicehandeler/AuthorApiHandler";
 
 import MuiDialog from "../libs/MuiDialog";
@@ -87,6 +88,9 @@ const BusinessItemInfo = () => {
   // exhibitType이 unpage인건 매칭에서 보려고
   const { userType, posterId, exhibitsType = "unpage" } = uselocation.state; // 작가인지 공간대여자인지 신청하기 눌렀을 때 정보 가져올 api 다름
 
+  // 사진리스트
+  const [imgList, setImgList] = useState([]);
+
   const [projectInfo, setProjectInfo] = useState({
     projectItemId: 1,
     projectManagerId: 1,
@@ -130,6 +134,20 @@ const BusinessItemInfo = () => {
             city: response.data.city,
           });
         });
+        console.log("작가 사진조회"); // todo
+        onGetAuthorPhotoHandler({ id: posterId }, (response) => {
+          alert("성공");
+          if (Array.isArray(response.data)) {
+            alert("배열안");
+            let now = new Date();
+            const newImgList = response.data.map((item) => ({
+              id: now.toString, // 각 이미지에 대한 고유 ID
+              previewUrl: item.url, // 미리보기 URL
+              originFile: item.url, // 원본 파일 정보는 서버에서 받아올 수 없으므로 null 처리
+            }));
+            setImgList(newImgList);
+          }
+        });
       } else if (userType === "space") {
         onGetSpaceItemInfoHandler({ posterId }, (response) => {
           setSpaceInfo({
@@ -164,6 +182,20 @@ const BusinessItemInfo = () => {
             endDate: response.data.endDate,
             city: response.data.city,
           });
+        });
+        console.log("작가 사진조회"); // todo
+        onGetAuthorPhotoHandler({ id: posterId }, (response) => {
+          alert("성공");
+          if (Array.isArray(response.data)) {
+            alert("배열안");
+            let now = new Date();
+            const newImgList = response.data.map((item) => ({
+              id: now.toString, // 각 이미지에 대한 고유 ID
+              previewUrl: item.url, // 미리보기 URL
+              originFile: item.url, // 원본 파일 정보는 서버에서 받아올 수 없으므로 null 처리
+            }));
+            setImgList(newImgList);
+          }
         });
       } else if (exhibitsType === "space") {
         onGetSpaceItemInfoHandler({ posterId }, (response) => {
@@ -296,7 +328,7 @@ const BusinessItemInfo = () => {
             marginBottom: 40,
           }}
         ></div>
-        <Box sx={{ width: "100%" }}>
+        <Box sx={{ width: "100%", height: " 100%", marginTop: 20 }}>
           <Stack spacing={15} alignItems="center" justifyContent="center">
             {/* <CustomCarousel isInfo={true}>
               {images.map((image, index) => {
@@ -305,27 +337,19 @@ const BusinessItemInfo = () => {
                 );
               })}
             </CustomCarousel> */}
-            <ImageList
-              sx={{ width: 700, height: 500 }}
-              variant="quilted"
-              cols={4}
-              rowHeight={121}
-            >
-              {itemData.map((item) => (
-                <ImageListItem
-                  key={item.img}
-                  cols={item.cols || 1}
-                  rows={item.rows || 1}
-                >
+            <ImageList variant="woven" cols={3} gap={8}>
+              {imgList.map((item) => (
+                <ImageListItem key={item.id}>
                   <img
-                    {...srcset(item.img, 121, item.rows, item.cols)}
+                    srcSet={`${item.previewUrl}`}
+                    src={`${item.previewUrl}`}
                     alt={item.title}
                     loading="lazy"
+                    style={{ maxWidth: 250, maxHeight: 170 }}
                   />
                 </ImageListItem>
               ))}
             </ImageList>
-
             {exhibitsType === "unpage" ? (
               userType === "author" ? (
                 <div className="info">
@@ -339,7 +363,7 @@ const BusinessItemInfo = () => {
                     type="button"
                     class="btn btn-dark"
                     style={{
-                      marginTop: 20,
+                      marginTop: 50,
                       marginBottom: 50,
                       padding: 20,
                       marginLeft: 0, // 왼쪽에 정렬되도록 marginLeft 제거
@@ -371,9 +395,9 @@ const BusinessItemInfo = () => {
                     type="button"
                     class="btn btn-dark"
                     style={{
-                      marginTop: 20,
+                      marginTop: 50,
                       marginBottom: 50,
-
+                      padding: 20,
                       marginLeft: 0, // 왼쪽에 정렬되도록 marginLeft 제거
                       float: "right", // 버튼을 왼쪽으로 정렬
                     }}
@@ -400,10 +424,11 @@ const BusinessItemInfo = () => {
                   className="applyBtn"
                   type="button"
                   style={{
-                    marginTop: 20,
+                    marginTop: 50,
                     marginBottom: 50,
-
-                    marginLeft: 25,
+                    padding: 20,
+                    marginLeft: 0, // 왼쪽에 정렬되도록 marginLeft 제거
+                    float: "right", // 버튼을 왼쪽으로 정렬
                   }}
                   class="btn btn-dark"
                   onClick={() => {
@@ -432,9 +457,9 @@ const BusinessItemInfo = () => {
                   type="button"
                   class="btn btn-dark"
                   style={{
-                    marginTop: 20,
+                    marginTop: 50,
                     marginBottom: 50,
-
+                    padding: 20,
                     marginLeft: 0, // 왼쪽에 정렬되도록 marginLeft 제거
                     float: "right", // 버튼을 왼쪽으로 정렬
                   }}

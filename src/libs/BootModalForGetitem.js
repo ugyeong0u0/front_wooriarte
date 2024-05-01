@@ -23,16 +23,30 @@ import FormLabel from "@mui/material/FormLabel";
 // 달력 위치
 import DatePickerOpenTo, { SelectSizesExample } from "../libs/Open";
 import DateRangePickerValue from "./DateRangePickerValue";
+
+// 이미지
+import ImageList from "@mui/material/ImageList";
+import ImageListItem from "@mui/material/ImageListItem";
+// 쓰레기 통 이미지
+import IconButton from "@mui/material/IconButton";
+import DeleteIcon from "@mui/icons-material/Delete";
+
 // api
 import {
   onGetAuthorItemInfoHandler,
   onDeleteSingleProjectItemHandler,
   onUpdateAuthorItemInfoHandler,
+  onDeleteAuthorPhotoHandler,
+  onGetAuthorPhotoHandler,
+  onUpdateAuthorPhotoHandler,
 } from "../apis/servicehandeler/AuthorApiHandler";
 import {
   onGetSpaceItemInfoHandler,
   onUpdateSpaceItemInfoHandler,
   onDeleteSpaceItemHandler,
+  onDeleteSpacePhotoHandler,
+  onGetSpacePhotoHandler,
+  onUpdateSpacePhotoHandler,
 } from "../apis/servicehandeler/SpaceApiHandler";
 
 //!------------ 작가랑 공간대여자 마이페이지에서 아이템 수정, 조회
@@ -45,6 +59,9 @@ export default function MyVerticallyCenteredModal({
 }) {
   // 저장 버튼 활성화
   const [enableNextBtn, setEnableNextBtn] = useState(false);
+
+  // 사진리스트
+  const [imgList, setImgList] = useState([]);
 
   // 작가용
   const [authorInfoState, setauthorInfoState] = useState({
@@ -68,6 +85,36 @@ export default function MyVerticallyCenteredModal({
     startDate: "",
     endDate: "",
   });
+
+  const onImgSelected = (e) => {
+    //이미 이미지가 업로드 되었던것을 다시 선택해서 실행될때는
+    //기존의 배열에서 기존의 선택된 이미지를 지우고
+
+    //새로운 선택한 이미지를 배열에 추가해준다.
+    let now = new Date();
+    let id = now.toString(); // -> '2021-09-09T10:00:00'
+
+    // FileReader(); // 내가 선택한 파일을 읽어주는 객체
+    let reader = new FileReader(); //객체생성함
+    reader.readAsDataURL(e.target.files[0]); //내가 선택한 파일을 읽어주는 함수
+    // readAsDataURL -> 비동기함수임
+    //readAsDataURL()함수는 내가 선택한 파일을 읽어서 url로 만들어준다.
+    //이미지가 url로 만들어진 후에 실행되는 함수
+
+    reader.onload = () => {
+      //이미지가 url로 만들어진 후에 실행되는 함수
+      console.log(reader.result); //이미지가 url로 만들어진다.
+      setImgList([
+        ...imgList,
+        { id, previewUrl: reader.result, originFile: e.target.files[0] },
+      ]);
+    };
+  };
+
+  // 사진 삭제하기
+  const onImgDelete = (id) => {
+    setImgList(imgList.filter((e) => e.id !== id));
+  };
 
   // 공간 입력상태 감지
   const handleSpaceChangeState = (e) => {
@@ -140,23 +187,49 @@ export default function MyVerticallyCenteredModal({
           address: response.data.city, // 주소
         }));
       });
+      // 사진 정보
+      // onGetAuthorPhotoHandler({ id }, (response) => {
+      //   if (Array.isArray(response.data)) {
+      //     alert("배열안");
+      //     let now = new Date();
+      //     const newImgList = response.data.map((item) => ({
+      //       id: now.toString, // 각 이미지에 대한 고유 ID
+      //       previewUrl: item.url, // 미리보기 URL
+      //       originFile: item.url, // 원본 파일 정보는 서버에서 받아올 수 없으므로 null 처리
+      //     }));
+      //     setImgList(newImgList);
+      //   }
+      // });
     } else if (type === "space") {
       console.log("아이템 정보 id " + id);
       onGetSpaceItemInfoHandler({ posterId: id }, (response) => {
         console.log("공간대여자 아이템 정보 응답값 받음");
         console.log("공간 조회 응답" + response.fee + typeof response.fee);
         console.log(response);
-        setBusinessInfoState((prevState) => ({
-          intro: response.data.intro, // 전시소개
-          hostName: response.data.hostName, // 주최자명
-          address: response.data.city,
-          size: response.data.size,
-          phoneNumber: response.data.phone,
-          parking: response.data.parking,
-          startDate: response.data.startDate, // 시작날짜
-          endDate: response.data.endDate, // 끝날짜
-          fee: response.data.fee,
-        }));
+        // setBusinessInfoState((prevState) => ({
+        //   intro: response.data.intro, // 전시소개
+        //   hostName: response.data.hostName, // 주최자명
+        //   address: response.data.city,
+        //   size: response.data.size,
+        //   phoneNumber: response.data.phone,
+        //   parking: response.data.parking,
+        //   startDate: response.data.startDate, // 시작날짜
+        //   endDate: response.data.endDate, // 끝날짜
+        //   fee: response.data.fee,
+        // }));
+      });
+
+      onGetSpacePhotoHandler({ id }, (response) => {
+        if (Array.isArray(response.data)) {
+          alert("배열안");
+          let now = new Date();
+          const newImgList = response.data.map((item) => ({
+            id: now.toString, // 각 이미지에 대한 고유 ID
+            previewUrl: item.url, // 미리보기 URL
+            originFile: item.url,
+          }));
+          setImgList(newImgList);
+        }
       });
     }
   }, []);
@@ -225,9 +298,22 @@ export default function MyVerticallyCenteredModal({
           city: authorInfoState.address,
         },
         () => {
-          console.log("작가 아이템 추가 성공");
-          setUpdateCount((prev) => prev + 1);
-          onHide(); // 부모컴포넌트 프롭
+          console.log("작가 아이템 수정 성공");
+          const formData = new FormData();
+          for (let i = 0; i < imgList.length; i++) {
+            formData.append("file", imgList[i].originFile); //반복문을 활용하여 파일들을 formData객체에 추가
+          }
+
+          onUpdateAuthorPhotoHandler({ id, formData }, (responseStatus) => {
+            alert("사진 수정하기 파트");
+            if (responseStatus) {
+              alert("이미지 수정 성공");
+              setUpdateCount((prev) => prev + 1);
+              onHide(); // 부모컴포넌트 프롭
+            } else {
+              alert("이미지 수정 실패");
+            }
+          });
         }
       );
       // todo 날짜 업데이트 하기
@@ -249,8 +335,21 @@ export default function MyVerticallyCenteredModal({
         },
         () => {
           console.log("스페이스 아이템 수정 성공");
-          setUpdateCount((prev) => prev + 1);
-          onHide(); // 부모컴포넌트 프롭
+          const formData = new FormData();
+          for (let i = 0; i < imgList.length; i++) {
+            formData.append("file", imgList[i].originFile); //반복문을 활용하여 파일들을 formData객체에 추가
+          }
+
+          onUpdateSpacePhotoHandler({ id, formData }, (responseStatus) => {
+            alert("사진 수정하기 파트");
+            if (responseStatus) {
+              alert("이미지 수정 성공");
+              setUpdateCount((prev) => prev + 1);
+              onHide(); // 부모컴포넌트 프롭
+            } else {
+              alert("이미지 수정 실패");
+            }
+          });
         }
       );
     } else {
@@ -263,16 +362,24 @@ export default function MyVerticallyCenteredModal({
     if (type === "author") {
       onDeleteSingleProjectItemHandler({ projectItemId: id }, () => {
         console.log("작가아이템 삭제 완료!!!!!!!!!!!");
-        // 모달 닫기
-        setUpdateCount((prev) => prev + 1);
-        onHide();
+        onDeleteAuthorPhotoHandler({ id }, () => {
+          console.log("전체 공간아이템 삭제 완료!!!!!!!!!!!");
+
+          // 모달 닫기
+          setUpdateCount((prev) => prev + 1);
+          onHide();
+        });
       });
     } else {
       onDeleteSpaceItemHandler({ spaceId: id }, () => {
         console.log("공간아이템 삭제 완료!!!!!!!!!!!");
-        // 모달 닫기
-        setUpdateCount((prev) => prev + 1);
-        onHide();
+        onDeleteSpacePhotoHandler({ id }, () => {
+          console.log("전체 공간아이템 삭제 완료!!!!!!!!!!!");
+
+          // 모달 닫기
+          setUpdateCount((prev) => prev + 1);
+          onHide();
+        });
       });
     }
   };
@@ -341,16 +448,62 @@ export default function MyVerticallyCenteredModal({
                 isEdit={true}
               />
 
-              <Button
-                component="label"
-                role={undefined}
-                variant="contained"
-                tabIndex={-1}
-                startIcon={<CloudUploadIcon />}
-              >
-                사진 올리기
-                <VisuallyHiddenInput type="file" />
-              </Button>
+              <Stack direction={"row"}>
+                <span>사진을 첨부해주세요</span>
+                <span style={{ fontSize: "10px", color: "gray", marginTop: 5 }}>
+                  (첫 사진이 대표사진이 되며, 최대 8장까지 업로드 할 수
+                  있습니다.)
+                </span>
+              </Stack>
+              <>
+                <ImageList
+                  sx={{ width: "100%", height: "auto" }}
+                  cols={3}
+                  rowHeight={170}
+                >
+                  {imgList.map((item) => (
+                    <ImageListItem key={item.id}>
+                      <img
+                        srcSet={`${item.previewUrl}`}
+                        src={`${item.previewUrl}`}
+                        alt={item.title}
+                        loading="lazy"
+                        style={{ maxWidth: 250, maxHeight: 170 }}
+                      />
+                      <IconButton
+                        color="primary"
+                        style={{ position: "absolute", top: "0", right: "0" }}
+                        aria-label="delete"
+                        size="large"
+                        onClick={() => {
+                          onImgDelete(item.id);
+                        }}
+                      >
+                        <DeleteIcon fontSize="inherit" />
+                      </IconButton>
+                    </ImageListItem>
+                  ))}
+
+                  <Button
+                    disabled={imgList.length >= 8}
+                    style={{
+                      width: imgList.length > 0 ? "250px" : "auto",
+                      height: imgList.length > 0 ? "200px" : "auto",
+                    }}
+                    variant="outlined"
+                    component="label"
+                    role={undefined}
+                    tabIndex={-1}
+                    onChange={onImgSelected}
+                    accept="image/*"
+                    type="file"
+                    startIcon={<CloudUploadIcon />}
+                  >
+                    사진 올리기
+                    <VisuallyHiddenInput type="file" />
+                  </Button>
+                </ImageList>
+              </>
             </Stack>
           </Box>
         ) : (
@@ -451,16 +604,63 @@ export default function MyVerticallyCenteredModal({
                 onDateChange={handleDateChange}
                 isEdit={true}
               />
-              <Button
-                component="label"
-                role={undefined}
-                variant="contained"
-                tabIndex={-1}
-                startIcon={<CloudUploadIcon />}
-              >
-                사진 올리기
-                <VisuallyHiddenInput type="file" />
-              </Button>
+              {/* //! 사진 */}
+              <Stack direction={"row"}>
+                <span>사진을 첨부해주세요</span>
+                <span style={{ fontSize: "10px", color: "gray", marginTop: 5 }}>
+                  (첫 사진이 대표사진이 되며, 최대 8장까지 업로드 할 수
+                  있습니다.)
+                </span>
+              </Stack>
+              <>
+                <ImageList
+                  sx={{ width: "100%", height: "auto" }}
+                  cols={3}
+                  rowHeight={170}
+                >
+                  {imgList.map((item) => (
+                    <ImageListItem key={item.id}>
+                      <img
+                        srcSet={`${item.previewUrl}`}
+                        src={`${item.previewUrl}`}
+                        alt={item.title}
+                        loading="lazy"
+                        style={{ maxWidth: 250, maxHeight: 170 }}
+                      />
+                      <IconButton
+                        color="primary"
+                        style={{ position: "absolute", top: "0", right: "0" }}
+                        aria-label="delete"
+                        size="large"
+                        onClick={() => {
+                          onImgDelete(item.id);
+                        }}
+                      >
+                        <DeleteIcon fontSize="inherit" />
+                      </IconButton>
+                    </ImageListItem>
+                  ))}
+
+                  <Button
+                    disabled={imgList.length >= 8}
+                    style={{
+                      width: imgList.length > 0 ? "250px" : "auto",
+                      height: imgList.length > 0 ? "200px" : "auto",
+                    }}
+                    variant="outlined"
+                    component="label"
+                    role={undefined}
+                    tabIndex={-1}
+                    onChange={onImgSelected}
+                    accept="image/*"
+                    type="file"
+                    startIcon={<CloudUploadIcon />}
+                  >
+                    사진 올리기
+                    <VisuallyHiddenInput type="file" />
+                  </Button>
+                </ImageList>
+              </>
             </Stack>
           </Box>
         )}

@@ -118,6 +118,8 @@ const Header = ({ isLoginState, isLoginHandler }) => {
                 text={`${
                   localStorage.getItem("userType") === "author"
                     ? "Author's"
+                    : localStorage.getItem("userType") === "user"
+                    ? "My"
                     : "Rental's"
                 }Page`}
                 isVisible={true}

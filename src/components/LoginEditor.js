@@ -82,36 +82,47 @@ const LoginEditor = ({ whatUser }) => {
               nav(`/`);
             } else {
               setEnableDialog(true);
+              setIsLoginStateState(false);
             }
           });
           setIsLoginStateState(false);
           return;
         }
         case "space": {
-          onLoginSpaceHandler({ id: state.id, pwd: state.pw }, () => {
-            changeUserLoginState(true);
-            let userType = localStorage.getItem("userId");
-            let userId = localStorage.getItem("userType");
-            console.log(
-              "유저 로그인 유저 번호 : " + userId + "유저타입:" + userType
-            );
-            setIsLoginStateState(true);
-            nav(`/mainbusiness`);
+          onLoginSpaceHandler({ id: state.id, pwd: state.pw }, (result) => {
+            if (result) {
+              changeUserLoginState(true);
+              let userType = localStorage.getItem("userId");
+              let userId = localStorage.getItem("userType");
+              console.log(
+                "유저 로그인 유저 번호 : " + userId + "유저타입:" + userType
+              );
+              setIsLoginStateState(true);
+              nav(`/mainbusiness`);
+            } else {
+              setEnableDialog(true);
+              setIsLoginStateState(false);
+            }
           });
           setIsLoginStateState(false);
           return;
         }
         case "author": {
           // 작가 로그인
-          onLoginAuthorHandler({ id: state.id, pwd: state.pw }, () => {
-            changeUserLoginState(true);
-            let userType = localStorage.getItem("userId");
-            let userId = localStorage.getItem("userType");
-            console.log(
-              "유저 로그인 유저 번호 : " + userId + "유저타입:" + userType
-            );
-            setIsLoginStateState(true);
-            nav(`/mainbusiness`);
+          onLoginAuthorHandler({ id: state.id, pwd: state.pw }, (result) => {
+            if (result) {
+              changeUserLoginState(true);
+              let userType = localStorage.getItem("userId");
+              let userId = localStorage.getItem("userType");
+              console.log(
+                "유저 로그인 유저 번호 : " + userId + "유저타입:" + userType
+              );
+              setIsLoginStateState(true);
+              nav(`/mainbusiness`);
+            } else {
+              setEnableDialog(true);
+              setIsLoginStateState(false);
+            }
           });
           setIsLoginStateState(false);
           return;

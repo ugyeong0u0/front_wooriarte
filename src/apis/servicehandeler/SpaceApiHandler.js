@@ -20,13 +20,17 @@ import {
   findPassForSpaceByEmailRequest,
   confirmEmailAuthForSpaceRequest,
   getSearchSpaceProject, // 필터링
+  uploadSpacePhoto,
+  deleteSpacePhoto,
+  getSpacePhoto,
+  updateSpacePhoto,
 } from "../space-api-manager";
 
 //!----------------------------스페이스 로그인
 // 유저 로그인 결과값
 export const LoginSpaceResponse = (response, callback) => {
   if (!response) {
-    alert("네트워크 이상");
+    callback(false);
     return;
   }
   if (response.status >= 200 && response.status < 300) {
@@ -35,10 +39,10 @@ export const LoginSpaceResponse = (response, callback) => {
     localStorage.setItem("userId", response.data);
     localStorage.setItem("userType", "space"); // 유저 타입으로 저장
 
-    callback(console.log("localhost저장완료"));
+    callback(true);
     return;
   } else {
-    alert("로그인 실패");
+    callback(false);
     console.log(response.status);
     return;
   }
@@ -253,7 +257,7 @@ export const addSpaceItemResponse = (response, callback) => {
   }
   if (response.status >= 200 && response.status < 300) {
     console.log("스페이스 아이템 추가 성공");
-    callback();
+    callback(response.data);
     return;
   } else {
     alert("스페이스 아이템 조회 실패");
@@ -612,5 +616,97 @@ export const onGetSearchSpaceProjectHandler = (
 ) => {
   getSearchSpaceProject({ startDate, endDate, city }).then((response) =>
     onGetSearchSpaceProjectResponse(response, callback)
+  );
+};
+//!---------------------------- 공간 사진 올리기
+
+export const onUploadSpacePhotoResponse = (response, callback) => {
+  if (!response) {
+    callback(false);
+    return;
+  }
+  if (response.status >= 200 && response.status < 300) {
+    console.log("공간 사진 올리기 성공");
+    callback(response);
+    return;
+  } else {
+    callback(false);
+    console.log(response.status);
+    return;
+  }
+};
+
+export const onUploadSpacePhotoHandler = ({ id, formData }, callback) => {
+  uploadSpacePhoto({ id, formData }).then((response) =>
+    onUploadSpacePhotoResponse(response, callback)
+  );
+};
+//!---------------------------- 공간 사진 삭제
+
+export const onDeleteSpacePhotoResponse = (response, callback) => {
+  if (!response) {
+    callback(false);
+    return;
+  }
+  if (response.status >= 200 && response.status < 300) {
+    console.log("공간 사진 삭제성공");
+    callback(response);
+    return;
+  } else {
+    callback(false);
+    console.log(response.status);
+    return;
+  }
+};
+
+export const onDeleteSpacePhotoHandler = ({ id }, callback) => {
+  deleteSpacePhoto({ id }).then((response) =>
+    onDeleteSpacePhotoResponse(response, callback)
+  );
+};
+//!---------------------------- 공간 사진 조회
+
+export const onGetSpacePhotoResponse = (response, callback) => {
+  if (!response) {
+    callback(false);
+    return;
+  }
+  if (response.status >= 200 && response.status < 300) {
+    console.log("공간 사진 조회");
+    callback(response);
+    return;
+  } else {
+    callback(false);
+    console.log(response.status);
+    return;
+  }
+};
+
+export const onGetSpacePhotoHandler = ({ id }, callback) => {
+  getSpacePhoto({ id }).then((response) =>
+    onGetSpacePhotoResponse(response, callback)
+  );
+};
+//!---------------------------- 공간 사진 수정
+
+export const onUpdateSpacePhotoResponse = (response, callback) => {
+  if (!response) {
+    callback(false);
+    return;
+  }
+  if (response.status >= 200 && response.status < 300) {
+    console.log("공간 사진 수정 성공");
+    callback(true);
+    return;
+  } else {
+    callback(false);
+    console.log(response.status);
+    return;
+  }
+};
+
+export const onUpdateSpacePhotoHandler = ({ id, formData }, callback) => {
+  updateSpacePhoto({ id, formData }).then((response) =>
+    onUpdateSpacePhotoResponse(response, callback)
   );
 };

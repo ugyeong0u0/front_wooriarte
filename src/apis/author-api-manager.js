@@ -61,6 +61,9 @@ const FindPassForAuthorbyEmail_URL = () =>
 const FindPassAuthForAuthorbyEmail_URL = () =>
   `${DOMAIN}/email/project-managers/email-send`; //!-> url 수정함
 
+//? ------------------------------- 사진 업로드
+const uploadImg_URL = ({ id }) => `${DOMAIN}/project-photos/${id}`; //!-> url 수정함
+
 //!----------------------------- 작가 로그인
 export const LoginAuthorRequest = async ({ id, pwd }) => {
   console.log("작가 LoginRequest실행");
@@ -705,5 +708,113 @@ export const confirmEmailAuthForAuthorRequest = async ({
       // 에러 DTO api 반환시
     });
   // console.log("result" + result.data);
+  return result;
+};
+// //!---------------------------- 작가작품 사진 올리기
+export const uploadAuthorPhoto = async ({ id, formData }) => {
+  console.log(" 작가작품 사진 올리기 실행");
+  const url = uploadImg_URL({ id });
+  console.log("작가작품 사진 올리기 url" + url);
+  const result = await axios
+    .post(url, formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    })
+    .then((response) => {
+      console.log("작가작품 사진 올리기조회 " + response.status);
+      return response;
+    })
+    .catch((error) => {
+      console.error("작가작품 사진 올리기 실패: " + error);
+      if (error.response) {
+        // 에러 응답이 있는 경우
+        const { data, status } = error.response;
+        console.log(`에러 메시지: ${data.msg}, 에러 코드: ${status}`);
+        // 이곳에서 상태 코드나 에러 메시지에 따른 추가적인 에러 처리를 할 수 있습니다.
+      } else {
+        // 에러 응답이 없는 경우
+        console.log("에러 응답이 없습니다.");
+      }
+    });
+  return result;
+};
+// //!---------------------------- 작가작품 사진 삭제
+export const deleteAuthorPhoto = async ({ id }) => {
+  console.log(" 작가작품 사진 삭제 실행");
+  const url = uploadImg_URL({ id });
+  console.log("작가작품 사진 삭제 url" + url);
+  const result = await axios
+    .delete(url)
+    .then((response) => {
+      console.log("작가작품 사진 삭제 " + response.status);
+      return response;
+    })
+    .catch((error) => {
+      console.error("작가작품 사진 삭제 실패: " + error);
+      if (error.response) {
+        // 에러 응답이 있는 경우
+        const { data, status } = error.response;
+        console.log(`에러 메시지: ${data.msg}, 에러 코드: ${status}`);
+        // 이곳에서 상태 코드나 에러 메시지에 따른 추가적인 에러 처리를 할 수 있습니다.
+      } else {
+        // 에러 응답이 없는 경우
+        console.log("에러 응답이 없습니다.");
+      }
+    });
+  return result;
+};
+// //!---------------------------- 작가작품 사진 조회
+export const getAuthorPhoto = async ({ id }) => {
+  console.log(" 작가작품 사진 조회 실행");
+  const url = uploadImg_URL({ id });
+  console.log("작가작품 사진 조회 url" + url);
+  const result = await axios
+    .get(url)
+    .then((response) => {
+      console.log("작가작품 사진 조회 " + response.status);
+      return response;
+    })
+    .catch((error) => {
+      console.error("작가작품 사진 조회 실패: " + error);
+      if (error.response) {
+        // 에러 응답이 있는 경우
+        const { data, status } = error.response;
+        console.log(`에러 메시지: ${data.msg}, 에러 코드: ${status}`);
+        // 이곳에서 상태 코드나 에러 메시지에 따른 추가적인 에러 처리를 할 수 있습니다.
+      } else {
+        // 에러 응답이 없는 경우
+        console.log("에러 응답이 없습니다.");
+      }
+    });
+  return result;
+};
+// //!---------------------------- 작품 사진 수정하기
+export const updateAuthorPhoto = async ({ id, formData }) => {
+  console.log(" 작품 사진 수정하기 실행");
+  const url = uploadImg_URL({ id });
+  console.log("작품 사진 수정하기 url" + url);
+  const result = await axios
+    .put(url, formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    })
+    .then((response) => {
+      console.log("작품 사진 수정하기 " + response.status);
+      return response;
+    })
+    .catch((error) => {
+      console.error("작품 사진 수정하기 실패: " + error);
+      if (error.response) {
+        // 에러 응답이 있는 경우
+        const { data, status } = error.response;
+        console.log(`에러 메시지: ${data.msg}, 에러 코드: ${status}`);
+        // 이곳에서 상태 코드나 에러 메시지에 따른 추가적인 에러 처리를 할 수 있습니다.
+      } else {
+        // 에러 응답이 없는 경우
+        console.log("에러 응답이 없습니다.");
+      }
+    });
   return result;
 };

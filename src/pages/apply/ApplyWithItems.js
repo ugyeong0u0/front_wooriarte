@@ -33,6 +33,13 @@ import ImageList from "@mui/material/ImageList";
 
 import MuiDialog from "../../libs/MuiDialog";
 import { Mp } from "@mui/icons-material";
+import BookmarkBorderIcon from "@mui/icons-material/BookmarkBorder";
+import BookmarkIcon from "@mui/icons-material/Bookmark";
+
+import DoneOutlineIcon from "@mui/icons-material/DoneOutline";
+import CropDinIcon from "@mui/icons-material/CropDin";
+const label = { inputProps: { "aria-label": "Checkbox demo" } };
+
 <link
   rel="stylesheet"
   href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
@@ -237,19 +244,16 @@ const ApplyWithItems = () => {
                   style={{
                     display: "flex",
                     flexDirection: "column",
-                    alignItems: "center",
+                    alignItems: "flex-start", // 라디오 버튼을 오른쪽 상단으로 정렬
                   }}
                 >
                   <Radio
                     {...controlProps(String(item.spaceItemId))}
-                    sx={{
-                      color: pink[800],
-                      "&.Mui-checked": {
-                        color: pink[600],
-                      },
-                    }}
+                    icon={<CropDinIcon />}
+                    checkedIcon={<DoneOutlineIcon />}
                     onClick={() => handleSelectedItem(item.spaceItemId)}
                   />
+
                   <BusinessItem
                     key={item.spaceItemId}
                     {...item}
