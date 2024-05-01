@@ -1,5 +1,6 @@
 import { BrowserRouter, useSearchParams } from "react-router-dom";
 import "./App.css";
+import "./index.css";
 import Header from "./components/Header";
 
 import Routers from "./components/Routers";
@@ -7,6 +8,14 @@ import MainUser from "./pages/MainUser";
 import { createContext, useEffect, useState } from "react";
 
 import CuFooter from "./components/CuFooter";
+
+import { createTheme, ThemeProvider } from '@mui/material/styles';
+
+const theme = createTheme({
+  typography: {
+    fontFamily: ['ChosunSm', 'sans-serif'].join(','),
+  },
+});
 
 export const loginContext = createContext();
 
@@ -24,6 +33,7 @@ function App() {
 
   return (
     <div className="wrapper">
+      <ThemeProvider theme = {theme}>
       <loginContext.Provider value={setIsLoginStateState}>
         <BrowserRouter>
           {/* 유저 id */}
@@ -35,6 +45,7 @@ function App() {
           <CuFooter className="footer" />
         </BrowserRouter>
       </loginContext.Provider>
+      </ThemeProvider>
     </div>
   );
 }

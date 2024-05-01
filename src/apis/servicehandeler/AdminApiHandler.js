@@ -87,7 +87,7 @@ export const onAddExhibitHandler = (
 // 콜백있음
 export const onGetAllExhibitsResponse = (response, callback) => {
   if (!response) {
-    alert("네트워크 이상 ");
+    //alert("네트워크 이상 ");
     return;
   }
   if (response.status >= 200 && response.status < 300) {

@@ -227,7 +227,7 @@ export const onUpdateUserInfoHandler = (
 //!---------------------------- 예매자 페이지 전시 리스트 모두 가져오기
 export const getUserMainPosterResponse = (response, callback) => {
   if (!response) {
-    alert("네트워크 이상 ");
+    //alert("네트워크 이상 ");
     return;
   }
   if (response.status >= 200 && response.status < 300) {
@@ -253,7 +253,7 @@ export const ongetUserMainPosterHandler = (
 
 export const getExhibitTicketUserResponse = (response, callback) => {
   if (!response) {
-    alert("네트워크 이상");
+   // alert("네트워크 이상");
     return;
   }
   if (response.status >= 200 && response.status < 300) {
