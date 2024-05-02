@@ -45,6 +45,7 @@ import {
 } from "../../apis/servicehandeler/AuthorApiHandler";
 import { useNavigate } from "react-router-dom";
 import { DataSaverOnTwoTone } from "@mui/icons-material";
+import { FaUser, FaUsers } from "react-icons/fa";
 
 const MainBusiness = () => {
   const [projectButtonType, setProjectButtonType] = useState("bold");
@@ -139,69 +140,6 @@ const MainBusiness = () => {
     setExhibitsType("space");
   };
 
-  const images = [
-    {
-      img: "https://images.unsplash.com/photo-1551963831-b3b1ca40c98e",
-      title: "Breakfast",
-      author: "@bkristastucchio",
-    },
-    {
-      img: "https://images.unsplash.com/photo-1551782450-a2132b4ba21d",
-      title: "Burger",
-      author: "@rollelflex_graphy726",
-    },
-    {
-      img: "https://images.unsplash.com/photo-1522770179533-24471fcdba45",
-      title: "Camera",
-      author: "@helloimnik",
-    },
-    {
-      img: "https://images.unsplash.com/photo-1444418776041-9c7e33cc5a9c",
-      title: "Coffee",
-      author: "@nolanissac",
-    },
-    {
-      img: "https://images.unsplash.com/photo-1533827432537-70133748f5c8",
-      title: "Hats",
-      author: "@hjrc33",
-    },
-    {
-      img: "https://images.unsplash.com/photo-1558642452-9d2a7deb7f62",
-      title: "Honey",
-      author: "@arwinneil",
-    },
-    {
-      img: "https://images.unsplash.com/photo-1516802273409-68526ee1bdd6",
-      title: "Basketball",
-      author: "@tjdragotta",
-    },
-    {
-      img: "https://images.unsplash.com/photo-1518756131217-31eb79b20e8f",
-      title: "Fern",
-      author: "@katie_wasserman",
-    },
-    {
-      img: "https://images.unsplash.com/photo-1597645587822-e99fa5d45d25",
-      title: "Mushrooms",
-      author: "@silverdalex",
-    },
-    {
-      img: "https://images.unsplash.com/photo-1567306301408-9b74779a11af",
-      title: "Tomato basil",
-      author: "@shelleypauls",
-    },
-    {
-      img: "https://images.unsplash.com/photo-1471357674240-e1a485acb3e1",
-      title: "Sea star",
-      author: "@peterlaster",
-    },
-    {
-      img: "https://images.unsplash.com/photo-1589118949245-7d38baf380d6",
-      title: "Bike",
-      author: "@southside_customs",
-    },
-  ];
-
   const nav = useNavigate();
 
   useEffect(() => {
@@ -266,7 +204,7 @@ const MainBusiness = () => {
             noValidate
             autoComplete="off"
           >
-            <Stack spacing={2} direction="row" style={{ marginBottom: 15 }}>
+            <Stack spacing={2} direction="row" style={{}}>
               {exhibitsType === "author" ? (
                 <Badge color="info" badgeContent=" " variant="dot">
                   <Button color="info" size="large" onClick={getProjectItems}>
@@ -335,16 +273,16 @@ const MainBusiness = () => {
         <Stack
           justifyContent="center" // 가로 방향으로 중앙 정렬
           alignItems="center" // 세로 방향으로 중앙 정렬
-          style={{ marginTop: 100, marginBottom: 150 }}
+          style={{ marginTop: 60 }}
         >
           {enableDialog && (
             <img src={noResult} style={{ width: 300, marginBottom: 30 }} />
           )}
           {!enableDialog && (
             <ImageList
-              sx={{ maxWidth: 1000, height: "auto", overflowY: "hidden" }}
+              sx={{ maxWidth: "90%", height: "auto", overflowY: "hidden" }}
               cols={3}
-              gap={8} // 이미지 사이의 간격 설정
+              gap={18} // 이미지 사이의 간격 설정
             >
               {data.map((item) => (
                 <ImageListItem
@@ -406,23 +344,7 @@ const MainBusiness = () => {
               ))}
             </ImageList>
           )}
-
-          {/* <ButtonBoot
-            variant="dark"
-            size="lg"
-            style={{ marginTop: 50, marginBottom: 50 }}
-          >
-            continue
-          </ButtonBoot> */}
         </Stack>
-
-        <div>
-          {/* <Exhibits
-            className="exhibits"
-            type={exhibitsType}
-            cancelBtnVisible={false}
-          /> */}
-        </div>
       </React.Fragment>
     </div>
   );
