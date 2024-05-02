@@ -15,6 +15,7 @@ const AdminExhibitItem = ({
   endDate,
   price,
   setUpdateCount,
+  url,
 }) => {
   const [modalShow, setModalShow] = useState(false);
   const handleItemInfo = (id) => {
@@ -24,7 +25,7 @@ const AdminExhibitItem = ({
   return (
     <>
       <ImageListItem key={exhibitId} onClick={() => handleItemInfo(exhibitId)}>
-        <img src={author} />
+        <img src={url} />
         <hr style={{ margin: "5px 0" }} />{" "}
         <ImageListItemBar
           title={name + " " + city}

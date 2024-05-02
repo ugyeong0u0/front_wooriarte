@@ -366,8 +366,7 @@ const MainBusiness = () => {
                   }}
                 >
                   <img
-                    srcSet={`https://images.unsplash.com/photo-1518756131217-31eb79b20e8f?w=248&fit=crop&auto=format?w=248&fit=crop&auto=format&dpr=2 2x`}
-                    src={`https://images.unsplash.com/photo-1518756131217-31eb79b20e8f?w=248&fit=crop&auto=format`}
+                    src={`${item.url}`}
                     alt={item.intro}
                     loading="lazy"
                     style={{

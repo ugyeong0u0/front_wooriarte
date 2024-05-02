@@ -64,7 +64,50 @@ export const confirmEmailAuthRequest = async ({ email, authNum }) => {
   const result = await axios
 
     .post(AuthSendEmail_URL(), {
-      id: "testid",
+      email,
+      authNum,
+    })
+    .then((response) => {
+      console.log(response.status);
+      return response; // 응답 데이터를 그대로 반환
+    })
+    .catch((error) => {
+      console.log("실패" + error);
+      if (!error.response || !error.response.data) return null; // 에러 응답이 없거나 데이터가 없는 경우 null 반환
+      return error.response; // 에러 응답의 데이터 반환
+      // 에러 DTO api 반환시
+    });
+  // console.log("result" + result.data);
+  return result;
+};
+//!----------------------------- 아이디찾기- 작가, 유저, 공간대여자 이메일 전송
+export const confirmEmailForEveryRequest = async ({ email }) => {
+  console.log("아이디찾기 이메일 전송 url" + FindIdSendEmail_URL);
+  console.log("아이디찾기 이메일 전송 " + email);
+
+  const result = await axios
+    .post(FindIdSendEmail_URL(), {
+      email,
+    })
+    .then((response) => {
+      console.log(response.status);
+      return response; // 응답 데이터를 그대로 반환
+    })
+    .catch((error) => {
+      console.log("실패" + error);
+      if (!error.response || !error.response.data) return null; // 에러 응답이 없거나 데이터가 없는 경우 null 반환
+      return error.response; // 에러 응답의 데이터 반환
+      // 에러 DTO api 반환시
+    });
+  // console.log("result" + result.data);
+  return result;
+};
+//!----------------------------- 아이디찾기 인증번호 확인 - 작가, 유저, 공간대여자 이메일 확인번호 인증
+export const confirmEmailAuthForEveryRequest = async ({ email, authNum }) => {
+  console.log("인증번호 인증" + email + authNum);
+  const result = await axios
+
+    .post(AuthSendEmail_URL(), {
       email,
       authNum,
     })

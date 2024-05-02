@@ -19,6 +19,7 @@ const BusinessItem = ({
   endDate,
   city,
   setUpdateCount,
+  url,
 }) => {
   const [modalShow, setModalShow] = useState(false);
   const handleItemInfo = () => {
@@ -30,7 +31,7 @@ const BusinessItem = ({
   return (
     <>
       <ImageListItem key={itemId} onClick={() => handleItemInfo()}>
-        <img src={author} />
+        <img src={url} />
         <hr style={{ margin: "5px 0" }} />{" "}
         <ImageListItemBar
           title={String(intro).slice(0, 15)}

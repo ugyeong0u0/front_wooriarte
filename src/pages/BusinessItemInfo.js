@@ -10,6 +10,7 @@ import { useEffect } from "react";
 import {
   onGetAllSpaceItemHandler,
   onGetSpaceItemInfoHandler,
+  onGetSpacePhotoHandler,
 } from "../apis/servicehandeler/SpaceApiHandler";
 import {
   onAllAuthorProjectHandler,
@@ -166,6 +167,20 @@ const BusinessItemInfo = () => {
           });
           console.log("공간 정보 업데이트 성공");
         });
+        console.log("공간 사진조회"); // todo
+        onGetSpacePhotoHandler({ id: posterId }, (response) => {
+          alert("성공");
+          if (Array.isArray(response.data)) {
+            alert("배열안");
+            let now = new Date();
+            const newImgList = response.data.map((item) => ({
+              id: now.toString, // 각 이미지에 대한 고유 ID
+              previewUrl: item.url, // 미리보기 URL
+              originFile: item.url, // 원본 파일 정보는 서버에서 받아올 수 없으므로 null 처리
+            }));
+            setImgList(newImgList);
+          }
+        });
       } else {
         console.log("비즈니스아이템 상세보기 들어온 유저 타입x");
       }
@@ -185,9 +200,7 @@ const BusinessItemInfo = () => {
         });
         console.log("작가 사진조회"); // todo
         onGetAuthorPhotoHandler({ id: posterId }, (response) => {
-          alert("성공");
           if (Array.isArray(response.data)) {
-            alert("배열안");
             let now = new Date();
             const newImgList = response.data.map((item) => ({
               id: now.toString, // 각 이미지에 대한 고유 ID
@@ -214,6 +227,18 @@ const BusinessItemInfo = () => {
             createdAt: response.data.createdAt,
           });
           console.log("공간 정보 업데이트 성공");
+        });
+        console.log("공간 사진조회"); // todo
+        onGetSpacePhotoHandler({ id: posterId }, (response) => {
+          if (Array.isArray(response.data)) {
+            let now = new Date();
+            const newImgList = response.data.map((item) => ({
+              id: now.toString, // 각 이미지에 대한 고유 ID
+              previewUrl: item.url, // 미리보기 URL
+              originFile: item.url, // 원본 파일 정보는 서버에서 받아올 수 없으므로 null 처리
+            }));
+            setImgList(newImgList);
+          }
         });
       } else {
         console.log("비즈니스아이템 상세보기 들어온 유저 타입x");
@@ -337,7 +362,8 @@ const BusinessItemInfo = () => {
                 );
               })}
             </CustomCarousel> */}
-            <ImageList variant="woven" cols={3} gap={8}>
+
+            <ImageList variant="woven" cols={3} gap={5}>
               {imgList.map((item) => (
                 <ImageListItem key={item.id}>
                   <img

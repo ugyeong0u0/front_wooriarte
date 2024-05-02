@@ -21,6 +21,7 @@ import { useEffect } from "react";
 const FindIdUser = () => {
   const nav = useNavigate();
   const [enableDialog, setEnableDialog] = useState(false); //  다이어로그
+  const [enableNotUserDialog, setEnableNotUserDialog] = useState(false); //  다이어로그
   // todo api 연결하기
   // 이메일 전송 버튼 제어 => 이메일 정규식에 따라 활성화
   const [isEmailValid, setIsEmailValid] = useState(false);
@@ -100,7 +101,7 @@ const FindIdUser = () => {
         setEnableDialog(true);
         setFindedId(entity.result); // 성공 응답 저장
       } else {
-        alert("가입되지 않은 회원입니다.");
+        setEnableNotUserDialog(true);
       }
     });
   };
@@ -225,6 +226,15 @@ const FindIdUser = () => {
             result={true}
             page={"goLogin"}
             parentClick={setEnableDialog}
+          />
+        )}
+        {enableNotUserDialog && (
+          <MuiDialog
+            title={"알림"}
+            content={"가입되지 않은 회원입니다! 회원가입해주세요"}
+            result={true}
+            page={"goLogin"}
+            parentClick={setEnableNotUserDialog}
           />
         )}
       </Box>

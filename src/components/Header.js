@@ -77,10 +77,7 @@ const Header = ({ isLoginState, isLoginHandler }) => {
     <div>
       <header className="header">
         <div style={{ marginRight: 24 }}>
-          <text
-            onClick={goMainPage}
-            style={{ marginLeft: 120, marginTop: 10, marginBottom: 10 }}
-          >
+          <text onClick={goMainPage} style={{ marginLeft: 120, marginTop: 10 }}>
             WOORI ARTE
           </text>
           {/* 버튼 하나로 변경하기  */}

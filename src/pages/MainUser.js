@@ -203,6 +203,7 @@ const MainUser = () => {
   return (
     <div>
       <React.Fragment>
+        <div class="gray-line" style={{ marginBottom: 20 }}></div>
         <CssBaseline />
         <Container maxWidth="100%">
           <CustomCarouselForMain>
@@ -210,6 +211,7 @@ const MainUser = () => {
               return <img key={index} src={image.imgURL} alt={image.imgAlt} />;
             })}
           </CustomCarouselForMain>
+          <div class="gray-line" style={{ marginBottom: 10 }}></div>
         </Container>
         <Container maxWidth="80%">
           <Box sx={{ bgcolor: "#00000000", height: "100%", marginTop: 7 }}>
@@ -253,8 +255,7 @@ const MainUser = () => {
                     onClick={() => handleItemInfo(item.exhibitId)}
                   >
                     <img
-                      srcSet={`${author}?w=248&fit=crop&auto=format&dpr=2 2x`}
-                      src={`${author}?w=248&fit=crop&auto=format`}
+                      src={`${item.url}`}
                       alt={item.name}
                       loading="lazy"
                       style={{
@@ -282,7 +283,12 @@ const MainUser = () => {
             {/* 문구배너  */}
             <img
               src={mainAdBanner}
-              style={{ width: "100% ", height: "80%", display: "block" }}
+              style={{
+                width: "100% ",
+                height: "80%",
+                display: "block",
+                marginBottom: 20,
+              }}
               alt="Responsive image"
             />
           </Box>

@@ -18,6 +18,7 @@ import { LocalizationProvider } from "@mui/x-date-pickers";
 import image1 from "../assets/image 1.png";
 const PosterItem = ({
   ticketId,
+  url,
   exhibitId,
   amount,
   ticketNo,
@@ -25,6 +26,7 @@ const PosterItem = ({
   isVisible,
   isDialog,
   isEditable,
+  name,
 }) => {
   console.log("ExhibitsItem 유저 타입" + whatType);
   const nav = useNavigate();
@@ -92,9 +94,9 @@ const PosterItem = ({
     >
       <div>
         <ImageListItem key={ticketId}>
-          <img src={image1} />
+          <img src={url} />
           <ImageListItemBar
-            title={ticketId}
+            title={name}
             subtitle={
               <span>
                 {

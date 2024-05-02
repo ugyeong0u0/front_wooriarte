@@ -35,8 +35,8 @@ const Exhibits = ({ type, cancelBtnVisible, isEditable, whatTab }) => {
     if (whatTab === 0) {
       console.log("Exhibits" + whatTab);
       onGetExhibitTicketUserHandler({ userId, value: whatTab }, (response) => {
-        if (Array.isArray(response.data.tickets)) {
-          setMockData(response.data.tickets);
+        if (Array.isArray(response.data)) {
+          setMockData(response.data);
         } else {
           const emptyList = [];
           setMockData(emptyList);
@@ -46,8 +46,8 @@ const Exhibits = ({ type, cancelBtnVisible, isEditable, whatTab }) => {
     } else if (whatTab === 1) {
       console.log("Exhibits" + whatTab);
       onGetExhibitTicketUserHandler({ userId, value: whatTab }, (response) => {
-        if (Array.isArray(response.data.tickets)) {
-          setMockData(response.data.tickets);
+        if (Array.isArray(response.data)) {
+          setMockData(response.data);
         } else {
           const emptyList = [];
           setMockData(emptyList);
@@ -85,7 +85,12 @@ const Exhibits = ({ type, cancelBtnVisible, isEditable, whatTab }) => {
           })}
       </ImageList>
       {enableDialog && (
-        <img src={noResult} style={{ width: 450, marginBottom: 30 }} />
+        <div style={{ display: "flex", justifyContent: "center" }}>
+          <img
+            src={noResult}
+            style={{ width: "50%", marginBottom: 30, marginTop: 20 }}
+          />
+        </div>
       )}
     </>
   );

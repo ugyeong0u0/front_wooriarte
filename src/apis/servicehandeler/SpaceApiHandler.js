@@ -95,16 +95,16 @@ export const onSignupSpaceHandler = (
 //? --- response 존재
 export const findfindSpaceIdResponse = (response, callback) => {
   if (!response) {
-    alert("네트워크 이상");
+    callback(false);
     return;
   }
   if (response.status >= 200 && response.status < 300) {
     console.log("스페이스 아이디 찾기 성공");
-    callback(response);
+    callback(response.data);
     return;
   } else {
-    alert("회원가입 실패");
-    console.log(response.status);
+    console.log("스페이스 아이디 찾기 실패");
+    callback(false);
     return;
   }
 };

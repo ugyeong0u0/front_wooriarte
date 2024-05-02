@@ -213,15 +213,17 @@ const ApplyWithItems = () => {
             mockData.map((item) => {
               return (
                 <>
-                  <Stack style={{ marginBottom: 150 }}>
+                  <div
+                    style={{
+                      display: "flex",
+                      flexDirection: "column",
+                      alignItems: "flex-start", // 라디오 버튼을 오른쪽 상단으로 정렬
+                    }}
+                  >
                     <Radio
                       {...controlProps(String(item.projectItemId))}
-                      sx={{
-                        color: pink[800],
-                        "&.Mui-checked": {
-                          color: pink[600],
-                        },
-                      }}
+                      icon={<CropDinIcon />}
+                      checkedIcon={<DoneOutlineIcon />}
                       onClick={() => handleSelectedItem(item.projectItemId)}
                     />
                     <BusinessItem
@@ -231,7 +233,7 @@ const ApplyWithItems = () => {
                       whatType={"author"}
                       setUpdateCount={setUpdateCount}
                     />
-                  </Stack>
+                  </div>
                 </>
               );
             })}

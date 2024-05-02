@@ -97,16 +97,16 @@ export const onsignupAuthorHandler = (
 // 스페이스 아이디 찾기 응답
 export const findAuthorIdResponse = (response, callback) => {
   if (!response) {
-    alert("네트워크 이상");
+    callback(false);
     return;
   }
   if (response.status >= 200 && response.status < 300) {
     console.log("작가 아이디 찾기 성공");
-    callback();
+    callback(response.data);
     return;
   } else {
     alert("회원가입 실패");
-    console.log(response.status);
+    callback(false);
     return;
   }
 };

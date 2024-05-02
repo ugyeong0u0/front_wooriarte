@@ -35,6 +35,7 @@ export default function MuiDialog({
         setOpen(false);
         return;
       }
+
       case "login": {
         // LoginEditor.js
         setOpen(false);
