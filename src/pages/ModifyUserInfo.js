@@ -54,8 +54,6 @@ const ModifyUserInfo = () => {
     id: "",
     phoneNumber: "",
     email: "",
-    password: "",
-    authPassword: "",
   });
   useEffect(() => {
     if (authState) {
@@ -69,8 +67,6 @@ const ModifyUserInfo = () => {
           name: response.data.name,
           email: response.data.email,
           phoneNumber: response.data.phone,
-          password: " ",
-          authPassword: " ",
         }));
       });
     }
@@ -78,15 +74,7 @@ const ModifyUserInfo = () => {
 
   useEffect(() => {
     // 입력값이 모두 있어야함. 유효한 email이여야 가입 가능
-    if (
-      infostate.password.length > 4 &&
-      infostate.authPassword.length > 4 &&
-      validateEmail(infostate.email) &&
-      infostate.name.length > 1 &&
-      infostate.id.length > 3 &&
-      infostate.phoneNumber.length > 8 &&
-      String(infostate.authPassword) === String(infostate.password)
-    ) {
+    if (validateEmail(infostate.email)) {
       setSaveState(true); // 저장 버튼 눌리게
     } else {
       setSaveState(false);
@@ -107,7 +95,6 @@ const ModifyUserInfo = () => {
       {
         userId: id,
         id: infostate.id,
-        pwd: infostate.password,
         name: infostate.name,
         email: infostate.email,
         phone: infostate.phoneNumber,
@@ -168,26 +155,6 @@ const ModifyUserInfo = () => {
               variant="standard"
               onChange={handleChangeState}
               value={infostate.email}
-            />
-          </div>
-          <div>
-            <TextField
-              name="password"
-              id="standard-search-Password"
-              label="비밀번호"
-              type="password"
-              variant="standard"
-              onChange={handleChangeState}
-            />
-          </div>
-          <div>
-            <TextField
-              name="authPassword"
-              id="standard-search-authPassword"
-              label="비밀번호확인"
-              type="password"
-              variant="standard"
-              onChange={handleChangeState}
             />
           </div>
 

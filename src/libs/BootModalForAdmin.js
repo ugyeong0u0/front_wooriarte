@@ -307,17 +307,6 @@ export default function BootModalForAdmin({
               onDateChange={handleDateChange}
               isEdit={type === "update" ? true : false}
             />
-
-            <Button
-              component="label"
-              role={undefined}
-              variant="contained"
-              tabIndex={-1}
-              startIcon={<CloudUploadIcon />}
-            >
-              사진 올리기
-              <VisuallyHiddenInput type="file" />
-            </Button>
           </Stack>
         </Box>
       </Modal.Body>

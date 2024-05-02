@@ -391,7 +391,7 @@ const BusinessItemInfo = () => {
                     style={{
                       marginTop: 50,
                       marginBottom: 50,
-                      padding: 20,
+
                       marginLeft: 0, // 왼쪽에 정렬되도록 marginLeft 제거
                       float: "right", // 버튼을 왼쪽으로 정렬
                     }}
@@ -423,7 +423,7 @@ const BusinessItemInfo = () => {
                     style={{
                       marginTop: 50,
                       marginBottom: 50,
-                      padding: 20,
+
                       marginLeft: 0, // 왼쪽에 정렬되도록 marginLeft 제거
                       float: "right", // 버튼을 왼쪽으로 정렬
                     }}
@@ -452,7 +452,7 @@ const BusinessItemInfo = () => {
                   style={{
                     marginTop: 50,
                     marginBottom: 50,
-                    padding: 20,
+
                     marginLeft: 0, // 왼쪽에 정렬되도록 marginLeft 제거
                     float: "right", // 버튼을 왼쪽으로 정렬
                   }}
@@ -485,7 +485,7 @@ const BusinessItemInfo = () => {
                   style={{
                     marginTop: 50,
                     marginBottom: 50,
-                    padding: 20,
+
                     marginLeft: 0, // 왼쪽에 정렬되도록 marginLeft 제거
                     float: "right", // 버튼을 왼쪽으로 정렬
                   }}

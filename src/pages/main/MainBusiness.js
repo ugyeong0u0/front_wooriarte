@@ -335,7 +335,7 @@ const MainBusiness = () => {
         <Stack
           justifyContent="center" // 가로 방향으로 중앙 정렬
           alignItems="center" // 세로 방향으로 중앙 정렬
-          style={{ marginTop: 50 }}
+          style={{ marginTop: 100, marginBottom: 150 }}
         >
           {enableDialog && (
             <img src={noResult} style={{ width: 300, marginBottom: 30 }} />

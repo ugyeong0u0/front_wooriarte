@@ -39,6 +39,7 @@ const ExhibitItemInfo = () => {
     hostName: "", // 주최자명
     price: "", // 가격
     address: "", // 주소
+    urls: "",
   });
 
   useEffect(() => {
@@ -46,7 +47,6 @@ const ExhibitItemInfo = () => {
 
     console.log("전시 modal id " + exhibitId);
     onGetExhibitInfoHandler({ exhibitId: exhibitId }, (response) => {
-      console.log("전시 수정시 전시 정보 응답값 받음");
       console.log(response);
       setExhibitInfoState((prevState) => ({
         name: response.data.name, // 전시명
@@ -57,6 +57,7 @@ const ExhibitItemInfo = () => {
         hostName: response.data.hostName, // 주최자명
         price: response.data.price, // 가격
         address: response.data.city, // 주소
+        urls: response.data.urls,
       }));
     });
   }, []);
@@ -86,29 +87,41 @@ const ExhibitItemInfo = () => {
     <div>
       <React.Fragment>
         <CssBaseline />
+        <div class="gray-line"></div>
         <Container
           maxWidth="80%"
           style={{
+            marginTop: 50,
             display: "flex",
             flexDirection: "column",
             alignItems: "center",
           }}
         >
-          <Stack direction="row" spacing={2}>
+          <Stack direction="row" spacing={10}>
             <div>
-              <img src={image1} />
+              <img
+                src={exhibitInfoState.urls[0]}
+                style={{ maxHeight: 500, maxWidth: 500 }}
+              />
             </div>
 
             <Stack
               direction="col"
               spacing={2}
-              style={{ alignItems: "center", padding: 10 }}
+              style={{ alignItems: "center", marginRight: 10 }}
             >
               <div className="exhibitInfoContainer">
                 <div>
                   <h1>{exhibitInfoState.name}</h1>
                 </div>
-
+                <div
+                  style={{
+                    height: 2,
+                    backgroundColor: "black" /* 선의 색상을 회색으로 설정 */,
+                    width: 300 /* 선의 너비를 부모 요소의 전체 너비로 설정 */,
+                    marginBottom: 30,
+                  }}
+                ></div>
                 <div>
                   <span>작가이름 </span>
                   <span>{exhibitInfoState.artistName}</span>
@@ -156,27 +169,30 @@ const ExhibitItemInfo = () => {
                     </Tooltip>
                   </Stack>
 
-                  <div>
+                  <div style={{ marginBottom: 20 }}>
                     <span>총 결제 금액 : </span>
                     <span>
                       {ticketNumber}개 x {exhibitInfoState.price} ={totalPrice}
                       원
                     </span>
                   </div>
-                  <Payment exhibitId={exhibitId} ticketNumber={ticketNumber}></Payment>
+                  <Payment
+                    exhibitId={exhibitId}
+                    ticketNumber={ticketNumber}
+                  ></Payment>
                 </div>
               </div>
             </Stack>
           </Stack>
 
           {/* 구분선 */}
-          <div class="gray-line" style={{ maxWidth: 40 }}></div>
+          <div class="gray-line" style={{ maxWidth: 40, marginTop: 100 }}></div>
           <h2 style={{ marginTop: 20 }}>전시 소개 </h2>
           <div class="gray-line" style={{ maxWidth: 40 }}></div>
 
           <span
             style={{
-              marginBottom: 40,
+              marginBottom: 200,
               padding: 20,
 
               display: "flex", // 플렉스박스 레이아웃 적용
