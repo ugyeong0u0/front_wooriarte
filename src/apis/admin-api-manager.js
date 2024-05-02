@@ -41,7 +41,7 @@ const AcceptForSpace_URL = ({ id }) =>
 
 const DenyForAuthor_URL = ({ id }) =>
   `${DOMAIN}/admin/refuse-project-item/${id}`;
-const DenyForSpace_URL = ({ id }) => `${DOMAIN}/refuse-space-item/${id}`;
+const DenyForSpace_URL = ({ id }) => `${DOMAIN}/admin/refuse-space-item/${id}`;
 
 // //!----------------------------관리자 모든 매칭 조회
 export const getAllMatchingsForAdmin = async () => {

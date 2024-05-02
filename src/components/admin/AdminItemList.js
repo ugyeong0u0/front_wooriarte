@@ -23,6 +23,8 @@ const AdminItmeList = () => {
   return (
     <>
       <Stack spacing={3}>
+        <>공간 아이템</>
+        <div style={{ height: 1, backgroundColor: "gray" }}></div>
         {mockData.length > 0 ? (
           mockData.map((item) => (
             // todo 아래 값 반환값에 따라 맞게 수정해야함
@@ -37,6 +39,9 @@ const AdminItmeList = () => {
         ) : (
           <span>없음</span>
         )}
+
+        <div>작가아이템</div>
+        <div style={{ height: 1, backgroundColor: "black" }}></div>
         {mockDataForProject.length > 0 ? (
           mockDataForProject.map((item) => (
             // todo 아래 값 반환값에 따라 맞게 수정해야함
