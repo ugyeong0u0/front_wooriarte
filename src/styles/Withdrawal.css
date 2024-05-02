@@ -5,9 +5,12 @@
   padding-right: 5rem;
   background-color: var(--white);
   border-radius: 1rem;
-  width: 100%;
   box-shadow: rgba(0, 0, 0, 0.1) 0px 5px 15px;
   margin-bottom: 35px;
+
+  width: 100%; /* 혹은 원하는 너비 */
+  margin-right: auto;
+  margin-left: 100px;
 }
 
 /* 마우스 호버 시 하이라이트 효과를 확장 */
@@ -16,19 +19,6 @@ div:hover .highlight:after {
 }
 
 .highlight {
-  display: inline-block;
-  position: relative;
-}
-
-.highlight:after {
-  content: "";
-  width: 0;
-  height: 10px; /* 하이라이트 효과의 높이 */
-  display: inline-block;
   background: #d9fcdb; /* 하이라이트 색상 */
-  position: absolute;
-  bottom: 0; /* 위치를 요소 하단으로 설정 */
-  left: 0;
-  z-index: -1; /* 요소를 배경으로 보내기 */
-  transition: width 0.2s; /* 너비 변화에 대한 애니메이션 설정 */
+  font-weight: bold;
 }

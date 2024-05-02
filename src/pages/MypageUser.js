@@ -13,6 +13,7 @@ import Tab from "@mui/material/Tab";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import WithDrawalUser from "../components/user/Withdrawal";
+import { Margin } from "@mui/icons-material";
 
 // 탭관련함수
 function TabPanel(props) {
@@ -128,15 +129,17 @@ const MypageUser = () => {
             alignItems: "center",
             marginBottom: 180,
             marginTop: 10,
+            marginLeft: -150,
             height: "100%", // 필요한 높이 지정
             width: "100%", // 필요한 너비 지정
+
           }}
         >
           <ModifyUserInfo />
         </TabPanel>
         {/* 예매내역 */}
         <TabPanel value={value} index={1}>
-          <Box sx={{ width: "100%", bgcolor: "background.paper" }}>
+          <Box sx={{ width: "100%", bgcolor: "background.paper", marginLeft: 4.5}}>
             <Tabs
               value={widthValue}
               onChange={widthHandleChange}
@@ -152,7 +155,7 @@ const MypageUser = () => {
         </TabPanel>
         {/* 탈퇴하기 */}
         <TabPanel value={value} index={2}>
-          <WithDrawalUser />
+          <WithDrawalUser sx={{marginLeft: 20}} />
         </TabPanel>
       </Box>
     </div>

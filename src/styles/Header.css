@@ -1,32 +1,31 @@
 .header {
-  display: flex; /* header 요소를 flex 컨테이너로 만듭니다. */
-  flex-direction: column; /* 자식 요소들을 세로 방향으로 쌓습니다. */
-  align-items: center; /* 세로 방향의 중앙 정렬을 위해 align-items 사용 */
-  width: 100%; /* header의 너비를 부모 요소의 100%로 설정합니다. */
-  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  position: relative; /* 상대적 포지셔닝 기준 제공 */
 }
 
-.header > div {
-  display: flex; /* div를 flex 컨테이너로 만듭니다. */
-  justify-content: flex-start; /* 자식 요소들을 컨테이너의 시작점 즉, 왼쪽으로 몰아줍니다. */
-  width: 100%; /* div의 너비를 부모 요소의 100%로 설정합니다. */
+.header::before,
+.header::after {
+  content: '';
+  flex: 1;
 }
 
-.header > div > text {
-  order: -1; /* text 요소를 다른 flex 아이템보다 앞에 위치시키기 위해 order 사용 */
-  width: 100%; /* text 요소의 너비를 최대로 설정하여 가운데 정렬 유지 */
-  font-size: 70px; /* 폰트 사이즈 조정 */
-  text-align: center; /* 텍스트를 가운데 정렬합니다. */
-  white-space: nowrap; /* 화면이 줄어도 글자 줄바꿈x */
+.titleContainer {
+  flex-grow: 0;
+  font-size: 80px;
+  text-align: center;
 }
 
-.header > div > Button {
-  margin-bottom: 10px; /* Button 아래에 마진을 추가하여 여백 조정 */
-  margin-right: 25px;
+.right-section {
+  position: absolute;
+  top: 50; /* 화면 상단에서의 위치 */
+  right: 0; /* 화면 오른쪽에서의 위치 */
+  display: flex;
+  justify-content: flex-end; /* 오른쪽 끝으로 정렬합니다 */
 }
-body {
-  line-height: 1.7;
-  color: black;
-  font-weight: 400;
-  font-size: 1rem;
+
+.right-section button {
+  font-size: 20px; /* 글자 크기를 24px로 설정 */
 }

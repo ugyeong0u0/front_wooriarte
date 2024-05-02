@@ -9,13 +9,6 @@ import { createContext, useEffect, useState } from "react";
 
 import CuFooter from "./components/CuFooter";
 
-import { createTheme, ThemeProvider } from '@mui/material/styles';
-
-const theme = createTheme({
-  typography: {
-    fontFamily: ['ChosunSm', 'sans-serif'].join(','),
-  },
-});
 
 export const loginContext = createContext();
 
@@ -33,7 +26,6 @@ function App() {
 
   return (
     <div className="wrapper">
-      <ThemeProvider theme = {theme}>
       <loginContext.Provider value={setIsLoginStateState}>
         <BrowserRouter>
           {/* 유저 id */}
@@ -45,7 +37,6 @@ function App() {
           <CuFooter className="footer" />
         </BrowserRouter>
       </loginContext.Provider>
-      </ThemeProvider>
     </div>
   );
 }

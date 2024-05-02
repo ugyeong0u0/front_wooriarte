@@ -76,10 +76,12 @@ const Header = ({ isLoginState, isLoginHandler }) => {
   return (
     <div>
       <header className="header">
-        <div style={{ marginRight: 24 }}>
-          <text onClick={goMainPage} style={{ marginLeft: 120, marginTop: 10 }}>
+        <div>
+          <text onClick={goMainPage} style={{ marginTop: 10, fontSize: '80px' }} className="titleContainer">
             WOORI ARTE
           </text>
+        </div>
+        <div className="right-section">
           {/* 버튼 하나로 변경하기  */}
 
           {!isLoginState && (
@@ -105,7 +107,7 @@ const Header = ({ isLoginState, isLoginHandler }) => {
             />
           )}
           {isLoginState && (
-            <Button text={"Logout"} isVisible={true} onClick={onClickLogout} />
+            <Button text={"Logout"} isVisible={true} onClick={onClickLogout}/>
           )}
 
           {isLoginState && (

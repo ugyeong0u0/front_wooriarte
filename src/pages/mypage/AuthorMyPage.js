@@ -107,6 +107,7 @@ const AuthorMyPage = () => {
             alignItems: "center",
             marginBottom: 180,
             marginTop: 10,
+            marginLeft: -150,
             height: "100%", // 필요한 높이 지정
             width: "100%", // 필요한 너비 지정
           }}
