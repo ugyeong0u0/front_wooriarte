@@ -18,6 +18,8 @@ import BusinessItem from "../../components/business/BusinessItem";
 // items
 import noItems from "../../assets/noItems.png";
 
+import Button from "@mui/material/Button";
+
 // api
 import {
   onGetOneAuthorProjectsHandler,
@@ -288,21 +290,20 @@ const ApplyWithItems = () => {
         )}
         {abledBtn && !enableDialog && (
           <div style={{ marginTop: 40, marginBottom: 100 }}>
+            <Button
+              variant="outlined"
+              style={{ marginRight: 10 }}
+              onClick={goBack}
+              color="info"
+            >
+              취소하기
+            </Button>
+
             <button
-              style={{ marginRight: 10, padding: 20 }}
               className="applyBtn"
               type="button"
               class="btn btn-dark"
-              onClick={goBack}
-            >
-              취소하기
-            </button>
-            <button
-              className="applyBtn"
-              type="button"
-              class="btn btn-success"
               onClick={goApply}
-              style={{ padding: 20 }}
             >
               신청하기
             </button>

@@ -39,48 +39,6 @@ import { grey } from "@mui/material/colors";
   crossorigin="anonymous"
 ></link>;
 
-const itemData = [
-  {
-    img: "https://images.unsplash.com/photo-1551963831-b3b1ca40c98e",
-    title: "Breakfast",
-    rows: 2,
-    cols: 2,
-  },
-  {
-    img: "https://images.unsplash.com/photo-1551782450-a2132b4ba21d",
-    title: "Burger",
-  },
-  {
-    img: "https://images.unsplash.com/photo-1522770179533-24471fcdba45",
-    title: "Camera",
-  },
-  {
-    img: "https://images.unsplash.com/photo-1444418776041-9c7e33cc5a9c",
-    title: "Coffee",
-    cols: 2,
-  },
-  {
-    img: "https://images.unsplash.com/photo-1533827432537-70133748f5c8",
-    title: "Hats",
-    cols: 2,
-  },
-  {
-    img: "https://images.unsplash.com/photo-1558642452-9d2a7deb7f62",
-    title: "Honey",
-    author: "@arwinneil",
-    rows: 2,
-    cols: 2,
-  },
-  {
-    img: "https://images.unsplash.com/photo-1516802273409-68526ee1bdd6",
-    title: "Basketball",
-  },
-  {
-    img: "https://images.unsplash.com/photo-1518756131217-31eb79b20e8f",
-    title: "Fern",
-  },
-];
-
 const BusinessItemInfo = () => {
   const nav = useNavigate();
   const uselocation = useLocation();
@@ -295,7 +253,7 @@ const BusinessItemInfo = () => {
           userType === "author" ? (
             <div>
               <h1 style={{ marginBottom: 10, marginTop: 10 }}>
-                작가: {projectInfo.artistName}
+                Author: {projectInfo.artistName}
               </h1>
               <span style={{ marginLeft: 10, color: "gray", fontSize: "12px" }}>
                 {" "}
@@ -308,7 +266,7 @@ const BusinessItemInfo = () => {
           ) : (
             <div>
               <h1 style={{ marginBottom: 10, marginTop: 10 }}>
-                공간대여자: {spaceInfo.hostName}
+                Rental: {spaceInfo.hostName}
               </h1>
               <span style={{ marginLeft: 10, color: "gray", fontSize: "12px" }}>
                 {spaceInfo.city}
@@ -321,7 +279,7 @@ const BusinessItemInfo = () => {
         ) : exhibitsType === "author" ? (
           <div>
             <h2 style={{ marginBottom: 10, marginTop: 10 }}>
-              작가: {projectInfo.artistName}
+              Author: {projectInfo.artistName}
             </h2>
             <span style={{ marginLeft: 10, color: "gray", fontSize: "12px" }}>
               {projectInfo.city}
@@ -333,7 +291,7 @@ const BusinessItemInfo = () => {
         ) : (
           <div>
             <h2 style={{ marginBottom: 10, marginTop: 10 }}>
-              공간대여자: {spaceInfo.hostName}
+              Rental: {spaceInfo.hostName}
             </h2>
             <span style={{ marginLeft: 10, color: "gray", fontSize: "12px" }}>
               {spaceInfo.city}

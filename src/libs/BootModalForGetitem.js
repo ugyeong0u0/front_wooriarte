@@ -670,15 +670,25 @@ export default function MyVerticallyCenteredModal({
           닫기
         </Button>
 
-        <ButtonBoot
+        <button
+          className="applyBtn"
+          type="button"
+          class="btn btn-dark"
           onClick={() => {
             submitAuthorItem();
           }}
           disabled={!enableNextBtn}
         >
           수정하기
+        </button>
+
+        <ButtonBoot
+          variant="outline-dark"
+          onClick={() => deleteExhibits()}
+          disabled={!enableNextBtn}
+        >
+          삭제하기
         </ButtonBoot>
-        <ButtonBoot onClick={() => deleteExhibits()}>삭제하기</ButtonBoot>
       </Modal.Footer>
     </Modal>
   );
