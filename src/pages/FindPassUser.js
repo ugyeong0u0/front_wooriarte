@@ -92,11 +92,15 @@ const FindPassUser = () => {
         component="form"
         sx={{
           "& .MuiTextField-root": { m: 1, width: "25ch" },
+          display: "flex", // 사용 flexbox 레이아웃
+          flexDirection: "column", // 요소들을 세로로 정렬
+          alignItems: "center", // 가로 방향으로 가운데 정렬
         }}
         noValidate
         autoComplete="off"
+        
       >
-        <span>비밀번호 찾기</span>
+        <h2 style={{ marginBottom: 20, marginTop: 30 }}>비밀번호 찾기</h2>
 
         <div>
           <TextField
@@ -119,7 +123,12 @@ const FindPassUser = () => {
           />
         </div>
         <div>
-          <Stack spacing={2} direction="row">
+          <Stack spacing={2} direction="row" style={{
+              marginLeft: 63,
+              marginTop: 10, // 위 여백 추가
+              marginBottom: 10, // 아래 여백 추가
+              alignItems: "center", // 요소들의 높이를 각 요소에 맞춤
+            }}>
             <TextField
               name="email"
               id="standard-search"
@@ -127,6 +136,7 @@ const FindPassUser = () => {
               type="search"
               variant="standard"
               onChange={handleChangeState}
+              
             />
 
             <button
@@ -134,13 +144,19 @@ const FindPassUser = () => {
               class="btn btn-dark"
               onClick={sendAuthNumber}
               disabled={!isEmailValid}
+              style={{ padding: 7 }}
             >
               전송
             </button>
           </Stack>
         </div>
         <div>
-          <Stack spacing={2} direction="row">
+          <Stack spacing={2} direction="row" style={{
+              marginLeft: 63,
+              marginTop: 10, // 위 여백 추가
+              marginBottom: 10, // 아래 여백 추가
+              alignItems: "center", // 요소들의 높이를 각 요소에 맞춤
+            }}>
             <TextField
               name="authnumber"
               id="standard-number"
@@ -155,9 +171,10 @@ const FindPassUser = () => {
 
             <button
               type="button"
-              class="btn btn-success"
+              class="btn btn-dark"
               onClick={certifyAuthNumber}
               disabled={!enableAuthBtn}
+              style={{ padding: 7 }}
             >
               확인
             </button>
@@ -168,6 +185,7 @@ const FindPassUser = () => {
           class="btn btn-dark"
           onClick={nextPage}
           disabled={!enableNextBtn}
+          style={{ marginTop: 50, marginBottom: 90 }}
         >
           다음
         </button>
