@@ -17,6 +17,9 @@ import { LocalizationProvider } from "@mui/x-date-pickers";
 
 import image1 from "../assets/image 1.png";
 import axios from "axios";
+import MuiDialog from "../libs/MuiDialog";
+import { useState } from "react";
+
 const PosterItem = ({
   ticketId,
   url,
@@ -31,16 +34,21 @@ const PosterItem = ({
 }) => {
   console.log("ExhibitsItem 유저 타입" + whatType);
   const nav = useNavigate();
+  const [enableDialog, setEnableDialog] = useState(false); //  다이어로그
+  const [enableDialog2, setEnableDialog2] = useState(false); //  다이어로그
   const cancelTicket = async () => {
     if (window.confirm("취소하시겠습니까?")) {
       console.log("취소o");
-        const { refund } = await axios.post('http://localhost:8080/refund', {
-          ticketId: ticketId
+        const refund  = await axios.post('http://localhost:8080/refund', {
+          ticketId: ticketId,
+          reason: ""
         });
+        console.log(refund);
+        console.log(refund.status);
         if(refund.status >= 200 && refund.status < 300) {
-          alert("환불 완료");
+          setEnableDialog(true)
         } else {
-          alert("환불 실패");
+          setEnableDialog2(true);
         }
     } else {
       console.log("취소x.");
@@ -123,6 +131,28 @@ const PosterItem = ({
           {/* {isDialog && <ScrollDialog />}  */}
         </ImageListItem>
       </div>
+      {enableDialog && (
+          <MuiDialog
+            title={"알림"}
+            content={
+              "환불 완료"
+            }
+            result={true}
+            page={"login"}
+            parentClick={setEnableDialog}
+          />
+        )}
+        {enableDialog2 && (
+          <MuiDialog
+            title={"알림"}
+            content={
+              "환불 실패"
+            }
+            result={true}
+            page={"login"}
+            parentClick={setEnableDialog2}
+          />
+        )}
     </div>
   );
 };

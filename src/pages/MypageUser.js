@@ -146,7 +146,7 @@ const MypageUser = () => {
               centered
               style={{ marginBottom: 14 }}
             >
-              <Tab label="관람예정" sx={{marginLeft: -22}}/>
+              <Tab label="관람예정" sx={{marginLeft: 8}}/>
               <Tab label="관람완료" />
             </Tabs>
 

@@ -74,6 +74,7 @@ const Payment = ({ exhibitId, ticketNumber }) => {
           console.log(data.verified);
           if (data.verified) {
             alert("결제 성공");
+            alert(localStorage.userId);
             const { ticket } = await axios.post(
               "http://127.0.0.1:8080/api/tickets",
               {
