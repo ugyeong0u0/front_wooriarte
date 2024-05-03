@@ -127,7 +127,7 @@ const SignupUser = () => {
       >
         <Stack spacing={2}>
           <div>
-            <Stack spacing={2} direction="row" style={{ marginLeft: 20 }}>
+            <Stack spacing={2} direction="row" style={{ marginLeft: 35 }}>
               <Badge color="info" badgeContent=" " variant="dot">
                 <Button color="info" size="large">
                   개인
@@ -216,7 +216,7 @@ const SignupUser = () => {
           </div>
           <button
             type="button"
-            class="btn btn-success"
+            class="btn btn-dark"
             onClick={submitsignup}
             disabled={!enableNextBtn}
             style={{ marginLeft: 7, marginBottom: 30, marginTop: 40 }}

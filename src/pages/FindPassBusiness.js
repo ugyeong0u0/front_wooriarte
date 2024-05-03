@@ -222,7 +222,7 @@ const FindPassBusiness = () => {
 
             <button
               type="button"
-              class="btn btn-success"
+              class="btn btn-dark"
               onClick={certifyAuthNumber}
               disabled={!enableAuthBtn}
             >

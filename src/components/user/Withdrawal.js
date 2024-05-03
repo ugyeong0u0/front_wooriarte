@@ -78,7 +78,7 @@ const WithDrawalUser = () => {
   };
 
   return (
-    <div className="withdrawalContainer">
+    <div className="withdrawalContainer" style={{ marginBottom: 65 }}>
       <h2 style={{ marginBottom: 15 }}> 회원탈퇴</h2>
       <div className="content">
         <span>

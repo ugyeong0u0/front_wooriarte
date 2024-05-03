@@ -23,7 +23,7 @@ const Matching = () => {
     <React.Fragment>
       <CssBaseline />
       <Container maxWidth="80%">
-        <Box sx={{ bgcolor: "#00000000", width: "100%" }}>
+        <Box sx={{ bgcolor: "#00000000", width: "100%", marginBottom: 15 }}>
           <h2>신청현황</h2>
           <div
             style={{

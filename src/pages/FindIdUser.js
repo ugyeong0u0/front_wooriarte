@@ -200,7 +200,7 @@ const FindIdUser = () => {
 
             <button
               type="button"
-              class="btn btn-success"
+              class="btn btn-dark"
               onClick={certifyAuthNumber}
               disabled={!enableAuthBtn}
               style={{ padding: 7 }}
@@ -215,7 +215,7 @@ const FindIdUser = () => {
           class="btn btn-dark"
           onClick={nextPage}
           disabled={!enableNextBtn}
-          style={{ marginTop: 50, marginBottom: 70 }}
+          style={{ marginTop: 50, marginBottom: 90 }}
         >
           다음
         </button>

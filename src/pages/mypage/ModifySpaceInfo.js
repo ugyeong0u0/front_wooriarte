@@ -47,7 +47,7 @@ const ModifySpaceInfo = () => {
   });
 
   return (
-    <div className="spaceInfoContainer">
+    <div className="spaceInfoContainer" style={{ marginBottom: 10 }}>
       {authState === true && (
         <BusinessInfo
           isBusinessInfo={true}
