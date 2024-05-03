@@ -8,6 +8,6 @@
   background-color: var(--white);
   border-radius: 1rem;
   width: 100%;
-  box-shadow: rgba(0, 0, 0, 0.1) 0px 5px 15px;
+
   display: flex; /* 플렉스박스 레이아웃 적용 */
 }

@@ -78,7 +78,11 @@ const Header = ({ isLoginState, isLoginHandler }) => {
     <div>
       <header className="header">
         <div>
-          <text onClick={goMainPage} style={{ marginTop: 10, fontSize: '80px', fontFamily: 'ChosunSm'}} className="titleContainer">
+          <text
+            onClick={goMainPage}
+            style={{ marginTop: 10, fontSize: "50px", marginRight: 900 }}
+            className="titleContainer"
+          >
             WOORI ARTE
           </text>
         </div>
@@ -108,7 +112,7 @@ const Header = ({ isLoginState, isLoginHandler }) => {
             />
           )}
           {isLoginState && (
-            <Button text={"Logout"} isVisible={true} onClick={onClickLogout}/>
+            <Button text={"Logout"} isVisible={true} onClick={onClickLogout} />
           )}
 
           {isLoginState && (

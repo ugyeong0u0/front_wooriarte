@@ -8,13 +8,13 @@
 
 .header::before,
 .header::after {
-  content: '';
+  content: "";
   flex: 1;
 }
 
 .titleContainer {
   flex-grow: 0;
-  font-size: 80px;
+  font-size: 40px;
   text-align: center;
 }
 
@@ -31,8 +31,8 @@
 }
 
 @font-face {
-  font-family: 'ChosunSm';
-  src: url('../fonts/ChosunSm.woff') format('woff');
+  font-family: "ChosunSm";
+  src: url("../fonts/ChosunSm.woff") format("woff");
   font-weight: normal;
   font-style: normal;
 }

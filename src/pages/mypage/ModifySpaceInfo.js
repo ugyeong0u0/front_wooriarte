@@ -47,7 +47,7 @@ const ModifySpaceInfo = () => {
   });
 
   return (
-    <div className="spaceInfoContainer" style={{ marginBottom: 10 }}>
+    <div className="spaceInfoContainer">
       {authState === true && (
         <BusinessInfo
           isBusinessInfo={true}
@@ -57,7 +57,14 @@ const ModifySpaceInfo = () => {
       )}
       {authState === false && (
         <div>
-          <Stack spacing={2} direction="row">
+          <Stack
+            spacing={2}
+            direction="row"
+            style={{
+              marginTop: 20,
+              alignItems: "center", // 요소들의 높이를 각 요소에 맞춤
+            }}
+          >
             <TextField
               name="pw"
               id="standard-password-input"
@@ -72,6 +79,7 @@ const ModifySpaceInfo = () => {
               type="button"
               class="btn btn-dark"
               onClick={setAuthStateChange}
+              style={{ paddingRight: 5, paddingLeft: 5, paddingTop: 5 }}
             >
               확인
             </button>
