@@ -63,7 +63,7 @@ const Payment = ({ exhibitId, ticketNumber }) => {
       {
         pg: "html5_inicis.INIpayTest",
         merchant_uid: orderInfo.merchantUid,
-        name: "테스트 상품",
+        name: "사탕이 녹는 시간 1매",
         amount: orderInfo.amount,
       },
       async (rsp) => {

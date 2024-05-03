@@ -16,6 +16,7 @@ import { LocalizationProvider } from "@mui/x-date-pickers";
 // isDialog는 작가 공간대여자가 신청할 때 자기 물건 자세히 보기 정도에 쓰임
 
 import image1 from "../assets/image 1.png";
+import axios from "axios";
 const PosterItem = ({
   ticketId,
   url,
@@ -30,9 +31,17 @@ const PosterItem = ({
 }) => {
   console.log("ExhibitsItem 유저 타입" + whatType);
   const nav = useNavigate();
-  const cancelTicket = () => {
+  const cancelTicket = async () => {
     if (window.confirm("취소하시겠습니까?")) {
       console.log("취소o");
+        const { refund } = await axios.post('http://localhost:8080/refund', {
+          ticketId: ticketId
+        });
+        if(refund.status >= 200 && refund.status < 300) {
+          alert("환불 완료");
+        } else {
+          alert("환불 실패");
+        }
     } else {
       console.log("취소x.");
     }

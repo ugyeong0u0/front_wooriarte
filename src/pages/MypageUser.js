@@ -139,14 +139,14 @@ const MypageUser = () => {
         </TabPanel>
         {/* 예매내역 */}
         <TabPanel value={value} index={1}>
-          <Box sx={{ width: "100%", bgcolor: "background.paper", marginLeft: 4.5}}>
+          <Box sx={{ width: "100%", bgcolor: "background.paper", marginLeft: 2}}>
             <Tabs
               value={widthValue}
               onChange={widthHandleChange}
               centered
               style={{ marginBottom: 14 }}
             >
-              <Tab label="관람예정" />
+              <Tab label="관람예정" sx={{marginLeft: -22}}/>
               <Tab label="관람완료" />
             </Tabs>
 
