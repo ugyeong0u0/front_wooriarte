@@ -28,8 +28,11 @@ const Exhibits = ({ type, cancelBtnVisible, isEditable, whatTab }) => {
   console.log("Exhibits 유저 타입" + type);
 
   const [mockData, setMockData] = useState([{}]); // 받는 형식이 배열 안 객체라
+
+  const [updateCount, setUpdateCount] = useState(0);
+
   const [enableDialog, setEnableDialog] = useState(false); // 검색결과가 없을때 띄울이미자
-  // 작가 메인에서
+  // 유저 메인에서
   useEffect(() => {
     const userId = localStorage.getItem("userId");
     if (whatTab === 0) {
@@ -55,7 +58,7 @@ const Exhibits = ({ type, cancelBtnVisible, isEditable, whatTab }) => {
         }
       });
     }
-  }, [whatTab]);
+  }, [whatTab, updateCount]);
 
   useEffect(() => {
     if (mockData.length < 1) {
@@ -80,6 +83,8 @@ const Exhibits = ({ type, cancelBtnVisible, isEditable, whatTab }) => {
                 isVisible={cancelBtnVisible}
                 isDialog={false}
                 isEditable={isEditable}
+                setUpdateCount={setUpdateCount}
+                updateCount={updateCount}
               />
             );
           })}

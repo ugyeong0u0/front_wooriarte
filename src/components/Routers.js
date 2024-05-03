@@ -23,6 +23,7 @@ import SpaceMyPage from "../pages/mypage/SpaceMyPage";
 import LoginAdmin from "../pages/admin/LoginAdimin";
 import MainAdmin from "../pages/admin/MainAdmin";
 import ResetPassBusiness from "../pages/login/ResetPassBusiness";
+import ResetPassUser from "../pages/login/ResetPassUser";
 
 // 페이지 이동 경로는 여기에만 작성하기
 // 주의 : url 경로는 소문자만 작성하기
@@ -60,6 +61,9 @@ const Routers = () => {
         <Route path="/findpwuser" element={<FindPassUser />} />
         <Route path="/findpwbusiness" element={<FindPassBusiness />} />
         <Route path="/resetpwbusiness" element={<ResetPassBusiness />} />
+
+        <Route path="/resetpwbusiness" element={<ResetPassBusiness />} />
+        <Route path="/resetpwuser" element={<ResetPassUser />} />
 
         {/* 사업자 아이템(작가, 사업자 둘다) 자세히보기 */}
         <Route path="/businessiteminfo/:id" element={<BusinessItemInfo />} />

@@ -15,6 +15,8 @@ const updateUserInfo_URL = ({ id }) => `${DOMAIN}/users/${id}/info`; // 유저 �
 // todo
 const ExhibitUser_URL = ({ id, value }) =>
   `${DOMAIN}/tickets/users/${id}/bookings/${value}`;
+const FindPassEmail_URL = () => `${DOMAIN}/email/users/email-send`; // 비번 찾기 이메일 전송
+const FindPassAuthEmail_URL = () => `${DOMAIN}/email/users/email-auth-check`; // 비번 찾기 이메일 전송
 
 //!----------------------------- 유저 로그인
 export const LogInRequest = async ({ id, pw }) => {
@@ -284,5 +286,51 @@ export const getExhibitTicketUser = async ({ userId, value }) => {
         console.log("에러 응답이 없습니다.");
       }
     });
+  return result;
+};
+
+//!----------------------------- 비번 찾기 이메일 전송
+export const findPassByEmailRequest = async ({ id, email }) => {
+  console.log("비번 찾기  이메일 전송 url" + FindPassEmail_URL());
+  console.log("비번 찾기  이메일 전송 " + id + email);
+
+  const result = await axios
+    .post(FindPassEmail_URL(), {
+      id,
+      email,
+    })
+    .then((response) => {
+      console.log(response.status);
+      return response; // 응답 데이터를 그대로 반환
+    })
+    .catch((error) => {
+      console.log("실패" + error);
+      if (!error.response || !error.response.data) return null; // 에러 응답이 없거나 데이터가 없는 경우 null 반환
+      return error.response; // 에러 응답의 데이터 반환
+      // 에러 DTO api 반환시
+    });
+  // console.log("result" + result.data);
+  return result;
+};
+//!----------------------------- 비번 찾기 이메일 확인번호 인증
+export const confirmEmailAuthRequest = async ({ id, email, authNum }) => {
+  console.log("인증번호 인증" + id + email + authNum);
+  const result = await axios
+    .post(FindPassAuthEmail_URL(), {
+      id,
+      email,
+      authNum,
+    })
+    .then((response) => {
+      console.log(response.status);
+      return response; // 응답 데이터를 그대로 반환
+    })
+    .catch((error) => {
+      console.log("실패" + error);
+      if (!error.response || !error.response.data) return null; // 에러 응답이 없거나 데이터가 없는 경우 null 반환
+      return error.response; // 에러 응답의 데이터 반환
+      // 에러 DTO api 반환시
+    });
+  // console.log("result" + result.data);
   return result;
 };

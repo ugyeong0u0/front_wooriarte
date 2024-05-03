@@ -8,6 +8,8 @@ import {
   getUserInfo,
   updateUserInfo,
   getExhibitTicketUser,
+  findPassByEmailRequest,
+  confirmEmailAuthRequest,
 } from "../api-manger";
 
 //!----------------------------유저 로그인
@@ -253,7 +255,7 @@ export const ongetUserMainPosterHandler = (
 
 export const getExhibitTicketUserResponse = (response, callback) => {
   if (!response) {
-   // alert("네트워크 이상");
+    // alert("네트워크 이상");
     return;
   }
   if (response.status >= 200 && response.status < 300) {
@@ -271,5 +273,50 @@ export const onGetExhibitTicketUserHandler = ({ userId, value }, callback) => {
   console.log("핸들러 안 " + value);
   getExhibitTicketUser({ userId, value }).then((response) =>
     getExhibitTicketUserResponse(response, callback)
+  );
+};
+//!---------------------------- 비번 찾기 이메일 전송 api
+export const findPassByEmailResponse = (response, callback) => {
+  if (!response) {
+    alert("네트워크 이상");
+    return;
+  }
+  if (response.status >= 200 && response.status < 300) {
+    console.log(" 비번 찾기 이메일 전송 : " + response.data);
+
+    callback();
+    return;
+  } else {
+    alert(" 비번 찾기 이메일 전송 실패");
+    console.log(response.status);
+    return;
+  }
+};
+
+export const onFindPassByEmailHandler = ({ id, email }, callback) => {
+  findPassByEmailRequest({ id, email }).then((response) =>
+    findPassByEmailResponse(response, callback)
+  );
+};
+//!---------------------------- 비번찾기 이메일  인증번호 확인
+export const confirmEmailAuthResponse = (response, callback) => {
+  if (!response) {
+    callback(false);
+    return;
+  }
+  if (response.status >= 200 && response.status < 300) {
+    console.log("비번 찾기 인증번호 확인 성공");
+    callback(true);
+    return;
+  } else {
+    callback(false);
+    console.log("비번 인증 실패" + response.status);
+    return;
+  }
+};
+
+export const onConfirmEmailAuthHandler = ({ id, email, authNum }, callback) => {
+  confirmEmailAuthRequest({ id, email, authNum }).then((response) =>
+    confirmEmailAuthResponse(response, callback)
   );
 };

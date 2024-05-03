@@ -9,6 +9,8 @@ const Payment = ({ exhibitId, ticketNumber }) => {
   const [enableDialog, setEnableDialog] = useState(false); //  빈 다이어로그
   const [enableLoginDialog, setEnableLoginDialog] = useState(false); //  로그인 다이어로그
   const [enableNotInfoDialog, setEnableNotInfoDialog] = useState(false); //  결제정보 가져오기 실패 다이어로그
+  const [enableCheckDialog, setEnableCheckDialog] = useState(false); // 결제 실패, 성공
+  const [enableTxt, setEnableTxt] = useState(""); // 결제 실패, 성공
   useEffect(() => {
     const jquery = document.createElement("script");
     jquery.src = "http://code.jquery.com/jquery-1.12.4.min.js";
@@ -73,8 +75,9 @@ const Payment = ({ exhibitId, ticketNumber }) => {
           );
           console.log(data.verified);
           if (data.verified) {
-            alert("결제 성공");
-            alert(localStorage.userId);
+            setEnableTxt("결제 성공하였습니다.");
+            setEnableCheckDialog(true);
+
             const { ticket } = await axios.post(
               "http://127.0.0.1:8080/api/tickets",
               {
@@ -87,14 +90,16 @@ const Payment = ({ exhibitId, ticketNumber }) => {
               }
             );
           } else {
-            alert("결제 실패");
+            setEnableTxt("결제 실패하였습니다. 다시 해주세요");
+            setEnableCheckDialog(true);
           }
         } catch (error) {
           console.error("결제 검증 중 에러 발생:", error);
           await axios.post(
             "http://127.0.0.1:8080/api/payment/cancel/" + orderInfo.merchantUid
           );
-          alert("결제 실패");
+          setEnableTxt("결제 실패하였습니다. 다시 해주세요");
+          setEnableCheckDialog(true);
         }
       }
     );
@@ -142,6 +147,16 @@ const Payment = ({ exhibitId, ticketNumber }) => {
           result={true}
           page={"login"}
           parentClick={setEnableNotInfoDialog}
+        />
+      )}
+
+      {enableCheckDialog && (
+        <MuiDialog
+          title={"알림"}
+          content={`${enableTxt}`}
+          result={true}
+          page={"login"}
+          parentClick={setEnableDialog}
         />
       )}
     </div>

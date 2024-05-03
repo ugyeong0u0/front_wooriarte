@@ -31,6 +31,8 @@ const PosterItem = ({
   isDialog,
   isEditable,
   name,
+  setUpdateCount,
+  updateCount,
 }) => {
   console.log("ExhibitsItem 유저 타입" + whatType);
   const nav = useNavigate();
@@ -39,17 +41,18 @@ const PosterItem = ({
   const cancelTicket = async () => {
     if (window.confirm("취소하시겠습니까?")) {
       console.log("취소o");
-        const refund  = await axios.post('http://localhost:8080/refund', {
-          ticketId: ticketId,
-          reason: ""
-        });
-        console.log(refund);
-        console.log(refund.status);
-        if(refund.status >= 200 && refund.status < 300) {
-          setEnableDialog(true)
-        } else {
-          setEnableDialog2(true);
-        }
+      const refund = await axios.post("http://localhost:8080/refund", {
+        ticketId: ticketId,
+        reason: "",
+      });
+      console.log(refund);
+      console.log(refund.status);
+      if (refund.status >= 200 && refund.status < 300) {
+        setEnableDialog(true);
+        setUpdateCount((prev) => prev + 1);
+      } else {
+        setEnableDialog2(true);
+      }
     } else {
       console.log("취소x.");
     }
@@ -132,27 +135,23 @@ const PosterItem = ({
         </ImageListItem>
       </div>
       {enableDialog && (
-          <MuiDialog
-            title={"알림"}
-            content={
-              "환불 완료"
-            }
-            result={true}
-            page={"login"}
-            parentClick={setEnableDialog}
-          />
-        )}
-        {enableDialog2 && (
-          <MuiDialog
-            title={"알림"}
-            content={
-              "환불 실패"
-            }
-            result={true}
-            page={"login"}
-            parentClick={setEnableDialog2}
-          />
-        )}
+        <MuiDialog
+          title={"알림"}
+          content={"환불 완료"}
+          result={true}
+          page={"login"}
+          parentClick={setEnableDialog}
+        />
+      )}
+      {enableDialog2 && (
+        <MuiDialog
+          title={"알림"}
+          content={"환불 실패"}
+          result={true}
+          page={"login"}
+          parentClick={setEnableDialog2}
+        />
+      )}
     </div>
   );
 };

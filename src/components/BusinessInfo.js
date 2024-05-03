@@ -411,7 +411,7 @@ const BusinessInfo = ({
         {!isBusinessInfo && (
           <button
             type="button"
-            class="btn btn-success"
+            class="btn btn-dark"
             onClick={submitsignup}
             disabled={!enableNextBtn}
           >
