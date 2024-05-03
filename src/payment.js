@@ -61,7 +61,7 @@ const Payment = ({ exhibitId, ticketNumber }) => {
 
     IMP.request_pay(
       {
-        pg: "kakaopay.TC0ONETIME",
+        pg: "html5_inicis.INIpayTest",
         merchant_uid: orderInfo.merchantUid,
         name: "테스트 상품",
         amount: orderInfo.amount,
