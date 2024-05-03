@@ -325,9 +325,9 @@ const MainBusiness = () => {
                 /> */}
                   <ImageListItemBar
                     title={
-                      { item } && item.intro
-                        ? item.intro.slice(0, 10)
-                        : "Loading..."
+                      { item } && exhibitsType === "author"
+                        ? item.artistName
+                        : item.hostName
                     }
                     subtitle={
                       <div>
