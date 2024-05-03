@@ -8,6 +8,13 @@ import MainUser from "./pages/MainUser";
 import { createContext, useEffect, useState } from "react";
 
 import CuFooter from "./components/CuFooter";
+import { createTheme, ThemeProvider } from '@mui/material/styles';
+
+const theme = createTheme({
+  typography: {
+    fontFamily: ['Pretendard-Regular', 'sans-serif'].join(','),
+  },
+});
 
 
 export const loginContext = createContext();
@@ -27,6 +34,7 @@ function App() {
   return (
     <div className="wrapper">
       <loginContext.Provider value={setIsLoginStateState}>
+      <ThemeProvider theme = {theme}>
         <BrowserRouter>
           {/* 유저 id */}
           <Header
@@ -36,6 +44,7 @@ function App() {
           <Routers />
           <CuFooter className="footer" />
         </BrowserRouter>
+      </ThemeProvider>
       </loginContext.Provider>
     </div>
   );

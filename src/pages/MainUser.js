@@ -215,7 +215,6 @@ const MainUser = () => {
   return (
     <div>
       <React.Fragment>
-        <div class="gray-line" style={{ marginBottom: 20 }}></div>
         <CssBaseline />
         <Container maxWidth="100%">
           <CustomCarouselForMain>

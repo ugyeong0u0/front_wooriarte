@@ -5,6 +5,7 @@ import React, { useEffect, useState, useContext } from "react";
 import { onLoginButtonHandler } from "../apis/servicehandeler/ApiHandler";
 import { loginContext } from "../App";
 import { lightGreen } from "@mui/material/colors";
+
 /*
 isLoginState 값이 true => 로그인 ok , mypage만 보여야함
 false => 비로그인 , 로그인 버튼만 보여야함 
@@ -77,7 +78,7 @@ const Header = ({ isLoginState, isLoginHandler }) => {
     <div>
       <header className="header">
         <div>
-          <text onClick={goMainPage} style={{ marginTop: 10, fontSize: '80px' }} className="titleContainer">
+          <text onClick={goMainPage} style={{ marginTop: 10, fontSize: '80px', fontFamily: 'ChosunSm'}} className="titleContainer">
             WOORI ARTE
           </text>
         </div>

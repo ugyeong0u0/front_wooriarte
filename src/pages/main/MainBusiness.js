@@ -45,7 +45,6 @@ import {
 } from "../../apis/servicehandeler/AuthorApiHandler";
 import { useNavigate } from "react-router-dom";
 import { DataSaverOnTwoTone } from "@mui/icons-material";
-import { FaUser, FaUsers } from "react-icons/fa";
 
 const MainBusiness = () => {
   const [projectButtonType, setProjectButtonType] = useState("bold");

@@ -29,3 +29,10 @@
 .right-section button {
   font-size: 20px; /* 글자 크기를 24px로 설정 */
 }
+
+@font-face {
+  font-family: 'ChosunSm';
+  src: url('../fonts/ChosunSm.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
