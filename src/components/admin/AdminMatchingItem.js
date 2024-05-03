@@ -9,6 +9,7 @@ import { useEffect } from "react";
 // 어이콘
 import ContentPasteSearchIcon from "@mui/icons-material/ContentPasteSearch";
 import IconButton from "@mui/material/IconButton";
+import ApartmentIcon from "@mui/icons-material/Apartment";
 
 // api
 import { onUpdateMatchingForAdminHandler } from "../../apis/servicehandeler/AdminApiHandler";
@@ -20,7 +21,8 @@ const AdminMatchingItem = ({
   matchingId,
   setUpdateCount,
   status,
-  id,
+  spaceId,
+  authorId,
   userType,
 }) => {
   const [modalShow, setModalShow] = useState(false); // 드랍다운 숫자 저장
@@ -53,16 +55,17 @@ const AdminMatchingItem = ({
     setModalShow(true);
   };
 
-  const goItemInfo = (id) => {
-    if (userType === "author") {
-      nav(`/businessiteminfo/${id}`, {
-        state: { userType: "space", posterId: id },
-      });
-    } else {
-      nav(`/businessiteminfo/${id}`, {
-        state: { userType: "author", posterId: id },
-      });
-    }
+  const goItemAuthorInfo = (id) => {
+    // alert("작가 " + id);
+    nav(`/businessiteminfo/${id}`, {
+      state: { userType: "author", posterId: id },
+    });
+  };
+  const goItemSpaceInfo = (id) => {
+    // alert("비즈니스 " + id);
+    nav(`/businessiteminfo/${id}`, {
+      state: { userType: "space", posterId: id },
+    });
   };
 
   return (
@@ -93,9 +96,17 @@ const AdminMatchingItem = ({
           color="inherit"
           aria-label="add an alarm"
           style={{ marginLeft: 30 }}
-          onClick={() => goItemInfo(id)}
+          onClick={() => goItemAuthorInfo(authorId)}
         >
           <ContentPasteSearchIcon />
+        </IconButton>
+        <IconButton
+          color="inherit"
+          aria-label="add an alarm"
+          style={{ marginLeft: 30 }}
+          onClick={() => goItemSpaceInfo(spaceId)}
+        >
+          <ApartmentIcon n />
         </IconButton>
       </Stack>
       <BootModalForAdmin

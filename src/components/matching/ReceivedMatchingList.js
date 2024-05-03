@@ -43,9 +43,7 @@ const ReceivedMatchingList = ({ setUpdateCount, updateCount }) => {
         mockData.map((item, index) => (
           <ReceivedMatchingItem
             key={item.matchingId}
-            text={`${index + 1}. ${item.name} 님이 ${
-              item.matchingId
-            } 신청을 보내셨습니다.`}
+            text={`${index + 1}. ${item.name} 님이 신청을 보내셨습니다.`}
             matchingId={item.matchingId}
             setUpdateCount={setUpdateCount}
             id={item.itemId}

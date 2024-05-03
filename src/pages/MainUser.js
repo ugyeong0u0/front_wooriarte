@@ -373,7 +373,7 @@ const MainUser = () => {
 
             <div class="gray-line" style={{ marginTop: 30 }}></div>
 
-            <section
+            {/* <section
               className="pb-7 pt-5"
               id="testimonial"
               style={{ marginBottom: 30 }}
@@ -483,10 +483,10 @@ const MainUser = () => {
                   </div>
                 </div>
               </div>
-            </section>
+            </section> */}
 
             {/* 문구배너  */}
-            <img
+            {/* <img
               onClick={() => {
                 goWooriBank();
               }}
@@ -499,7 +499,7 @@ const MainUser = () => {
                 marginTop: 70,
               }}
               alt="Responsive image"
-            />
+            /> */}
           </Box>
         </Container>
       </React.Fragment>

@@ -3,7 +3,7 @@
 import axios from "axios";
 import { jsx } from "react/jsx-runtime";
 // 변수명 임시 지정
-const DOMAIN = "http://wooriarte-front-ALB-232140650.ap-northeast-2.elb.amazonaws.com:80/api"; // TODO: 도메인 주소 확인 필요
+const DOMAIN = "http://localhost:8080/api"; // TODO: 도메인 주소 확인 필요
 
 //?----------------------------- 작가 url
 // 로그인

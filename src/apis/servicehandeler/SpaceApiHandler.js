@@ -252,7 +252,7 @@ export const onUpdateSpaceInfoHandler = (
 // 스페이스 조회 응답
 export const addSpaceItemResponse = (response, callback) => {
   if (!response) {
-    alert("네트워크 이상 ");
+    callback(false);
     return;
   }
   if (response.status >= 200 && response.status < 300) {
@@ -260,7 +260,7 @@ export const addSpaceItemResponse = (response, callback) => {
     callback(response.data);
     return;
   } else {
-    alert("스페이스 아이템 조회 실패");
+    callback(false);
     console.log(response.status);
     return;
   }
@@ -324,7 +324,7 @@ export const onGetAllSpaceItemHandler = (callback) => {
 // todo 콜백 있음
 export const getSpaceItemInfoResponse = (response, callback) => {
   if (!response) {
-    alert("네트워크 이상 ");
+    alert("삭제된 공간 아이템");
     return;
   }
   if (response.status >= 200 && response.status < 300) {
@@ -332,7 +332,7 @@ export const getSpaceItemInfoResponse = (response, callback) => {
     callback(response);
     return;
   } else {
-    alert("스페이스 아이템 단건 조회  실패");
+    alert("삭제된 공간 아이템");
     console.log(response.status);
     return;
   }
@@ -348,15 +348,15 @@ export const onGetSpaceItemInfoHandler = ({ posterId }, callback) => {
 // 프로젝트 아이템 수정 응답
 export const updateAuthorItemInfoResponse = (response, callback) => {
   if (!response) {
-    alert("네트워크 이상 ");
+    callback(false);
     return;
   }
   if (response.status >= 200 && response.status < 300) {
     console.log("프로젝트 아이템 수정 성공");
-    callback();
+    callback(true);
     return;
   } else {
-    alert("프로젝트 아이템 수정 실패");
+    callback(false);
     console.log(response.status);
     return;
   }

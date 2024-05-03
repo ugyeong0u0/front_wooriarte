@@ -56,7 +56,7 @@ export default function BootModalForAdmin({
     artistName: "", // 직가명
     hostName: "", // 주최자명
     price: "", // 가격
-    address: "", // 주소
+    address: "서울", // 주소
   });
 
   // 전시 입력상태 감지
@@ -99,7 +99,6 @@ export default function BootModalForAdmin({
         exhibitInfoState.intro.length > 1 &&
         exhibitInfoState.artistName.length > 1 &&
         exhibitInfoState.price.length > 1 &&
-        exhibitInfoState.address.length > 1 &&
         exhibitInfoState.hostName.length > 1
       ) {
         console.log("빈값없음");
@@ -115,7 +114,6 @@ export default function BootModalForAdmin({
         exhibitInfoState.intro.length > 1 &&
         exhibitInfoState.artistName.length > 1 &&
         exhibitInfoState.price.length > 1 &&
-        exhibitInfoState.address.length > 1 &&
         exhibitInfoState.hostName.length > 1
       ) {
         console.log("빈값없음");

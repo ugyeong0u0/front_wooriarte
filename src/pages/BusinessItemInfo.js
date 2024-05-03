@@ -95,9 +95,7 @@ const BusinessItemInfo = () => {
         });
         console.log("작가 사진조회"); // todo
         onGetAuthorPhotoHandler({ id: posterId }, (response) => {
-          alert("성공");
           if (Array.isArray(response.data)) {
-            alert("배열안");
             let now = new Date();
             const newImgList = response.data.map((item) => ({
               id: now.toString, // 각 이미지에 대한 고유 ID
@@ -108,6 +106,7 @@ const BusinessItemInfo = () => {
           }
         });
       } else if (userType === "space") {
+        // alert("space안" + posterId);
         onGetSpaceItemInfoHandler({ posterId }, (response) => {
           setSpaceInfo({
             spaceItemId: response.data.spaceItemId,
@@ -127,9 +126,7 @@ const BusinessItemInfo = () => {
         });
         console.log("공간 사진조회"); // todo
         onGetSpacePhotoHandler({ id: posterId }, (response) => {
-          alert("성공");
           if (Array.isArray(response.data)) {
-            alert("배열안");
             let now = new Date();
             const newImgList = response.data.map((item) => ({
               id: now.toString, // 각 이미지에 대한 고유 ID
@@ -339,6 +336,15 @@ const BusinessItemInfo = () => {
                 <div className="info">
                   <p>연락처: {projectInfo.phone}</p>
 
+                  <div
+                    style={{
+                      height: "1px",
+                      background: "black",
+                      width: "100%",
+                      marginTop: 10,
+                      marginBottom: 40,
+                    }}
+                  ></div>
                   <p>프로젝트 소개 </p>
                   <p> {projectInfo.intro}</p>
 
@@ -370,7 +376,15 @@ const BusinessItemInfo = () => {
                   <p>주차 가능: {spaceInfo.parking ? "예" : "아니오"}</p>
                   <p>요금: {spaceInfo.fee}원</p>
                   <p>연락처: {spaceInfo.phone}</p>
-
+                  <div
+                    style={{
+                      height: "1px",
+                      background: "black",
+                      width: "100%",
+                      marginTop: 10,
+                      marginBottom: 40,
+                    }}
+                  ></div>
                   <p>소개</p>
                   <p>{spaceInfo.intro}</p>
 
@@ -400,7 +414,15 @@ const BusinessItemInfo = () => {
             ) : exhibitsType === "author" ? (
               <div className="info">
                 <p>연락처: {projectInfo.phone}</p>
-
+                <div
+                  style={{
+                    height: "1px",
+                    background: "black",
+                    width: "100%",
+                    marginTop: 10,
+                    marginBottom: 40,
+                  }}
+                ></div>
                 <p>프로젝트 소개</p>
                 <p>{projectInfo.intro}</p>
 
@@ -432,7 +454,15 @@ const BusinessItemInfo = () => {
                 <p>주차 가능: {spaceInfo.parking ? "예" : "아니오"}</p>
                 <p>요금: {spaceInfo.fee}원</p>
                 <p>연락처: {spaceInfo.phone}</p>
-
+                <div
+                  style={{
+                    height: "1px",
+                    background: "black",
+                    width: "100%",
+                    marginTop: 10,
+                    marginBottom: 40,
+                  }}
+                ></div>
                 <p>소개 </p>
                 <p> {spaceInfo.intro}</p>
 

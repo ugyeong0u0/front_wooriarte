@@ -67,7 +67,7 @@ const MainAdmin = () => {
       className="parentContainer"
       style={{
         width: "100%",
-        marginBottom: 40,
+        marginBottom: 90,
       }}
     >
       <Box
@@ -116,13 +116,13 @@ const MainAdmin = () => {
           <AdminMatchingList />
         </TabPanel>
         <TabPanel value={value} index={1}>
-          <h2>아이템 승인 </h2>
+          <h2 style={{ marginBottom: 20 }}>아이템 승인 </h2>
           <AdminItmeList />
           {/* 개인정보 수정 */}
         </TabPanel>
 
         <TabPanel value={value} index={2}>
-          <h2>전시정보</h2>
+          <h2 style={{ marginBottom: 20 }}>전시정보</h2>
           <AdminExhibitList />
         </TabPanel>
       </Box>

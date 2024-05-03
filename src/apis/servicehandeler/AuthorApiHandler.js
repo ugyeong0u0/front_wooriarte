@@ -253,7 +253,7 @@ export const onUpdateUserInfoHandler = (
 // todo 지역, 날짜 추가 해야함
 export const addAuthorProjectResponse = (response, callback) => {
   if (!response) {
-    alert("네트워크 이상 ");
+    callback(false);
     return;
   }
   if (response.status >= 200 && response.status < 300) {
@@ -262,7 +262,7 @@ export const addAuthorProjectResponse = (response, callback) => {
     return;
   } else {
     alert("작가 아이템 조회 실패");
-    console.log(response.status);
+    callback(false);
     return;
   }
 };
@@ -336,7 +336,7 @@ export const onGetSearchAuthorProjectHandler = (
 // todo 콜백 있음
 export const getAuthorItemInfoResponse = (response, callback) => {
   if (!response) {
-    alert("네트워크 이상 ");
+    alert("삭제된 작가 아이템 ");
     return;
   }
   if (response.status >= 200 && response.status < 300) {
@@ -344,7 +344,7 @@ export const getAuthorItemInfoResponse = (response, callback) => {
     callback(response);
     return;
   } else {
-    alert("작가 아이템 단건 조회  실패");
+    alert("삭제된 작가 아이템");
     console.log(response.status);
     return;
   }
@@ -360,15 +360,15 @@ export const onGetAuthorItemInfoHandler = ({ posterId }, callback) => {
 // 작가 아이템 수정 응답
 export const updateAuthorItemInfoResponse = (response, callback) => {
   if (!response) {
-    alert("네트워크 이상 ");
+    callback(false);
     return;
   }
   if (response.status >= 200 && response.status < 300) {
     console.log("작가 아이템 수정 성공");
-    callback();
+    callback(true);
     return;
   } else {
-    alert("작가 아이템 수정 실패");
+    callback(false);
     console.log(response.status);
     return;
   }

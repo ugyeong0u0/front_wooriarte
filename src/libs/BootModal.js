@@ -45,6 +45,8 @@ export default function MyVerticallyCenteredModal(props) {
   // 저장 버튼 활성화
   const [enableNextBtn, setEnableNextBtn] = useState(false);
   const [enableDialog, setEnableDialog] = useState(false);
+
+  const [enableInfoDialog, setEnableInfoDialog] = useState(false); // 입력값비었을 때
   // 사진리스트
   const [imgList, setImgList] = useState([]);
 
@@ -101,18 +103,36 @@ export default function MyVerticallyCenteredModal(props) {
     setImgList(imgList.filter((e) => e.id !== id));
   };
 
+  const initialAuthorState = {
+    name: "",
+    phoneNumber: "",
+    explanation: "",
+  };
+  const initialSpaceState = {
+    hostName: "",
+    intro: "",
+    address: "",
+    size: "",
+    phoneNumber: "",
+    parking: true, // parking의 기본값이 true라고 가정
+    fee: 0, // fee의 초기값을 0으로 설정
+    startDate: "",
+    endDate: "",
+  };
+
   // 작가용 // todo
   const [authorInfoState, setauthorInfoState] = useState({
     name: "",
     phoneNumber: "",
     explanation: "",
+    address: "서울",
   });
 
   // 공간대여자용
   const [businessInfoState, setBusinessInfoState] = useState({
     hostName: "",
     intro: "",
-    address: "",
+    address: "서울",
     size: "",
     phoneNumber: "",
     parking: true,
@@ -161,11 +181,7 @@ export default function MyVerticallyCenteredModal(props) {
   useEffect(() => {
     console.log("저장 버튼 useEffect");
     if (props.type === "author") {
-      if (
-        authorInfoState.name.length > 1 &&
-        authorInfoState.explanation.length > 3 &&
-        authorInfoState.phoneNumber.length > 8
-      ) {
+      if (authorInfoState) {
         console.log("빈값없음");
         setEnableNextBtn(true); // 다음 버튼 비활성화
       } else {
@@ -181,17 +197,7 @@ export default function MyVerticallyCenteredModal(props) {
           "호스트이름" +
           businessInfoState.hostName
       );
-      if (
-        businessInfoState.address.length > 1 &&
-        businessInfoState.fee.length > 1 &&
-        businessInfoState.hostName.length > 1 &&
-        businessInfoState.intro.length > 5 &&
-        businessInfoState.parking.length > 1 &&
-        businessInfoState.phoneNumber.length > 5 &&
-        businessInfoState.size.length > 1 &&
-        businessInfoState.startDate.length > 1 &&
-        businessInfoState.endDate.length > 1
-      ) {
+      if (businessInfoState) {
         setEnableNextBtn(true);
       } else {
         setEnableNextBtn(false);
@@ -211,7 +217,7 @@ export default function MyVerticallyCenteredModal(props) {
     width: 1,
   });
 
-  //? 등록하기 api
+  //? 등록 생성 하기 api
   const submitAuthorItem = () => {
     if (props.type === "author" && imgList.length > 0) {
       let authorId = localStorage.getItem("userId");
@@ -227,25 +233,32 @@ export default function MyVerticallyCenteredModal(props) {
           city: authorInfoState.address,
         },
         (response) => {
-          console.log("작가 아이템 추가 성공");
+          if (response) {
+            console.log("작가 아이템 추가 성공");
 
-          const formData = new FormData();
-          for (let i = 0; i < imgList.length; i++) {
-            formData.append("file", imgList[i].originFile);
-          }
-
-          onUploadAuthorPhotoHandler(
-            { id: response.projectItemId, formData },
-            (responseStatus) => {
-              if (responseStatus) {
-                alert("이미지 업로드 성공");
-                props.setUpdateCount((prev) => prev + 1);
-                props.onHide(); // 부모컴포넌트 프롭
-              } else {
-                alert("이미지 업로드 실패");
-              }
+            const formData = new FormData();
+            for (let i = 0; i < imgList.length; i++) {
+              formData.append("file", imgList[i].originFile);
             }
-          );
+
+            onUploadAuthorPhotoHandler(
+              { id: response.projectItemId, formData },
+              (responseStatus) => {
+                if (responseStatus) {
+                  setauthorInfoState(initialAuthorState);
+
+                  setImgList([]);
+
+                  props.setUpdateCount((prev) => prev + 1);
+                  props.onHide(); // 부모컴포넌트 프롭
+                } else {
+                  console.log("이미지 업로드 실패");
+                }
+              }
+            );
+          } else {
+            setEnableInfoDialog(true);
+          }
         }
       );
     } else if (props.type === "space" && imgList.length > 0) {
@@ -265,24 +278,28 @@ export default function MyVerticallyCenteredModal(props) {
           endDate: businessInfoState.endDate,
         },
         (response) => {
-          const formData = new FormData();
-          for (let i = 0; i < imgList.length; i++) {
-            formData.append("file", imgList[i].originFile); //반복문을 활용하여 파일들을 formData객체에 추가
-          }
-
-          onUploadSpacePhotoHandler(
-            { id: response.spaceItemId, formData },
-            (responseStatus) => {
-              alert("사진 업로드 파트");
-              if (responseStatus) {
-                alert("이미지 업로드 성공");
-                props.setUpdateCount((prev) => prev + 1);
-                props.onHide(); // 부모컴포넌트 프롭
-              } else {
-                alert("이미지 업로드 실패");
-              }
+          if (response) {
+            const formData = new FormData();
+            for (let i = 0; i < imgList.length; i++) {
+              formData.append("file", imgList[i].originFile); //반복문을 활용하여 파일들을 formData객체에 추가
             }
-          );
+
+            onUploadSpacePhotoHandler(
+              { id: response.spaceItemId, formData },
+              (responseStatus) => {
+                if (responseStatus) {
+                  setBusinessInfoState(initialSpaceState);
+                  setImgList([]);
+                  props.setUpdateCount((prev) => prev + 1);
+                  props.onHide(); // 부모컴포넌트 프롭
+                } else {
+                  alert("이미지 업로드 실패");
+                }
+              }
+            );
+          } else {
+            setEnableInfoDialog(true);
+          }
         }
       );
     } else if (imgList.length < 1) {
@@ -592,13 +609,27 @@ export default function MyVerticallyCenteredModal(props) {
             parentClick={setEnableDialog}
           />
         )}
+
+        {enableInfoDialog && (
+          <MuiDialog
+            title={"알림"}
+            content={"정보를 다 입력해주세요."}
+            result={true}
+            page={"login"}
+            parentClick={setEnableInfoDialog}
+          />
+        )}
       </Modal.Body>
       <Modal.Footer>
         <Button variant="dark" onClick={props.onHide}>
           닫기
         </Button>
 
-        <ButtonBoot onClick={submitAuthorItem} disabled={!enableNextBtn}>
+        <ButtonBoot
+          variant="dark"
+          onClick={submitAuthorItem}
+          disabled={!enableNextBtn}
+        >
           등록하기
         </ButtonBoot>
       </Modal.Footer>

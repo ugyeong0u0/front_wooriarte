@@ -48,6 +48,7 @@ import {
   onGetSpacePhotoHandler,
   onUpdateSpacePhotoHandler,
 } from "../apis/servicehandeler/SpaceApiHandler";
+import MuiDialog from "./MuiDialog";
 
 //!------------ 작가랑 공간대여자 마이페이지에서 아이템 수정, 조회
 export default function MyVerticallyCenteredModal({
@@ -59,6 +60,25 @@ export default function MyVerticallyCenteredModal({
 }) {
   // 저장 버튼 활성화
   const [enableNextBtn, setEnableNextBtn] = useState(false);
+  const [enableDialog, setEnableDialog] = useState(false); // 입력값비었을 때
+  const [enableInfoDialog, setEnableInfoDialog] = useState(false); // 입력값비었을 때
+
+  const initialAuthorState = {
+    name: "",
+    phoneNumber: "",
+    explanation: "",
+  };
+  const initialSpaceState = {
+    hostName: "",
+    intro: "",
+    address: "",
+    size: "",
+    phoneNumber: "",
+    parking: true, // parking의 기본값이 true라고 가정
+    fee: 0, // fee의 초기값을 0으로 설정
+    startDate: "",
+    endDate: "",
+  };
 
   // 사진리스트
   const [imgList, setImgList] = useState([]);
@@ -206,31 +226,31 @@ export default function MyVerticallyCenteredModal({
         console.log("공간대여자 아이템 정보 응답값 받음");
         console.log("공간 조회 응답" + response.fee + typeof response.fee);
         console.log(response);
-        // setBusinessInfoState((prevState) => ({
-        //   intro: response.data.intro, // 전시소개
-        //   hostName: response.data.hostName, // 주최자명
-        //   address: response.data.city,
-        //   size: response.data.size,
-        //   phoneNumber: response.data.phone,
-        //   parking: response.data.parking,
-        //   startDate: response.data.startDate, // 시작날짜
-        //   endDate: response.data.endDate, // 끝날짜
-        //   fee: response.data.fee,
-        // }));
+        setBusinessInfoState((prevState) => ({
+          intro: response.data.intro, // 전시소개
+          hostName: response.data.hostName, // 주최자명
+          address: response.data.city,
+          size: response.data.size,
+          phoneNumber: response.data.phone,
+          parking: response.data.parking,
+          startDate: response.data.startDate, // 시작날짜
+          endDate: response.data.endDate, // 끝날짜
+          fee: response.data.fee,
+        }));
       });
 
-      onGetSpacePhotoHandler({ id }, (response) => {
-        if (Array.isArray(response.data)) {
-          alert("배열안");
-          let now = new Date();
-          const newImgList = response.data.map((item) => ({
-            id: now.toString, // 각 이미지에 대한 고유 ID
-            previewUrl: item.url, // 미리보기 URL
-            originFile: item.url,
-          }));
-          setImgList(newImgList);
-        }
-      });
+      // onGetSpacePhotoHandler({ id }, (response) => {
+      //   if (Array.isArray(response.data)) {
+      //     alert("배열안");
+      //     let now = new Date();
+      //     const newImgList = response.data.map((item) => ({
+      //       id: now.toString, // 각 이미지에 대한 고유 ID
+      //       previewUrl: item.url, // 미리보기 URL
+      //       originFile: item.url,
+      //     }));
+      //     setImgList(newImgList);
+      //   }
+      // });
     }
   }, []);
 
@@ -238,14 +258,9 @@ export default function MyVerticallyCenteredModal({
   useEffect(() => {
     console.log("저장 버튼 useEffect");
     if (type === "author") {
-      if (
-        authorInfoState &&
-        authorInfoState.name.length > 1 &&
-        authorInfoState.explanation.length > 3 &&
-        authorInfoState.phoneNumber.length > 8
-      ) {
+      if (authorInfoState) {
         console.log("빈값없음");
-        setEnableNextBtn(true); // 다음 버튼 비활성화
+        setEnableNextBtn(true); // 다음 버튼
       } else {
         console.log("필수 입력 필드가 비어있습니다.");
         setEnableNextBtn(false); // 다음 버튼 비활성화
@@ -253,12 +268,9 @@ export default function MyVerticallyCenteredModal({
     } else if (type === "space") {
       if (
         businessInfoState
-        // &&
-        // businessInfoState.address.length > 1 &&
-        // businessInfoState.fee.length > 1 &&
+        // businessInfoState.fee.length > 1 //&&
         // businessInfoState.hostName.length > 1 &&
         // businessInfoState.intro.length > 5 &&
-        // businessInfoState.parking.length > 1 &&
         // businessInfoState.phoneNumber.length > 5 &&
         // businessInfoState.size.length > 1
       ) {
@@ -284,7 +296,7 @@ export default function MyVerticallyCenteredModal({
   //? 수정 하기 api
   const submitAuthorItem = () => {
     console.log("제출 호출");
-    if (type === "author") {
+    if (type === "author" && imgList.length > 0) {
       let authorId = localStorage.getItem("userId");
       // todo 시작날짜 끝날짜 넣기 + 지역은 서버에 작가만 넣어둠
       onUpdateAuthorItemInfoHandler(
@@ -297,27 +309,31 @@ export default function MyVerticallyCenteredModal({
           endDate: authorInfoState.endDate,
           city: authorInfoState.address,
         },
-        () => {
-          console.log("작가 아이템 수정 성공");
-          const formData = new FormData();
-          for (let i = 0; i < imgList.length; i++) {
-            formData.append("file", imgList[i].originFile); //반복문을 활용하여 파일들을 formData객체에 추가
-          }
-
-          onUpdateAuthorPhotoHandler({ id, formData }, (responseStatus) => {
-            alert("사진 수정하기 파트");
-            if (responseStatus) {
-              alert("이미지 수정 성공");
-              setUpdateCount((prev) => prev + 1);
-              onHide(); // 부모컴포넌트 프롭
-            } else {
-              alert("이미지 수정 실패");
+        (responseStatus) => {
+          if (responseStatus) {
+            console.log("작가 아이템 수정 성공");
+            const formData = new FormData();
+            for (let i = 0; i < imgList.length; i++) {
+              formData.append("file", imgList[i].originFile); //반복문을 활용하여 파일들을 formData객체에 추가
             }
-          });
+
+            onUpdateAuthorPhotoHandler({ id, formData }, (responseStatus) => {
+              if (responseStatus) {
+                setauthorInfoState(initialAuthorState);
+                setUpdateCount((prev) => prev + 1);
+                onHide(); // 부모컴포넌트 프롭
+              } else {
+                console.log("이미지 수정 실패");
+              }
+            });
+          } else {
+            // 빈값있을 때
+            setEnableInfoDialog(true);
+          }
         }
       );
       // todo 날짜 업데이트 하기
-    } else if (type === "space") {
+    } else if (type === "space" && imgList.length > 0) {
       console.log("bootmodalfoegetitem의 id" + id + type);
       let newParking = businessInfoState.parking === "true" ? true : false;
       onUpdateSpaceItemInfoHandler(
@@ -333,25 +349,31 @@ export default function MyVerticallyCenteredModal({
           startDate: businessInfoState.startDate,
           endDate: businessInfoState.endDate,
         },
-        () => {
-          console.log("스페이스 아이템 수정 성공");
-          const formData = new FormData();
-          for (let i = 0; i < imgList.length; i++) {
-            formData.append("file", imgList[i].originFile); //반복문을 활용하여 파일들을 formData객체에 추가
-          }
-
-          onUpdateSpacePhotoHandler({ id, formData }, (responseStatus) => {
-            alert("사진 수정하기 파트");
-            if (responseStatus) {
-              alert("이미지 수정 성공");
-              setUpdateCount((prev) => prev + 1);
-              onHide(); // 부모컴포넌트 프롭
-            } else {
-              alert("이미지 수정 실패");
+        (responseStatus) => {
+          if (responseStatus) {
+            console.log("스페이스 아이템 수정 성공");
+            const formData = new FormData();
+            for (let i = 0; i < imgList.length; i++) {
+              formData.append("file", imgList[i].originFile); //반복문을 활용하여 파일들을 formData객체에 추가
             }
-          });
+
+            onUpdateSpacePhotoHandler({ id, formData }, (responseStatus) => {
+              if (responseStatus) {
+                setBusinessInfoState(initialSpaceState);
+                setUpdateCount((prev) => prev + 1);
+                onHide(); // 부모컴포넌트 프롭
+              } else {
+                console.log("이미지 수정 실패");
+              }
+            });
+          } else {
+            // 빈값있을 때
+            setEnableInfoDialog(true);
+          }
         }
       );
+    } else if (imgList.length < 1) {
+      setEnableDialog(true); // 사진 한장도 안부쳤을 땐
     } else {
       console.log("아이템등로 잘못된 접근");
     }
@@ -664,23 +686,41 @@ export default function MyVerticallyCenteredModal({
             </Stack>
           </Box>
         )}
+
+        {enableDialog && (
+          <MuiDialog
+            title={"알림"}
+            content={"사진 한 장이상 첨부해주세요"}
+            result={true}
+            page={"login"}
+            parentClick={setEnableDialog}
+          />
+        )}
+
+        {enableInfoDialog && (
+          <MuiDialog
+            title={"알림"}
+            content={"정보를 다 입력해주세요."}
+            result={true}
+            page={"login"}
+            parentClick={setEnableInfoDialog}
+          />
+        )}
       </Modal.Body>
       <Modal.Footer>
         <Button variant="dark" onClick={onHide}>
           닫기
         </Button>
 
-        <button
-          className="applyBtn"
-          type="button"
-          class="btn btn-dark"
+        <ButtonBoot
+          variant="dark"
           onClick={() => {
             submitAuthorItem();
           }}
           disabled={!enableNextBtn}
         >
           수정하기
-        </button>
+        </ButtonBoot>
 
         <ButtonBoot
           variant="outline-dark"
