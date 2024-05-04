@@ -87,33 +87,33 @@ const ExhibitItemInfo = () => {
     <div>
       <React.Fragment>
         <CssBaseline />
-        <div class="gray-line"></div>
         <Container
           maxWidth="80%"
           style={{
-            marginTop: 50,
+            marginTop: 20,
+            marginLeft: 146, 
             display: "flex",
             flexDirection: "column",
-            alignItems: "center",
+            alignItems: "flex-start",
           }}
         >
           <Stack direction="row" spacing={10}>
-            <div>
-              <img
-                src={exhibitInfoState.urls[0]}
-                style={{ maxHeight: 500, maxWidth: 500 }}
-              />
-            </div>
+          <div>
+            <img
+              src={exhibitInfoState.urls[0]}
+              style={{ height: 600, width: 500, objectFit: 'cover' }}
+            />
+          </div>
 
             <Stack
               direction="col"
               spacing={2}
-              style={{ alignItems: "center", marginRight: 10 }}
+              style={{ alignItems: "flex-start", marginRight: 10 }}
             >
               <div className="exhibitInfoContainer">
-                <div>
-                  <h1>{exhibitInfoState.name}</h1>
-                </div>
+              <div>
+                <h1 style={{ fontSize: '4em', fontWeight: 'bold' }}>{exhibitInfoState.name}</h1>
+              </div>
                 <div
                   style={{
                     height: 2,
@@ -151,6 +151,28 @@ const ExhibitItemInfo = () => {
                 <div />
 
                 <div>
+                  <div style={{ marginBottom: 20 }}>
+                    <span>총 결제 금액 : </span>
+                    <span>
+                      {ticketNumber}개 x {exhibitInfoState.price} ={totalPrice}
+                      원
+                    </span>
+                  </div>
+                  <div class="gray-line" style={{ maxWidth: 40, marginTop: 100 }}></div>
+                    <h2 style={{ marginTop: 20 }}>전시 소개 </h2>
+                  <div class="gray-line" style={{ maxWidth: 40 }}></div>
+                  <span
+                    style={{
+                      marginBottom: 10,
+                      padding: 10,
+
+                      display: "flex", // 플렉스박스 레이아웃 적용
+                      alignItems: "flex-start", // 수직 방향 중앙 정렬
+                      justifyContent: "flex-start", // 수평 방향 중앙 정렬
+                    }}
+                  >
+                    {exhibitInfoState.intro}
+                  </span>
                   <Stack
                     direction="row"
                     spacing={2}
@@ -168,14 +190,6 @@ const ExhibitItemInfo = () => {
                       </IconButton>
                     </Tooltip>
                   </Stack>
-
-                  <div style={{ marginBottom: 20 }}>
-                    <span>총 결제 금액 : </span>
-                    <span>
-                      {ticketNumber}개 x {exhibitInfoState.price} ={totalPrice}
-                      원
-                    </span>
-                  </div>
                   <Payment
                     exhibitId={exhibitId}
                     ticketNumber={ticketNumber}
@@ -186,22 +200,6 @@ const ExhibitItemInfo = () => {
           </Stack>
 
           {/* 구분선 */}
-          <div class="gray-line" style={{ maxWidth: 40, marginTop: 100 }}></div>
-          <h2 style={{ marginTop: 20 }}>전시 소개 </h2>
-          <div class="gray-line" style={{ maxWidth: 40 }}></div>
-
-          <span
-            style={{
-              marginBottom: 200,
-              padding: 20,
-
-              display: "flex", // 플렉스박스 레이아웃 적용
-              alignItems: "center", // 수직 방향 중앙 정렬
-              justifyContent: "center", // 수평 방향 중앙 정렬
-            }}
-          >
-            {exhibitInfoState.intro}
-          </span>
         </Container>
       </React.Fragment>
     </div>
