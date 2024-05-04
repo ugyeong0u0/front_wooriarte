@@ -75,18 +75,17 @@ const Header = ({ isLoginState, isLoginHandler }) => {
   // };
 
   return (
-    <div>
+    <div style={{width: "80%", marginLeft: "10%" }}>
       <header className="header">
         <div>
           <text
             onClick={goMainPage}
-            style={{ marginTop: 10, fontSize: "50px", marginRight: 900 }}
             className="titleContainer"
           >
             WOORI ARTE
           </text>
         </div>
-        <div className="right-section">
+        <div className="header-right-section">
           {/* 버튼 하나로 변경하기  */}
 
           {!isLoginState && (
@@ -118,7 +117,6 @@ const Header = ({ isLoginState, isLoginHandler }) => {
           {isLoginState && (
             <>
               <Button
-                className="mypage"
                 text={`${
                   localStorage.getItem("userType") === "author"
                     ? "Author's"
@@ -133,6 +131,7 @@ const Header = ({ isLoginState, isLoginHandler }) => {
           )}
         </div>
       </header>
+      <div class="line"></div>
     </div>
   );
 };

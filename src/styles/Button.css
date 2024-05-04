@@ -6,7 +6,6 @@
   padding: 10px, 20px; /**/
   font-size: 10px;
   white-space: nowrap; /* 화면이 줄어도 글자 줄바꿈x */
-  margin-right: 10px; /* 오른쪽 마진으로 간격 설정 */
 }
 /* 배경색 투명에 글자 선택된 경우 => 글자 굵은 검정 */
 .Button_bold {

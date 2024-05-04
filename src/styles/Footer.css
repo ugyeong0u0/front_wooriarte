@@ -1,14 +1,41 @@
-.footerContainer {
-  color: white; /* 모든 텍스트 색상을 하얀색으로 설정 */
-  background-color: black;
-  padding: 20px; /* 푸터 패딩 */
-  text-align: left; /* 텍스트 중앙 정렬 */
+/* styles.css */
+
+footer {
+  bottom: 0;
+  width: 100%;
+  background-color: #000;
+  color: #fff;
+  padding: 0 10%;
 }
 
-/* 수평선 스타일 */
-.horizontal-line {
-  width: 100%; /* 너비 전체 */
-  height: 1px; /* 선의 높이 */
-  background-color: white; /* 선의 색상, 하얀색 */
-  margin: 20px 0; /* 상하 마진 설정 */
+.footer-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end; 
+}
+
+.left-section{
+  margin: 20px 0;
+}
+
+.customer-center {
+  margin: 20px 0;
+  margin-left: -10%;
+}
+
+.right-section {
+  margin: 20px 0;
+}
+
+.left-section p,
+.customer-center p {
+  font-size: 12px;
+  margin-top: 2px;
+  margin-bottom: 2px;
+}
+
+.right-section img {
+  width: 40px; /* 이미지 너비를 현재 크기의 절반으로 설정합니다. */
+  height: auto; /* 이미지 높이를 자동으로 조정하여 가로세로 비율을 유지합니다. */
+  margin-right: 15px;
 }

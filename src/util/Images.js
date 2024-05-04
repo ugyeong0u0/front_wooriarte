@@ -3,21 +3,12 @@ import main2 from "../assets/main002.png";
 import main3 from "../assets/main003.png";
 import authorimg from "../assets/authorimg.png";
 import cafe from "../assets/cafe.jpg";
+import mainInage from "../assets/mainImage.jpg"
 
 export const mainCarouselImage = [
   {
-    imgURL: main1,
-
-    imgAlt: "img-1",
-  },
-  {
-    imgURL: main2,
-    imgAlt: "img-2",
-  },
-  {
-    imgURL: main3,
-    imgAlt: "img-3",
-  },
+    imgURL: mainInage
+  }
 ];
 export const cardImg = [
   {
