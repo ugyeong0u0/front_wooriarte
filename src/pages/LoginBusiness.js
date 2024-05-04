@@ -1,25 +1,25 @@
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import LoginSpan from "../components/LoginSpan";
 import * as React from "react";
+import { useState } from "react";
 import Stack from "@mui/material/Stack";
 import Button from "@mui/material/Button";
 import ButtonBoot from "react-bootstrap/Button";
-
 import Box from "@mui/material/Box";
-// 배지
-import Badge from "@mui/material/Badge";
 
-// 사업자 로그인페이지 => 사업자버튼 글자 볼드 처리
 const LoginBusiness = () => {
   const nav = useNavigate();
+  const [isActive, setIsActive] = useState(true); // 사업자 버튼의 활성화 상태
 
   // 유저 로그인으로 가기
   const goUserLogin = () => {
+    setIsActive(false); // 사업자 버튼 비활성화
     nav(`/loginuser`, { replace: true });
   };
 
-  // 사업자 로그인으로 가기= 작가 로그인으로 가기
+  // 사업자 로그인으로 가기 = 작가 로그인으로 가기
   const goBusinessLogin = () => {
+    setIsActive(true); // 사업자 버튼 활성화
     nav(`/loginauthor`, { replace: true });
   };
 
@@ -27,6 +27,7 @@ const LoginBusiness = () => {
   const goSpaceLogin = () => {
     nav(`/loginspace`, { replace: true });
   };
+
   return (
     <>
       <div>
@@ -34,9 +35,9 @@ const LoginBusiness = () => {
           sx={{
             marginTop: 5,
             marginBottom: 5,
-            width: "100%", // 박스 너비 설정
-            display: "flex", // flexbox 디스플레이 설정
-            justifyContent: "center", // 가로 중앙 정렬
+            width: "100%",
+            display: "flex",
+            justifyContent: "center",
           }}
         >
           <LoginSpan />
@@ -46,40 +47,44 @@ const LoginBusiness = () => {
           sx={{
             marginTop: 4,
             marginBottom: 2,
-            width: "100%", // 박스 너비 설정
-            display: "flex", // flexbox 디스플레이 설정
-            justifyContent: "center", // 가로 중앙 정렬
+            width: "100%",
+            display: "flex",
+            justifyContent: "center",
           }}
         >
           <Stack spacing={2}>
-            <Stack spacing={2} direction="row" style={{ marginLeft: 2 }}>
-              <Button color="inherit" size="large" onClick={goUserLogin}>
+            <Stack spacing={2} direction="row" style={{ marginLeft: 2 }} justifyContent="center" >
+              <Button
+                color="inherit"
+                size="large"
+                onClick={goUserLogin}
+                style={{ color: isActive ? 'gray' : 'inherit' }} // 비활성화 상태에서 회색으로 설정
+              >
                 개인
               </Button>
-              <Badge color="info" badgeContent=" " variant="dot">
-                <Button color="info" size="large" onClick={goBusinessLogin}>
-                  사업자
-                </Button>
-              </Badge>
+              <Button
+                color="info"
+                size="large"
+                onClick={goBusinessLogin}
+                style={{
+                  fontWeight: isActive ? 'bold' : 'normal', // 활성화 상태에서 굵은 글씨
+                  color: isActive ? 'black' : 'gray', // 비활성화 상태에서 회색으로 설정
+                }}
+              >
+                사업자
+              </Button>
             </Stack>
 
             <div>
               <Stack
-                spacing={4}
-                style={{ marginTop: 20, marginLeft: 5, marginBottom: 80 }}
+                spacing={2}
+                style={{ marginTop: 40, marginLeft: 5, marginBottom: 80 }}
+                direction={"row"}
               >
-                <ButtonBoot
-                  variant="outline-dark"
-                  onClick={goBusinessLogin}
-                  size="lg"
-                >
+                <ButtonBoot variant="outline-dark" onClick={goBusinessLogin} style={{ width: '100px', height: '40px' }}>
                   작가
                 </ButtonBoot>
-                <ButtonBoot
-                  variant="outline-dark"
-                  onClick={goSpaceLogin}
-                  size="lg"
-                >
+                <ButtonBoot variant="outline-dark" onClick={goSpaceLogin} style={{ width: '100px', height: '40px' }}>
                   임대 사업자
                 </ButtonBoot>
               </Stack>
