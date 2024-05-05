@@ -217,7 +217,7 @@ const MainBusiness = () => {
                   프로젝트
                 </Button>
               ) : (
-                <Button color="inherit" size="large" onClick={getProjectItems}>
+                <Button style={{ color: "grey" }} size="large" onClick={getProjectItems}>
                   프로젝트
                 </Button>
               )}
@@ -234,9 +234,9 @@ const MainBusiness = () => {
                   공간
                 </Button>
               ) : (
-                <Button color="inherit" size="large" onClick={getSpaceItems}>
-                  공간
-                </Button>
+            <Button style={{ color: "grey" }} size="large" onClick={getSpaceItems}>
+              공간
+            </Button>
               )}
             </Stack>
 
