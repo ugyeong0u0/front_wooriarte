@@ -102,10 +102,10 @@ const MainUser = () => {
     <div style={{ width: "70%", textAlign: "center", margin: "auto" }}>
       <React.Fragment>
         <CssBaseline />
-        <Container maxWidth="100%">
+        <Container style={{padding: "0 0", maxWidth: "100%"}}>
           <CustomCarouselForMain>
             {mainCarouselImage.map((image, index) => {
-              return <img key={index} src={image.imgURL} alt={image.imgAlt} />;
+              return <img key={index} src={image.imgURL} alt={image.imgAlt} style={{maxWidth: "auto"}}/>;
             })}
           </CustomCarouselForMain>
           <Stack
@@ -132,8 +132,8 @@ const MainUser = () => {
             )}
           </Stack>
         </Container>
-        <Container maxWidth="80%">
-          <Box sx={{ bgcolor: "#00000000", height: "100%" }}>
+        <Container style={{width: "100%", padding: "0 0"}}>
+          <Box sx={{ bgcolor: "#00000000", height: "100%", marginTop: 7 }}>
             {/* 추천 리스트 */}
             {/* <Stack
               justifyContent="center" // 가로 방향으로 중앙 정렬
@@ -252,7 +252,7 @@ const MainUser = () => {
                     className="col-12 col-md-4 d-flex flex-column align-items-center"
                     style={{ paddingRight: 60, paddingLeft: 60, marginTop: 30 }}
                   >
-                    <div className="badge badge-circle bg-soft-primary flex-center"> */}
+                    <div className="badge badge-circle bg-soft-primary flex-center">
             {/* <div
                         className="text-primary fs-7 font-base"
                         style={{

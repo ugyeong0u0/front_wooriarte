@@ -88,7 +88,9 @@ const MypageUser = () => {
     <div
       className="parentContainer"
       style={{
-        width: "100%",
+        width: "70%",
+        marginLeft: "15%",
+        marginTop: 40,
         marginBottom: 40,
       }}
     >
@@ -98,27 +100,38 @@ const MypageUser = () => {
           bgcolor: "background.paper",
           display: "flex",
           height: "100%",
-          width: "100%",
+          width: "auto",
         }}
       >
         <Tabs
           orientation="vertical"
           variant="scrollable"
           value={value}
+          display="flex"
           onChange={handleChange}
-          aria-label="Vertical tabs example"
+          textColor="black"
           sx={{
             borderRight: 1,
-            borderColor: "divider",
-            width: "150px", // Tabs 너비 고정
-            minWidth: "150px", // 최소 너비 설정
+            borderColor: "black",
+            '.Mui-selected': {
+              fontWeight: 'bold',
+            },
+            '.MuiTab-root': {
+              justifyContent: "center",
+              textTransform: "none",
+              alignItems: "flex-start",
+              padding: "0 0",
+            },
+            flex: 2,
           }}
+          TabIndicatorProps={{ style: { display: "none" } }}
         >
-          <Tab label="개인정보수정" {...a11yProps(0)} />
-          <Tab label="예매내역 " {...a11yProps(1)} />
-          <Tab label="탈퇴하기" {...a11yProps(2)} />
+          <Tab style={{fontSize: "16px"}} label="개인정보수정" {...a11yProps(0)} />
+          <Tab style={{fontSize: "16px"}} label="예매내역 " {...a11yProps(1)} />
+          <Tab style={{fontSize: "16px"}} label="탈퇴하기" {...a11yProps(2)} />
         </Tabs>
         {/* 개인정보수정 */}
+        <Box sx={{ flex: 8, display: 'flex', flexDirection: 'column' }}>
         <TabPanel
           value={value}
           index={0}
@@ -127,27 +140,29 @@ const MypageUser = () => {
             flexDirection: "column",
             justifyContent: "center",
             alignItems: "center",
-            marginBottom: 180,
-            marginTop: 10,
-            marginLeft: -150,
-            height: "100%", // 필요한 높이 지정
-            width: "100%", // 필요한 너비 지정
-
+            height: "100%",
+            width: "100%",
           }}
         >
           <ModifyUserInfo />
         </TabPanel>
         {/* 예매내역 */}
         <TabPanel value={value} index={1}>
-          <Box sx={{ width: "100%", bgcolor: "background.paper", marginLeft: 2}}>
+          <Box sx={{ width: "100%", bgcolor: "background.paper"}}>
             <Tabs
               value={widthValue}
               onChange={widthHandleChange}
               centered
-              style={{ marginBottom: 14 }}
+              textColor="black"
+              sx={{
+                '.Mui-selected': {  
+                fontWeight: 'bold',
+              },
+              }}
+              TabIndicatorProps={{ style: { display: "none" } }}
             >
-              <Tab label="관람예정" sx={{marginLeft: 8}}/>
-              <Tab label="관람완료" />
+              <Tab style={{fontSize: "20px"}} label="관람예정"/>
+              <Tab style={{fontSize: "20px"}} label="관람완료" />
             </Tabs>
 
             <TicketHistory whatTab={widthValue} />
@@ -155,8 +170,9 @@ const MypageUser = () => {
         </TabPanel>
         {/* 탈퇴하기 */}
         <TabPanel value={value} index={2}>
-          <WithDrawalUser sx={{marginLeft: 20}} />
+          <WithDrawalUser/>
         </TabPanel>
+      </Box>
       </Box>
     </div>
   );
