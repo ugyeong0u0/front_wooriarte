@@ -4,7 +4,7 @@ import image1 from "../assets/image 1.png";
 import mainAdBanner from "../assets/mainAdBanner.png";
 import PosterItem from "../components/PosterItem";
 import "../styles/MainUser.css";
-
+import Button from "@mui/material/Button";
 import * as React from "react";
 
 // api
@@ -45,31 +45,8 @@ import quotation from "../assets/quotation.png";
 import author3 from "../assets/author3.jpg";
 import gian from "../assets/gian.jpg";
 import kimuj from "../assets/kimuj.jpg";
-import mainImage from "../assets/mainImage.jpg"
+import mainImage from "../assets/mainImage.jpg";
 
-const mockData = [
-  {
-    id: 1,
-    postName: "전시1",
-    location: "서울시 마포구",
-    imageurl: image1,
-    createdDate: new Date("2024-04-19").getTime(),
-  },
-  {
-    id: 2,
-    postName: "전시2",
-    location: "서울시 마포구",
-    imageurl: image1,
-    createdDate: new Date("2024-04-19").getTime(),
-  },
-  {
-    id: 3,
-    postName: "전시3",
-    location: "서울시 마포구",
-    imageurl: image1,
-    createdDate: new Date("2024-04-19").getTime(),
-  },
-];
 // stack 배치 사용
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
@@ -82,6 +59,8 @@ const Item = styled(Paper)(({ theme }) => ({
 // 추후 무한 스크롤로 변경
 const MainUser = () => {
   const [mockData, setMockData] = useState([{}]); // 받는 형식이 배열 안 객체라
+  const [visibleData, setVisibleData] = useState([]);
+  const [showAll, setShowAll] = useState(false);
   const nav = useNavigate();
 
   // 아이템 상세 보기 api
@@ -94,16 +73,29 @@ const MainUser = () => {
     ongetAllExhibitsHandler((response) => {
       if (Array.isArray(response.data)) {
         setMockData(response.data);
+        setVisibleData(mockData.slice(0, 3));
       } else {
         console.error("응답 데이터가 배열이 아닙니다.");
       }
     });
   }, []);
+  useEffect(() => {
+    setVisibleData(mockData.slice(0, 3));
+  }, [mockData]);
+
+  const handleShowAll = () => {
+    setVisibleData(mockData);
+    setShowAll(true); // 전체 데이터가 표시되고 있음을 상태로 관리
+  };
 
   const goWooriBank = () => {
     const url =
       "https://pc.wooricard.com/dcpc/yh1/crd/crd01/H1CRD101S02.do?cdPrdCd=102534&canvasser=88804648&utm_source=pc_google&utm_medium=card&utm_campaign=credit&utm_content=DA@%EC%B9%B4%EB%93%9C%EC%9D%98%EC%A0%95%EC%84%9D%E2%85%A1&utm_term=%EC%9A%B0%EB%A6%AC%EC%B9%B4%EB%93%9Cda&gclid=Cj0KCQjw0MexBhD3ARIsAEI3WHLGBO7mkYUjUuDa9Kp0KTFMx3_k_IenEW1FUeSCdf-hYrMlaP3oCs4aAo-gEALw_wcB/";
     window.open(url, "_blank", "noopener,noreferrer");
+  };
+
+  const formatDate = (date) => {
+    return String(date).replace(/-/g, ".");
   };
 
   return (
@@ -116,10 +108,32 @@ const MainUser = () => {
               return <img key={index} src={image.imgURL} alt={image.imgAlt} />;
             })}
           </CustomCarouselForMain>
-          <div class="gray-line" style={{ marginBottom: 10 }}></div>
+          <Stack
+            direction={"row"}
+            sx={{
+              marginTop: 6, // 40px, MUI의 spacing system 사용
+              justifyContent: "space-between", // 요소들을 양 끝으로 분산 배치
+            }}
+          >
+            <span
+              style={{ textAlign: "left", fontWeight: "bold", fontSize: 24 }}
+            >
+              진행중인 전시
+            </span>
+            {!showAll && (
+              <Button
+                color="inherit"
+                size="small"
+                onClick={handleShowAll}
+                style={{ color: "gray", alignContent: "flex-end" }} // 비활성화 상태에서 회색으로 설정
+              >
+                {"전시 모두 보기 >"}
+              </Button>
+            )}
+          </Stack>
         </Container>
         <Container maxWidth="80%">
-          <Box sx={{ bgcolor: "#00000000", height: "100%", marginTop: 7 }}>
+          <Box sx={{ bgcolor: "#00000000", height: "100%" }}>
             {/* 추천 리스트 */}
             {/* <Stack
               justifyContent="center" // 가로 방향으로 중앙 정렬
@@ -147,14 +161,14 @@ const MainUser = () => {
             <Stack
               justifyContent="center" // 가로 방향으로 중앙 정렬
               alignItems="center" // 세로 방향으로 중앙 정렬
-              style={{ marginTop: 50 }}
+              style={{ marginTop: 20 }}
             >
               <ImageList
                 sx={{ maxWidth: 1000, height: "auto", overflowY: "hidden" }}
-                cols={4}
-                gap={20} // 이미지 사이의 간격 설정
+                cols={3}
+                gap={35} // 이미지 사이의 간격 설정
               >
-                {mockData.map((item) => (
+                {visibleData.map((item) => (
                   <ImageListItem
                     key={item.exhibitId}
                     onClick={() => handleItemInfo(item.exhibitId)}
@@ -170,12 +184,49 @@ const MainUser = () => {
                       }} // 모든 이미지가 동일한 가로 길이를 가지도록 가로 너비를 100%로 설정
                     />
                     <ImageListItemBar
-                      title={item.name + " " + item.city}
+                      title={
+                        <>
+                          <span
+                            style={{
+                              fontWeight: "bold",
+                              fontSize: "10px",
+                              textAlign: "left", // 왼쪽 정렬
+                              display: "block", // span을 블록 요소로 만들어 줄 전체를 차지하게 함
+                              width: "100%", // 너비 100%로 설정
+                            }}
+                          >
+                            {item.city}
+                          </span>
+                          <div></div>
+                          <span
+                            style={{
+                              fontWeight: "bold",
+                              fontSize: "30px",
+                              textAlign: "left", // 왼쪽 정렬
+                              display: "block", // span을 블록 요소로 만들어 줄 전체를 차지하게 함
+                              width: "100%", // 너비 100%로 설정
+                            }}
+                          >
+                            {item.name}
+                          </span>
+                        </>
+                      }
                       subtitle={
-                        <div>
-                          <span>{item.artistName}</span>
-                          <div />
-                          <span>{item.startDate + "~" + item.endDate}</span>
+                        <div style={{ marginTop: 10 }}>
+                          <span
+                            style={{
+                              color: "gray",
+
+                              fontSize: "10px",
+                              textAlign: "left", // 왼쪽 정렬
+                              display: "block", // span을 블록 요소로 만들어 줄 전체를 차지하게 함
+                              width: "100%", // 너비 100%로 설정
+                            }}
+                          >
+                            {formatDate(item.startDate) +
+                              "~" +
+                              formatDate(item.endDate)}
+                          </span>
                         </div>
                       }
                       position="below"
@@ -185,7 +236,7 @@ const MainUser = () => {
               </ImageList>
             </Stack>
 
-            <section className="py-0" id="howitworks" style={{ marginTop: 30 }}>
+            {/* <section className="py-0" id="howitworks" style={{ marginTop: 30 }}>
               <div className="container">
                 <hr className="mt-6"></hr>
                 <div className="row">
@@ -199,10 +250,10 @@ const MainUser = () => {
                 <div className="row mt-6">
                   <div
                     className="col-12 col-md-4 d-flex flex-column align-items-center"
-                    style={{ paddingRight: 80, paddingLeft: 80, marginTop: 30 }}
+                    style={{ paddingRight: 60, paddingLeft: 60, marginTop: 30 }}
                   >
-                    <div className="badge badge-circle bg-soft-primary flex-center">
-                      {/* <div
+                    <div className="badge badge-circle bg-soft-primary flex-center"> */}
+            {/* <div
                         className="text-primary fs-7 font-base"
                         style={{
                           color: "black",
@@ -211,20 +262,22 @@ const MainUser = () => {
                       >
                         1
                       </div> */}
-                    </div>
+            {/* </div>
                     <h5 className="text-primary text-center mt-3">
-                      사업자로 가입해보세요.
+                      사업자로
+                      <br /> 가입해보세요.
                     </h5>
                     <p className="text-center mx-xl-7">
-                      사업자로 가입하여 수많은 작품과 공간을 둘러보세요.
+                      사업자로 가입하여 <br /> 수많은 작품과 공간을
+                      <br /> 둘러보세요.
                     </p>
                   </div>
                   <div
                     className="col-12 col-md-4 d-flex flex-column align-items-center"
-                    style={{ paddingRight: 80, paddingLeft: 80, marginTop: 30 }}
+                    style={{ paddingRight: 60, paddingLeft: 60, marginTop: 30 }}
                   >
-                    <div className="badge badge-circle bg-soft-warning flex-center">
-                      {/* <div
+                    <div className="badge badge-circle bg-soft-warning flex-center"> */}
+            {/* <div
                         className="text-warning fs-7 font-base"
                         style={{
                           fontSize: "30px",
@@ -232,20 +285,22 @@ const MainUser = () => {
                       >
                         2
                       </div> */}
-                    </div>
+            {/* </div>
                     <h5 className="text-primary text-center mt-3">
-                      작품 혹은 공간을 소개해보세요.
+                      작품 혹은 공간을
+                      <br /> 소개해보세요.
                     </h5>
                     <p className="text-center mx-xl-7">
-                      소개도 하고 맘에 드는 작품과 공간에 제안을 보내보세요.
+                      소개도 하고 <br /> 맘에 드는 작품과 공간에 <br /> 제안을
+                      보내보세요.
                     </p>
                   </div>
                   <div
                     className="col-12 col-md-4 d-flex flex-column align-items-center"
-                    style={{ paddingRight: 80, paddingLeft: 80, marginTop: 30 }}
+                    style={{ paddingRight: 60, paddingLeft: 60, marginTop: 30 }}
                   >
-                    <div className="badge badge-circle bg-soft-success flex-center">
-                      {/* <div
+                    <div className="badge badge-circle bg-soft-success flex-center"> */}
+            {/* <div
                         className="text-success fs-7 font-base"
                         style={{
                           fontSize: "30px",
@@ -253,19 +308,21 @@ const MainUser = () => {
                       >
                         3
                       </div> */}
-                    </div>
+            {/* </div>
                     <h5 className="text-primary text-center mt-3">
-                      전시를 열어보세요.
+                      전시를
+                      <br /> 열어보세요.
                     </h5>
                     <p className="text-center mx-xl-7">
-                      WOORI ATRE가 전시의 시작부터 끝을 책임져드립니다.
+                      WOORI ATRE가 <br /> 전시의 시작과 끝을
+                      <br /> 책임져드립니다.
                     </p>
                   </div>
                 </div>
               </div>
-            </section>
+            </section> */}
 
-            <div class="gray-line" style={{ marginTop: 30 }}></div>
+            {/* <div class="gray-line" style={{ marginTop: 30 }}></div> */}
 
             {/* <section
               className="pb-7 pt-5"

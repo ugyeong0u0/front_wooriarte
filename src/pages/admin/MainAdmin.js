@@ -131,18 +131,20 @@ const MainAdmin = () => {
             width: "100%", // 필요한 너비 지정
           }}
         >
-          <h2 style={{ marginBottom: 20 }}>매칭관리</h2>
+          <span style={{ fontWeight: "bold", fontSize: "25px" }}>매칭관리</span>
           <div />
           <AdminMatchingList />
         </TabPanel>
         <TabPanel value={value} index={1}>
-          <h2 style={{ marginBottom: 20 }}>아이템 승인 </h2>
+          <span style={{ fontWeight: "bold", fontSize: "25px" }}>
+            공간 아이템
+          </span>
           <AdminItmeList />
           {/* 개인정보 수정 */}
         </TabPanel>
 
         <TabPanel value={value} index={2}>
-          <h2 style={{ marginBottom: 20 }}>전시정보</h2>
+          <span style={{ fontWeight: "bold", fontSize: "25px" }}>전시정보</span>
           <AdminExhibitList />
         </TabPanel>
       </Box>

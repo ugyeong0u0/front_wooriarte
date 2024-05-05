@@ -8,14 +8,13 @@ import MainUser from "./pages/MainUser";
 import { createContext, useEffect, useState } from "react";
 
 import CuFooter from "./components/CuFooter";
-import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { createTheme, ThemeProvider } from "@mui/material/styles";
 
 const theme = createTheme({
   typography: {
-    fontFamily: ['Pretendard-Regular', 'sans-serif'].join(','),
+    fontFamily: ["Pretendard-Regular", "sans-serif"].join(","),
   },
 });
-
 
 export const loginContext = createContext();
 
@@ -34,17 +33,18 @@ function App() {
   return (
     <div className="wrapper">
       <loginContext.Provider value={setIsLoginStateState}>
-      <ThemeProvider theme = {theme}>
-        <BrowserRouter>
-          {/* 유저 id */}
-          <Header
-            isLoginState={isLoginState} // 헤더는 로그인여부 값을 받기만 함
-            isLoginHandler={setIsLoginStateState}
-          />
-          <Routers />
-          <CuFooter className="footer" />
-        </BrowserRouter>
-      </ThemeProvider>
+        <ThemeProvider theme={theme}>
+          <BrowserRouter>
+            {/* 유저 id */}
+            <Header
+              isLoginState={isLoginState} // 헤더는 로그인여부 값을 받기만 함
+              isLoginHandler={setIsLoginStateState}
+            />
+            <Routers />
+            <div style={{ marginBottom: 150 }}></div>
+            <CuFooter className="footer" />
+          </BrowserRouter>
+        </ThemeProvider>
       </loginContext.Provider>
     </div>
   );

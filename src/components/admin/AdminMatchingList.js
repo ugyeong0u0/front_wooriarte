@@ -18,7 +18,7 @@ const AdminMatchingList = () => {
   }, [updateCount]);
   return (
     <>
-      <Stack spacing={3}>
+      <Stack spacing={3} style={{ marginTop: 30 }}>
         {mockData.length > 0 ? (
           mockData.map((item) => (
             <AdminMatchingItem

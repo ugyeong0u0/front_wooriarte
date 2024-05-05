@@ -47,7 +47,7 @@ export default function DatePickerOpenTo({ calendarType, onDateChange }) {
       <DemoContainer components={["DatePicker", "DatePicker", "DatePicker"]}>
         <DatePicker
           format="YYYY-MM"
-          label={calendarType === "startDate" ? "시작" : "끝"}
+          label={calendarType === "startDate" ? "시작" : "종료"}
           views={["month", "year"]}
           value={value} // 현재 값
           onChange={handleDateChange} // 변경시 핸들러 호출

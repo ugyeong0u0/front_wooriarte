@@ -54,10 +54,10 @@ function CustomCarousel({ children, isInfo }) {
 
   return (
     <div
-      className="container__slider"
+      className="container__sliderForInfo"
       onMouseEnter={AutoPlayStop}
       onMouseLeave={AutoPlayStart}
-      style={{ width: isInfo ? "400px" : "50%" }} // isInfo가 true일 경우 넓이를 200px로 설정
+      style={{ width: isInfo ? "80%" : "80%" }} // isInfo가 true일 경우 넓이를 200px로 설정
     >
       {children.map((item, index) => {
         return (
@@ -70,15 +70,15 @@ function CustomCarousel({ children, isInfo }) {
         );
       })}
 
-      <div className="container__slider__links">
+      <div className="container__sliderForInfo__links">
         {children.map((item, index) => {
           return (
             <button
               key={index}
               className={
                 activeIndex === index
-                  ? "container__slider__links-small container__slider__links-small-active"
-                  : "container__slider__links-small"
+                  ? "container__sliderForInfo__links-small container__sliderForInfo__links-small-active"
+                  : "container__sliderForInfo__links-small"
               }
               onClick={(e) => {
                 e.preventDefault();

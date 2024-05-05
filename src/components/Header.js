@@ -38,8 +38,10 @@ const Header = ({ isLoginState, isLoginHandler }) => {
     let userType = localStorage.getItem("userType");
     if (userType === "user") {
       nav(`/`);
-    } else {
+    } else if (userType === "author" || userType === "space") {
       nav(`/mainbusiness`);
+    } else {
+      nav(`/`);
     }
   };
 
@@ -75,13 +77,10 @@ const Header = ({ isLoginState, isLoginHandler }) => {
   // };
 
   return (
-    <div style={{width: "80%", marginLeft: "10%" }}>
+    <div style={{ width: "80%", marginLeft: "10%" }}>
       <header className="header">
         <div>
-          <text
-            onClick={goMainPage}
-            className="titleContainer"
-          >
+          <text onClick={goMainPage} className="titleContainer">
             WOORI ARTE
           </text>
         </div>

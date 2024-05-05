@@ -1,17 +1,17 @@
-.container__slider {
+.container__sliderForInfo {
   position: relative;
   width: 50%;
   padding: 0;
   overflow: hidden;
   display: flex;
   justify-content: flex-start;
-  align-items: center;
+  align-items: flex-start; /* 이미지가 컨테이너의 상단에서 시작하도록 조정 */
   flex-direction: row;
   flex-wrap: nowrap;
-  background-color: black;
+  background-color: white; /* 배경색을 흰색으로 설정 */
 }
 
-.container__slider > button {
+.container__sliderForInfo > button {
   background-color: transparent;
   outline: none;
   border: 0;
@@ -19,28 +19,42 @@
   font-size: 24px;
 }
 
-.container__slider > button:active {
+.container__sliderForInfo > button:active {
   color: black;
 }
 
 .slider__btn-next {
   position: absolute;
-  right: 0;
+  top: 50%; /* 상단으로부터 50% 위치에 배치 */
+  transform: translateY(
+    -50%
+  ); /* Y축 방향으로 자신의 높이의 50%만큼 이동하여 중앙 정렬 */
+  z-index: 10; /* 다른 콘텐츠 위에 버튼이 오도록 설정 */
 }
 
 .slider__btn-prev {
   position: absolute;
-  left: 0;
+  top: 50%; /* 상단으로부터 50% 위치에 배치 */
+  transform: translateY(
+    -50%
+  ); /* Y축 방향으로 자신의 높이의 50%만큼 이동하여 중앙 정렬 */
+  z-index: 10; /* 다른 콘텐츠 위에 버튼이 오도록 설정 */
+}
+.slider__btn-next {
+  right: 10px; /* 오른쪽 끝에서 10px 떨어진 위치 */
 }
 
-.container__slider__links {
+.slider__btn-prev {
+  left: 10px; /* 왼쪽 끝에서 10px 떨어진 위치 */
+}
+.container__sliderForInfo__links {
   position: absolute;
   bottom: 5%;
   left: 50%;
   transform: translateX(-50%);
 }
 
-.container__slider__links-small {
+.container__sliderForInfo__links-small {
   position: relative;
   width: 8px;
   height: 8px;
@@ -54,7 +68,7 @@
   margin: 0 2px;
 }
 
-.container__slider__links-small-active {
+.container__sliderForInfo__links-small-active {
   background-color: black;
 }
 

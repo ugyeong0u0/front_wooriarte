@@ -21,6 +21,9 @@ const AdminExhibitItem = ({
   const handleItemInfo = (id) => {
     setModalShow(true);
   };
+  const formatDate = (date) => {
+    return String(date).replace(/-/g, ".");
+  };
 
   return (
     <>
@@ -30,19 +33,45 @@ const AdminExhibitItem = ({
         <ImageListItemBar
           title={
             <>
-              <span style={{ fontWeight: "bold", fontSize: "30px" }}>
+              <span
+                style={{
+                  fontWeight: "bold",
+                  fontSize: "30px",
+                  marginBottom: 4,
+                }}
+              >
                 {name}
               </span>
               <span style={{ float: "right", fontWeight: "bold" }}>{city}</span>{" "}
             </>
           }
           subtitle={
-            <div>
-              <span style={{ color: "gray" }}>
-                전시기간 : {startDate + "~" + endDate}
+            <div style={{ marginTop: 5 }}>
+              <span
+                style={{
+                  color: "gray",
+
+                  fontSize: "10px",
+                  textAlign: "left", // 왼쪽 정렬
+                  display: "block", // span을 블록 요소로 만들어 줄 전체를 차지하게 함
+                  width: "100%", // 너비 100%로 설정
+                }}
+              >
+                전시기간 : {formatDate(startDate) + "~" + formatDate(endDate)}
               </span>
               <div />
-              <span style={{ color: "gray" }}>표 가격 :{price}원</span>
+              <span
+                style={{
+                  color: "gray",
+                  marginTop: 3,
+                  fontSize: "10px",
+                  textAlign: "left", // 왼쪽 정렬
+                  display: "block", // span을 블록 요소로 만들어 줄 전체를 차지하게 함
+                  width: "100%", // 너비 100%로 설정
+                }}
+              >
+                표 가격 :{price}원
+              </span>
             </div>
           }
           position="below"

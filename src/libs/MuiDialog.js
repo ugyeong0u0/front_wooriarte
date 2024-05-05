@@ -107,7 +107,15 @@ export default function MuiDialog({
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose}>확인</Button>
+          <Button
+            onClick={handleClose}
+            sx={{
+              color: "black", // 활성화 상태에 따라 색상 변경
+              fontWeight: "normal", // 활성화 상태에 따라 굵기 변경
+            }}
+          >
+            확인
+          </Button>
         </DialogActions>
       </Dialog>
     </React.Fragment>
