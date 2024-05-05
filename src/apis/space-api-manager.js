@@ -3,8 +3,7 @@
 import axios from "axios";
 import { jsx } from "react/jsx-runtime";
 // 변수명 임시 지정
-const DOMAIN =
-  "http://wooriarte-front-ALB-232140650.ap-northeast-2.elb.amazonaws.com:80/api"; // TODO: 도메인 주소 확인 필요
+const DOMAIN = "http://localhost:8080/api"; // TODO: 도메인 주소 확인 필요
 
 //?----------------------------- 공간대여자 url
 const LoginSpace_URL = () => `${DOMAIN}/space-rentals/login`; //! url수정 완
@@ -21,8 +20,11 @@ const getSpaceInfo_URL = ({ id }) => `${DOMAIN}/space-rentals/${id}`; //! 수정
 const updateSpaceInfo_URL = ({ id }) => `${DOMAIN}/space-rentals/${id}`; //! 수정완
 
 //?----------------------------- 스페이스 아이템
-// 모든 공간 아이템 조회 / 공간 아이템 추가
+// 공간 아이템 추가
 const addSpaceItem_URL = () => `${DOMAIN}/space-items`;
+
+// 모든 공간 아이템 조회
+const getAllSpaceItem_URL = () => `${DOMAIN}/space-items/approved-all`;
 
 // 공간 필터링
 const GetFilteredSpaceProject_URL = ({ startDate, endDate, city }) =>
@@ -312,6 +314,7 @@ export const updateSpaceInfo = async ({
 
 //!---------------------------- 스페이스 아이템 생성
 export const addSpaceItem = async ({
+  title,
   spaceRentalId,
   intro,
   hostname,
@@ -339,6 +342,7 @@ export const addSpaceItem = async ({
   console.log("스페이스 정보조회 id  :" + spaceRentalId);
   const result = await axios
     .post(addSpaceItem_URL(), {
+      title,
       spaceRentalId,
       intro,
       hostName: hostname,
@@ -347,7 +351,7 @@ export const addSpaceItem = async ({
       parking,
       fee,
       phone,
-      approval: true,
+      approval: false,
       startDate,
       endDate,
       isDeleted: false,
@@ -374,7 +378,7 @@ export const addSpaceItem = async ({
 export const getAllSpaceItem = async () => {
   console.log("모든 스페이스 아이템 가져오기 실행");
   const result = await axios
-    .get(addSpaceItem_URL())
+    .get(getAllSpaceItem_URL())
     .then((response) => {
       console.log("모든 스페이스 아이템 조회 " + response.status);
       return response;
@@ -422,6 +426,7 @@ export const getSpaceItemInfo = async ({ posterId }) => {
 // todo 시작일 끝날짜 추가 필요
 //!---------------------------- 스페이스 아이템 수정
 export const updateSpaceItemInfo = async ({
+  title,
   spaceId,
   intro,
   hostname,
@@ -439,6 +444,7 @@ export const updateSpaceItemInfo = async ({
   console.log("스페이스 아이템 수정" + url);
   const result = await axios
     .put(url, {
+      title,
       intro,
       hostName: hostname,
       city,

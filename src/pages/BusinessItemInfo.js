@@ -31,6 +31,7 @@ import Container from "@mui/material/Container";
 import ImageList from "@mui/material/ImageList";
 import ImageListItem from "@mui/material/ImageListItem";
 import { grey } from "@mui/material/colors";
+import { RiSpace } from "react-icons/ri";
 
 <link
   rel="stylesheet"
@@ -59,6 +60,7 @@ const BusinessItemInfo = () => {
     startDate: "",
     endDate: "",
     city: "",
+    title: "",
   });
 
   const [spaceInfo, setSpaceInfo] = useState({
@@ -74,6 +76,7 @@ const BusinessItemInfo = () => {
     startDate: "2024-04-22T05:23:02.924441",
     endDate: "2024-04-22T05:23:02.924441",
     createdAt: "2024-04-22T05:23:02.924441",
+    title: "",
   });
 
   useEffect(() => {
@@ -91,6 +94,7 @@ const BusinessItemInfo = () => {
             startDate: response.data.startDate,
             endDate: response.data.endDate,
             city: response.data.city,
+            title: response.data.title,
           });
         });
         console.log("작가 사진조회"); // todo
@@ -121,6 +125,7 @@ const BusinessItemInfo = () => {
             startDate: response.data.startDate,
             endDate: response.data.endDate,
             createdAt: response.data.createdAt,
+            title: response.data.title,
           });
           console.log("공간 정보 업데이트 성공");
         });
@@ -151,6 +156,7 @@ const BusinessItemInfo = () => {
             startDate: response.data.startDate,
             endDate: response.data.endDate,
             city: response.data.city,
+            title: response.data.title,
           });
         });
         console.log("작가 사진조회"); // todo
@@ -180,6 +186,7 @@ const BusinessItemInfo = () => {
             startDate: response.data.startDate,
             endDate: response.data.endDate,
             createdAt: response.data.createdAt,
+            title: response.data.title,
           });
           console.log("공간 정보 업데이트 성공");
         });
@@ -252,6 +259,9 @@ const BusinessItemInfo = () => {
               <h1 style={{ marginBottom: 10, marginTop: 10 }}>
                 Author: {projectInfo.artistName}
               </h1>
+              <h1 style={{ marginBottom: 10, marginTop: 10 }}>
+                Author: {projectInfo.title}
+              </h1>
               <span style={{ marginLeft: 10, color: "gray", fontSize: "12px" }}>
                 {" "}
                 {projectInfo.city}
@@ -265,6 +275,9 @@ const BusinessItemInfo = () => {
               <h1 style={{ marginBottom: 10, marginTop: 10 }}>
                 Rental: {spaceInfo.hostName}
               </h1>
+              <h1 style={{ marginBottom: 10, marginTop: 10 }}>
+                Rental: {spaceInfo.title}
+              </h1>
               <span style={{ marginLeft: 10, color: "gray", fontSize: "12px" }}>
                 {spaceInfo.city}
               </span>
@@ -275,6 +288,9 @@ const BusinessItemInfo = () => {
           )
         ) : exhibitsType === "author" ? (
           <div>
+            <h2 style={{ marginBottom: 10, marginTop: 10 }}>
+              Author: {projectInfo.title}
+            </h2>
             <h2 style={{ marginBottom: 10, marginTop: 10 }}>
               Author: {projectInfo.artistName}
             </h2>
@@ -289,6 +305,9 @@ const BusinessItemInfo = () => {
           <div>
             <h2 style={{ marginBottom: 10, marginTop: 10 }}>
               Rental: {spaceInfo.hostName}
+            </h2>
+            <h2 style={{ marginBottom: 10, marginTop: 10 }}>
+              Rental: {spaceInfo.title}
             </h2>
             <span style={{ marginLeft: 10, color: "gray", fontSize: "12px" }}>
               {spaceInfo.city}

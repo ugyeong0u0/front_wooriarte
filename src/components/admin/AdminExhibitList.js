@@ -36,7 +36,7 @@ const AdminExhibitList = () => {
       <Stack
         justifyContent="center" // 가로 방향으로 중앙 정렬
         alignItems="center" // 세로 방향으로 중앙 정렬
-        style={{ marginTop: 50 }}
+        style={{ marginTop: 50, width: "85%" }}
       >
         <ImageList
           sx={{ maxWidth: 1000, height: "auto", overflowY: "hidden" }}

@@ -20,6 +20,7 @@ const BusinessItem = ({
   city,
   setUpdateCount,
   url,
+  title,
 }) => {
   const [modalShow, setModalShow] = useState(false);
   const handleItemInfo = () => {
@@ -34,7 +35,7 @@ const BusinessItem = ({
         <img src={url} />
         <hr style={{ margin: "5px 0" }} />{" "}
         <ImageListItemBar
-          title={String(intro).slice(0, 15)}
+          title={title}
           subtitle={
             <div>
               <span>

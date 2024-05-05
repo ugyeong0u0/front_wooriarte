@@ -268,6 +268,7 @@ export const addSpaceItemResponse = (response, callback) => {
 // 스페이스 아이템 이벤트
 export const onAddSpaceItemHandler = (
   {
+    title,
     spaceRentalId,
     intro,
     hostname,
@@ -282,6 +283,7 @@ export const onAddSpaceItemHandler = (
   callback
 ) => {
   addSpaceItem({
+    title,
     spaceRentalId,
     intro,
     hostname,
@@ -364,6 +366,7 @@ export const updateAuthorItemInfoResponse = (response, callback) => {
 //  수정 이벤트
 export const onUpdateSpaceItemInfoHandler = (
   {
+    title,
     spaceId,
     intro,
     hostname,
@@ -379,6 +382,7 @@ export const onUpdateSpaceItemInfoHandler = (
 ) => {
   console.log("수정핸들러 안");
   updateSpaceItemInfo({
+    title,
     spaceId,
     intro,
     hostname,

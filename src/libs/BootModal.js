@@ -107,8 +107,10 @@ export default function MyVerticallyCenteredModal(props) {
     name: "",
     phoneNumber: "",
     explanation: "",
+    title: "",
   };
   const initialSpaceState = {
+    title: "",
     hostName: "",
     intro: "",
     address: "",
@@ -126,10 +128,12 @@ export default function MyVerticallyCenteredModal(props) {
     phoneNumber: "",
     explanation: "",
     address: "서울",
+    title: "",
   });
 
   // 공간대여자용
   const [businessInfoState, setBusinessInfoState] = useState({
+    title: "",
     hostName: "",
     intro: "",
     address: "서울",
@@ -231,6 +235,7 @@ export default function MyVerticallyCenteredModal(props) {
           startDate: authorInfoState.startDate,
           endDate: authorInfoState.endDate,
           city: authorInfoState.address,
+          title: authorInfoState.title,
         },
         (response) => {
           if (response) {
@@ -266,6 +271,7 @@ export default function MyVerticallyCenteredModal(props) {
       let newParking = businessInfoState.parking === "true" ? true : false;
       onAddSpaceItemHandler(
         {
+          title: businessInfoState.title,
           spaceRentalId: spaceRentalId,
           intro: businessInfoState.intro,
           hostname: businessInfoState.hostName,
@@ -345,6 +351,18 @@ export default function MyVerticallyCenteredModal(props) {
                 variant="standard"
                 onChange={handleChangeState}
                 value={authorInfoState.phoneNumber}
+              />
+              <TextField
+                name="title"
+                id="standard-author-title"
+                label="작품명"
+                type="search"
+                InputLabelProps={{
+                  shrink: true,
+                }}
+                variant="standard"
+                onChange={handleChangeState}
+                value={authorInfoState.title}
               />
               <TextField
                 name="explanation"
@@ -457,6 +475,18 @@ export default function MyVerticallyCenteredModal(props) {
                 variant="standard"
                 onChange={handleSpaceChangeState}
                 value={businessInfoState.phoneNumber}
+              />
+              <TextField
+                name="title"
+                id="standard-number-title"
+                label="건물명"
+                type="search"
+                InputLabelProps={{
+                  shrink: true,
+                }}
+                variant="standard"
+                onChange={handleSpaceChangeState}
+                value={businessInfoState.title}
               />
               <TextField
                 name="intro"

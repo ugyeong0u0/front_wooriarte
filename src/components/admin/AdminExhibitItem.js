@@ -28,12 +28,21 @@ const AdminExhibitItem = ({
         <img src={url} />
         <hr style={{ margin: "5px 0" }} />{" "}
         <ImageListItemBar
-          title={name + " " + city}
+          title={
+            <>
+              <span style={{ fontWeight: "bold", fontSize: "30px" }}>
+                {name}
+              </span>
+              <span style={{ float: "right", fontWeight: "bold" }}>{city}</span>{" "}
+            </>
+          }
           subtitle={
             <div>
-              <span>{startDate + "~" + endDate}</span>
+              <span style={{ color: "gray" }}>
+                전시기간 : {startDate + "~" + endDate}
+              </span>
               <div />
-              <span>판매:{price}</span>
+              <span style={{ color: "gray" }}>표 가격 :{price}원</span>
             </div>
           }
           position="below"

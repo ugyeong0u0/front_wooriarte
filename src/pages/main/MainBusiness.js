@@ -279,7 +279,7 @@ const MainBusiness = () => {
           )}
           {!enableDialog && (
             <ImageList
-              sx={{ maxWidth: "90%", height: "auto", overflowY: "hidden" }}
+              sx={{ maxWidth: "80%", height: "auto", overflowY: "hidden" }}
               cols={3}
               gap={18} // 이미지 사이의 간격 설정
             >
@@ -327,7 +327,7 @@ const MainBusiness = () => {
                     title={
                       { item } && exhibitsType === "author"
                         ? item.artistName
-                        : item.hostName
+                        : item.title
                     }
                     subtitle={
                       <div>
@@ -338,6 +338,18 @@ const MainBusiness = () => {
                       </div>
                     }
                     position="below"
+                    sx={{
+                      ".MuiImageListItemBar-titleWrap": {
+                        fontWeight: "bold !important", // Force the title to be bold
+                        fontSize: "24px !important", // Force the title font size to 24px
+                        lineHeight: "48px !important", // Force the line height to enhance title visibility
+                      },
+                      ".MuiImageListItemBar-subtitle": {
+                        color: "gray !important", // Force the subtitle color to gray
+                        fontSize: "1px !important", // Force the subtitle font size to 1px for ultra-small appearance
+                        fontWeight: "lighter !important", // Force the subtitle font lighter
+                      },
+                    }}
                   />
                 </ImageListItem>
               ))}

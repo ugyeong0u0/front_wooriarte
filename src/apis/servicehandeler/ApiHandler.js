@@ -10,6 +10,7 @@ import {
   getExhibitTicketUser,
   findPassByEmailRequest,
   confirmEmailAuthRequest,
+  resetPassRequest,
 } from "../api-manger";
 
 //!----------------------------유저 로그인
@@ -318,5 +319,27 @@ export const confirmEmailAuthResponse = (response, callback) => {
 export const onConfirmEmailAuthHandler = ({ id, email, authNum }, callback) => {
   confirmEmailAuthRequest({ id, email, authNum }).then((response) =>
     confirmEmailAuthResponse(response, callback)
+  );
+};
+//!---------------------------- 비번찾기 이메일 재설정
+export const resetUserPassResponse = (response, callback) => {
+  if (!response) {
+    callback(false);
+    return;
+  }
+  if (response.status >= 200 && response.status < 300) {
+    console.log("비번 재설정 성공");
+    callback(true);
+    return;
+  } else {
+    callback(false);
+    console.log("비번 인증 실패" + response.status);
+    return;
+  }
+};
+
+export const onResetUserPassHandler = ({ id, name, email, pwd }, callback) => {
+  resetPassRequest({ id, name, email, pwd }).then((response) =>
+    resetUserPassResponse(response, callback)
   );
 };

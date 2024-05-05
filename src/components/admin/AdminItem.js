@@ -53,7 +53,7 @@ const AdminItem = ({ text, id, setUpdateCount, type }) => {
     <>
       <Stack spacing={2} direction="row">
         <span> {text}</span>
-        <Button variant="primary" onClick={() => AcceptPropsal(id, true)}>
+        <Button variant="outline-dark" onClick={() => AcceptPropsal(id, true)}>
           승인
         </Button>{" "}
         <Button variant="outline-dark" onClick={() => denyPropsal(id, false)}>

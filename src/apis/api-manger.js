@@ -1,8 +1,7 @@
 import axios from "axios";
 import { jsx } from "react/jsx-runtime";
 // 변수명 임시 지정
-const DOMAIN =
-  "http://wooriarte-front-ALB-232140650.ap-northeast-2.elb.amazonaws.com:80/api"; // TODO: 도메인 주소 확인 필요
+const DOMAIN = "http://localhost:8080/api"; // TODO: 도메인 주소 확인 필요
 
 //?----------------------------- 유저 url
 const LoginSpace_URL = () => `${DOMAIN}/users/login`; //! 로그인 수정완
@@ -18,6 +17,7 @@ const ExhibitUser_URL = ({ id, value }) =>
   `${DOMAIN}/tickets/users/${id}/bookings/${value}`;
 const FindPassEmail_URL = () => `${DOMAIN}/email/users/email-send`; // 비번 찾기 이메일 전송
 const FindPassAuthEmail_URL = () => `${DOMAIN}/email/users/email-auth-check`; // 비번 찾기 이메일 전송
+const ResetUserPass_URL = () => `${DOMAIN}/users/set-pw`; // 비번 찾기 이메일 전송
 
 //!----------------------------- 유저 로그인
 export const LogInRequest = async ({ id, pw }) => {
@@ -336,13 +336,14 @@ export const confirmEmailAuthRequest = async ({ id, email, authNum }) => {
   return result;
 };
 //!----------------------------- 비번 이메일 확인번호 재설정
-export const confirmPassRequest = async ({ id, email, authNum }) => {
-  console.log("인증번호 인증" + id + email + authNum);
+export const resetPassRequest = async ({ id, name, email, pwd }) => {
+  console.log("인증번호 인증" + id + name + email + pwd);
   const result = await axios
-    .post(FindPassAuthEmail_URL(), {
+    .post(ResetUserPass_URL(), {
       id,
+      name,
       email,
-      authNum,
+      pwd,
     })
     .then((response) => {
       console.log(response.status);

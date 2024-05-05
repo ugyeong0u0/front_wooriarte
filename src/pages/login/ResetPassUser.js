@@ -7,13 +7,15 @@ import Box from "@mui/material/Box";
 
 import { onFindAuthorPwHandler } from "../../apis/servicehandeler/AuthorApiHandler";
 import { onFindSpacePwHandler } from "../../apis/servicehandeler/SpaceApiHandler";
+import { onResetUserPassHandler } from "../../apis/servicehandeler/ApiHandler";
 
 // 다이어로그
 import MuiDialog from "../../libs/MuiDialog";
+import { ImLab } from "react-icons/im";
 //? 유저 비번 재설정 사이트
 const ResetPassUser = () => {
   const uselocation = useLocation();
-  const { id } = uselocation.state;
+  const { id, name, email } = uselocation.state;
   const [enableDialog, setEnableDialog] = useState(false); //  다이어로그
   // 다음 버튼 활성화
   const [enableNextBtn, setEnableNextBtn] = useState(true);
@@ -47,7 +49,15 @@ const ResetPassUser = () => {
   // api 연결 시 id, userType 필요함
   const nextPage = () => {
     // todo 유저 pass재설정
-    alert("유저비번재설정");
+    onResetUserPassHandler(
+      { id, name, email, pwd: state.authpass },
+      (responseStatus) => {
+        if (responseStatus) {
+          setEnableDialog(true);
+        }
+      }
+    );
+
     // onFindAuthorPwHandler({ id, new_pwd: state.pass }, (responseStatus) => {
     //   if (responseStatus) {
     //     setEnableDialog(true);
@@ -108,7 +118,7 @@ const ResetPassUser = () => {
           <MuiDialog
             title={"알림"}
             content={
-              "비밀번호가 재설정되었습니다. 로그인 페이지로 이동합니다. "
+              "비밀번호가 재설정되었습니다. 로그인 페이지로 이동1합니다. "
             }
             result={true}
             page={"userSignUp"}

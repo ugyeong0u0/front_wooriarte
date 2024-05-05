@@ -67,11 +67,14 @@ export default function MyVerticallyCenteredModal({
     name: "",
     phoneNumber: "",
     explanation: "",
+    title: "",
+    address: "서울",
   };
   const initialSpaceState = {
+    title: "",
     hostName: "",
     intro: "",
-    address: "",
+    address: "서울",
     size: "",
     phoneNumber: "",
     parking: true, // parking의 기본값이 true라고 가정
@@ -88,16 +91,18 @@ export default function MyVerticallyCenteredModal({
     name: " ",
     phoneNumber: " ",
     explanation: " ",
-    address: "",
+    address: "서울",
     startDate: "",
     endDate: "",
+    title: "",
   });
 
   // 공간대여자용
   const [businessInfoState, setBusinessInfoState] = useState({
+    title: " ",
     hostName: "",
     intro: " ",
-    address: "",
+    address: "서울",
     size: " ",
     phoneNumber: " ",
     parking: true,
@@ -195,6 +200,7 @@ export default function MyVerticallyCenteredModal({
         console.log("작가아이템 정보 응답값 받음");
         console.log(response);
         setauthorInfoState((prevState) => ({
+          title: response.data.title,
           name: response.data.artistName, // 전시명
           phoneNumber: response.data.phone, // 전화번호
           explanation: response.data.intro, // 전시 소개
@@ -227,6 +233,7 @@ export default function MyVerticallyCenteredModal({
         console.log("공간 조회 응답" + response.fee + typeof response.fee);
         console.log(response);
         setBusinessInfoState((prevState) => ({
+          title: response.data.title,
           intro: response.data.intro, // 전시소개
           hostName: response.data.hostName, // 주최자명
           address: response.data.city,
@@ -299,8 +306,10 @@ export default function MyVerticallyCenteredModal({
     if (type === "author" && imgList.length > 0) {
       let authorId = localStorage.getItem("userId");
       // todo 시작날짜 끝날짜 넣기 + 지역은 서버에 작가만 넣어둠
+      console.log("작가아이템 수정");
       onUpdateAuthorItemInfoHandler(
         {
+          title: authorInfoState.title,
           posterId: id,
           artistName: authorInfoState.name,
           intro: authorInfoState.explanation,
@@ -338,6 +347,7 @@ export default function MyVerticallyCenteredModal({
       let newParking = businessInfoState.parking === "true" ? true : false;
       onUpdateSpaceItemInfoHandler(
         {
+          title: businessInfoState.title,
           spaceId: id,
           intro: businessInfoState.intro,
           hostname: businessInfoState.hostName,
@@ -445,6 +455,18 @@ export default function MyVerticallyCenteredModal({
                 value={authorInfoState.phoneNumber}
               />
               <TextField
+                name="title"
+                id="standard-title"
+                label="작품명"
+                type="search"
+                InputLabelProps={{
+                  shrink: true,
+                }}
+                variant="standard"
+                onChange={handleChangeState}
+                value={authorInfoState.title} // 상태와 입력 필드 연결
+              />
+              <TextField
                 name="explanation"
                 id="outlined-multiline-static"
                 label="소개"
@@ -545,6 +567,18 @@ export default function MyVerticallyCenteredModal({
                 value={businessInfoState.hostName} // 상태와 입력 필드 연결
               />
               <TextField
+                name="hostName"
+                id="standard-number-busi"
+                label="임대인"
+                type="search"
+                InputLabelProps={{
+                  shrink: true,
+                }}
+                variant="standard"
+                onChange={handleSpaceChangeState}
+                value={businessInfoState.hostName} // 상태와 입력 필드 연결
+              />
+              <TextField
                 name="phoneNumber"
                 id="standard-number"
                 label="전화번호"
@@ -555,6 +589,18 @@ export default function MyVerticallyCenteredModal({
                 variant="standard"
                 onChange={handleSpaceChangeState}
                 value={businessInfoState.phoneNumber}
+              />
+              <TextField
+                name="title"
+                id="standard-number-title"
+                label="건물명"
+                type="search"
+                InputLabelProps={{
+                  shrink: true,
+                }}
+                variant="standard"
+                onChange={handleSpaceChangeState}
+                value={businessInfoState.title} // 상태와 입력 필드 연결
               />
               <TextField
                 name="intro"

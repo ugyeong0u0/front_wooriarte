@@ -16,7 +16,10 @@ export default function DateRangePickerValueForAdmin({
 }) {
   // 날짜 유효성 상태
   const [isDateValid, setIsDateValid] = useState(true);
-  const [value, setValue] = useState(() => [dayjs(), dayjs().add(1, "month")]);
+  const [value, setValue] = useState(() => [
+    dayjs().subtract(1, "month"),
+    dayjs().add(1, "month"),
+  ]);
 
   const handleDateChange = (newValue) => {
     setValue(newValue);
