@@ -90,8 +90,8 @@ const ExhibitItemInfo = () => {
         <Container
           maxWidth="80%"
           style={{
-            marginTop: 20,
-            marginLeft: 146, 
+            marginTop: 30,
+            marginLeft: 255, 
             display: "flex",
             flexDirection: "column",
             alignItems: "flex-start",
@@ -101,57 +101,61 @@ const ExhibitItemInfo = () => {
           <div>
             <img
               src={exhibitInfoState.urls[0]}
-              style={{ height: 600, width: 500, objectFit: 'cover' }}
+              style={{ height: 489, width: 289, marginTop: 15, objectFit: 'cover' }}
             />
           </div>
 
             <Stack
               direction="col"
-              spacing={2}
+              spacing={0}
               style={{ alignItems: "flex-start", marginRight: 10 }}
             >
               <div className="exhibitInfoContainer">
-              <div>
-                <h1 style={{ fontSize: '4em', fontWeight: 'bold' }}>{exhibitInfoState.name}</h1>
-              </div>
-                <div
-                  style={{
-                    height: 2,
-                    backgroundColor: "black" /* 선의 색상을 회색으로 설정 */,
-                    width: 300 /* 선의 너비를 부모 요소의 전체 너비로 설정 */,
-                    marginBottom: 30,
-                  }}
-                ></div>
                 <div>
-                  <span>작가이름 </span>
-                  <span>{exhibitInfoState.artistName}</span>
+                  <h1 style={{ fontSize: '4em', fontWeight: 'bold' }}>{exhibitInfoState.name}</h1>
+                </div> 
+                {/* <br></br>
+                <div style={{ display: 'flex', alignItems: 'center' }}>
+                <div className="selector-item1">
+                  <div className="label">작가이름</div>
                 </div>
-
-                <div>
-                  <span>주최자 </span>
-                  <span>{exhibitInfoState.hostName}</span>
+                <span className="value" style={{ marginLeft: '10px' }}>{exhibitInfoState.artistName}</span>
                 </div>
-
-                <div>
-                  <span>관람장소 </span>
-                  <span>{exhibitInfoState.address}</span>
+                <br></br>
+                <div style={{ display: 'flex', alignItems: 'center' }}>
+                <div className="selector-item2">
+                  <div className="label">주최자</div>
                 </div>
-                <div>
-                  <span>관람기간 </span>
-                  <span>
+                  <span className="value" style={{ marginLeft: '10px' }}>{exhibitInfoState.hostName}</span>
+                </div> */}
+                <br></br>
+                <div style={{ display: 'flex', alignItems: 'center' }}>
+                <div className="selector-item3">
+                  <div className="label">관람장소</div>
+                </div>
+                  <span className="value" style={{ marginLeft: '10px' }}>{exhibitInfoState.address}</span>
+                </div>
+                <br></br>
+                <div style={{ display: 'flex', alignItems: 'center', flexWrap: 'nowrap', minWidth: 0, justifyContent: 'flex-start' }}>
+                <div className="selector-item3">
+                  <div className="label">관람기간 </div>
+                </div>
+                <span className="value" style={{ marginLeft: '10px', whiteSpace: 'nowrap', textOverflow: 'ellipsis' }}>
                     {exhibitInfoState.startDate +
                       "~" +
                       exhibitInfoState.endDate}
                   </span>
                 </div>
-                <div>
-                  <span>관람료 </span>
-                  <span>{exhibitInfoState.price}원</span>
+                <br></br>
+                <div style={{ display: 'flex', alignItems: 'center' }}>
+                <div className="selector-item3">
+                  <div className="label">관람료 </div>
                 </div>
-                <div />
-
+                  <span className="value" style={{ marginLeft: '10px' }}>{exhibitInfoState.price}원</span>
+                </div>
+                <br></br>
                 <div>
-                  <div style={{ marginBottom: 20 }}>
+                  {/* <div style={{ marginBottom: 20 }}>
                     <span>총 결제 금액 : </span>
                     <span>
                       {ticketNumber}개 x {exhibitInfoState.price} ={totalPrice}
@@ -160,19 +164,19 @@ const ExhibitItemInfo = () => {
                   </div>
                   <div class="gray-line" style={{ maxWidth: 40, marginTop: 100 }}></div>
                     <h2 style={{ marginTop: 20 }}>전시 소개 </h2>
-                  <div class="gray-line" style={{ maxWidth: 40 }}></div>
-                  <span
+                  <div class="gray-line" style={{ maxWidth: 40 }}></div> */}
+                  <div
                     style={{
                       marginBottom: 10,
-                      padding: 10,
-
-                      display: "flex", // 플렉스박스 레이아웃 적용
-                      alignItems: "flex-start", // 수직 방향 중앙 정렬
-                      justifyContent: "flex-start", // 수평 방향 중앙 정렬
+                      display: "flex",
+                      alignItems: "flex-start",
+                      justifyContent: "flex-start",
+                      maxWidth: "calc(100% - 600px)", // `header-right-section`과 버튼들이 차지하는 공간을 고려하여 조정
                     }}
                   >
                     {exhibitInfoState.intro}
-                  </span>
+                  </div>
+                  <br></br>
                   <Stack
                     direction="row"
                     spacing={2}
@@ -189,11 +193,11 @@ const ExhibitItemInfo = () => {
                         <AddIcon />
                       </IconButton>
                     </Tooltip>
-                  </Stack>
-                  <Payment
+                    <Payment
                     exhibitId={exhibitId}
                     ticketNumber={ticketNumber}
-                  ></Payment>
+                    ></Payment>
+                  </Stack>
                 </div>
               </div>
             </Stack>
