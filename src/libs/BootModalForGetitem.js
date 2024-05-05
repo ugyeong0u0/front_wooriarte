@@ -695,7 +695,7 @@ export default function MyVerticallyCenteredModal({
               {/* // todo 선택 창으로 변경하기 */}
               <FormControl>
                 <FormLabel id="demo-controlled-radio-buttons-group">
-                  주차여부
+                  주차 여부
                 </FormLabel>
                 <RadioGroup
                   aria-labelledby="demo-controlled-radio-buttons-group"

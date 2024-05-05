@@ -36,7 +36,7 @@ const Matching = () => {
           <Stack
             alignItems="center" // 세로 방향으로 중앙 정렬
             spacing={2}
-            style={{ marginBottom: 20 }}
+            style={{ marginBottom: 50 }}
             // 요소들을 가로 방향으로 배치
           >
             <ReceivedMatchingList
@@ -59,7 +59,7 @@ const Matching = () => {
           <Stack
             alignItems="center" // 세로 방향으로 중앙 정렬
             spacing={2}
-            style={{ marginBottom: 20 }}
+            style={{ marginBottom: 50 }}
           >
             {/* 대기 매칭 리스트  */}
             <WaitingMatchingList />
@@ -78,7 +78,7 @@ const Matching = () => {
           <Stack
             alignItems="center" // 세로 방향으로 중앙 정렬
             spacing={2}
-            style={{ marginBottom: 20 }}
+            style={{ marginBottom: 50 }}
             // 요소들을 가로 방향으로 배치
           >
             <AcceptedMatchingList updateCount={updateCount} />

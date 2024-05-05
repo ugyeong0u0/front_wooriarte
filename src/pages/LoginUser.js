@@ -127,6 +127,9 @@ const LoginUser = () => {
               color="inherit"
               size="large"
               onClick={handleBusinessClick}
+              sx={{
+                color: "gray", // 텍스트 색상을 회색으로 지정
+              }}
             >
               사업자
             </Button>

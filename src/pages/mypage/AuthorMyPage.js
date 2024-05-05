@@ -89,7 +89,7 @@ const AuthorMyPage = () => {
             borderColor: "divider",
             width: "200px", // Tabs 너비 고정
             minWidth: "200px", // 최소 너비 설정
-            marginLeft: "170px", // 왼쪽에 20px 공간 추가
+            marginLeft: "250px", // 왼쪽에 20px 공간 추가
             "& .MuiTab-textColorSecondary": { // 선택된 탭의 스타일
               color: "black", // 선택된 탭의 글자 색상 변경
             },

@@ -99,12 +99,10 @@ const WithDrawalUser = () => {
         <Checkbox
           {...label}
           onChange={handleChange}
-          sx={{
-            color: grey[800],
-            "&.Mui-checked": {
-              color: grey[600],
-            },
+          style={{
+            color: "#000000", // 이 색상은 검은색입니다.
           }}
+
         />
         <p><span>위 내용을 모두 확인했으며, 이에 동의합니다.</span></p>
       </Stack>

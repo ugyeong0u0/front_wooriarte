@@ -99,7 +99,7 @@ const theme = createTheme({
             direction="row"
             style={{
               marginTop: 20,
-              marginBottom: 70,
+              marginBottom: 75,
               alignItems: "center", // 요소들의 높이를 각 요소에 맞춤
             }}
           >

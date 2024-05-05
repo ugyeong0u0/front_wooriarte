@@ -9,7 +9,7 @@ const CuFooter = () => {
     <footer>
       <div className="footer-container">
         <div class="left-section">
-          <h3>woori arte</h3>
+          <h3>WOORI ARTE</h3>
           <p>서울 마포구 월드컵북로 434 상암 IT Tower</p>
           <p>사업자등록번호 663-81-07443</p>
           <p>© 2024 WOORI ARTE. All Rights Reserved. Design by WOORI FISA</p>
