@@ -25,6 +25,7 @@ const PosterItem = ({
   url,
   exhibitId,
   amount,
+  city,
   ticketNo,
   whatType,
   isVisible,
@@ -32,6 +33,8 @@ const PosterItem = ({
   isEditable,
   name,
   setUpdateCount,
+  startDate,
+  endDate,
   updateCount,
 }) => {
   console.log("ExhibitsItem 유저 타입" + whatType);
@@ -112,19 +115,23 @@ const PosterItem = ({
         }
       }}
     >
-      <div>
+      <div style={{margin: "15px"}}>
         <ImageListItem key={ticketId}>
           <img src={url} />
           <ImageListItemBar
-            title={name}
             subtitle={
               <span>
                 {
                   <div>
-                    <span> 예매수{amount}</span>
-                    <ButtonBoot variant="outline-danger" onClick={cancelTicket}>
-                      예매취소
-                    </ButtonBoot>{" "}
+                    <p style={{fontSize: "12px", marginBottom: "5px"}}> {city}</p>
+                    <p style={{fontSize: "20px", fontWeight: "bold", marginBottom: "5px"}}> {name}</p>
+                    <p style={{fontSize: "12px", color: "gray", marginBottom: "5px"}}> {startDate}~{endDate}</p>
+                    <div style={{display: "flex", justifyContent: "space-between", alignItems: "center"}}>
+                      <span> 예매수: {amount}</span>
+                      <ButtonBoot style={{ borderColor: 'black', color: 'black', background: '#FFFFFF', borderRadius: '0', justifyContent: "flex-end", padding: "3px 6px"}} onClick={cancelTicket}>
+                        예매취소
+                      </ButtonBoot>{" "}
+                    </div>
                   </div>
                 }
               </span>

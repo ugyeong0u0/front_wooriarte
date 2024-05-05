@@ -110,15 +110,15 @@ const MainUser = () => {
     <div style={{ width: "70%", textAlign: "center", margin: "auto" }}>
       <React.Fragment>
         <CssBaseline />
-        <Container maxWidth="100%">
+        <Container style={{padding: "0 0", maxWidth: "100%"}}>
           <CustomCarouselForMain>
             {mainCarouselImage.map((image, index) => {
-              return <img key={index} src={image.imgURL} alt={image.imgAlt} />;
+              return <img key={index} src={image.imgURL} alt={image.imgAlt} style={{maxWidth: "auto"}}/>;
             })}
           </CustomCarouselForMain>
           <div class="gray-line" style={{ marginBottom: 10 }}></div>
         </Container>
-        <Container maxWidth="80%">
+        <Container style={{width: "100%", padding: "0 0"}}>
           <Box sx={{ bgcolor: "#00000000", height: "100%", marginTop: 7 }}>
             {/* 추천 리스트 */}
             {/* <Stack
@@ -186,7 +186,7 @@ const MainUser = () => {
             </Stack>
 
             <section className="py-0" id="howitworks" style={{ marginTop: 30 }}>
-              <div className="container">
+              <div className="container" style={{padding: "0 0"}}>
                 <hr className="mt-6"></hr>
                 <div className="row">
                   <div className="col-12">

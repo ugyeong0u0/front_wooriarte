@@ -75,7 +75,7 @@ const Header = ({ isLoginState, isLoginHandler }) => {
   // };
 
   return (
-    <div style={{width: "80%", marginLeft: "10%" }}>
+    <div style={{width: "70%", margin: "auto" }}>
       <header className="header">
         <div>
           <text

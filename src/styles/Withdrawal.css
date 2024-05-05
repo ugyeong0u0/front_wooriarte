@@ -6,11 +6,8 @@
   background-color: var(--white);
   border-radius: 1rem;
   box-shadow: rgba(0, 0, 0, 0.1) 0px 5px 15px;
-  margin-bottom: 35px;
 
   width: 100%; /* 혹은 원하는 너비 */
-  margin-right: auto;
-  margin-left: 100px;
 }
 
 /* 마우스 호버 시 하이라이트 효과를 확장 */
