@@ -186,29 +186,28 @@ const ApplyWithItems = () => {
   console.log();
 
   return (
-    <div>
-      <h3 style={{ marginLeft: 130, marginTop: 50 }}>
+    <div style={{ marginTop: 40 }}>
+      <span
+        style={{
+          marginLeft: 140,
+
+          fontSize: "20px",
+        }}
+      >
         {" "}
-        신청할 아이템을 골라주세요
-      </h3>
+        신청할 아이템을 골라주세요.
+      </span>
       <Stack
         style={{
           justifyContent: "center",
           alignItems: "center",
+          marginTop: 20,
         }}
       >
-        <div
-          style={{
-            height: 0.5,
-            backgroundColor: "black",
-            width: "80%",
-            marginBottom: 50,
-          }}
-        />
         <ImageList
           sx={{ maxWidth: 1000, height: "auto", overflowY: "hidden" }}
-          cols={4}
-          gap={20} // 이미지 사이의 간격 설정
+          cols={3}
+          gap={50} // 이미지 사이의 간격 설정
         >
           {userType === "author" &&
             !enableDialog &&
@@ -225,7 +224,9 @@ const ApplyWithItems = () => {
                     <Radio
                       {...controlProps(String(item.projectItemId))}
                       icon={<CropDinIcon />}
-                      checkedIcon={<DoneOutlineIcon />}
+                      checkedIcon={
+                        <DoneOutlineIcon style={{ color: "black" }} />
+                      }
                       onClick={() => handleSelectedItem(item.projectItemId)}
                     />
                     <BusinessItem
@@ -291,10 +292,14 @@ const ApplyWithItems = () => {
         {abledBtn && !enableDialog && (
           <div style={{ marginTop: 40, marginBottom: 100 }}>
             <Button
-              variant="outlined"
-              style={{ marginRight: 10 }}
+              color="inherit"
+              size="large"
+              sx={{
+                color: "black", // 활성화 상태에 따라 색상 변경
+                fontWeight: "normal", // 활성화 상태에 따라 굵기 변경
+                marginRight: 2,
+              }}
               onClick={goBack}
-              color="info"
             >
               취소하기
             </Button>

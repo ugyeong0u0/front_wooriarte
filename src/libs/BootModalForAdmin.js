@@ -17,6 +17,8 @@ import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import { onAddAuthorProjectHandler } from "../apis/servicehandeler/AuthorApiHandler";
 import { onAddSpaceItemHandler } from "../apis/servicehandeler/SpaceApiHandler";
 
+import MuiDialog from "./MuiDialog";
+
 import {
   onAddExhibitHandler,
   onGetExhibitInfoHandler,
@@ -42,7 +44,9 @@ export default function BootModalForAdmin({
   type,
   id,
   setUpdateCount,
+  setUpdate,
 }) {
+  const [enableDialog, setEnableDialog] = useState(false); //  다이어로그
   // 전시생성 버튼 활성화
   const [enableNextBtn, setEnableNextBtn] = useState(false);
 
@@ -185,10 +189,14 @@ export default function BootModalForAdmin({
           price: exhibitInfoState.price,
           city: exhibitInfoState.address,
         },
-        () => {
-          console.log("전시 추가 성공");
-
-          onHide(); // 부모컴포넌트 프롭
+        (responseStatus) => {
+          if (responseStatus) {
+            console.log("전시 추가 성공");
+            setEnableDialog(true);
+            setUpdate(false); // 전시생성, 상태변경 없앰
+            setUpdateCount((prev) => prev + 1);
+            onHide(); // 부모컴포넌트 프롭
+          }
         }
       );
     } else if (type === "update") {
@@ -216,118 +224,137 @@ export default function BootModalForAdmin({
   };
 
   return (
-    <Modal
-      show={show}
-      onHide={onHide}
-      size="lg"
-      aria-labelledby="contained-modal-title-vcenter"
-      centered
-    >
-      <Modal.Header closeButton>
-        <Modal.Title id="contained-modal-title-vcenter">
-          {type === "create" ? "전시생성하기" : "전시 수정하기"}
-        </Modal.Title>
-      </Modal.Header>
-      <Modal.Body>
-        {/* // todo 작가 아이템에도 달력, 위치 넣어야함 서버에도 */}
-        <Box>
-          <Stack spacing={2}>
-            <TextField
-              name="name"
-              id="standard-number-busi"
-              label="전시명"
-              type="search"
-              InputLabelProps={{
-                shrink: true,
-              }}
-              variant="standard"
-              onChange={handleExhibitInfoStateChange}
-              value={exhibitInfoState.name} // 상태와 입력 필드 연결
-            />
-            <TextField
-              name="intro"
-              id="outlined-multiline-static"
-              label="전시 소개"
-              multiline
-              rows={10}
-              onChange={handleExhibitInfoStateChange}
-              value={exhibitInfoState.intro}
-            />
-            <TextField
-              name="artistName"
-              id="outlined-multiline-static"
-              label="아티스트이름"
-              type="search"
-              InputLabelProps={{
-                shrink: true,
-              }}
-              variant="standard"
-              onChange={handleExhibitInfoStateChange}
-              value={exhibitInfoState.artistName}
-            />
-            <TextField
-              name="hostName"
-              id="outlined-multiline-static"
-              label="주최자"
-              type="search"
-              InputLabelProps={{
-                shrink: true,
-              }}
-              variant="standard"
-              onChange={handleExhibitInfoStateChange}
-              value={exhibitInfoState.hostName}
-            />
-
-            <Stack spacing={16} direction="row">
+    <>
+      <Modal
+        show={show}
+        onHide={onHide}
+        size="lg"
+        aria-labelledby="contained-modal-title-vcenter"
+        centered
+      >
+        <Modal.Header closeButton>
+          <Modal.Title id="contained-modal-title-vcenter">
+            {type === "create" ? "전시생성하기" : "전시 수정하기"}
+          </Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          {/* // todo 작가 아이템에도 달력, 위치 넣어야함 서버에도 */}
+          <Box>
+            <Stack spacing={2}>
               <TextField
-                name="price"
-                id="standard-search-id"
-                label="가격"
-                type="number"
+                name="name"
+                id="standard-number-busi"
+                label="전시명"
+                type="search"
+                InputLabelProps={{
+                  shrink: true,
+                }}
                 variant="standard"
                 onChange={handleExhibitInfoStateChange}
-                value={exhibitInfoState.price}
+                value={exhibitInfoState.name} // 상태와 입력 필드 연결
+              />
+              <TextField
+                name="intro"
+                id="outlined-multiline-static"
+                label="전시 소개"
+                multiline
+                rows={10}
+                onChange={handleExhibitInfoStateChange}
+                value={exhibitInfoState.intro}
+              />
+              <TextField
+                name="artistName"
+                id="outlined-multiline-static"
+                label="아티스트이름"
+                type="search"
+                InputLabelProps={{
+                  shrink: true,
+                }}
+                variant="standard"
+                onChange={handleExhibitInfoStateChange}
+                value={exhibitInfoState.artistName}
+              />
+              <TextField
+                name="hostName"
+                id="outlined-multiline-static"
+                label="주최자"
+                type="search"
+                InputLabelProps={{
+                  shrink: true,
+                }}
+                variant="standard"
+                onChange={handleExhibitInfoStateChange}
+                value={exhibitInfoState.hostName}
               />
 
-              {/* 주소 */}
-              <SelectSizesExample
-                name="address"
-                size={"default"}
-                type={"location"}
-                selectedLocation={exhibitInfoState.address}
-                onLocationChange={handleExhibitInfoStateChange}
+              <Stack spacing={16} direction="row">
+                <TextField
+                  name="price"
+                  id="standard-search-id"
+                  label="가격"
+                  type="number"
+                  variant="standard"
+                  onChange={handleExhibitInfoStateChange}
+                  value={exhibitInfoState.price}
+                />
+
+                {/* 주소 */}
+                <SelectSizesExample
+                  name="address"
+                  size={"default"}
+                  type={"location"}
+                  selectedLocation={exhibitInfoState.address}
+                  onLocationChange={handleExhibitInfoStateChange}
+                />
+              </Stack>
+              {/* 달력 */}
+              <DateRangePickerValueForAdmin
+                startDate={exhibitInfoState.startDate}
+                endDate={exhibitInfoState.endDate}
+                onDateChange={handleDateChange}
+                isEdit={type === "update" ? true : false}
               />
             </Stack>
-            {/* 달력 */}
-            <DateRangePickerValueForAdmin
-              startDate={exhibitInfoState.startDate}
-              endDate={exhibitInfoState.endDate}
-              onDateChange={handleDateChange}
-              isEdit={type === "update" ? true : false}
-            />
-          </Stack>
-        </Box>
-      </Modal.Body>
-      <Modal.Footer>
-        <Button variant="dark" onClick={onHide}>
-          닫기
-        </Button>
-        {type == "create" && (
-          <ButtonBoot onClick={updateExhibit} disabled={!enableNextBtn}>
-            등록하기
-          </ButtonBoot>
-        )}
-        {type == "update" && (
-          <ButtonBoot onClick={updateExhibit} disabled={!enableNextBtn}>
-            수정하기
-          </ButtonBoot>
-        )}
-        {type === "update" && (
-          <Button variant="dark" onClick={() => deleteExhibits()}>
-            삭제하기
+          </Box>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="dark" onClick={onHide}>
+            닫기
           </Button>
-        )}
-      </Modal.Footer>
-    </Modal>
+          {type == "create" && (
+            <ButtonBoot
+              variant="dark"
+              onClick={updateExhibit}
+              disabled={!enableNextBtn}
+            >
+              등록하기
+            </ButtonBoot>
+          )}
+          {type == "update" && (
+            <ButtonBoot
+              variant="dark"
+              onClick={updateExhibit}
+              disabled={!enableNextBtn}
+            >
+              수정하기
+            </ButtonBoot>
+          )}
+          {type === "update" && (
+            <Button variant="dark" onClick={() => deleteExhibits()}>
+              삭제하기
+            </Button>
+          )}
+        </Modal.Footer>
+      </Modal>
+      {enableDialog && (
+        <MuiDialog
+          title={"알림"}
+          content={"전시 추가되었습니다"}
+          result={true}
+          page={"login"}
+          parentClick={setEnableDialog}
+        />
+      )}
+    </>
   );
 }

@@ -205,22 +205,34 @@ const MainBusiness = () => {
           >
             <Stack spacing={2} direction="row" style={{}}>
               {exhibitsType === "author" ? (
-                <Badge color="info" badgeContent=" " variant="dot">
-                  <Button color="info" size="large" onClick={getProjectItems}>
-                    프로젝트
-                  </Button>
-                </Badge>
+                <Button
+                  color="inherit"
+                  size="large"
+                  sx={{
+                    color: "black", // 활성화 상태에 따라 색상 변경
+                    fontWeight: "bold", // 활성화 상태에 따라 굵기 변경
+                  }}
+                  onClick={getProjectItems}
+                >
+                  프로젝트
+                </Button>
               ) : (
                 <Button color="inherit" size="large" onClick={getProjectItems}>
                   프로젝트
                 </Button>
               )}
               {exhibitsType === "space" ? (
-                <Badge color="info" badgeContent=" " variant="dot">
-                  <Button color="info" size="large" onClick={getSpaceItems}>
-                    공간
-                  </Button>
-                </Badge>
+                <Button
+                  color="inherit"
+                  size="large"
+                  sx={{
+                    color: "black", // 활성화 상태에 따라 색상 변경
+                    fontWeight: "bold", // 활성화 상태에 따라 굵기 변경
+                  }}
+                  onClick={getSpaceItems}
+                >
+                  공간
+                </Button>
               ) : (
                 <Button color="inherit" size="large" onClick={getSpaceItems}>
                   공간
@@ -268,20 +280,27 @@ const MainBusiness = () => {
         {/* 구분선 */}
 
         {/* 비어있을때 값  */}
-        <div class="gray-line"></div>
         <Stack
           justifyContent="center" // 가로 방향으로 중앙 정렬
           alignItems="center" // 세로 방향으로 중앙 정렬
-          style={{ marginTop: 60 }}
+          style={{ marginTop: 30 }}
         >
+          <div
+            style={{
+              height: 1,
+              backgroundColor: "gray",
+              width: "80%",
+              marginBottom: 60,
+            }}
+          ></div>
           {enableDialog && (
             <img src={noResult} style={{ width: 300, marginBottom: 30 }} />
           )}
           {!enableDialog && (
             <ImageList
-              sx={{ maxWidth: "90%", height: "auto", overflowY: "hidden" }}
+              sx={{ maxWidth: "80%", height: "auto", overflowY: "hidden" }}
               cols={3}
-              gap={18} // 이미지 사이의 간격 설정
+              gap={60} // 이미지 사이의 간격 설정
             >
               {data.map((item) => (
                 <ImageListItem
@@ -327,17 +346,29 @@ const MainBusiness = () => {
                     title={
                       { item } && exhibitsType === "author"
                         ? item.artistName
-                        : item.hostName
+                        : item.title
                     }
                     subtitle={
                       <div>
-                        <span>희망기간 :</span>
+                        <span>전시 희망기간 :</span>
                         <span>
                           {item.startDate}~{item.endDate}
                         </span>
                       </div>
                     }
                     position="below"
+                    sx={{
+                      ".MuiImageListItemBar-titleWrap": {
+                        fontWeight: "bold !important", // Force the title to be bold
+                        fontSize: "24px !important", // Force the title font size to 24px
+                        lineHeight: "48px !important", // Force the line height to enhance title visibility
+                      },
+                      ".MuiImageListItemBar-subtitle": {
+                        color: "gray !important", // Force the subtitle color to gray
+                        fontSize: "1px !important", // Force the subtitle font size to 1px for ultra-small appearance
+                        fontWeight: "lighter !important", // Force the subtitle font lighter
+                      },
+                    }}
                   />
                 </ImageListItem>
               ))}

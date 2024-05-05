@@ -268,7 +268,7 @@ export const addAuthorProjectResponse = (response, callback) => {
 };
 // 작가 정보조회 이벤트
 export const onAddAuthorProjectHandler = (
-  { authorId, artistName, intro, phone, startDate, endDate, city },
+  { authorId, artistName, intro, phone, startDate, endDate, city, title },
   callback
 ) => {
   addAuthorProject({
@@ -279,6 +279,7 @@ export const onAddAuthorProjectHandler = (
     startDate,
     endDate,
     city,
+    title,
   }).then((response) => addAuthorProjectResponse(response, callback));
 };
 //!---------------------------- 모든 작가 아이템 조회
@@ -375,10 +376,11 @@ export const updateAuthorItemInfoResponse = (response, callback) => {
 };
 // 작가 아이템 수정 이벤트
 export const onUpdateAuthorItemInfoHandler = (
-  { posterId, artistName, intro, phone, startDate, endDate, city },
+  { posterId, artistName, intro, phone, startDate, endDate, city, title },
   callback
 ) => {
   updateAuthorItemInfo({
+    title,
     posterId,
     artistName,
     intro,

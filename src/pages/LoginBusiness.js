@@ -45,15 +45,15 @@ const LoginBusiness = () => {
 
         <Box
           sx={{
-            marginTop: 4,
-            marginBottom: 2,
+            marginTop: 5,
+            marginBottom: 5,
             width: "100%",
             display: "flex",
             justifyContent: "center",
           }}
         >
           <Stack spacing={2}>
-            <Stack spacing={2} direction="row" style={{ marginLeft: 2 }} justifyContent="center" >
+            <Stack spacing={3} direction="row" style={{ marginLeft: 0 }} justifyContent="center" >
               <Button
                 color="inherit"
                 size="large"
@@ -78,13 +78,13 @@ const LoginBusiness = () => {
             <div>
               <Stack
                 spacing={2}
-                style={{ marginTop: 40, marginLeft: 5, marginBottom: 80 }}
+                style={{ marginTop: 40, marginBottom: 80 }}
                 direction={"row"}
               >
-                <ButtonBoot variant="outline-dark" onClick={goBusinessLogin} style={{ width: '100px', height: '40px' }}>
+                <ButtonBoot variant="outline-dark" onClick={goBusinessLogin} style={{ border: '1px solid #000', borderRadius: '0', width: '100px', height: '40px' }}>
                   작가
                 </ButtonBoot>
-                <ButtonBoot variant="outline-dark" onClick={goSpaceLogin} style={{ width: '100px', height: '40px' }}>
+                <ButtonBoot variant="outline-dark" onClick={goSpaceLogin} style={{ border: '1px solid #000', borderRadius: '0', width: '100px', height: '40px' }}>
                   임대 사업자
                 </ButtonBoot>
               </Stack>

@@ -67,6 +67,8 @@ const FindPassUser = () => {
             replace: true,
             state: {
               id: state.id,
+              name: state.name,
+              email: state.email,
             },
           });
         } else {

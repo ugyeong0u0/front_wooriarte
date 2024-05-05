@@ -42,15 +42,15 @@ export const onGetAllMatchingsForAdminHandler = (callback) => {
 // 전시 생성 조회 응답
 export const onAddExhibitResponse = (response, callback) => {
   if (!response) {
-    alert("네트워크 이상 ");
+    callback(false);
     return;
   }
   if (response.status >= 200 && response.status < 300) {
     console.log("전시생성 성공");
-    callback();
+    callback(true);
     return;
   } else {
-    alert("전시생성실패");
+    callback(false);
     console.log(response.status);
     return;
   }
@@ -203,15 +203,15 @@ export const onUpdateExhibitHandler = (
 
 export const updateMatchingForAdminResponse = (response, callback) => {
   if (!response) {
-    alert("매칭 상태 변경 조회 네트워크 이상");
+    callback(false);
     return;
   }
   if (response.status >= 200 && response.status < 300) {
     console.log("매칭 상태 변경 성공!!!!!!!!!!!!!!");
-    callback(response);
+    callback(true);
     return;
   } else {
-    alert("매칭 상태 변경 실패");
+    callback(false);
     console.log(response.status);
     return;
   }

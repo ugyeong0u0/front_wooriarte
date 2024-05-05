@@ -23,4 +23,6 @@
   background-color: black;
   color: white;
   padding: 10px 20px; /* 상하 10px, 좌우 20px의 패딩을 추가 */
+  border: 1px solid #000;
+  border-radius: 0;
 }

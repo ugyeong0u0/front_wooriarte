@@ -68,6 +68,7 @@ const MainAdmin = () => {
       style={{
         width: "100%",
         marginBottom: 90,
+        marginTop: 50,
       }}
     >
       <Box
@@ -88,13 +89,33 @@ const MainAdmin = () => {
           sx={{
             borderRight: 1,
             borderColor: "divider",
-            width: "150px", // Tabs 너비 고정
-            minWidth: "150px", // 최소 너비 설정
+            marginLeft: 12,
+            width: "170px", // Tabs 너비 고정
+            minWidth: "170px", // 최소 너비 설정
+            ".MuiTab-root": {
+              // 모든 탭에 적용되는 기본 스타일
+              color: "#000", // 탭의 기본 글자색을 검정으로 설정
+              display: "flex",
+            },
+            ".Mui-selected": {
+              // 선택된 탭에만 적용되는 스타일
+              color: "black !important", // 선택된 탭의 글자색을 검정으로 설정
+              fontWeight: "bold", // 글자를 굵게
+            },
+            ".MuiTabs-indicator": {
+              // 선택된 탭을 나타내는 하단 바의 스타일
+              backgroundColor: "black", // 하단 바의 색을 검정으로 설정
+              display: "none", // 하단 바를 보이지 않도록 설정
+            },
           }}
         >
-          <Tab label="매칭관리" {...a11yProps(0)} />
-          <Tab label="아이템승인 " {...a11yProps(1)} />
-          <Tab label="전시정보" {...a11yProps(2)} />
+          <Tab style={{ marginRight: 50 }} label="매칭관리" {...a11yProps(0)} />
+          <Tab
+            style={{ marginRight: 40 }}
+            label="아이템승인 "
+            {...a11yProps(1)}
+          />
+          <Tab style={{ marginRight: 53 }} label="전시정보" {...a11yProps(2)} />
         </Tabs>
 
         <TabPanel
@@ -103,26 +124,27 @@ const MainAdmin = () => {
           style={{
             display: "flex",
             flexDirection: "column",
-            justifyContent: "center",
-            alignItems: "center",
+
             marginBottom: 180,
-            marginTop: 10,
+
             height: "100%", // 필요한 높이 지정
             width: "100%", // 필요한 너비 지정
           }}
         >
-          <h2>매칭관리</h2>
+          <span style={{ fontWeight: "bold", fontSize: "25px" }}>매칭관리</span>
           <div />
           <AdminMatchingList />
         </TabPanel>
         <TabPanel value={value} index={1}>
-          <h2 style={{ marginBottom: 20 }}>아이템 승인 </h2>
+          <span style={{ fontWeight: "bold", fontSize: "25px" }}>
+            공간 아이템
+          </span>
           <AdminItmeList />
           {/* 개인정보 수정 */}
         </TabPanel>
 
         <TabPanel value={value} index={2}>
-          <h2 style={{ marginBottom: 20 }}>전시정보</h2>
+          <span style={{ fontWeight: "bold", fontSize: "25px" }}>전시정보</span>
           <AdminExhibitList />
         </TabPanel>
       </Box>

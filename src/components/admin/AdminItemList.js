@@ -22,11 +22,7 @@ const AdminItmeList = () => {
 
   return (
     <>
-      <Stack spacing={3}>
-        <div
-          style={{ height: 1, backgroundColor: "black", marginBottom: 5 }}
-        ></div>
-        <>공간 아이템</>
+      <Stack spacing={3} style={{ marginTop: 30 }}>
         {mockData.length > 0 ? (
           mockData.map((item) => (
             // todo 아래 값 반환값에 따라 맞게 수정해야함
@@ -42,8 +38,9 @@ const AdminItmeList = () => {
           <span>없음</span>
         )}
 
-        <div style={{ height: 1, backgroundColor: "black" }}></div>
-        <div style={{ marginTop: 10 }}>작가아이템</div>
+        <span style={{ fontWeight: "bold", fontSize: "25px" }}>
+          작가 아이템
+        </span>
 
         {mockDataForProject.length > 0 ? (
           mockDataForProject.map((item) => (

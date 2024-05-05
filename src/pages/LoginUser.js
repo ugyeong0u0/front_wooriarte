@@ -111,7 +111,7 @@ const LoginUser = () => {
             justifyContent: "center",
           }}
         >
-          <Stack spacing={2} direction="row">
+          <Stack spacing={3} direction="row">
             <Button
               color="inherit"
               size="large"
