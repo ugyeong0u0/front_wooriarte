@@ -282,7 +282,6 @@ export const onAddSpaceItemHandler = (
   },
   callback
 ) => {
-    title,
   addSpaceItem({
     title,
     spaceRentalId,
