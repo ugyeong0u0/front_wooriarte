@@ -18,44 +18,66 @@ const Signupbusiness = () => {
 
   const nav = useNavigate();
 
+  const [isActive, setIsActive] = useState(true); // 사업자 버튼의 활성화 상태
+
   const goUserSignup = () => {
+    setIsActive(false); //사업자 버튼 비활성화
     nav(`/signupuser`, { replace: true });
   };
   const goBusinessSignup = () => {
     // whatUser에 따라 회원가입 다르게 해야함
     alert("회원가입 누구? " + userInfo);
     console.log("회원가입 누구? " + userInfo);
+    setIsActive(true);
   };
 
   return (
     <div>
       <Box
         sx={{
-          marginTop: 4,
-          marginBottom: 2,
+          marginTop: 5,
+          marginBottom: 5,
           width: "100%", // 박스 너비 설정
           display: "flex", // flexbox 디스플레이 설정
           justifyContent: "center", // 가로 중앙 정렬
         }}
       >
-        <div>
-          <h1 style={{ marginLeft: 23 }}>Signup</h1>
-          <Stack spacing={2} direction="row" style={{ marginTop: 30 }}>
-            <Button color="inherit" size="large" onClick={goUserSignup}>
-              개인
-            </Button>
-            <Badge color="info" badgeContent=" " variant="dot">
-              <Button color="info" size="large" onClick={goBusinessSignup}>
-                사업자
-              </Button>
-            </Badge>
-          </Stack>
-        </div>
+        <h1>Signup</h1>
       </Box>
       <Box
         sx={{
-          marginTop: 5,
-          marginBottom: 5,
+          marginTop: 4,
+          marginBottom: -2,
+          width: "100%", // 박스 너비 설정
+          display: "flex", // flexbox 디스플레이 설정
+          justifyContent: "center", // 가로 중앙 정렬
+        }}
+      >
+          <div>
+          <Stack spacing={3} direction="row" >
+            <Button
+              color="inherit"
+              size="large"
+              onClick={goUserSignup}
+            >
+              개인
+            </Button>
+            <Button
+              color="inherit"
+              size="large"
+              onClick={goBusinessSignup}
+              sx={{
+                color: isActive ? 'black' : 'grey', // 활성화 상태에 따라 색상 변경
+                fontWeight: isActive ? 'bold' : 'normal', // 활성화 상태에 따라 굵기 변경
+              }}
+            >
+              사업자
+            </Button>
+          </Stack>
+          </div>
+        </Box>
+      <Box
+        sx={{
           width: "100%", // 박스 너비 설정
           display: "flex", // flexbox 디스플레이 설정
           justifyContent: "center", // 가로 중앙 정렬

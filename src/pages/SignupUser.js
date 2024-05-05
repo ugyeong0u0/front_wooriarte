@@ -18,6 +18,8 @@ import Box from "@mui/material/Box";
 
 // 다이어로그
 import MuiDialog from "../libs/MuiDialog";
+// 클릭시 밑줄색
+import {ThemeProvider, createTheme } from '@mui/material';
 
 // 회원가입 완료
 // todo("회원가입 통신 연결해야함 ")
@@ -25,10 +27,57 @@ import MuiDialog from "../libs/MuiDialog";
 
 const SignupUser = () => {
   const nav = useNavigate();
-
+  const [isActive, setIsActive] = useState(true); // 초기 상태는 '개인'이 활성화
+  
+  // '개인' 버튼 클릭 핸들러
+  const handlePersonalClick = () => {
+    setIsActive(true);
+  };
+  
+  // '사업자' 버튼 클릭 핸들러
+  const handleBusinessClick = () => {
+    setIsActive(false);
+       console.log("비즈니스 로그인으로 이동");
+    nav(`/loginbusiness`);
+  };
   // 다음 버튼 활성화
   const [enableNextBtn, setEnableNextBtn] = useState(false);
   const [enableDialog, setEnableDialog] = useState(false);
+
+    // 밑줄 색 바꾸기
+    const theme = createTheme({
+      typography:{
+        fontFamily: 'Pretendard-Regular'
+      },
+      components: {
+        MuiInput: {
+          styleOverrides: {
+            underline: {
+              '&:before': {
+                borderBottom: '1px solid #e0e0e0',
+              },
+              '&:hover:not(.Mui-disabled):before': {
+                borderBottom: '2px solid rgba(0, 0, 0, 0.87)',
+              },
+              '&:after': {
+                borderBottom: '1px solid black',
+              }
+            },
+          },
+        },
+        // MuiInputLabel 컴포넌트에 대한 스타일 추가
+        MuiInputLabel: {
+          styleOverrides: {
+            // 'standard' variant를 사용하는 경우
+            root: {
+              '&.Mui-focused': { // 포커스 상태일 때
+                color: 'gray', // 레이블 색상을 검정으로 변경
+              }
+            },
+          },
+        },
+      },
+    });
 
   const submitsignup = () => {
     if (state.id !== "" && state.pw !== "") {
@@ -107,8 +156,8 @@ const SignupUser = () => {
     <>
       <Box
         sx={{
-          marginTop: 4,
-          marginBottom: 2,
+          marginTop: 5,
+          marginBottom: 5,
           width: "100%", // 박스 너비 설정
           display: "flex", // flexbox 디스플레이 설정
           justifyContent: "center", // 가로 중앙 정렬
@@ -118,6 +167,7 @@ const SignupUser = () => {
       </Box>
       <Box
         sx={{
+          "& .MuiTextField-root": { m: 1, width: "25ch" },
           marginTop: 4,
           marginBottom: 2,
           width: "100%", // 박스 너비 설정
@@ -125,15 +175,28 @@ const SignupUser = () => {
           justifyContent: "center", // 가로 중앙 정렬
         }}
       >
+        
         <Stack spacing={2}>
           <div>
-            <Stack spacing={2} direction="row" style={{ marginLeft: 35 }}>
-              <Badge color="info" badgeContent=" " variant="dot">
+          <Stack spacing={3} direction="row" marginLeft={7.5}>
+            <Button
+              color="inherit"
+              size="large"
+              onClick={handlePersonalClick}
+              sx={{
+                color: isActive ? 'black' : 'grey', // 활성화 상태에 따라 색상 변경
+                fontWeight: isActive ? 'bold' : 'normal', // 활성화 상태에 따라 굵기 변경
+              }}
+            >
+              개인
+            </Button>
+            {/* <Stack spacing={2} direction="row" style={{ marginLeft: 35 }}>
+              <Badge color="info" badgeContent=" ">
                 <Button color="info" size="large">
                   개인
                 </Button>
-              </Badge>
-              <Button
+              </Badge> */}
+              {/* <Button
                 color="inherit"
                 size="large"
                 onClick={() => {
@@ -142,87 +205,97 @@ const SignupUser = () => {
                 }}
               >
                 사업자
-              </Button>
-            </Stack>
+              </Button> */}
+            <Button
+              color="inherit"
+              size="large"
+              onClick={handleBusinessClick}
+            >
+              사업자
+            </Button>
+          </Stack>
           </div>
-          <div>
-            <TextField
-              name="name"
-              id="standard-search-name"
-              label="이름"
-              type="search"
-              variant="standard"
-              onChange={handleChangeState}
-              style={{ marginLeft: 10 }}
-            />
-          </div>
-          <div>
-            <TextField
-              name="id"
-              id="standard-search-id"
-              label="아이디"
-              type="search"
-              variant="standard"
-              onChange={handleChangeState}
-              style={{ marginLeft: 10 }}
-            />
-          </div>
-          <div>
-            <TextField
-              name="phoneNumber"
-              id="standard-number"
-              label="전화번호"
-              type="number"
-              InputLabelProps={{
-                shrink: true,
-              }}
-              variant="standard"
-              onChange={handleChangeState}
-              style={{ marginLeft: 10 }}
-            />
-          </div>
-          <div>
-            <TextField
-              name="email"
-              id="standard-search-email"
-              label="이메일"
-              type="search"
-              variant="standard"
-              onChange={handleChangeState}
-              style={{ marginLeft: 10 }}
-            />
-          </div>
-          <div>
-            <TextField
-              name="password"
-              id="standard-search-Password"
-              label="비밀번호"
-              type="password"
-              variant="standard"
-              onChange={handleChangeState}
-              style={{ marginLeft: 10 }}
-            />
-          </div>
-          <div>
-            <TextField
-              name="authPassword"
-              id="standard-search-authPassword"
-              label="비밀번호확인"
-              type="password"
-              variant="standard"
-              onChange={handleChangeState}
-              style={{ marginLeft: 10 }}
-            />
-          </div>
+          <ThemeProvider theme={theme}>
+            <div>
+              <TextField
+                name="name"
+                id="standard-search-name"
+                label="이름"
+                type="search"
+                variant="standard"
+                onChange={handleChangeState}
+                style={{ marginLeft: 10 }}
+              />
+            </div>
+            <div>
+              <TextField
+                name="id"
+                id="standard-search-id"
+                label="아이디"
+                type="search"
+                variant="standard"
+                onChange={handleChangeState}
+                style={{ marginLeft: 10 }}
+              />
+            </div>
+            <div>
+              <TextField
+                name="phoneNumber"
+                id="standard-number"
+                label="전화번호"
+                type="number"
+                // InputLabelProps={{
+                //   shrink: true,
+                // }}
+                variant="standard"
+                onChange={handleChangeState}
+                style={{ marginLeft: 10 }}
+              />
+            </div>
+            <div>
+              <TextField
+                name="email"
+                id="standard-search-email"
+                label="이메일"
+                type="search"
+                variant="standard"
+                onChange={handleChangeState}
+                style={{ marginLeft: 10 }}
+              />
+            </div>
+            <div>
+              <TextField
+                name="password"
+                id="standard-search-Password"
+                label="비밀번호"
+                type="password"
+                variant="standard"
+                onChange={handleChangeState}
+                style={{ marginLeft: 10 }}
+              />
+            </div>
+            <div>
+              <TextField
+                name="authPassword"
+                id="standard-search-authPassword"
+                label="비밀번호확인"
+                type="password"
+                variant="standard"
+                onChange={handleChangeState}
+                style={{ marginLeft: 10 }}
+              />
+            </div>
+          </ThemeProvider>
           <button
             type="button"
             class="btn btn-dark"
             onClick={submitsignup}
             disabled={!enableNextBtn}
-            style={{ marginLeft: 7, marginBottom: 30, marginTop: 40 }}
+            style={{ border: '1px solid #000', borderRadius: '0', height: '40px' }}
           >
-            확인
+            회원가입
           </button>
+          
         </Stack>
         {enableDialog && (
           <MuiDialog

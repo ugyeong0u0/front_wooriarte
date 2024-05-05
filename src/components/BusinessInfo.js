@@ -19,6 +19,12 @@ import {
   onGetSpaceInfoHandler,
 } from "../apis/servicehandeler/SpaceApiHandler"; //공간대여자
 
+// 레이아웃
+import Box from "@mui/material/Box";
+
+// 클릭시 밑줄색
+import {ThemeProvider, createTheme } from '@mui/material';
+
 //회원가입
 import { common } from "@mui/material/colors";
 import { CompressSharp } from "@mui/icons-material";
@@ -51,6 +57,41 @@ const BusinessInfo = ({
     email: "",
     password: "",
     authPassword: "",
+  });
+
+  // 밑줄 색 바꾸기
+  const theme = createTheme({
+    typography:{
+      fontFamily: 'Pretendard-Regular'
+    },
+    components: {
+      MuiInput: {
+        styleOverrides: {
+          underline: {
+            '&:before': {
+              borderBottom: '1px solid #e0e0e0',
+            },
+            '&:hover:not(.Mui-disabled):before': {
+              borderBottom: '2px solid rgba(0, 0, 0, 0.87)',
+            },
+            '&:after': {
+              borderBottom: '1px solid black',
+            }
+          },
+        },
+      },
+      // MuiInputLabel 컴포넌트에 대한 스타일 추가
+      MuiInputLabel: {
+        styleOverrides: {
+          // 'standard' variant를 사용하는 경우
+          root: {
+            '&.Mui-focused': { // 포커스 상태일 때
+              color: 'gray', // 레이블 색상을 검정으로 변경
+            }
+          },
+        },
+      },
+    },
   });
 
   useEffect(() => {
@@ -236,12 +277,23 @@ const BusinessInfo = ({
 
   return (
     <div>
+      <Box
+        sx={{
+          "& .MuiTextField-root": { m: 1, width: "25ch" },
+          marginTop: 4,
+          marginBottom: 2,
+          width: "100%", // 박스 너비 설정
+          display: "flex", // flexbox 디스플레이 설정
+          justifyContent: "center", // 가로 중앙 정렬
+        }}
+      >
       <Stack spacing={2}>
-        {isBusinessInfo && <h2 style={{ marginBottom: 25 }}>myInfo</h2>}
+        {isBusinessInfo && <h2 style={{ marginBottom: 0 }}>myInfo</h2>}
 
         {/* 회원정보수정 */}
         {isBusinessInfo && (
           <>
+          <ThemeProvider theme={theme}>
             <div>
               <TextField
                 name="businessNumber"
@@ -303,22 +355,20 @@ const BusinessInfo = ({
                 value={businessInfoState.email}
               />
             </div>
-
+          </ThemeProvider>
             <div />
           </>
         )}
         {/* 회원가입 */}
         {!isBusinessInfo && (
           <>
+          <ThemeProvider theme={theme}>
             <div>
               <TextField
                 name="businessNumber"
                 id="standard-number-busi"
                 label="사업자번호"
                 type="number"
-                InputLabelProps={{
-                  shrink: true,
-                }}
                 variant="standard"
                 onChange={handleChangeState}
                 value={businessInfoState.businessNumber} // 상태와 입력 필드 연결
@@ -363,9 +413,6 @@ const BusinessInfo = ({
                 id="standard-number"
                 label="전화번호"
                 type="number"
-                InputLabelProps={{
-                  shrink: true,
-                }}
                 variant="standard"
                 onChange={handleChangeState}
                 value={businessInfoState.phoneNumber}
@@ -403,6 +450,7 @@ const BusinessInfo = ({
               />
             </div>
             <div />
+          </ThemeProvider>
           </>
         )}
 
@@ -414,6 +462,7 @@ const BusinessInfo = ({
             class="btn btn-dark"
             onClick={submitsignup}
             disabled={!enableNextBtn}
+            style={{ border: '1px solid #000', borderRadius: '0', height: '40px' }}
           >
             회원가입
           </button>
@@ -458,6 +507,7 @@ const BusinessInfo = ({
           />
         )}
       </Stack>
+      </Box>
     </div>
   );
 };
