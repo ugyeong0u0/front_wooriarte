@@ -7,6 +7,7 @@ import Box from "@mui/material/Box";
 import Stack from "@mui/material/Stack";
 import { styled } from "@mui/material/styles";
 import TextField from "@mui/material/TextField";
+import {ThemeProvider, createTheme } from '@mui/material';
 
 // 업로드
 import * as React from "react";
@@ -49,6 +50,9 @@ import {
   onUpdateSpacePhotoHandler,
 } from "../apis/servicehandeler/SpaceApiHandler";
 import MuiDialog from "./MuiDialog";
+
+
+
 
 //!------------ 작가랑 공간대여자 마이페이지에서 아이템 수정, 조회
 export default function MyVerticallyCenteredModal({
@@ -416,7 +420,57 @@ export default function MyVerticallyCenteredModal({
     }
   };
 
+
+  // 입력란 파란색 색 수정 *********************
+  const theme = createTheme({
+    typography:{
+      fontFamily: 'Pretendard-Regular'
+    },
+    components: {
+      MuiInput: {
+        styleOverrides: {
+          underline: {
+            '&:before': {
+              borderBottom: '1px solid #e0e0e0',
+            },
+            '&:hover:not(.Mui-disabled):before': {
+              borderBottom: '2px solid rgba(0, 0, 0, 0.87)',
+            },
+            '&:after': {
+              borderBottom: '1px solid black',
+            }
+          },
+        },
+      },
+      // MuiInputLabel 컴포넌트에 대한 스타일 추가
+      MuiInputLabel: {
+        styleOverrides: {
+          // 'standard' variant를 사용하는 경우
+          root: {
+            '&.Mui-focused': { // 포커스 상태일 때
+              color: 'gray', // 레이블 색상을 검정으로 변경
+            }
+          },
+        },
+      },
+      MuiOutlinedInput: {
+        styleOverrides: {
+          root: {
+            // 포커스 상태일 때 테두리 색상 변경
+            '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
+              borderColor: 'gray', // 여기서 원하는 색상으로 변경
+            },
+          },
+        },
+      },
+    },
+  });
+
+
+
+
   return (
+    <ThemeProvider theme={theme}>
     <Modal
       show={show}
       onHide={onHide}
@@ -432,6 +486,7 @@ export default function MyVerticallyCenteredModal({
       <Modal.Body>
         {/* // todo 작가 아이템에도 달력, 위치 넣어야함 서버에도 */}
         {type === "author" ? (
+        
           <Box>
             <Stack spacing={2}>
               <TextField
@@ -442,6 +497,8 @@ export default function MyVerticallyCenteredModal({
                 onChange={handleChangeState}
                 value={authorInfoState.name}
               />
+
+
               <TextField
                 name="phoneNumber"
                 id="standard-number"
@@ -550,6 +607,7 @@ export default function MyVerticallyCenteredModal({
               </>
             </Stack>
           </Box>
+
         ) : (
           // 건물 아이템 정보
           <Box>
@@ -777,5 +835,6 @@ export default function MyVerticallyCenteredModal({
         </ButtonBoot>
       </Modal.Footer>
     </Modal>
+    </ThemeProvider>
   );
 }

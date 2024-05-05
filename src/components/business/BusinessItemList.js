@@ -94,6 +94,15 @@ const BusinessItemList = ({ whatType }) => {
             })}
           <Button
             variant="outlined"
+            sx={{
+              color: "black", // 글자색: 흰색
+              borderRadius: 0, //모서리 둥글게 ㄴㄴㄴ
+              borderColor: "black", // 테두리색깔
+              "&:hover": {
+                backgroundColor: "#f0f0f0", // 마우스를 올렸을 때 배경색 변경: 더 진한 초록색
+                borderColor: "black",
+              },
+            }}
             style={{
               paddingRight: 80,
               paddingLeft: 80,

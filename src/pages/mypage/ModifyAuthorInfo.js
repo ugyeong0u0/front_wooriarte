@@ -3,6 +3,7 @@ import { useState } from "react";
 
 import Stack from "@mui/material/Stack";
 import TextField from "@mui/material/TextField";
+import {ThemeProvider, createTheme } from '@mui/material';
 
 import "../../styles/ModifySpaceInfo.css";
 import BusinessInfo from "../../components/BusinessInfo";
@@ -48,12 +49,52 @@ const ModifyAuthorInfo = () => {
     authPassword: "",
   });
 
+
+
+  // 비밀번호입력란 설정!!!!! ******************************************* 
+  const theme = createTheme({
+    typography:{
+      fontFamily: 'Pretendard-Regular'
+    },
+    components: {
+      MuiInput: {
+        styleOverrides: {
+          underline: {
+            '&:before': {
+              borderBottom: '1px solid #e0e0e0',
+            },
+            '&:hover:not(.Mui-disabled):before': {
+              borderBottom: '2px solid rgba(0, 0, 0, 0.87)',
+            },
+            '&:after': {
+              borderBottom: '1px solid black',
+            }
+          },
+        },
+      },
+      // MuiInputLabel 컴포넌트에 대한 스타일 추가
+      MuiInputLabel: {
+        styleOverrides: {
+          // 'standard' variant를 사용하는 경우
+          root: {
+            '&.Mui-focused': { // 포커스 상태일 때
+              color: 'gray', // 레이블 색상을 검정으로 변경
+            }
+          },
+        },
+      },
+    },
+  });
+
+
   const handleChangeState = (e) => {
     setInfoState({
       ...infostate,
       [e.target.name]: e.target.value,
     });
   };
+
+
 
   return (
     <div className="spaceInfoContainer">
@@ -69,9 +110,14 @@ const ModifyAuthorInfo = () => {
           <Stack
             spacing={2}
             direction="row"
-            style={{ marginTop: 20, marginBottom: 50 }}
+            style={{
+              marginTop: 20,
+              marginBottom: 70,
+              alignItems: "center", // 요소들의 높이를 각 요소에 맞춤
+            }}
           >
-            <TextField
+            <ThemeProvider theme={theme} >
+              <TextField
               name="pw"
               id="standard-password-input"
               label="비밀번호"
@@ -79,7 +125,8 @@ const ModifyAuthorInfo = () => {
               autoComplete="current-password"
               variant="standard"
               onChange={handlePasswordChangeState}
-            />
+              />
+              </ThemeProvider>
 
             <button
               type="button"
@@ -101,6 +148,7 @@ const ModifyAuthorInfo = () => {
         />
       )}
     </div>
+    
   );
 };
 export default ModifyAuthorInfo;

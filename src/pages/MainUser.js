@@ -161,14 +161,14 @@ const MainUser = () => {
             <Stack
               justifyContent="center" // 가로 방향으로 중앙 정렬
               alignItems="center" // 세로 방향으로 중앙 정렬
-              style={{ marginTop: 50 }}
+              style={{ marginTop: 20 }}
             >
               <ImageList
                 sx={{ maxWidth: 1000, height: "auto", overflowY: "hidden" }}
-                cols={4}
-                gap={20} // 이미지 사이의 간격 설정
+                cols={3}
+                gap={35} // 이미지 사이의 간격 설정
               >
-                {mockData.map((item) => (
+                {visibleData.map((item) => (
                   <ImageListItem
                     key={item.exhibitId}
                     onClick={() => handleItemInfo(item.exhibitId)}
@@ -236,7 +236,7 @@ const MainUser = () => {
               </ImageList>
             </Stack>
 
-            <section className="py-0" id="howitworks" style={{ marginTop: 30 }}>
+            {/* <section className="py-0" id="howitworks" style={{ marginTop: 30 }}>
               <div className="container">
                 <hr className="mt-6"></hr>
                 <div className="row">
@@ -262,20 +262,22 @@ const MainUser = () => {
                       >
                         1
                       </div> */}
-                    </div>
+            {/* </div>
                     <h5 className="text-primary text-center mt-3">
-                      사업자로 가입해보세요.
+                      사업자로
+                      <br /> 가입해보세요.
                     </h5>
                     <p className="text-center mx-xl-7">
-                      사업자로 가입하여 수많은 작품과 공간을 둘러보세요.
+                      사업자로 가입하여 <br /> 수많은 작품과 공간을
+                      <br /> 둘러보세요.
                     </p>
                   </div>
                   <div
                     className="col-12 col-md-4 d-flex flex-column align-items-center"
-                    style={{ paddingRight: 80, paddingLeft: 80, marginTop: 30 }}
+                    style={{ paddingRight: 60, paddingLeft: 60, marginTop: 30 }}
                   >
-                    <div className="badge badge-circle bg-soft-warning flex-center">
-                      {/* <div
+                    <div className="badge badge-circle bg-soft-warning flex-center"> */}
+            {/* <div
                         className="text-warning fs-7 font-base"
                         style={{
                           fontSize: "30px",
@@ -283,20 +285,22 @@ const MainUser = () => {
                       >
                         2
                       </div> */}
-                    </div>
+            {/* </div>
                     <h5 className="text-primary text-center mt-3">
-                      작품 혹은 공간을 소개해보세요.
+                      작품 혹은 공간을
+                      <br /> 소개해보세요.
                     </h5>
                     <p className="text-center mx-xl-7">
-                      소개도 하고 맘에 드는 작품과 공간에 제안을 보내보세요.
+                      소개도 하고 <br /> 맘에 드는 작품과 공간에 <br /> 제안을
+                      보내보세요.
                     </p>
                   </div>
                   <div
                     className="col-12 col-md-4 d-flex flex-column align-items-center"
-                    style={{ paddingRight: 80, paddingLeft: 80, marginTop: 30 }}
+                    style={{ paddingRight: 60, paddingLeft: 60, marginTop: 30 }}
                   >
-                    <div className="badge badge-circle bg-soft-success flex-center">
-                      {/* <div
+                    <div className="badge badge-circle bg-soft-success flex-center"> */}
+            {/* <div
                         className="text-success fs-7 font-base"
                         style={{
                           fontSize: "30px",
@@ -304,19 +308,21 @@ const MainUser = () => {
                       >
                         3
                       </div> */}
-                    </div>
+            {/* </div>
                     <h5 className="text-primary text-center mt-3">
-                      전시를 열어보세요.
+                      전시를
+                      <br /> 열어보세요.
                     </h5>
                     <p className="text-center mx-xl-7">
-                      WOORI ATRE가 전시의 시작부터 끝을 책임져드립니다.
+                      WOORI ATRE가 <br /> 전시의 시작과 끝을
+                      <br /> 책임져드립니다.
                     </p>
                   </div>
                 </div>
               </div>
-            </section>
+            </section> */}
 
-            <div class="gray-line" style={{ marginTop: 30 }}></div>
+            {/* <div class="gray-line" style={{ marginTop: 30 }}></div> */}
 
             {/* <section
               className="pb-7 pt-5"

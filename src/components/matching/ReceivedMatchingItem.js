@@ -46,7 +46,7 @@ const ReceivedMatchingItem = ({ text, matchingId, setUpdateCount, id }) => {
           <ContentPasteSearchIcon />
         </IconButton>
         <Button
-          variant="primary"
+          variant="outline-dark"
           style={{ padding: 5 }}
           onClick={() => AcceptPropsal(matchingId, true)}
         >

@@ -3,8 +3,7 @@
 import axios from "axios";
 import { jsx } from "react/jsx-runtime";
 // 변수명 임시 지정
-const DOMAIN =
-  "http://wooriarte-front-ALB-232140650.ap-northeast-2.elb.amazonaws.com:80/api"; // TODO: 도메인 주소 확인 필요
+const DOMAIN = "http://localhost:8080/api"; // TODO: 도메인 주소 확인 필요
 
 //?----------------------------- 작가 url
 // 로그인
@@ -27,8 +26,11 @@ const GetAuthorInfo_URL = ({ id }) => `${DOMAIN}/project-managers/${id}`; //! ur
 const UpdateAuthorInfo_URL = ({ id }) => `${DOMAIN}/project-managers/${id}`; //! url 수정완
 
 //?------------------------------작가 작품 url
-// 모든 아이템 조회 /
+// 작가 아이템 생성
 const AddAuthorProject_URL = () => `${DOMAIN}/project-items`;
+// 모든 작가 아이템 조회
+const GetAllApprovedAuthorProject_URL = () =>
+  `${DOMAIN}/project-items/approved-all`;
 
 const GetFilteredAuthorProject_URL = ({ startDate, endDate, city }) =>
   `${DOMAIN}/project-items/${startDate}/${endDate}/${city}`;
@@ -331,6 +333,7 @@ export const addAuthorProject = async ({
   startDate,
   endDate,
   city,
+  title,
 }) => {
   console.log("작가 아이템 추가 실행");
   console.log("작가 정보조회 id  :" + authorId);
@@ -344,7 +347,8 @@ export const addAuthorProject = async ({
       startDate,
       endDate,
       city,
-      approval: true,
+      title,
+      approval: false,
       isDeleted: false,
     })
     .then((response) => {
@@ -369,7 +373,7 @@ export const addAuthorProject = async ({
 export const getAllAuthorProject = async () => {
   console.log("모든 작가 아이템 가져오기 실행");
   const result = await axios
-    .get(AddAuthorProject_URL())
+    .get(GetAllApprovedAuthorProject_URL())
     .then((response) => {
       console.log("모든 작가 아이템 조회 " + response.status);
       return response;
@@ -443,6 +447,7 @@ export const getAuthorItemInfo = async ({ posterId }) => {
 
 //!---------------------------- 작가 아이템 수정
 export const updateAuthorItemInfo = async ({
+  title,
   posterId,
   artistName,
   intro,
@@ -457,13 +462,12 @@ export const updateAuthorItemInfo = async ({
 
   const result = await axios
     .put(url, {
+      title,
       artistName,
       intro,
       phone,
-      approval: true,
       startDate,
       endDate,
-      isDeleted: false,
       city,
     })
     .then((response) => {

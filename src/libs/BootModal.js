@@ -7,7 +7,7 @@ import Box from "@mui/material/Box";
 import Stack from "@mui/material/Stack";
 import { styled } from "@mui/material/styles";
 import TextField from "@mui/material/TextField";
-
+import {ThemeProvider, createTheme } from '@mui/material';
 // 업로드
 import * as React from "react";
 import Button from "@mui/material/Button";
@@ -39,6 +39,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import DatePickerOpenTo, { SelectSizesExample } from "../libs/Open";
 import DateRangePickerValue from "./DateRangePickerValue";
 import MuiDialog from "./MuiDialog";
+import { dark } from "@mui/material/styles/createPalette";
 
 //!------------ 작가랑 공간대여자 아이템 추가 모달
 export default function MyVerticallyCenteredModal(props) {
@@ -315,7 +316,55 @@ export default function MyVerticallyCenteredModal(props) {
     }
   };
 
+
+  // 입력란 파란색 색 수정 *********************
+  const theme = createTheme({
+    typography:{
+      fontFamily: 'Pretendard-Regular'
+    },
+    components: {
+      MuiInput: {
+        styleOverrides: {
+          underline: {
+            '&:before': {
+              borderBottom: '1px solid #e0e0e0',
+            },
+            '&:hover:not(.Mui-disabled):before': {
+              borderBottom: '2px solid rgba(0, 0, 0, 0.87)',
+            },
+            '&:after': {
+              borderBottom: '1px solid black',
+            }
+          },
+        },
+      },
+      // MuiInputLabel 컴포넌트에 대한 스타일 추가
+      MuiInputLabel: {
+        styleOverrides: {
+          // 'standard' variant를 사용하는 경우
+          root: {
+            '&.Mui-focused': { // 포커스 상태일 때
+              color: 'gray', // 레이블 색상을 검정으로 변경
+            }
+          },
+        },
+      },
+      MuiOutlinedInput: {
+        styleOverrides: {
+          root: {
+            // 포커스 상태일 때 테두리 색상 변경
+            '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
+              borderColor: 'gray', // 여기서 원하는 색상으로 변경
+            },
+          },
+        },
+      },
+    },
+  });
+
+
   return (
+    <ThemeProvider theme={theme}>
     <Modal
       {...props}
       size="lg"
@@ -335,7 +384,7 @@ export default function MyVerticallyCenteredModal(props) {
               <TextField
                 name="name"
                 id="standard-basic"
-                label="작가이름"
+                label="작가 이름"
                 variant="standard"
                 onChange={handleChangeState}
                 value={authorInfoState.name}
@@ -383,10 +432,12 @@ export default function MyVerticallyCenteredModal(props) {
               />
               {/* 달력 */}
               <DateRangePickerValue
+                format="YYYY-MM-DD"
                 startDate={authorInfoState.startDate}
                 endDate={authorInfoState.endDate}
                 onDateChange={handleDateForAuthorChange}
                 isEdit={false}
+                
               />
 
               {/* //! 사진 */}
@@ -455,7 +506,7 @@ export default function MyVerticallyCenteredModal(props) {
               <TextField
                 name="hostName"
                 id="standard-number-busi"
-                label="임대인"
+                label="이름"
                 type="search"
                 InputLabelProps={{
                   shrink: true,
@@ -522,23 +573,34 @@ export default function MyVerticallyCenteredModal(props) {
               </Stack>
 
               <FormControl>
-                <FormLabel id="demo-controlled-radio-buttons-group">
-                  주차여부
+                <FormLabel id="demo-controlled-radio-buttons-group" >
+                  주차 여부
                 </FormLabel>
                 <RadioGroup
                   aria-labelledby="demo-controlled-radio-buttons-group"
                   name="parking"
                   value={String(businessInfoState.parking)}
                   onChange={handleSpaceChangeState}
+
                 >
-                  <FormControlLabel
+                  <FormControlLabel 
                     value={"true"}
-                    control={<Radio />}
+                    control={<Radio           sx={{
+                      color: 'black', // 기본 색상을 검정색으로 설정
+                      '&.Mui-checked': {
+                        color: 'black', // 선택된 상태의 색상을 검정색으로 설정
+                      },
+                    }} />}
                     label="가능"
                   />
                   <FormControlLabel
                     value={"false"}
-                    control={<Radio />}
+                    control={<Radio           sx={{
+                      color: 'black', // 기본 색상을 검정색으로 설정
+                      '&.Mui-checked': {
+                        color: 'black', // 선택된 상태의 색상을 검정색으로 설정
+                      },
+                    }}/>}
                     label="불가능"
                   />
                 </RadioGroup>
@@ -664,5 +726,6 @@ export default function MyVerticallyCenteredModal(props) {
         </ButtonBoot>
       </Modal.Footer>
     </Modal>
+    </ThemeProvider>
   );
 }

@@ -5,7 +5,6 @@ import Tab from "@mui/material/Tab";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import Exhibits from "../../components/Exhibits";
-
 import ModifyAuthorInfo from "../../pages/mypage/ModifyAuthorInfo";
 import Matching from "../../components/business/Matching";
 // import MyPosterForBusiness from "../../components/business/MyPosterForBusiness";
@@ -54,6 +53,9 @@ const AuthorMyPage = () => {
     setValue(newValue);
   };
 
+
+
+
   return (
     <div
       className="parentContainer"
@@ -62,6 +64,9 @@ const AuthorMyPage = () => {
         marginBottom: 40,
       }}
     >
+
+
+
       <Box
         sx={{
           flexGrow: 1,
@@ -69,8 +74,10 @@ const AuthorMyPage = () => {
           display: "flex",
           height: "100%",
           width: "100%",
+          justifyContent: 'flex-start'
         }}
       >
+        
         <Tabs
           orientation="vertical"
           variant="scrollable"
@@ -80,18 +87,31 @@ const AuthorMyPage = () => {
           sx={{
             borderRight: 1,
             borderColor: "divider",
-            width: "150px", // Tabs 너비 고정
-            minWidth: "150px", // 최소 너비 설정
+            width: "200px", // Tabs 너비 고정
+            minWidth: "200px", // 최소 너비 설정
+            marginLeft: "170px", // 왼쪽에 20px 공간 추가
+            "& .MuiTab-textColorSecondary": { // 선택된 탭의 스타일
+              color: "black", // 선택된 탭의 글자 색상 변경
+            },
+            '&& .MuiTab-root': {    ///탭 왼쪽정렬
+              alignItems: 'baseline',
+          },
+          }}
+          TabIndicatorProps={{
+            style: {
+              backgroundColor: "white"
+            }
           }}
         >
-          <Tab label="회원정보 수정" {...a11yProps(0)} />
-          <Tab label="아이템 관리" {...a11yProps(1)} />
-          <Tab label="매칭 신청 현황" {...a11yProps(2)} />
-          <Tab label="회원탈퇴" {...a11yProps(3)} />
+          <Tab label="아이템 관리" {...a11yProps(0)} sx={{'&.Mui-selected': { color: 'black',}}} />
+          <Tab label="매칭신청 현황" {...a11yProps(1)} sx={{ '&.Mui-selected': { color: 'black' }}}/>
+          <Tab label="개인정보 수정" {...a11yProps(2)} sx={{ '&.Mui-selected': { color: 'black' }}}/>
+          <Tab label="회원탈퇴" {...a11yProps(3)} sx={{ '&.Mui-selected': { color: 'black' }}}/>
+  
         </Tabs>
-        <TabPanel value={value} index={1}>
+
+        <TabPanel value={value} index={0}>
           {/*todo 사업자용 만들기 아이템관리  */}
-          <h2>아이템 정보</h2>
           {/* <MyPosterForBusiness whatType={"author"} /> */}
           <BusinessItemList whatType={"author"} />
 
@@ -99,28 +119,31 @@ const AuthorMyPage = () => {
         </TabPanel>
         <TabPanel
           value={value}
-          index={0}
+          index={2}
           style={{
             display: "flex",
             flexDirection: "column",
             justifyContent: "center",
             alignItems: "center",
             marginBottom: 180,
-            marginTop: 10,
+            marginTop: 30,
             marginLeft: -150,
-            height: "100%", // 필요한 높이 지정
+            height: "200%", // 필요한 높이 지정
             width: "100%", // 필요한 너비 지정
           }}
         >
           <ModifyAuthorInfo />
         </TabPanel>
-        <TabPanel value={value} index={2}>
+        <TabPanel value={value} index={1} >
           <Matching />
         </TabPanel>
-        <TabPanel value={value} index={3}>
+        <TabPanel value={value} index={3} >
           <WithDrawalUser />
         </TabPanel>
+      
       </Box>
+      
+      
     </div>
   );
 };
