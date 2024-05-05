@@ -2,7 +2,7 @@ import Stack from "@mui/material/Stack";
 import Button from "react-bootstrap/Button";
 // 체크박스
 import Checkbox from "@mui/material/Checkbox";
-import { red } from "@mui/material/colors";
+import { blue, grey, pink, red } from "@mui/material/colors";
 import * as React from "react";
 
 // css
@@ -19,6 +19,7 @@ import { useNavigate } from "react-router-dom";
 import MuiDialog from "../../libs/MuiDialog";
 
 import { loginContext } from "../../App";
+import { dark } from "@mui/material/styles/createPalette";
 
 const WithDrawalUser = () => {
   const nav = useNavigate();
@@ -79,17 +80,16 @@ const WithDrawalUser = () => {
 
   return (
     <div className="withdrawalContainer" style={{ marginBottom: 65 }}>
-      <h2 style={{ marginBottom: 15 }}> 회원탈퇴</h2>
+      <h2> <strong>WOORI ARTE 회원 탈퇴 시 아래 내용을 먼저 확인해 주세요.</strong></h2>
       <div className="content">
         <span>
-          아이디 <span class="highlight">재사용</span>및{" "}
-          <span class="highlight">복구 불가</span>
         </span>
       </div>
       <div />
       <span>
-        사용하고 계신 아이디를 탈퇴하기면 본인과 타인 모두 재사용 및 복구가
-        불가하오니 신중하게 선택하시길 바랍니다.
+        <p><span>&#183;</span>회원 탈퇴는 신청하시는 즉시 처리됩니다.</p>
+        <p><span>&#183;</span>회원 탈퇴 후에는 해당 아이디를 다시 사용할 수 없습니다. </p>
+        <p><span>&#183;</span>로그인이 필요한 서비스 이용은 더 이상 이용하실 수 없게 됩니다. </p>
       </span>
       <Stack
         spacing={2}
@@ -100,13 +100,13 @@ const WithDrawalUser = () => {
           {...label}
           onChange={handleChange}
           sx={{
-            color: red[800],
+            color: grey[800],
             "&.Mui-checked": {
-              color: red[600],
+              color: grey[600],
             },
           }}
         />
-        <span>위 내용을 모두 확인했으며, 이에 동의합니다.</span>
+        <p><span>위 내용을 모두 확인했으며, 이에 동의합니다.</span></p>
       </Stack>
       <Stack spacing={2} direction="row">
         <Button
@@ -114,7 +114,7 @@ const WithDrawalUser = () => {
           disabled={!enableBtn}
           onClick={widthDrawalHandler}
         >
-          탈퇴하기
+          탈퇴 신청
         </Button>{" "}
       </Stack>
       {enableDialog && (

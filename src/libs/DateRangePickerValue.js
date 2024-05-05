@@ -53,6 +53,7 @@ export default function DateRangePickerValue({
         components={["SingleInputDateRangeField", "SingleInputDateRangeField"]}
       >
         <SingleInputDateRangeField
+          format="YYYY.MM.DD"
           label="전시 희망 날짜"
           value={value}
           onChange={handleDateChange}

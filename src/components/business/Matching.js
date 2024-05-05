@@ -24,7 +24,27 @@ const Matching = () => {
       <CssBaseline />
       <Container maxWidth="80%">
         <Box sx={{ bgcolor: "#00000000", width: "100%", marginBottom: 15 }}>
-          <h2>신청현황</h2>
+        <h2><strong>받은 제안</strong></h2>
+          <div
+            style={{
+              height: 1,
+              width: "100%",
+              backgroundColor: "gray",
+              marginBottom: 20,
+            }}
+          />
+          <Stack
+            alignItems="center" // 세로 방향으로 중앙 정렬
+            spacing={2}
+            style={{ marginBottom: 20 }}
+            // 요소들을 가로 방향으로 배치
+          >
+            <ReceivedMatchingList
+              setUpdateCount={setUpdateCount}
+              updateCount={updateCount}
+            />
+          </Stack>
+          <h2><strong>신청 현황</strong></h2>
           <div
             style={{
               height: 1,
@@ -45,27 +65,8 @@ const Matching = () => {
             <WaitingMatchingList />
           </Stack>
 
-          <h2>제안</h2>
-          <div
-            style={{
-              height: 1,
-              width: "100%",
-              backgroundColor: "gray",
-              marginBottom: 20,
-            }}
-          />
-          <Stack
-            alignItems="center" // 세로 방향으로 중앙 정렬
-            spacing={2}
-            style={{ marginBottom: 20 }}
-            // 요소들을 가로 방향으로 배치
-          >
-            <ReceivedMatchingList
-              setUpdateCount={setUpdateCount}
-              updateCount={updateCount}
-            />
-          </Stack>
-          <h2>성사된 매칭</h2>
+
+          <h2><strong>성사된 매칭</strong></h2>
           <div
             style={{
               height: 1,

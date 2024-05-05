@@ -111,16 +111,29 @@ const SpaceMyPage = () => {
           sx={{
             borderRight: 1,
             borderColor: "divider",
-            width: "150px", // Tabs 너비 고정
-            minWidth: "150px", // 최소 너비 설정
+            width: "200px", // Tabs 너비 고정
+            minWidth: "200px", // 최소 너비 설정
+            marginLeft: "170px", // 왼쪽에 20px 공간 추가
+            "& .MuiTab-textColorSecondary": { // 선택된 탭의 스타일
+              color: "black", // 선택된 탭의 글자 색상 변경
+            },
+            '&& .MuiTab-root': {    ///탭 왼쪽정렬
+              alignItems: 'baseline',
+          },
+          }}
+          TabIndicatorProps={{
+            style: {
+              backgroundColor: "white"
+            }
           }}
         >
-          <Tab label="회원정보 수정" {...a11yProps(0)} />
-          <Tab label="아이템 관리" {...a11yProps(1)} />
-          <Tab label="매칭 신청 현황" {...a11yProps(2)} />
-          <Tab label="회원탈퇴" {...a11yProps(3)} />
+
+          <Tab label="아이템 관리" {...a11yProps(0)} sx={{'&.Mui-selected': { color: 'black',}}} />
+          <Tab label="매칭신청 현황" {...a11yProps(1)} sx={{ '&.Mui-selected': { color: 'black' }}}/>
+          <Tab label="개인정보 수정" {...a11yProps(2)} sx={{ '&.Mui-selected': { color: 'black' }}}/>
+          <Tab label="회원탈퇴" {...a11yProps(3)} sx={{ '&.Mui-selected': { color: 'black' }}}/>
         </Tabs>
-        <TabPanel value={value} index={1}>
+        <TabPanel value={value} index={0}>
           {/*todo 사업자용 만들기 아이템관리  */}
           {/* <Stack
             justifyContent="center" // 가로 방향으로 중앙 정렬
@@ -150,21 +163,22 @@ const SpaceMyPage = () => {
         </TabPanel>
         <TabPanel
           value={value}
-          index={0}
+          index={2}
           style={{
             display: "flex",
             flexDirection: "column",
             justifyContent: "center",
             alignItems: "center",
             marginBottom: 180,
-            marginTop: 10,
-            height: "100%", // 필요한 높이 지정
+            marginTop: 30,
+            marginLeft: -150,
+            height: "200%", // 필요한 높이 지정
             width: "100%", // 필요한 너비 지정
           }}
         >
           <ModifySpaceInfo />
         </TabPanel>
-        <TabPanel value={value} index={2}>
+        <TabPanel value={value} index={1}>
           <Matching />
         </TabPanel>
         <TabPanel value={value} index={3}>
