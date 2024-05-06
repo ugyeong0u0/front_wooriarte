@@ -1,4 +1,4 @@
-.container__slider {
+.container__sliderForMain {
   position: relative;
   width: 100%;
   padding: 0;
@@ -11,7 +11,7 @@
   background-color: white;
 }
 
-.container__slider > button {
+.container__sliderForMain > button {
   background-color: transparent;
   outline: none;
   border: 0;
@@ -19,7 +19,7 @@
   font-size: 24px;
 }
 
-.container__slider > button:active {
+.container__sliderForMain > button:active {
   color: black;
 }
 
@@ -33,14 +33,14 @@
   left: 0;
 }
 
-.container__slider__links {
+.container__sliderForMain__links {
   position: absolute;
   bottom: 5%;
   left: 50%;
   transform: translateX(-50%);
 }
 
-.container__slider__links-small {
+.container__sliderForMain__links-small {
   position: relative;
   width: 8px;
   height: 8px;
@@ -54,7 +54,7 @@
   margin: 0 2px;
 }
 
-.container__slider__links-small-active {
+.container__sliderForMain__links-small-active {
   background-color: black;
 }
 

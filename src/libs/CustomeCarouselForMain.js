@@ -54,10 +54,10 @@ function CustomCarouselForMain({ children }) {
 
   return (
     <div
-      className="container__slider"
+      className="container__sliderForMain"
       onMouseEnter={AutoPlayStop}
       onMouseLeave={AutoPlayStart}
-      style={{ height: 400 }} // 높이를 80%로 설정
+      style={{ height: 296 }} // 높이를 80%로 설정
     >
       {children.map((item, index) => {
         return (
@@ -70,15 +70,15 @@ function CustomCarouselForMain({ children }) {
         );
       })}
 
-      <div className="container__slider__links">
+      <div className="container__sliderForMain__links">
         {children.map((item, index) => {
           return (
             <button
               key={index}
               className={
                 activeIndex === index
-                  ? "container__slider__links-small container__slider__links-small-active"
-                  : "container__slider__links-small"
+                  ? "container__sliderForMain__links-small container__sliderForMain__links-small-active"
+                  : "container__sliderForMain__links-small"
               }
               onClick={(e) => {
                 e.preventDefault();

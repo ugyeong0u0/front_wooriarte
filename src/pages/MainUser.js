@@ -138,7 +138,7 @@ const MainUser = () => {
             )}
           </Stack>
         </Container>
-            <div className="line" style={{ marginTop: 15 }}></div>
+        <div className="line" style={{ marginTop: 15 }}></div>
         <Container style={{ width: "100%", padding: "0 0" }}>
           <Box sx={{ bgcolor: "#00000000", height: "100%", marginTop: 5 }}>
             {/* 추천 리스트 */}
@@ -168,12 +168,12 @@ const MainUser = () => {
             <Stack
               justifyContent="center" // 가로 방향으로 중앙 정렬
               alignItems="center" // 세로 방향으로 중앙 정렬
-              style={{ marginTop: 0 }}
+              style={{ marginTop: 0, width: "100%" }}
             >
               <ImageList
-                sx={{ width: "100%", maxWidth: 1100, height: "auto", overflowY: "hidden", mx: "auto" }}
+                sx={{ maxWidth: "100%", height: "auto", overflowY: "hidden" }}
                 cols={3}
-                gap={100} // 이미지 사이의 간격 설정
+                gap={20} // 이미지 사이의 간격 설정
               >
                 {visibleData.map((item) => (
                   <ImageListItem
