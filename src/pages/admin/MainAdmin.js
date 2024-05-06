@@ -64,7 +64,6 @@ const MainAdmin = () => {
 
   return (
     <div
-      className="parentContainer"
       style={{
         width: "100%",
         marginBottom: 90,
@@ -77,7 +76,7 @@ const MainAdmin = () => {
           bgcolor: "background.paper",
           display: "flex",
           height: "100%",
-          width: "100%",
+          width: "94%",
         }}
       >
         <Tabs
@@ -90,8 +89,9 @@ const MainAdmin = () => {
             borderRight: 1,
             borderColor: "divider",
             marginLeft: 12,
-            width: "170px", // Tabs 너비 고정
-            minWidth: "170px", // 최소 너비 설정
+            width: "150px", // Tabs 너비 고정
+            minWidth: "150px", // 최소 너비 설정
+            marginLeft: 21,
             ".MuiTab-root": {
               // 모든 탭에 적용되는 기본 스타일
               color: "#000", // 탭의 기본 글자색을 검정으로 설정

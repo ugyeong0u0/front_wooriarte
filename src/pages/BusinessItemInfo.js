@@ -268,7 +268,7 @@ const BusinessItemInfo = () => {
       <Container maxWidth="100%" sx={{}}>
         <Box
           sx={{
-            width: "82%", // Box의 너비를 전체의 80%로 설정
+            width: "72%", // Box의 너비를 전체의 80%로 설정
             height: "100%",
             marginTop: 10,
             marginX: "auto", // 좌우 마진을 auto로 설정하여 중앙 정렬
@@ -476,28 +476,28 @@ const BusinessItemInfo = () => {
                       >
                         {projectInfo.city}
                       </span>{" "}
-                      <Stack direction={"row"} spacing={3}>
-                        <span
-                          style={{
-                            backgroundColor: "#EBEBF0",
-                            padding: 10,
-                            color: "black",
-                            fontWeight: "bold",
-                          }}
-                        >
-                          전시 희망 기간
-                        </span>
-                        <span
-                          style={{
-                            color: "black",
-                            fontWeight: "bold",
-                            padding: 10,
-                          }}
-                        >
-                          {formatDate(projectInfo.startDate)} ~{" "}
-                          {formatDate(projectInfo.endDate)}
-                        </span>{" "}
-                      </Stack>
+                    </Stack>
+                    <Stack direction={"row"} spacing={3}>
+                      <span
+                        style={{
+                          backgroundColor: "#EBEBF0",
+                          padding: 10,
+                          color: "black",
+                          fontWeight: "bold",
+                        }}
+                      >
+                        전시 희망 기간
+                      </span>
+                      <span
+                        style={{
+                          color: "black",
+                          fontWeight: "bold",
+                          padding: 10,
+                        }}
+                      >
+                        {formatDate(projectInfo.startDate)} ~{" "}
+                        {formatDate(projectInfo.endDate)}
+                      </span>{" "}
                     </Stack>
 
                     <span
@@ -808,28 +808,28 @@ const BusinessItemInfo = () => {
                     >
                       {projectInfo.city}
                     </span>{" "}
-                    <Stack direction={"row"} spacing={3}>
-                      <span
-                        style={{
-                          backgroundColor: "#EBEBF0",
-                          padding: 10,
-                          color: "black",
-                          fontWeight: "bold",
-                        }}
-                      >
-                        전시 희망 기간
-                      </span>
-                      <span
-                        style={{
-                          color: "black",
-                          fontWeight: "bold",
-                          padding: 10,
-                        }}
-                      >
-                        {formatDate(projectInfo.startDate)} ~{" "}
-                        {formatDate(projectInfo.endDate)}
-                      </span>{" "}
-                    </Stack>
+                  </Stack>
+                  <Stack direction={"row"} spacing={3}>
+                    <span
+                      style={{
+                        backgroundColor: "#EBEBF0",
+                        padding: 10,
+                        color: "black",
+                        fontWeight: "bold",
+                      }}
+                    >
+                      전시 희망 기간
+                    </span>
+                    <span
+                      style={{
+                        color: "black",
+                        fontWeight: "bold",
+                        padding: 10,
+                      }}
+                    >
+                      {formatDate(projectInfo.startDate)} ~{" "}
+                      {formatDate(projectInfo.endDate)}
+                    </span>{" "}
                   </Stack>
 
                   <span

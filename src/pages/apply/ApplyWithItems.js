@@ -189,7 +189,7 @@ const ApplyWithItems = () => {
     <div style={{ marginTop: 40 }}>
       <span
         style={{
-          marginLeft: 140,
+          marginLeft: 193,
 
           fontSize: "20px",
         }}
@@ -205,9 +205,9 @@ const ApplyWithItems = () => {
         }}
       >
         <ImageList
-          sx={{ maxWidth: 1000, height: "auto", overflowY: "hidden" }}
+          sx={{ width: "70%", height: "auto", overflowY: "hidden" }}
           cols={3}
-          gap={50} // 이미지 사이의 간격 설정
+          gap={20} // 이미지 사이의 간격 설정
         >
           {userType === "author" &&
             !enableDialog &&

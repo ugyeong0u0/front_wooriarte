@@ -77,7 +77,7 @@ const Header = ({ isLoginState, isLoginHandler }) => {
   // };
 
   return (
-    <div style={{width: "70%", margin: "auto" }}>
+    <div style={{ width: "70%", margin: "auto" }}>
       <header className="header">
         <div>
           <text onClick={goMainPage} className="titleContainer">
@@ -118,10 +118,10 @@ const Header = ({ isLoginState, isLoginHandler }) => {
               <Button
                 text={`${
                   localStorage.getItem("userType") === "author"
-                    ? "Author's"
+                    ? "My"
                     : localStorage.getItem("userType") === "user"
                     ? "My"
-                    : "Rental's"
+                    : "My"
                 }Page`}
                 isVisible={true}
                 onClick={whatUserMypage}

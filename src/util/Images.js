@@ -3,12 +3,25 @@ import main2 from "../assets/main002.png";
 import main3 from "../assets/main003.png";
 import authorimg from "../assets/authorimg.png";
 import cafe from "../assets/cafe.jpg";
-import mainInage from "../assets/mainImage.jpg"
+import mainInage from "../assets/mainImage.jpg";
+
+import finalmain01 from "../assets/finalmain01.png";
+import finalmain02 from "../assets/finalmain02.png";
+import finalmain03 from "../assets/finalmain03.png";
 
 export const mainCarouselImage = [
   {
-    imgURL: mainInage
-  }
+    imgURL: mainInage,
+  },
+  {
+    imgURL: finalmain03,
+  },
+  {
+    imgURL: finalmain01,
+  },
+  {
+    imgURL: finalmain02,
+  },
 ];
 export const cardImg = [
   {

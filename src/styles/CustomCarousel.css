@@ -1,6 +1,7 @@
 .container__sliderForInfo {
   position: relative;
-  width: 50%;
+  width: 500px;
+  height: 580px;
   padding: 0;
   overflow: hidden;
   display: flex;

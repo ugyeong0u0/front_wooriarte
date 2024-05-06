@@ -217,7 +217,11 @@ const MainBusiness = () => {
                   프로젝트
                 </Button>
               ) : (
-                <Button style={{ color: "grey" }} size="large" onClick={getProjectItems}>
+                <Button
+                  style={{ color: "grey" }}
+                  size="large"
+                  onClick={getProjectItems}
+                >
                   프로젝트
                 </Button>
               )}
@@ -234,9 +238,13 @@ const MainBusiness = () => {
                   공간
                 </Button>
               ) : (
-            <Button style={{ color: "grey" }} size="large" onClick={getSpaceItems}>
-              공간
-            </Button>
+                <Button
+                  style={{ color: "grey" }}
+                  size="large"
+                  onClick={getSpaceItems}
+                >
+                  공간
+                </Button>
               )}
             </Stack>
 
@@ -289,7 +297,7 @@ const MainBusiness = () => {
             style={{
               height: 1,
               backgroundColor: "gray",
-              width: "80%",
+              width: "70%",
               marginBottom: 60,
             }}
           ></div>
@@ -298,9 +306,9 @@ const MainBusiness = () => {
           )}
           {!enableDialog && (
             <ImageList
-              sx={{ maxWidth: "80%", height: "auto", overflowY: "hidden" }}
+              sx={{ maxWidth: "70%", height: "auto", overflowY: "hidden" }}
               cols={3}
-              gap={60} // 이미지 사이의 간격 설정
+              gap={18} // 이미지 사이의 간격 설정
             >
               {data.map((item) => (
                 <ImageListItem
@@ -326,8 +334,8 @@ const MainBusiness = () => {
                     alt={item.intro}
                     loading="lazy"
                     style={{
-                      width: "100%",
-                      height: "100%",
+                      width: 281,
+                      height: 400,
                       objectFit: "cover",
                     }} // 모든 이미지가 동일한 가로 길이를 가지도록 가로 너비를 100%로 설정
                   />

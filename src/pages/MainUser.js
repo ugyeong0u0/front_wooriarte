@@ -1,6 +1,6 @@
 // 추후 useEffect로 초기 설정하기
 import { useEffect } from "react";
-import image1 from "../assets/image 1.png";
+
 import mainAdBanner from "../assets/mainAdBanner.png";
 import PosterItem from "../components/PosterItem";
 import "../styles/MainUser.css";
@@ -102,10 +102,17 @@ const MainUser = () => {
     <div style={{ width: "70%", textAlign: "center", margin: "auto" }}>
       <React.Fragment>
         <CssBaseline />
-        <Container style={{padding: "0 0", maxWidth: "100%"}}>
+        <Container style={{ padding: "0 0", maxWidth: "100%", height: "100%" }}>
           <CustomCarouselForMain>
             {mainCarouselImage.map((image, index) => {
-              return <img key={index} src={image.imgURL} alt={image.imgAlt} style={{maxWidth: "auto"}}/>;
+              return (
+                <img
+                  key={index}
+                  src={image.imgURL}
+                  alt={image.imgAlt}
+                  style={{ maxWidth: "auto" }}
+                />
+              );
             })}
           </CustomCarouselForMain>
           <Stack
@@ -118,7 +125,7 @@ const MainUser = () => {
             <span
               style={{ textAlign: "left", fontWeight: "bold", fontSize: 24 }}
             >
-              진행중인 전시
+              전시 Exhibits
             </span>
             {!showAll && (
               <Button
@@ -132,7 +139,7 @@ const MainUser = () => {
             )}
           </Stack>
         </Container>
-        <Container style={{width: "100%", padding: "0 0"}}>
+        <Container style={{ width: "100%", padding: "0 0" }}>
           <Box sx={{ bgcolor: "#00000000", height: "100%", marginTop: 7 }}>
             {/* 추천 리스트 */}
             {/* <Stack
@@ -164,9 +171,9 @@ const MainUser = () => {
               style={{ marginTop: 20 }}
             >
               <ImageList
-                sx={{ maxWidth: 1000, height: "auto", overflowY: "hidden" }}
+                sx={{ width: "100%", height: "auto", overflowY: "hidden" }}
                 cols={3}
-                gap={35} // 이미지 사이의 간격 설정
+                gap={20} // 이미지 사이의 간격 설정
               >
                 {visibleData.map((item) => (
                   <ImageListItem
@@ -178,8 +185,8 @@ const MainUser = () => {
                       alt={item.name}
                       loading="lazy"
                       style={{
-                        width: "100%",
-                        height: "100%",
+                        width: 281,
+                        height: 400,
                         objectFit: "cover",
                       }} // 모든 이미지가 동일한 가로 길이를 가지도록 가로 너비를 100%로 설정
                     />
