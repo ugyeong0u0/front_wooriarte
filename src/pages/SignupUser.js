@@ -42,7 +42,7 @@ const SignupUser = () => {
     nav(`/loginbusiness`);
   };
   // 다음 버튼 활성화
-  const [enableNextBtn, setEnableNextBtn] = useState(false);
+  const [enableNextBtn, setEnableNextBtn] = useState(true);
   const [enableDialog, setEnableDialog] = useState(false);
   const [falseDialog, setFalseDialog] = useState(false); //  에러 다이어로그 - 정보가 비어있음
   const [falsePassDialog, setFalsePassDialog] = useState(false); //  에러 다이어로그 - 비번
@@ -127,16 +127,13 @@ const SignupUser = () => {
   });
 
   useEffect(() => {
-    console.log("비번일치");
-
-    console.log("빈값없음");
-    if (validateEmail(state.email)) {
-      console.log("이메일일치");
-      setEnableNextBtn(true); // 다음 버튼 활성화
-    } else {
-      console.log("이메일불일치");
-      setEnableNextBtn(false); // 다음 버튼 비활성화
-    }
+    // if (validateEmail(state.email)) {
+    //   console.log("이메일일치");
+    //   setEnableNextBtn(true); // 다음 버튼 활성화
+    // } else {
+    //   console.log("이메일불일치");
+    //   setEnableNextBtn(false); // 다음 버튼 비활성화
+    // }
   }, [state]); // state 객체의 모든 변경에 반응
 
   // id, pw 입력이 달라지면 상태 감지
