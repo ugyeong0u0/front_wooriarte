@@ -61,7 +61,7 @@ const BusinessItemList = ({ whatType }) => {
       <Stack
         justifyContent="center" // 가로 방향으로 중앙 정렬
         alignItems="center" // 세로 방향으로 중앙 정렬
-        style={{ marginTop: 50, marginBottom: 75 }}
+        style={{ marginTop: -23, marginBottom: 75, marginLeft: 30}}
       >
         <ImageList
           sx={{ width: "100%", height: "auto", overflowY: "hidden" }}
@@ -104,6 +104,7 @@ const BusinessItemList = ({ whatType }) => {
               },
             }}
             style={{
+              fontSize: 18,
               paddingRight: 80,
               paddingLeft: 80,
               paddingBottom: 120,

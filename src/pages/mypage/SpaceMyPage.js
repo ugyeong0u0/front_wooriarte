@@ -63,7 +63,8 @@ const SpaceMyPage = () => {
       className="parentContainer"
       style={{
         width: "100%",
-        marginBottom: 40,
+        marginTop: 50,
+        marginLeft: 70,
       }}
     >
       <Box
@@ -84,8 +85,8 @@ const SpaceMyPage = () => {
           sx={{
             borderRight: 1,
             borderColor: "divider",
-            width: "150px", // Tabs 너비 고정
-            minWidth: "150px", // 최소 너비 설정
+            width: "190px", // Tabs 너비 고정
+            minWidth: "190px", // 최소 너비 설정
             marginLeft: 22, // 왼쪽에 20px 공간 추가
             "& .MuiTab-textColorSecondary": {
               // 선택된 탭의 스타일
@@ -105,22 +106,22 @@ const SpaceMyPage = () => {
           <Tab
             label="아이템 관리"
             {...a11yProps(0)}
-            sx={{ "&.Mui-selected": { color: "black", fontWeight: "bold" } }}
+            sx={{ fontSize: 22, "&.Mui-selected": { color: "black", fontWeight: "bold"}, marginTop: 1, marginBottom: 1}}
           />
           <Tab
             label="매칭신청 현황"
             {...a11yProps(1)}
-            sx={{ "&.Mui-selected": { color: "black", fontWeight: "bold" } }}
+            sx={{ fontSize: 22, "&.Mui-selected": { color: "black", fontWeight: "bold" }, marginTop: 1, marginBottom: 1 }}
           />
           <Tab
             label="개인정보 수정"
             {...a11yProps(2)}
-            sx={{ "&.Mui-selected": { color: "black", fontWeight: "bold" } }}
+            sx={{ fontSize: 22, "&.Mui-selected": { color: "black", fontWeight: "bold" }, marginTop: 1, marginBottom: 1 }}
           />
           <Tab
             label="회원탈퇴"
             {...a11yProps(3)}
-            sx={{ "&.Mui-selected": { color: "black" } }}
+            sx={{ fontSize: 22, "&.Mui-selected": { color: "black", fontWeight: "bold" }, marginTop: 1, marginBottom: 1 }}
           />
         </Tabs>
         <TabPanel value={value} index={0}>

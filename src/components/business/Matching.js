@@ -25,7 +25,7 @@ const Matching = () => {
       <Container maxWidth="80%">
         <Box sx={{ bgcolor: "#00000000", width: "86%" }}>
           <h2>
-            <strong>받은 제안</strong>
+            <span style={{ fontSize: 22, fontWeight: "bold"}}>받은 제안</span>
           </h2>
           <div
             style={{ backgroundColor: "white", width: 300, height: 1 }}
@@ -46,7 +46,7 @@ const Matching = () => {
             />
           </Stack>
           <h2>
-            <strong>신청 현황</strong>
+          <span style={{ fontSize: 22, fontWeight: "bold"}}>신청 현황</span>
           </h2>
 
           <div />
@@ -60,7 +60,7 @@ const Matching = () => {
           </Stack>
 
           <h2>
-            <strong>성사된 매칭</strong>
+          <span style={{ fontSize: 22, fontWeight: "bold"}}>성사된 매칭</span>
           </h2>
 
           <Stack
