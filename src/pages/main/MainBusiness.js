@@ -181,6 +181,10 @@ const MainBusiness = () => {
     });
   };
 
+  const formatDate = (date) => {
+    return String(date).replace(/-/g, ".");
+  };
+
   return (
     <div className="MainBusiness">
       <React.Fragment>
@@ -360,7 +364,8 @@ const MainBusiness = () => {
                       <div>
                         <span>전시 희망기간 :</span>
                         <span>
-                          {item.startDate}~{item.endDate}
+                          {formatDate(item.startDate)}~
+                          {formatDate(item.endDate)}
                         </span>
                       </div>
                     }

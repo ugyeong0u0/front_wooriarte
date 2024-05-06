@@ -28,7 +28,14 @@ const AdminExhibitItem = ({
   return (
     <>
       <ImageListItem key={exhibitId} onClick={() => handleItemInfo(exhibitId)}>
-        <img src={url} />
+        <img
+          src={url}
+          style={{
+            width: 230,
+            height: 380,
+            objectFit: "cover",
+          }}
+        />
         <hr style={{ margin: "5px 0" }} />{" "}
         <ImageListItemBar
           title={

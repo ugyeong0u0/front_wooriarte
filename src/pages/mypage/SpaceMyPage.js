@@ -58,33 +58,6 @@ const SpaceMyPage = () => {
     setValue(newValue);
   };
 
-  let mockData2 = [];
-  // 메인별 목데이터
-
-  mockData2 = [
-    {
-      id: 1,
-      postName: "전시1",
-      location: "서울시 마포구",
-      imageurl: image1,
-      createdDate: new Date("2024-04-19").getTime(),
-    },
-    {
-      id: 2,
-      postName: "전시2",
-      location: "서울시 마포구",
-      imageurl: image1,
-      createdDate: new Date("2024-04-19").getTime(),
-    },
-    {
-      id: 3,
-      postName: "전시3",
-      location: "서울시 마포구",
-      imageurl: image1,
-      createdDate: new Date("2024-04-19").getTime(),
-    },
-  ];
-
   return (
     <div
       className="parentContainer"
@@ -111,27 +84,44 @@ const SpaceMyPage = () => {
           sx={{
             borderRight: 1,
             borderColor: "divider",
-            width: "200px", // Tabs 너비 고정
-            minWidth: "200px", // 최소 너비 설정
-            marginLeft: "250px", // 왼쪽에 20px 공간 추가
-            "& .MuiTab-textColorSecondary": { // 선택된 탭의 스타일
+            width: "150px", // Tabs 너비 고정
+            minWidth: "150px", // 최소 너비 설정
+            marginLeft: 22, // 왼쪽에 20px 공간 추가
+            "& .MuiTab-textColorSecondary": {
+              // 선택된 탭의 스타일
               color: "black", // 선택된 탭의 글자 색상 변경
             },
-            '&& .MuiTab-root': {    ///탭 왼쪽정렬
-              alignItems: 'baseline',
-          },
+            "&& .MuiTab-root": {
+              ///탭 왼쪽정렬
+              alignItems: "baseline",
+            },
           }}
           TabIndicatorProps={{
             style: {
-              backgroundColor: "white"
-            }
+              backgroundColor: "white",
+            },
           }}
         >
-
-          <Tab label="아이템 관리" {...a11yProps(0)} sx={{'&.Mui-selected': { color: 'black',}}} />
-          <Tab label="매칭신청 현황" {...a11yProps(1)} sx={{ '&.Mui-selected': { color: 'black' }}}/>
-          <Tab label="개인정보 수정" {...a11yProps(2)} sx={{ '&.Mui-selected': { color: 'black' }}}/>
-          <Tab label="회원탈퇴" {...a11yProps(3)} sx={{ '&.Mui-selected': { color: 'black' }}}/>
+          <Tab
+            label="아이템 관리"
+            {...a11yProps(0)}
+            sx={{ "&.Mui-selected": { color: "black", fontWeight: "bold" } }}
+          />
+          <Tab
+            label="매칭신청 현황"
+            {...a11yProps(1)}
+            sx={{ "&.Mui-selected": { color: "black", fontWeight: "bold" } }}
+          />
+          <Tab
+            label="개인정보 수정"
+            {...a11yProps(2)}
+            sx={{ "&.Mui-selected": { color: "black", fontWeight: "bold" } }}
+          />
+          <Tab
+            label="회원탈퇴"
+            {...a11yProps(3)}
+            sx={{ "&.Mui-selected": { color: "black" } }}
+          />
         </Tabs>
         <TabPanel value={value} index={0}>
           {/*todo 사업자용 만들기 아이템관리  */}
@@ -178,7 +168,19 @@ const SpaceMyPage = () => {
         >
           <ModifySpaceInfo />
         </TabPanel>
-        <TabPanel value={value} index={1}>
+        <TabPanel
+          value={value}
+          index={1}
+          style={{
+            display: "flex",
+            flexDirection: "column",
+
+            marginBottom: 180,
+
+            height: "100%", // 필요한 높이 지정
+            width: "100%", // 필요한 너비 지정
+          }}
+        >
           <Matching />
         </TabPanel>
         <TabPanel value={value} index={3}>

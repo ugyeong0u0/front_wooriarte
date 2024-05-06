@@ -309,6 +309,12 @@ const ApplyWithItems = () => {
               type="button"
               class="btn btn-dark"
               onClick={goApply}
+              style={{
+                border: "1px solid #000",
+                borderRadius: "0",
+                width: "100px",
+                height: "40px",
+              }}
             >
               신청하기
             </button>

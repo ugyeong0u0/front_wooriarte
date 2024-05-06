@@ -50,7 +50,7 @@ const ReceivedMatchingList = ({ setUpdateCount, updateCount }) => {
           />
         ))
       ) : (
-        <span>현재 제안 받은 매칭이 없습니다.</span>
+        <span> 현재 제안 받은 매칭이 없습니다.</span>
       )}
     </>
   );

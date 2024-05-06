@@ -38,7 +38,7 @@ const BusinessItem = ({
       <ImageListItem key={itemId} onClick={() => handleItemInfo()}>
         <img
           src={url}
-          style={{ width: 281, height: 400, objectFit: "cover" }}
+          style={{ width: 230, height: 380, objectFit: "cover" }}
         />
         <hr style={{ margin: "5px 0" }} />{" "}
         <ImageListItemBar

@@ -79,17 +79,32 @@ const WithDrawalUser = () => {
   };
 
   return (
-    <div className="withdrawalContainer" style={{ marginBottom: 65 }}>
-      <h2> <strong>WOORI ARTE 회원 탈퇴 시 아래 내용을 먼저 확인해 주세요.</strong></h2>
+    <div
+      className="withdrawalContainer"
+      style={{ marginBottom: 65, width: "100%" }}
+    >
+      <span style={{ fontSize: "23px" }}>
+        {" "}
+        <strong>
+          WOORI ARTE 회원 탈퇴 시, <br /> 아래 내용을 먼저 확인해 주세요.
+        </strong>
+      </span>
       <div className="content">
-        <span>
-        </span>
+        <span></span>
       </div>
       <div />
       <span>
-        <p><span>&#183;</span>회원 탈퇴는 신청하시는 즉시 처리됩니다.</p>
-        <p><span>&#183;</span>회원 탈퇴 후에는 해당 아이디를 다시 사용할 수 없습니다. </p>
-        <p><span>&#183;</span>로그인이 필요한 서비스 이용은 더 이상 이용하실 수 없게 됩니다. </p>
+        <p>
+          <span>&#183;</span>회원 탈퇴는 신청하시는 즉시 처리됩니다.
+        </p>
+        <p>
+          <span>&#183;</span>회원 탈퇴 후에는 해당 아이디를 다시 사용할 수
+          없습니다.{" "}
+        </p>
+        <p>
+          <span>&#183;</span>로그인이 필요한 서비스 이용은 더 이상 이용하실 수
+          없게 됩니다.{" "}
+        </p>
       </span>
       <Stack
         spacing={2}
@@ -102,18 +117,26 @@ const WithDrawalUser = () => {
           style={{
             color: "#000000", // 이 색상은 검은색입니다.
           }}
-
         />
-        <p><span>위 내용을 모두 확인했으며, 이에 동의합니다.</span></p>
+        <p>
+          <span>위 내용을 모두 확인했으며, 이에 동의합니다.</span>
+        </p>
       </Stack>
-      <Stack spacing={2} direction="row">
-        <Button
-          variant="outline-danger"
+      <Stack spacing={2} direction="row" sx={{ justifyContent: "flex-end" }}>
+        <button
           disabled={!enableBtn}
           onClick={widthDrawalHandler}
+          type="button"
+          class="btn btn-dark"
+          style={{
+            border: "1px solid #000",
+            borderRadius: "0",
+            width: "100px",
+            height: "40px",
+          }}
         >
           탈퇴 신청
-        </Button>{" "}
+        </button>{" "}
       </Stack>
       {enableDialog && (
         <MuiDialog

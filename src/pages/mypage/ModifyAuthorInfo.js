@@ -3,7 +3,7 @@ import { useState } from "react";
 
 import Stack from "@mui/material/Stack";
 import TextField from "@mui/material/TextField";
-import {ThemeProvider, createTheme } from '@mui/material';
+import { ThemeProvider, createTheme } from "@mui/material";
 
 import "../../styles/ModifySpaceInfo.css";
 import BusinessInfo from "../../components/BusinessInfo";
@@ -49,26 +49,24 @@ const ModifyAuthorInfo = () => {
     authPassword: "",
   });
 
-
-
-  // 비밀번호입력란 설정!!!!! ******************************************* 
+  // 비밀번호입력란 설정!!!!! *******************************************
   const theme = createTheme({
-    typography:{
-      fontFamily: 'Pretendard-Regular'
+    typography: {
+      fontFamily: "Pretendard-Regular",
     },
     components: {
       MuiInput: {
         styleOverrides: {
           underline: {
-            '&:before': {
-              borderBottom: '1px solid #e0e0e0',
+            "&:before": {
+              borderBottom: "1px solid #e0e0e0",
             },
-            '&:hover:not(.Mui-disabled):before': {
-              borderBottom: '2px solid rgba(0, 0, 0, 0.87)',
+            "&:hover:not(.Mui-disabled):before": {
+              borderBottom: "2px solid rgba(0, 0, 0, 0.87)",
             },
-            '&:after': {
-              borderBottom: '1px solid black',
-            }
+            "&:after": {
+              borderBottom: "1px solid black",
+            },
           },
         },
       },
@@ -77,15 +75,15 @@ const ModifyAuthorInfo = () => {
         styleOverrides: {
           // 'standard' variant를 사용하는 경우
           root: {
-            '&.Mui-focused': { // 포커스 상태일 때
-              color: 'gray', // 레이블 색상을 검정으로 변경
-            }
+            "&.Mui-focused": {
+              // 포커스 상태일 때
+              color: "gray", // 레이블 색상을 검정으로 변경
+            },
           },
         },
       },
     },
   });
-
 
   const handleChangeState = (e) => {
     setInfoState({
@@ -93,8 +91,6 @@ const ModifyAuthorInfo = () => {
       [e.target.name]: e.target.value,
     });
   };
-
-
 
   return (
     <div className="spaceInfoContainer">
@@ -116,22 +112,28 @@ const ModifyAuthorInfo = () => {
               alignItems: "center", // 요소들의 높이를 각 요소에 맞춤
             }}
           >
-            <ThemeProvider theme={theme} >
+            <ThemeProvider theme={theme}>
               <TextField
-              name="pw"
-              id="standard-password-input"
-              label="비밀번호"
-              type="password"
-              autoComplete="current-password"
-              variant="standard"
-              onChange={handlePasswordChangeState}
+                name="pw"
+                id="standard-password-input"
+                label="비밀번호"
+                type="password"
+                autoComplete="current-password"
+                variant="standard"
+                onChange={handlePasswordChangeState}
               />
-              </ThemeProvider>
+            </ThemeProvider>
 
             <button
               type="button"
               class="btn btn-dark"
               onClick={setAuthStateChange}
+              style={{
+                border: "1px solid #000",
+                borderRadius: "0",
+                width: "70px",
+                height: "40px",
+              }}
             >
               확인
             </button>
@@ -148,7 +150,6 @@ const ModifyAuthorInfo = () => {
         />
       )}
     </div>
-    
   );
 };
 export default ModifyAuthorInfo;

@@ -24,10 +24,9 @@ const MatchingItem = ({ text, id }) => {
   return (
     <>
       <Stack
-        spacing={0.9}
+        spacing={1}
         direction="row"
-        alignItems="center"
-        justifyContent="flex-start"
+        sx={{ display: "flex", justifyContent: "space-between", width: "90%" }}
       >
         <span> {text}</span>
         <IconButton

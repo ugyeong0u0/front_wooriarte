@@ -66,7 +66,7 @@ const MainAdmin = () => {
     <div
       style={{
         width: "100%",
-        marginBottom: 90,
+
         marginTop: 50,
       }}
     >

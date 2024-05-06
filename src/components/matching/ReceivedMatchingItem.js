@@ -35,30 +35,36 @@ const ReceivedMatchingItem = ({ text, matchingId, setUpdateCount, id }) => {
 
   return (
     <>
-      <Stack spacing={0.9} direction="row" alignItems="center">
+      <Stack
+        spacing={0.9}
+        direction="row"
+        sx={{ display: "flex", justifyContent: "space-between", width: "90%" }}
+      >
         <span> {text}</span>
-        <IconButton
-          color="inherit"
-          aria-label="add an alarm"
-          style={{ marginLeft: 30 }}
-          onClick={() => goItemInfo(id)}
-        >
-          <ContentPasteSearchIcon />
-        </IconButton>
-        <Button
-          variant="outline-dark"
-          style={{ padding: 5 }}
-          onClick={() => AcceptPropsal(matchingId, true)}
-        >
-          수락
-        </Button>{" "}
-        <Button
-          variant="outline-dark"
-          style={{ padding: 5 }}
-          onClick={() => AcceptPropsal(matchingId, false)}
-        >
-          거절
-        </Button>{" "}
+        <div style={{ display: "flex", alignItems: "center" }}>
+          <IconButton
+            color="inherit"
+            aria-label="add an alarm"
+            style={{ marginRight: 5 }}
+            onClick={() => goItemInfo(id)}
+          >
+            <ContentPasteSearchIcon />
+          </IconButton>
+          <Button
+            variant="outline-dark"
+            style={{ padding: 5, marginRight: 5 }}
+            onClick={() => AcceptPropsal(matchingId, true)}
+          >
+            수락
+          </Button>{" "}
+          <Button
+            variant="outline-dark"
+            style={{ padding: 5 }}
+            onClick={() => AcceptPropsal(matchingId, false)}
+          >
+            거절
+          </Button>{" "}
+        </div>
       </Stack>
     </>
   );

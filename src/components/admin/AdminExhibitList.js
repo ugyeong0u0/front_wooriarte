@@ -36,12 +36,12 @@ const AdminExhibitList = () => {
       <Stack
         justifyContent="center" // 가로 방향으로 중앙 정렬
         alignItems="center" // 세로 방향으로 중앙 정렬
-        style={{ marginTop: 30, width: "85%" }}
+        style={{ marginTop: 30, width: "100%" }}
       >
         <ImageList
-          sx={{ maxWidth: 1000, height: "auto", overflowY: "hidden" }}
+          sx={{ maxWidth: "100%", height: "auto", overflowY: "hidden" }}
           cols={3}
-          gap={30} // 이미지 사이의 간격 설정
+          gap={20} // 이미지 사이의 간격 설정
         >
           {mockData.map((item) => {
             return (

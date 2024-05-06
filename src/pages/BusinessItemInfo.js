@@ -856,6 +856,8 @@ const BusinessItemInfo = () => {
                     position: "relative", // 버튼을 뷰포트에 고정
 
                     marginTop: 100,
+                    border: "1px solid #000",
+                    borderRadius: "0",
 
                     paddingLeft: 30,
                     paddingRight: 30,
@@ -1086,7 +1088,8 @@ const BusinessItemInfo = () => {
                     position: "relative", // 버튼을 뷰포트에 고정
 
                     marginTop: 100,
-
+                    border: "1px solid #000",
+                    borderRadius: "0",
                     paddingLeft: 30,
                     paddingRight: 30,
                     paddingTop: 10,

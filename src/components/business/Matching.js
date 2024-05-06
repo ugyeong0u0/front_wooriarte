@@ -23,20 +23,21 @@ const Matching = () => {
     <React.Fragment>
       <CssBaseline />
       <Container maxWidth="80%">
-        <Box sx={{ bgcolor: "#00000000", width: "100%", marginBottom: 15 }}>
-        <h2><strong>받은 제안</strong></h2>
+        <Box sx={{ bgcolor: "#00000000", width: "86%" }}>
+          <h2>
+            <strong>받은 제안</strong>
+          </h2>
           <div
-            style={{
-              height: 1,
-              width: "100%",
-              backgroundColor: "gray",
-              marginBottom: 20,
-            }}
-          />
+            style={{ backgroundColor: "white", width: 300, height: 1 }}
+          ></div>
           <Stack
             alignItems="center" // 세로 방향으로 중앙 정렬
             spacing={2}
-            style={{ marginBottom: 50 }}
+            sx={{
+              display: "flex",
+
+              marginBottom: 3,
+            }}
             // 요소들을 가로 방향으로 배치
           >
             <ReceivedMatchingList
@@ -44,41 +45,28 @@ const Matching = () => {
               updateCount={updateCount}
             />
           </Stack>
-          <h2><strong>신청 현황</strong></h2>
-          <div
-            style={{
-              height: 1,
-              width: "100%",
-              backgroundColor: "gray",
-              marginBottom: 20,
-              display: "flex", // flexbox 디스플레이 설정
-              justifyContent: "center", // 가로 중앙 정렬
-            }}
-          />
+          <h2>
+            <strong>신청 현황</strong>
+          </h2>
+
           <div />
           <Stack
             alignItems="center" // 세로 방향으로 중앙 정렬
             spacing={2}
-            style={{ marginBottom: 50 }}
+            style={{ display: "flex", marginTop: 5, marginBottom: 20 }}
           >
             {/* 대기 매칭 리스트  */}
             <WaitingMatchingList />
           </Stack>
 
+          <h2>
+            <strong>성사된 매칭</strong>
+          </h2>
 
-          <h2><strong>성사된 매칭</strong></h2>
-          <div
-            style={{
-              height: 1,
-              width: "100%",
-              backgroundColor: "gray",
-              marginBottom: 20,
-            }}
-          />
           <Stack
             alignItems="center" // 세로 방향으로 중앙 정렬
             spacing={2}
-            style={{ marginBottom: 50 }}
+            style={{ display: "flex", marginTop: 2 }}
             // 요소들을 가로 방향으로 배치
           >
             <AcceptedMatchingList updateCount={updateCount} />

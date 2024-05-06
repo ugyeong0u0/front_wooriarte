@@ -41,7 +41,7 @@ function App() {
               isLoginHandler={setIsLoginStateState}
             />
             <Routers />
-            <div style={{ marginBottom: 150 }}></div>
+            <div style={{ marginBottom: 400 }}></div>
             <CuFooter className="footer" />
           </BrowserRouter>
         </ThemeProvider>
