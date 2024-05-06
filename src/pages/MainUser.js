@@ -138,8 +138,9 @@ const MainUser = () => {
             )}
           </Stack>
         </Container>
+            <div className="line" style={{ marginTop: 15 }}></div>
         <Container style={{ width: "100%", padding: "0 0" }}>
-          <Box sx={{ bgcolor: "#00000000", height: "100%", marginTop: 7 }}>
+          <Box sx={{ bgcolor: "#00000000", height: "100%", marginTop: 5 }}>
             {/* 추천 리스트 */}
             {/* <Stack
               justifyContent="center" // 가로 방향으로 중앙 정렬
@@ -167,12 +168,12 @@ const MainUser = () => {
             <Stack
               justifyContent="center" // 가로 방향으로 중앙 정렬
               alignItems="center" // 세로 방향으로 중앙 정렬
-              style={{ marginTop: 20 }}
+              style={{ marginTop: 0 }}
             >
               <ImageList
-                sx={{ width: "100%", height: "auto", overflowY: "hidden" }}
+                sx={{ width: "100%", maxWidth: 1100, height: "auto", overflowY: "hidden", mx: "auto" }}
                 cols={3}
-                gap={20} // 이미지 사이의 간격 설정
+                gap={100} // 이미지 사이의 간격 설정
               >
                 {visibleData.map((item) => (
                   <ImageListItem
@@ -195,7 +196,7 @@ const MainUser = () => {
                           <span
                             style={{
                               fontWeight: "bold",
-                              fontSize: "10px",
+                              fontSize: "15px",
                               textAlign: "left", // 왼쪽 정렬
                               display: "block", // span을 블록 요소로 만들어 줄 전체를 차지하게 함
                               width: "100%", // 너비 100%로 설정
@@ -223,7 +224,7 @@ const MainUser = () => {
                             style={{
                               color: "gray",
 
-                              fontSize: "10px",
+                              fontSize: "15px",
                               textAlign: "left", // 왼쪽 정렬
                               display: "block", // span을 블록 요소로 만들어 줄 전체를 차지하게 함
                               width: "100%", // 너비 100%로 설정
