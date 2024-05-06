@@ -26,7 +26,7 @@ const Signupbusiness = () => {
   };
   const goBusinessSignup = () => {
     // whatUser에 따라 회원가입 다르게 해야함
-    alert("회원가입 누구? " + userInfo);
+
     console.log("회원가입 누구? " + userInfo);
     setIsActive(true);
   };
@@ -53,13 +53,9 @@ const Signupbusiness = () => {
           justifyContent: "center", // 가로 중앙 정렬
         }}
       >
-          <div>
-          <Stack spacing={3} direction="row" >
-            <Button
-              color="inherit"
-              size="large"
-              onClick={goUserSignup}
-            >
+        <div>
+          <Stack spacing={3} direction="row">
+            <Button color="inherit" size="large" onClick={goUserSignup}>
               개인
             </Button>
             <Button
@@ -67,15 +63,15 @@ const Signupbusiness = () => {
               size="large"
               onClick={goBusinessSignup}
               sx={{
-                color: isActive ? 'black' : 'grey', // 활성화 상태에 따라 색상 변경
-                fontWeight: isActive ? 'bold' : 'normal', // 활성화 상태에 따라 굵기 변경
+                color: isActive ? "black" : "grey", // 활성화 상태에 따라 색상 변경
+                fontWeight: isActive ? "bold" : "normal", // 활성화 상태에 따라 굵기 변경
               }}
             >
               사업자
             </Button>
           </Stack>
-          </div>
-        </Box>
+        </div>
+      </Box>
       <Box
         sx={{
           width: "100%", // 박스 너비 설정

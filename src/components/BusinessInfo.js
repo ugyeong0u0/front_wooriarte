@@ -161,9 +161,9 @@ const BusinessInfo = ({
   const submitsignup = () => {
     if (businessInfoState.password === businessInfoState.authPassword) {
       console.log("회원가입 저장 눌림 ");
-      if (businessInfoState.id !== "") {
+      if (Object.values(businessInfoState).every((value) => value !== "")) {
         // 회원가입 통신
-        setFalseDialog(true);
+
         if (whatUser === "author") {
           onsignupAuthorHandler(
             {
@@ -211,6 +211,7 @@ const BusinessInfo = ({
           alert("비즈니스 회원가입 유저틀림 잘못된 접근");
         }
       } else {
+        console.log("회원가입 걸러짐");
         // 회원정보 다 입력안됨
         setFalseDialog(true);
       }

@@ -19,7 +19,8 @@ import Box from "@mui/material/Box";
 // 다이어로그
 import MuiDialog from "../libs/MuiDialog";
 // 클릭시 밑줄색
-import {ThemeProvider, createTheme } from '@mui/material';
+import { ThemeProvider, createTheme } from "@mui/material";
+import { Business } from "@mui/icons-material";
 
 // 회원가입 완료
 // todo("회원가입 통신 연결해야함 ")
@@ -28,82 +29,91 @@ import {ThemeProvider, createTheme } from '@mui/material';
 const SignupUser = () => {
   const nav = useNavigate();
   const [isActive, setIsActive] = useState(true); // 초기 상태는 '개인'이 활성화
-  
+
   // '개인' 버튼 클릭 핸들러
   const handlePersonalClick = () => {
     setIsActive(true);
   };
-  
+
   // '사업자' 버튼 클릭 핸들러
   const handleBusinessClick = () => {
     setIsActive(false);
-       console.log("비즈니스 로그인으로 이동");
+    console.log("비즈니스 로그인으로 이동");
     nav(`/loginbusiness`);
   };
   // 다음 버튼 활성화
   const [enableNextBtn, setEnableNextBtn] = useState(false);
   const [enableDialog, setEnableDialog] = useState(false);
-
-    // 밑줄 색 바꾸기
-    const theme = createTheme({
-      typography:{
-        fontFamily: 'Pretendard-Regular'
-      },
-      components: {
-        MuiInput: {
-          styleOverrides: {
-            underline: {
-              '&:before': {
-                borderBottom: '1px solid #e0e0e0',
-              },
-              '&:hover:not(.Mui-disabled):before': {
-                borderBottom: '2px solid rgba(0, 0, 0, 0.87)',
-              },
-              '&:after': {
-                borderBottom: '1px solid black',
-              }
+  const [falseDialog, setFalseDialog] = useState(false); //  에러 다이어로그 - 정보가 비어있음
+  const [falsePassDialog, setFalsePassDialog] = useState(false); //  에러 다이어로그 - 비번
+  // 밑줄 색 바꾸기
+  const theme = createTheme({
+    typography: {
+      fontFamily: "Pretendard-Regular",
+    },
+    components: {
+      MuiInput: {
+        styleOverrides: {
+          underline: {
+            "&:before": {
+              borderBottom: "1px solid #e0e0e0",
             },
-          },
-        },
-        // MuiInputLabel 컴포넌트에 대한 스타일 추가
-        MuiInputLabel: {
-          styleOverrides: {
-            // 'standard' variant를 사용하는 경우
-            root: {
-              '&.Mui-focused': { // 포커스 상태일 때
-                color: 'gray', // 레이블 색상을 검정으로 변경
-              }
+            "&:hover:not(.Mui-disabled):before": {
+              borderBottom: "2px solid rgba(0, 0, 0, 0.87)",
+            },
+            "&:after": {
+              borderBottom: "1px solid black",
             },
           },
         },
       },
-    });
+      // MuiInputLabel 컴포넌트에 대한 스타일 추가
+      MuiInputLabel: {
+        styleOverrides: {
+          // 'standard' variant를 사용하는 경우
+          root: {
+            "&.Mui-focused": {
+              // 포커스 상태일 때
+              color: "gray", // 레이블 색상을 검정으로 변경
+            },
+          },
+        },
+      },
+    },
+  });
 
   const submitsignup = () => {
-    if (state.id !== "" && state.pw !== "") {
+    if (state.password === state.authPassword) {
       // 회원가입 통신
-      onSignupUserHandler(
-        {
-          userName: state.name,
-          id: state.id,
-          phoneNum: state.phoneNumber,
-          email: state.email,
-          pass: state.password,
-          authPass: state.authPassword,
-        },
-        (success) => {
-          console.log("callback 안 ");
-          if (!success) {
-            console.log("callback 실패 안 ");
-            setEnableDialog(true);
-          } else {
-            console.log("callback 성공 안 ");
-            // 성공시 콜백
-            console.log("Signup successful, navigating back");
-            nav(-1); // 로그인 페이지로 가기
+      if (Object.values(state).every((value) => value !== "")) {
+        onSignupUserHandler(
+          {
+            userName: state.name,
+            id: state.id,
+            phoneNum: state.phoneNumber,
+            email: state.email,
+            pass: state.password,
+            authPass: state.authPassword,
+          },
+          (success) => {
+            console.log("callback 안 ");
+            if (!success) {
+              console.log("callback 실패 안 ");
+              setEnableDialog(true);
+            } else {
+              console.log("callback 성공 안 ");
+              // 성공시 콜백
+              console.log("Signup successful, navigating back");
+              nav(-1); // 로그인 페이지로 가기
+            }
           }
-        }
-      );
+        );
+      } else {
+        setFalseDialog(true);
+      }
+    } else {
+      console.log("비번틀림 ");
+      setFalsePassDialog(true);
     }
   };
 
@@ -117,27 +127,14 @@ const SignupUser = () => {
   });
 
   useEffect(() => {
-    if (state.password.length > 3 && state.authPassword === state.password) {
-      console.log("비번일치");
-      if (
-        state.id !== "" &&
-        state.name !== "" &&
-        state.email !== "" &&
-        state.phoneNumber.length > 8
-      ) {
-        console.log("빈값없음");
-        if (validateEmail(state.email)) {
-          console.log("이메일일치");
-          setEnableNextBtn(true); // 다음 버튼 활성화
-        } else {
-          console.log("이메일불일치");
-          setEnableNextBtn(false); // 다음 버튼 비활성화
-        }
-      } else {
-        setEnableNextBtn(false); // 다음 버튼 비활성화
-      }
+    console.log("비번일치");
+
+    console.log("빈값없음");
+    if (validateEmail(state.email)) {
+      console.log("이메일일치");
+      setEnableNextBtn(true); // 다음 버튼 활성화
     } else {
-      console.log("비번불일치");
+      console.log("이메일불일치");
       setEnableNextBtn(false); // 다음 버튼 비활성화
     }
   }, [state]); // state 객체의 모든 변경에 반응
@@ -175,22 +172,21 @@ const SignupUser = () => {
           justifyContent: "center", // 가로 중앙 정렬
         }}
       >
-        
         <Stack spacing={2}>
           <div>
-          <Stack spacing={3} direction="row" marginLeft={7.5}>
-            <Button
-              color="inherit"
-              size="large"
-              onClick={handlePersonalClick}
-              sx={{
-                color: isActive ? 'black' : 'grey', // 활성화 상태에 따라 색상 변경
-                fontWeight: isActive ? 'bold' : 'normal', // 활성화 상태에 따라 굵기 변경
-              }}
-            >
-              개인
-            </Button>
-            {/* <Stack spacing={2} direction="row" style={{ marginLeft: 35 }}>
+            <Stack spacing={3} direction="row" marginLeft={7.5}>
+              <Button
+                color="inherit"
+                size="large"
+                onClick={handlePersonalClick}
+                sx={{
+                  color: isActive ? "black" : "grey", // 활성화 상태에 따라 색상 변경
+                  fontWeight: isActive ? "bold" : "normal", // 활성화 상태에 따라 굵기 변경
+                }}
+              >
+                개인
+              </Button>
+              {/* <Stack spacing={2} direction="row" style={{ marginLeft: 35 }}>
               <Badge color="info" badgeContent=" ">
                 <Button color="info" size="large">
                   개인
@@ -206,14 +202,14 @@ const SignupUser = () => {
               >
                 사업자
               </Button> */}
-            <Button
-              color="inherit"
-              size="large"
-              onClick={handleBusinessClick}
-            >
-              사업자
-            </Button>
-          </Stack>
+              <Button
+                color="inherit"
+                size="large"
+                onClick={handleBusinessClick}
+              >
+                사업자
+              </Button>
+            </Stack>
           </div>
           <ThemeProvider theme={theme}>
             <div>
@@ -291,11 +287,14 @@ const SignupUser = () => {
             class="btn btn-dark"
             onClick={submitsignup}
             disabled={!enableNextBtn}
-            style={{ border: '1px solid #000', borderRadius: '0', height: '40px' }}
+            style={{
+              border: "1px solid #000",
+              borderRadius: "0",
+              height: "40px",
+            }}
           >
             회원가입
           </button>
-          
         </Stack>
         {enableDialog && (
           <MuiDialog
@@ -303,6 +302,24 @@ const SignupUser = () => {
             content={"이미 가입 된 회원입니다!"}
             result={true}
             page={"userSignUp"}
+          />
+        )}
+        {falseDialog && (
+          <MuiDialog
+            title={"알림"}
+            content={"정보를 다 작성해주세요"}
+            result={true}
+            page={"login"}
+            parentClick={setFalseDialog}
+          />
+        )}
+        {falsePassDialog && (
+          <MuiDialog
+            title={"알림"}
+            content={"비밀번호가 일치하지 않습니다."}
+            result={true}
+            page={"login"}
+            parentClick={setFalsePassDialog}
           />
         )}
       </Box>
