@@ -91,7 +91,7 @@ const ExhibitItemInfo = () => {
           maxWidth="80%"
           style={{
             marginTop: 30,
-            marginLeft: 255, 
+            marginLeft: 229, 
             display: "flex",
             flexDirection: "column",
             alignItems: "flex-start",
@@ -133,14 +133,14 @@ const ExhibitItemInfo = () => {
                 <div className="selector-item3">
                   <div className="label">관람장소</div>
                 </div>
-                  <span className="value" style={{ marginLeft: '10px' }}>{exhibitInfoState.address}</span>
+                  <span className="value" style={{ marginLeft: '15px' }}>{exhibitInfoState.address}</span>
                 </div>
                 <br></br>
                 <div style={{ display: 'flex', alignItems: 'center', flexWrap: 'nowrap', minWidth: 0, justifyContent: 'flex-start' }}>
                 <div className="selector-item3">
                   <div className="label">관람기간 </div>
                 </div>
-                <span className="value" style={{ marginLeft: '10px', whiteSpace: 'nowrap', textOverflow: 'ellipsis' }}>
+                <span className="value" style={{ marginLeft: '15px', whiteSpace: 'nowrap', textOverflow: 'ellipsis' }}>
                     {exhibitInfoState.startDate +
                       "~" +
                       exhibitInfoState.endDate}
@@ -151,7 +151,7 @@ const ExhibitItemInfo = () => {
                 <div className="selector-item3">
                   <div className="label">관람료 </div>
                 </div>
-                  <span className="value" style={{ marginLeft: '10px' }}>{exhibitInfoState.price}원</span>
+                  <span className="value" style={{ marginLeft: '15px' }}>{exhibitInfoState.price}원</span>
                 </div>
                 <br></br>
                 <div>
@@ -167,6 +167,7 @@ const ExhibitItemInfo = () => {
                   <div class="gray-line" style={{ maxWidth: 40 }}></div> */}
                   <div
                     style={{
+                      fontSize: 16,
                       marginBottom: 10,
                       display: "flex",
                       alignItems: "flex-start",

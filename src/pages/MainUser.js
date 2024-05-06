@@ -45,7 +45,6 @@ import quotation from "../assets/quotation.png";
 import author3 from "../assets/author3.jpg";
 import gian from "../assets/gian.jpg";
 import kimuj from "../assets/kimuj.jpg";
-import mainImage from "../assets/mainImage.jpg";
 
 // stack 배치 사용
 const Item = styled(Paper)(({ theme }) => ({

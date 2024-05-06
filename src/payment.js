@@ -109,10 +109,11 @@ const Payment = ({ exhibitId, ticketNumber }) => {
     <div>
       <Button
         variant="contained"
-        endIcon={<AddShoppingCartIcon />}
         onClick={() => requestPay(exhibitId, ticketNumber)}
         style={{
-          marginTop: 10,
+          width: 90,
+          height: 40,
+          borderRadius: 0,
           backgroundColor: "black", // 버튼 배경색을 검정으로 설정
           color: "white", // 텍스트 색상을 흰색으로 설정
           "&:hover": {
