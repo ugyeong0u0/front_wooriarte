@@ -57,7 +57,7 @@ function CustomCarouselForMain({ children }) {
       className="container__sliderForMain"
       onMouseEnter={AutoPlayStop}
       onMouseLeave={AutoPlayStart}
-      style={{ height: 324 }} // 높이를 80%로 설정
+      style={{ height: "auto" }} // 높이를 80%로 설정
     >
       {children.map((item, index) => {
         return (
