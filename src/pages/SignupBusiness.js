@@ -15,6 +15,7 @@ const Signupbusiness = () => {
   const uselocation = useLocation();
   const { userInfo } = uselocation.state; // LoginEditor에서 옴
   const [enableDialog, setEnableDialog] = useState(false);
+  const [enableSuccessDialog, setEnableSuccessDialog] = useState(false);
 
   const nav = useNavigate();
 
@@ -84,12 +85,21 @@ const Signupbusiness = () => {
           isBusinessInfo={false}
           whatUser={userInfo}
           setDialog={setEnableDialog}
+          setEnableSuccessDialog={setEnableSuccessDialog}
         />
 
         {enableDialog && (
           <MuiDialog
             title={"알림"}
             content={"이미 가입 된 회원입니다!"}
+            result={true}
+            page={userInfo === "author" ? "authorLogin" : "spaceLogin"}
+          />
+        )}
+        {enableSuccessDialog && (
+          <MuiDialog
+            title={"알림"}
+            content={"가입되었습니다! 로그인화면으로 이동합니다"}
             result={true}
             page={userInfo === "author" ? "authorLogin" : "spaceLogin"}
           />

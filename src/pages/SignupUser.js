@@ -29,7 +29,7 @@ import { Business } from "@mui/icons-material";
 const SignupUser = () => {
   const nav = useNavigate();
   const [isActive, setIsActive] = useState(true); // 초기 상태는 '개인'이 활성화
-
+  const [enableSuccessDialog, setEnableSuccessDialog] = useState(false);
   // '개인' 버튼 클릭 핸들러
   const handlePersonalClick = () => {
     setIsActive(true);
@@ -101,10 +101,10 @@ const SignupUser = () => {
               console.log("callback 실패 안 ");
               setEnableDialog(true);
             } else {
+              setEnableSuccessDialog(true);
               console.log("callback 성공 안 ");
               // 성공시 콜백
               console.log("Signup successful, navigating back");
-              nav(-1); // 로그인 페이지로 가기
             }
           }
         );
@@ -317,6 +317,15 @@ const SignupUser = () => {
             result={true}
             page={"login"}
             parentClick={setFalsePassDialog}
+          />
+        )}
+        {enableSuccessDialog && (
+          <MuiDialog
+            title={"알림"}
+            content={"가입되었습니다! 로그인화면으로 이동합니다"}
+            result={true}
+            page={"goLogin"}
+            parentClick={setEnableSuccessDialog}
           />
         )}
       </Box>

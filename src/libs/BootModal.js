@@ -7,7 +7,7 @@ import Box from "@mui/material/Box";
 import Stack from "@mui/material/Stack";
 import { styled } from "@mui/material/styles";
 import TextField from "@mui/material/TextField";
-import {ThemeProvider, createTheme } from '@mui/material';
+import { ThemeProvider, createTheme } from "@mui/material";
 // 업로드
 import * as React from "react";
 import Button from "@mui/material/Button";
@@ -40,6 +40,7 @@ import DatePickerOpenTo, { SelectSizesExample } from "../libs/Open";
 import DateRangePickerValue from "./DateRangePickerValue";
 import MuiDialog from "./MuiDialog";
 import { dark } from "@mui/material/styles/createPalette";
+import { Padding } from "@mui/icons-material";
 
 //!------------ 작가랑 공간대여자 아이템 추가 모달
 export default function MyVerticallyCenteredModal(props) {
@@ -108,13 +109,14 @@ export default function MyVerticallyCenteredModal(props) {
     name: "",
     phoneNumber: "",
     explanation: "",
+    address: "서울",
     title: "",
   };
   const initialSpaceState = {
     title: "",
     hostName: "",
     intro: "",
-    address: "",
+    address: "서울",
     size: "",
     phoneNumber: "",
     parking: true, // parking의 기본값이 true라고 가정
@@ -316,25 +318,24 @@ export default function MyVerticallyCenteredModal(props) {
     }
   };
 
-
   // 입력란 파란색 색 수정 *********************
   const theme = createTheme({
-    typography:{
-      fontFamily: 'Pretendard-Regular'
+    typography: {
+      fontFamily: "Pretendard-Regular",
     },
     components: {
       MuiInput: {
         styleOverrides: {
           underline: {
-            '&:before': {
-              borderBottom: '1px solid #e0e0e0',
+            "&:before": {
+              borderBottom: "1px solid #e0e0e0",
             },
-            '&:hover:not(.Mui-disabled):before': {
-              borderBottom: '2px solid rgba(0, 0, 0, 0.87)',
+            "&:hover:not(.Mui-disabled):before": {
+              borderBottom: "2px solid rgba(0, 0, 0, 0.87)",
             },
-            '&:after': {
-              borderBottom: '1px solid black',
-            }
+            "&:after": {
+              borderBottom: "1px solid black",
+            },
           },
         },
       },
@@ -343,9 +344,10 @@ export default function MyVerticallyCenteredModal(props) {
         styleOverrides: {
           // 'standard' variant를 사용하는 경우
           root: {
-            '&.Mui-focused': { // 포커스 상태일 때
-              color: 'gray', // 레이블 색상을 검정으로 변경
-            }
+            "&.Mui-focused": {
+              // 포커스 상태일 때
+              color: "gray", // 레이블 색상을 검정으로 변경
+            },
           },
         },
       },
@@ -353,8 +355,8 @@ export default function MyVerticallyCenteredModal(props) {
         styleOverrides: {
           root: {
             // 포커스 상태일 때 테두리 색상 변경
-            '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
-              borderColor: 'gray', // 여기서 원하는 색상으로 변경
+            "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
+              borderColor: "gray", // 여기서 원하는 색상으로 변경
             },
           },
         },
@@ -362,266 +364,330 @@ export default function MyVerticallyCenteredModal(props) {
     },
   });
 
-
   return (
     <ThemeProvider theme={theme}>
-    <Modal
-      {...props}
-      size="lg"
-      aria-labelledby="contained-modal-title-vcenter"
-      centered
-    >
-      <Modal.Header closeButton>
-        <Modal.Title id="contained-modal-title-vcenter">
-          {props.type === "author" ? "작품 추가하기" : "공간 추가하기"}
-        </Modal.Title>
-      </Modal.Header>
-      <Modal.Body>
-        {/* // todo 작가 아이템에도 달력, 위치 넣어야함 서버에도 */}
-        {props.type === "author" ? (
-          <Box>
-            <Stack spacing={2}>
-              <TextField
-                name="name"
-                id="standard-basic"
-                label="작가 이름"
-                variant="standard"
-                onChange={handleChangeState}
-                value={authorInfoState.name}
-              />
-              <TextField
-                name="phoneNumber"
-                id="standard-number"
-                label="전화번호"
-                type="number"
-                InputLabelProps={{
-                  shrink: true,
-                }}
-                variant="standard"
-                onChange={handleChangeState}
-                value={authorInfoState.phoneNumber}
-              />
-              <TextField
-                name="title"
-                id="standard-author-title"
-                label="작품명"
-                type="search"
-                InputLabelProps={{
-                  shrink: true,
-                }}
-                variant="standard"
-                onChange={handleChangeState}
-                value={authorInfoState.title}
-              />
-              <TextField
-                name="explanation"
-                id="outlined-multiline-static"
-                label="소개"
-                multiline
-                rows={10}
-                onChange={handleChangeState}
-                value={authorInfoState.explanation}
-              />
-
-              <SelectSizesExample
-                name="address"
-                size={"default"}
-                type={"location"}
-                selectedLocation={authorInfoState.address}
-                onLocationChange={handleChangeState}
-              />
-              {/* 달력 */}
-              <DateRangePickerValue
-                format="YYYY-MM-DD"
-                startDate={authorInfoState.startDate}
-                endDate={authorInfoState.endDate}
-                onDateChange={handleDateForAuthorChange}
-                isEdit={false}
-                
-              />
-
-              {/* //! 사진 */}
-              <Stack direction={"row"}>
-                <span>사진을 첨부해주세요</span>
-                <span style={{ fontSize: "10px", color: "gray", marginTop: 5 }}>
-                  (첫 사진이 대표사진이 되며, 최대 8장까지 업로드 할 수
-                  있습니다.)
-                </span>
-              </Stack>
-              <>
-                <ImageList
-                  sx={{ width: "100%", height: "auto" }}
-                  cols={3}
-                  rowHeight={170}
+      <Modal
+        {...props}
+        size="lg"
+        aria-labelledby="contained-modal-title-vcenter"
+        centered
+      >
+        <Modal.Header closeButton>
+          <Modal.Title id="contained-modal-title-vcenter">
+            {props.type === "author" ? "작품 추가하기" : "공간 추가하기"}
+          </Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          {/* // todo 작가 아이템에도 달력, 위치 넣어야함 서버에도 */}
+          {props.type === "author" ? (
+            <Box>
+              <Stack spacing={2} style={{ marginLeft: 15, marginRight: 15 }}>
+                <Stack
+                  spacing={20}
+                  direction={"row"}
+                  style={{ marginTop: 10, marginBottom: 10 }}
                 >
-                  {imgList.map((item) => (
-                    <ImageListItem key={item.id}>
-                      <img
-                        srcSet={`${item.previewUrl}`}
-                        src={`${item.previewUrl}`}
-                        alt={item.title}
-                        loading="lazy"
-                        style={{ maxWidth: 250, maxHeight: 170 }}
-                      />
-                      <IconButton
-                        color="primary"
-                        style={{ position: "absolute", top: "0", right: "0" }}
-                        aria-label="delete"
-                        size="large"
-                        onClick={() => {
-                          onImgDelete(item.id);
-                        }}
-                      >
-                        <DeleteIcon fontSize="inherit" />
-                      </IconButton>
-                    </ImageListItem>
-                  ))}
-
-                  <Button
-                    disabled={imgList.length >= 8}
-                    style={{
-                      width: imgList.length > 0 ? "250px" : "auto",
-                      height: imgList.length > 0 ? "200px" : "auto",
+                  <TextField
+                    name="name"
+                    id="standard-basic"
+                    label="작가 이름"
+                    variant="standard"
+                    InputLabelProps={{
+                      shrink: true,
                     }}
-                    variant="outlined"
-                    component="label"
-                    role={undefined}
-                    tabIndex={-1}
-                    onChange={onImgSelected}
-                    accept="image/*"
-                    type="file"
-                    startIcon={<CloudUploadIcon />}
-                  >
-                    사진 올리기
-                    <VisuallyHiddenInput type="file" />
-                  </Button>
-                </ImageList>
-              </>
-            </Stack>
-          </Box>
-        ) : (
-          // 건물 아이템 정보
-          <Box>
-            <Stack spacing={4}>
-              <TextField
-                name="hostName"
-                id="standard-number-busi"
-                label="이름"
-                type="search"
-                InputLabelProps={{
-                  shrink: true,
-                }}
-                variant="standard"
-                onChange={handleSpaceChangeState}
-                value={businessInfoState.hostName} // 상태와 입력 필드 연결
-              />
-              <TextField
-                name="phoneNumber"
-                id="standard-number"
-                label="전화번호"
-                type="number"
-                InputLabelProps={{
-                  shrink: true,
-                }}
-                variant="standard"
-                onChange={handleSpaceChangeState}
-                value={businessInfoState.phoneNumber}
-              />
-              <TextField
-                name="title"
-                id="standard-number-title"
-                label="건물명"
-                type="search"
-                InputLabelProps={{
-                  shrink: true,
-                }}
-                variant="standard"
-                onChange={handleSpaceChangeState}
-                value={businessInfoState.title}
-              />
-              <TextField
-                name="intro"
-                id="outlined-multiline-static"
-                label="건물 소개"
-                multiline
-                rows={10}
-                onChange={handleSpaceChangeState}
-                value={businessInfoState.intro}
-              />
-
-              {/* 위치 */}
-              <Stack spacing={16} direction="row">
+                    onChange={handleChangeState}
+                    value={authorInfoState.name}
+                  />
+                  <TextField
+                    name="phoneNumber"
+                    id="standard-number"
+                    label="전화번호"
+                    type="number"
+                    InputLabelProps={{
+                      shrink: true,
+                    }}
+                    variant="standard"
+                    onChange={handleChangeState}
+                    value={authorInfoState.phoneNumber}
+                  />
+                </Stack>
                 <TextField
-                  name="fee"
-                  id="standard-search-authPassword"
-                  label="대여료/1일"
-                  type="number"
+                  name="title"
+                  id="standard-author-title"
+                  label="작품명"
+                  type="search"
+                  InputLabelProps={{
+                    shrink: true,
+                  }}
                   variant="standard"
-                  style={{ width: 300 }} // 가로 너비를 자동으로 설정
-                  onChange={handleSpaceChangeState}
+                  onChange={handleChangeState}
+                  value={authorInfoState.title}
+                  style={{ marginBottom: 10 }}
                 />
-
                 <TextField
-                  name="size"
-                  id="standard-search-id"
-                  label="면적/평"
-                  type="number"
-                  variant="standard"
-                  onChange={handleSpaceChangeState}
-                  value={businessInfoState.size}
+                  name="explanation"
+                  id="outlined-multiline-static"
+                  label="작품 소개"
+                  multiline
+                  rows={10}
+                  onChange={handleChangeState}
+                  value={authorInfoState.explanation}
+                  style={{ marginBottom: 10 }}
                 />
-              </Stack>
-
-              <FormControl>
-                <FormLabel id="demo-controlled-radio-buttons-group" >
-                  주차 여부
-                </FormLabel>
-                <RadioGroup
-                  aria-labelledby="demo-controlled-radio-buttons-group"
-                  name="parking"
-                  value={String(businessInfoState.parking)}
-                  onChange={handleSpaceChangeState}
-
+                <Stack
+                  direction={"row"}
+                  spacing={21}
+                  style={{ alignItems: "center" }} // 가운데 정렬
                 >
-                  <FormControlLabel 
-                    value={"true"}
-                    control={<Radio           sx={{
-                      color: 'black', // 기본 색상을 검정색으로 설정
-                      '&.Mui-checked': {
-                        color: 'black', // 선택된 상태의 색상을 검정색으로 설정
-                      },
-                    }} />}
-                    label="가능"
+                  <Stack direction={"row"} spacing={5}>
+                    <span
+                      style={{
+                        color: "gray",
+                        fontSize: 15,
+                        whiteSpace: "nowrap",
+                        paddingTop: 7,
+                      }}
+                    >
+                      전시희망지역
+                    </span>
+                    <SelectSizesExample
+                      name="address"
+                      size={"default"}
+                      type={"location"}
+                      selectedLocation={authorInfoState.address}
+                      onLocationChange={handleChangeState}
+                    />
+                  </Stack>
+
+                  {/* 달력 */}
+                  <DateRangePickerValue
+                    format="YYYY-MM-DD"
+                    startDate={authorInfoState.startDate}
+                    endDate={authorInfoState.endDate}
+                    onDateChange={handleDateForAuthorChange}
+                    isEdit={false}
                   />
-                  <FormControlLabel
-                    value={"false"}
-                    control={<Radio           sx={{
-                      color: 'black', // 기본 색상을 검정색으로 설정
-                      '&.Mui-checked': {
-                        color: 'black', // 선택된 상태의 색상을 검정색으로 설정
-                      },
-                    }}/>}
-                    label="불가능"
+                </Stack>
+
+                {/* //! 사진 */}
+                <Stack
+                  direction={"row"}
+                  style={{ marginTop: 15, alignItems: "center" }}
+                >
+                  <span>사진을 첨부해주세요</span>
+                  <span style={{ fontSize: "10px", color: "gray" }}>
+                    (첫 사진이 대표사진이 되며, 8장까지 업로드 할 수 있습니다.)
+                  </span>
+                </Stack>
+                <>
+                  <ImageList
+                    sx={{ width: "100%", height: "auto" }}
+                    cols={3}
+                    rowHeight={170}
+                    style={{ marginBottom: 5 }}
+                  >
+                    {imgList.map((item) => (
+                      <ImageListItem key={item.id}>
+                        <img
+                          srcSet={`${item.previewUrl}`}
+                          src={`${item.previewUrl}`}
+                          alt={item.title}
+                          loading="lazy"
+                          style={{ maxWidth: 250, maxHeight: 170 }}
+                        />
+                        <IconButton
+                          color="primary"
+                          style={{ position: "absolute", top: "0", right: "0" }}
+                          aria-label="delete"
+                          size="large"
+                          onClick={() => {
+                            onImgDelete(item.id);
+                          }}
+                        >
+                          <DeleteIcon fontSize="inherit" />
+                        </IconButton>
+                      </ImageListItem>
+                    ))}
+
+                    <Button
+                      disabled={imgList.length >= 8}
+                      style={{
+                        width: imgList.length > 0 ? "250px" : "auto",
+                        height: imgList.length > 0 ? "200px" : "auto",
+                      }}
+                      variant="outlined"
+                      component="label"
+                      role={undefined}
+                      tabIndex={-1}
+                      onChange={onImgSelected}
+                      accept="image/*"
+                      type="file"
+                      startIcon={<CloudUploadIcon />}
+                    >
+                      사진 올리기
+                      <VisuallyHiddenInput type="file" />
+                    </Button>
+                  </ImageList>
+                </>
+              </Stack>
+            </Box>
+          ) : (
+            // 건물 아이템 정보
+            <Box>
+              <Stack spacing={2} style={{ marginLeft: 15, marginRight: 15 }}>
+                <Stack spacing={20} direction={"row"} style={{ marginTop: 10 }}>
+                  <TextField
+                    name="hostName"
+                    id="standard-number-busi"
+                    label="임대인"
+                    type="search"
+                    InputLabelProps={{
+                      shrink: true,
+                    }}
+                    variant="standard"
+                    onChange={handleSpaceChangeState}
+                    value={businessInfoState.hostName} // 상태와 입력 필드 연결
                   />
-                </RadioGroup>
-              </FormControl>
-              {/* 지역 */}
-              <SelectSizesExample
-                name="address"
-                size={"default"}
-                type={"location"}
-                selectedLocation={businessInfoState.address}
-                onLocationChange={handleSpaceChangeState}
-              />
-              {/* 달력 */}
-              <DateRangePickerValue
-                startDate={businessInfoState.startDate}
-                endDate={businessInfoState.endDate}
-                onDateChange={handleDateChange}
-                isEdit={false}
-              />
-              {/* //! 사진 올리기  */}
-              {/* <Button
+                  <TextField
+                    name="phoneNumber"
+                    id="standard-number"
+                    label="전화번호"
+                    type="number"
+                    InputLabelProps={{
+                      shrink: true,
+                    }}
+                    variant="standard"
+                    onChange={handleSpaceChangeState}
+                    value={businessInfoState.phoneNumber}
+                  />
+                </Stack>
+                <TextField
+                  name="title"
+                  id="standard-number-title"
+                  label="건물명"
+                  type="search"
+                  InputLabelProps={{
+                    shrink: true,
+                  }}
+                  variant="standard"
+                  onChange={handleSpaceChangeState}
+                  value={businessInfoState.title}
+                />
+                <TextField
+                  name="intro"
+                  id="outlined-multiline-static"
+                  label="건물 소개"
+                  multiline
+                  rows={10}
+                  onChange={handleSpaceChangeState}
+                  value={businessInfoState.intro}
+                />
+
+                {/* 위치 */}
+                <Stack spacing={20} direction="row">
+                  <TextField
+                    name="fee"
+                    id="standard-search-authPassword"
+                    label="대여료/1일"
+                    type="number"
+                    variant="standard"
+                    InputLabelProps={{
+                      shrink: true,
+                    }}
+                    style={{ width: 210 }} // 가로 너비를 자동으로 설정
+                    onChange={handleSpaceChangeState}
+                  />
+
+                  <TextField
+                    name="size"
+                    id="standard-search-id"
+                    label="면적/평"
+                    type="number"
+                    InputLabelProps={{
+                      shrink: true,
+                    }}
+                    variant="standard"
+                    onChange={handleSpaceChangeState}
+                    value={businessInfoState.size}
+                  />
+                </Stack>
+
+                <FormControl>
+                  <FormLabel id="demo-controlled-radio-buttons-group">
+                    주차 여부
+                  </FormLabel>
+                  <RadioGroup
+                    aria-labelledby="demo-controlled-radio-buttons-group"
+                    name="parking"
+                    value={String(businessInfoState.parking)}
+                    onChange={handleSpaceChangeState}
+                  >
+                    <FormControlLabel
+                      value={"true"}
+                      control={
+                        <Radio
+                          sx={{
+                            color: "black", // 기본 색상을 검정색으로 설정
+                            "&.Mui-checked": {
+                              color: "black", // 선택된 상태의 색상을 검정색으로 설정
+                            },
+                          }}
+                        />
+                      }
+                      label="가능"
+                    />
+                    <FormControlLabel
+                      value={"false"}
+                      control={
+                        <Radio
+                          sx={{
+                            color: "black", // 기본 색상을 검정색으로 설정
+                            "&.Mui-checked": {
+                              color: "black", // 선택된 상태의 색상을 검정색으로 설정
+                            },
+                          }}
+                        />
+                      }
+                      label="불가능"
+                    />
+                  </RadioGroup>
+                </FormControl>
+                {/* 지역 */}
+                <Stack
+                  direction={"row"}
+                  spacing={21}
+                  style={{ alignItems: "center" }} // 가운데 정렬
+                >
+                  <Stack direction={"row"} spacing={5}>
+                    <span
+                      style={{
+                        color: "gray",
+                        fontSize: 15,
+                        whiteSpace: "nowrap",
+                        paddingTop: 7,
+                      }}
+                    >
+                      전시희망지역
+                    </span>
+
+                    <SelectSizesExample
+                      name="address"
+                      size={"default"}
+                      type={"location"}
+                      selectedLocation={businessInfoState.address}
+                      onLocationChange={handleSpaceChangeState}
+                    />
+                  </Stack>
+                  {/* 달력 */}
+                  <DateRangePickerValue
+                    startDate={businessInfoState.startDate}
+                    endDate={businessInfoState.endDate}
+                    onDateChange={handleDateChange}
+                    isEdit={false}
+                  />
+                </Stack>
+                {/* //! 사진 올리기  */}
+                {/* <Button
                 component="label"
                 role={undefined}
                 variant="contained"
@@ -631,101 +697,102 @@ export default function MyVerticallyCenteredModal(props) {
                 사진 올리기
                 <VisuallyHiddenInput type="file" />
               </Button> */}
-              {/* //! 사진 */}
-              <Stack direction={"row"}>
-                <span>사진을 첨부해주세요</span>
-                <span style={{ fontSize: "10px", color: "gray", marginTop: 5 }}>
-                  (첫 사진이 대표사진이 되며, 최대 8장까지 업로드 할 수
-                  있습니다.)
-                </span>
-              </Stack>
-              <>
-                <ImageList
-                  sx={{ width: "100%", height: "auto" }}
-                  cols={3}
-                  rowHeight={170}
-                >
-                  {imgList.map((item) => (
-                    <ImageListItem key={item.id}>
-                      <img
-                        srcSet={`${item.previewUrl}`}
-                        src={`${item.previewUrl}`}
-                        alt={item.title}
-                        loading="lazy"
-                        style={{ maxWidth: 250, maxHeight: 170 }}
-                      />
-                      <IconButton
-                        color="primary"
-                        style={{ position: "absolute", top: "0", right: "0" }}
-                        aria-label="delete"
-                        size="large"
-                        onClick={() => {
-                          onImgDelete(item.id);
-                        }}
-                      >
-                        <DeleteIcon fontSize="inherit" />
-                      </IconButton>
-                    </ImageListItem>
-                  ))}
-
-                  <Button
-                    disabled={imgList.length >= 8}
-                    style={{
-                      width: imgList.length > 0 ? "250px" : "auto",
-                      height: imgList.length > 0 ? "200px" : "auto",
-                    }}
-                    variant="outlined"
-                    component="label"
-                    role={undefined}
-                    tabIndex={-1}
-                    onChange={onImgSelected}
-                    accept="image/*"
-                    type="file"
-                    startIcon={<CloudUploadIcon />}
+                {/* //! 사진 */}
+                <Stack direction={"row"}>
+                  <span>사진을 첨부해주세요</span>
+                  <span
+                    style={{ fontSize: "10px", color: "gray", marginTop: 5 }}
                   >
-                    사진 올리기
-                    <VisuallyHiddenInput type="file" />
-                  </Button>
-                </ImageList>
-              </>
-            </Stack>
-          </Box>
-        )}
+                    (첫 사진이 대표사진이 되며, 8장까지 업로드 할 수 있습니다.)
+                  </span>
+                </Stack>
+                <>
+                  <ImageList
+                    sx={{ width: "100%", height: "auto" }}
+                    cols={3}
+                    rowHeight={170}
+                  >
+                    {imgList.map((item) => (
+                      <ImageListItem key={item.id}>
+                        <img
+                          srcSet={`${item.previewUrl}`}
+                          src={`${item.previewUrl}`}
+                          alt={item.title}
+                          loading="lazy"
+                          style={{ maxWidth: 250, maxHeight: 170 }}
+                        />
+                        <IconButton
+                          color="primary"
+                          style={{ position: "absolute", top: "0", right: "0" }}
+                          aria-label="delete"
+                          size="large"
+                          onClick={() => {
+                            onImgDelete(item.id);
+                          }}
+                        >
+                          <DeleteIcon fontSize="inherit" />
+                        </IconButton>
+                      </ImageListItem>
+                    ))}
 
-        {enableDialog && (
-          <MuiDialog
-            title={"알림"}
-            content={"사진 한 장이상 첨부해주세요"}
-            result={true}
-            page={"login"}
-            parentClick={setEnableDialog}
-          />
-        )}
+                    <Button
+                      disabled={imgList.length >= 8}
+                      style={{
+                        width: imgList.length > 0 ? "250px" : "auto",
+                        height: imgList.length > 0 ? "200px" : "auto",
+                      }}
+                      variant="outlined"
+                      component="label"
+                      role={undefined}
+                      tabIndex={-1}
+                      onChange={onImgSelected}
+                      accept="image/*"
+                      type="file"
+                      startIcon={<CloudUploadIcon />}
+                    >
+                      사진 올리기
+                      <VisuallyHiddenInput type="file" />
+                    </Button>
+                  </ImageList>
+                </>
+              </Stack>
+            </Box>
+          )}
 
-        {enableInfoDialog && (
-          <MuiDialog
-            title={"알림"}
-            content={"정보를 다 입력해주세요."}
-            result={true}
-            page={"login"}
-            parentClick={setEnableInfoDialog}
-          />
-        )}
-      </Modal.Body>
-      <Modal.Footer>
-        <Button variant="dark" onClick={props.onHide}>
-          닫기
-        </Button>
+          {enableDialog && (
+            <MuiDialog
+              title={"알림"}
+              content={"사진 한 장이상 첨부해주세요"}
+              result={true}
+              page={"login"}
+              parentClick={setEnableDialog}
+            />
+          )}
 
-        <ButtonBoot
-          variant="dark"
-          onClick={submitAuthorItem}
-          disabled={!enableNextBtn}
-        >
-          등록하기
-        </ButtonBoot>
-      </Modal.Footer>
-    </Modal>
+          {enableInfoDialog && (
+            <MuiDialog
+              title={"알림"}
+              content={"정보를 다 입력해주세요."}
+              result={true}
+              page={"login"}
+              parentClick={setEnableInfoDialog}
+            />
+          )}
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="dark" onClick={props.onHide}>
+            닫기
+          </Button>
+
+          <ButtonBoot
+            variant="dark"
+            onClick={submitAuthorItem}
+            disabled={!enableNextBtn}
+          >
+            등록하기
+          </ButtonBoot>
+        </Modal.Footer>
+      </Modal>
     </ThemeProvider>
   );
 }

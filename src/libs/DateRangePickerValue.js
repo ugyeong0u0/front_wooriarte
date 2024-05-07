@@ -52,12 +52,19 @@ export default function DateRangePickerValue({
       <DemoContainer
         components={["SingleInputDateRangeField", "SingleInputDateRangeField"]}
       >
-        <SingleInputDateRangeField
-          format="YYYY.MM.DD"
-          label="전시 희망 날짜"
-          value={value}
-          onChange={handleDateChange}
-        />
+        <div className="SingleInputDateRangeFieldCustom">
+          <SingleInputDateRangeField
+            format="YYYY.MM.DD"
+            label="전시 희망 날짜"
+            value={value}
+            onChange={handleDateChange}
+            sx={{
+              ".MuiInputBase-root": {
+                paddingRight: 0, // 오른쪽 패딩 제거
+              },
+            }}
+          />
+        </div>
       </DemoContainer>
     </LocalizationProvider>
   );

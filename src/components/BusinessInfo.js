@@ -37,6 +37,7 @@ const BusinessInfo = ({
   whatUser,
   setDialog,
   setAuthState,
+  setEnableSuccessDialog,
 }) => {
   const [enableDialog, setEnableDialog] = useState(false); //  다이어로그
   const [falseDialog, setFalseDialog] = useState(false); //  에러 다이어로그 - 정보가 비어있음
@@ -179,7 +180,7 @@ const BusinessInfo = ({
               if (responseStatus) {
                 // 성공시 콜백
                 console.log("Signup successful, navigating back");
-                nav(`/loginauthor`); // 로그인 페이지로 가기
+                setEnableSuccessDialog(true);
               } else {
                 console.log("Signup 실패");
                 setDialog(true);
@@ -201,7 +202,7 @@ const BusinessInfo = ({
               if (responseStatus) {
                 // 성공시 콜백
                 console.log("Signup successful, navigating back");
-                nav(`/loginspace`); // 로그인 페이지로 가기
+                setEnableSuccessDialog(true);
               } else {
                 setDialog(true);
               }
