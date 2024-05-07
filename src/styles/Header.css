@@ -13,6 +13,7 @@
   left: 0;
   font-size: 50px;
   text-align: left;
+  font-family: 'NanumMyeongjo';
 }
 
 .line {
@@ -36,4 +37,10 @@
   border: 1px solid #000;
   border-radius: 0;
   margin-left: 10px;
+}
+
+@font-face {
+  font-family: 'NanumMyeongjo';
+  src: url(https://hangeul.pstatic.net/hangeul_static/webfont/NanumMyeongjo/NanumMyeongjo.eot);
+  src: url(https://hangeul.pstatic.net/hangeul_static/webfont/NanumMyeongjo/NanumMyeongjo.eot?#iefix) format("embedded-opentype"), url(https://hangeul.pstatic.net/hangeul_static/webfont/NanumMyeongjo/NanumMyeongjo.woff) format("woff"), url(https://hangeul.pstatic.net/hangeul_static/webfont/NanumMyeongjo/NanumMyeongjo.ttf) format("truetype");
 }
