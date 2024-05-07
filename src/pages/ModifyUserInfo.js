@@ -4,6 +4,8 @@ import { useEffect, useState } from "react";
 import Button from "../components/Button";
 import Stack from "@mui/material/Stack";
 import TextField from "@mui/material/TextField";
+// 레이아웃
+import Box from "@mui/material/Box";
 
 import "../styles/ModifyUserInfo.css";
 
@@ -14,6 +16,8 @@ import {
   onGetUserInfoHandler,
   onUpdateUserInfoHandler,
 } from "../apis/servicehandeler/ApiHandler"; // api
+// 클릭시 밑줄색
+import { ThemeProvider, createTheme } from "@mui/material";
 import { string } from "prop-types";
 
 const ModifyUserInfo = () => {
@@ -23,6 +27,41 @@ const ModifyUserInfo = () => {
   const [saveState, setSaveState] = useState(false);
   const [enableDialog, setEnableDialog] = useState(false); //  다이어로그
 
+  // 밑줄 색 바꾸기
+  const theme = createTheme({
+    typography: {
+      fontFamily: "Pretendard-Regular",
+    },
+    components: {
+      MuiInput: {
+        styleOverrides: {
+          underline: {
+            "&:before": {
+              borderBottom: "1px solid #e0e0e0",
+            },
+            "&:hover:not(.Mui-disabled):before": {
+              borderBottom: "2px solid rgba(0, 0, 0, 0.87)",
+            },
+            "&:after": {
+              borderBottom: "1px solid black",
+            },
+          },
+        },
+      },
+      // MuiInputLabel 컴포넌트에 대한 스타일 추가
+      MuiInputLabel: {
+        styleOverrides: {
+          // 'standard' variant를 사용하는 경우
+          root: {
+            "&.Mui-focused": {
+              // 포커스 상태일 때
+              color: "gray", // 레이블 색상을 검정으로 변경
+            },
+          },
+        },
+      },
+    },
+  });
   const setAuthStateChange = () => {
     let id = localStorage.getItem("userId");
     // 비밀번호 확인 api
@@ -42,6 +81,7 @@ const ModifyUserInfo = () => {
       }
     );
   };
+
   // 비밀번호 입력
   const [passwordState, setPasswordState] = useState("");
 
@@ -111,86 +151,127 @@ const ModifyUserInfo = () => {
   return (
     <div className="userInfoContainer">
       {authState === true && (
-        <div>
-          <h2>회원 정보 수정</h2>
-          <div>
-            <TextField
-              name="name"
-              id="standard-search-name"
-              label="이름"
-              type="search"
-              variant="standard"
-              onChange={handleChangeState}
-              value={infostate.name} // 상태와 입력 필드 연결
-            />
-          </div>
-          <div>
-            <TextField
-              name="id"
-              id="standard-search-id"
-              label="아이디"
-              type="search"
-              variant="standard"
-              onChange={handleChangeState}
-              value={infostate.id} // 상태와 입력 필드 연결
-            />
-          </div>
-          <div>
-            <TextField
-              name="phoneNumber"
-              id="standard-number"
-              label="연락처"
-              type="search"
-              variant="standard"
-              onChange={handleChangeState}
-              value={infostate.phoneNumber}
-            />
-          </div>
-          <div>
-            <TextField
-              name="email"
-              id="standard-search-email"
-              label="이메일"
-              type="search"
-              variant="standard"
-              onChange={handleChangeState}
-              value={infostate.email}
-            />
-          </div>
-
-          <button
-            type="button"
-            class="btn btn-dark"
-            onClick={saveUserInfo}
-            style={{ marginTop: 15 }}
-            disabled={!saveState}
+        <ThemeProvider theme={theme}> {/* ThemeProvider 적용 */}
+          <Box
+            sx={{
+              "& .MuiTextField-root": { m: 1, width: "25ch" },
+              marginTop: -10,
+              marginBottom: 0,
+              marginLeft: -10,
+              width: "100%",
+              display: "flex",
+              justifyContent: "center",
+            }}
           >
-            저장
-          </button>
-        </div>
-      )}
-      {authState === false && (
-        <div>
-          <Stack spacing={2} direction="row">
-            <TextField
-              name="pw"
-              id="standard-password-input"
-              label="비밀번호"
-              type="password"
-              autoComplete="current-password"
-              variant="standard"
-              onChange={handlePasswordChangeState}
-            />
+          <Stack spacing={2}>
+          <Box
+            sx={{
+              marginTop: 5,
+              marginBottom: 5,
+              width: "100%", // 박스 너비 설정
+              display: "flex", // flexbox 디스플레이 설정
+              justifyContent: "center", // 가로 중앙 정렬
+            }}
+          >
+            <h2>MyInfo</h2>
+          </Box>
+            <div>
+              <Stack spacing={3} direction="column" marginLeft={7.5}>
+                <div>
+                    <TextField
+                      name="name"
+                      id="standard-search-name"
+                      label="이름"
+                      type="search"
+                      variant="standard"
+                      onChange={handleChangeState}
+                      value={infostate.name} // 상태와 입력 필드 연결
+                    />
+                  </div>
+                  <div>
+                    <TextField
+                      name="id"
+                      id="standard-search-id"
+                      label="아이디"
+                      type="search"
+                      variant="standard"
+                      onChange={handleChangeState}
+                      value={infostate.id} // 상태와 입력 필드 연결
+                    />
+                  </div>
+                  <div>
+                    <TextField
+                      name="phoneNumber"
+                      id="standard-number"
+                      label="연락처"
+                      type="search"
+                      variant="standard"
+                      onChange={handleChangeState}
+                      value={infostate.phoneNumber}
+                    />
+                  </div>
+                  <div>
+                    <TextField
+                      name="email"
+                      id="standard-search-email"
+                      label="이메일"
+                      type="search"
+                      variant="standard"
+                      onChange={handleChangeState}
+                      value={infostate.email}
+                    />
+                  </div>
+                
 
-            <button
-              type="button"
-              class="btn btn-dark"
-              onClick={setAuthStateChange}
-            >
-              확인
-            </button>
-          </Stack>
-        </div>
+                <button
+                  type="button"
+                  class="btn btn-dark"
+                  onClick={saveUserInfo}
+                  style={{
+                    border: "1px solid #000",
+                    borderRadius: "0",
+                    height: "40px",
+                  }}
+                  disabled={!saveState}
+                >
+                  저장
+                </button>
+                </Stack>
+                </div>
+              </Stack>
+          </Box>
+        </ThemeProvider>
+      )}
+
+      {authState === false && (
+        <ThemeProvider theme={theme}> 
+          <div>
+            <Stack spacing={2} direction="row">
+              <TextField
+                name="pw"
+                id="standard-password-input"
+                label="비밀번호"
+                type="password"
+                autoComplete="current-password"
+                variant="standard"
+                onChange={handlePasswordChangeState}
+              />
+
+              <button
+                type="button"
+                class="btn btn-dark"
+                style={{
+                  border: "1px solid #000",
+                  borderRadius: "0",
+                  height: "40px",
+                }}
+                onClick={setAuthStateChange}
+              >
+                확인
+              </button>
+            </Stack>
+          </div>
+        </ThemeProvider>
       )}
       {enableDialog && (
         <MuiDialog
