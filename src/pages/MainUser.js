@@ -173,12 +173,18 @@ const MainUser = () => {
               <ImageList
                 sx={{ maxWidth: "100%", height: "auto", overflowY: "hidden" }}
                 cols={3}
-                gap={20} // 이미지 사이의 간격 설정
+                gap={100} // 이미지 사이의 간격 설정
               >
                 {visibleData.map((item) => (
                   <ImageListItem
                     key={item.exhibitId}
                     onClick={() => handleItemInfo(item.exhibitId)}
+                    style={{
+                      height: 550,
+                      display: 'inline',
+                      lexDirection: 'column', // 자식 요소를 세로 방향으로 정렬
+                      justifyContent: 'center', // 세로 방향 중앙 정렬
+                    }}    
                   >
                     <img
                       src={`${item.url}`}
@@ -207,11 +213,12 @@ const MainUser = () => {
                           <div></div>
                           <span
                             style={{
+                              width: 281,
                               fontWeight: "bold",
-                              fontSize: "30px",
+                              fontSize: "24px",
                               textAlign: "left", // 왼쪽 정렬
                               display: "block", // span을 블록 요소로 만들어 줄 전체를 차지하게 함
-                              width: "100%", // 너비 100%로 설정
+                              whiteSpace: "pre-wrap",
                             }}
                           >
                             {item.name}
@@ -223,7 +230,6 @@ const MainUser = () => {
                           <span
                             style={{
                               color: "gray",
-
                               fontSize: "15px",
                               textAlign: "left", // 왼쪽 정렬
                               display: "block", // span을 블록 요소로 만들어 줄 전체를 차지하게 함
