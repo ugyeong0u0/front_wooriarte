@@ -3,12 +3,12 @@
 import axios from "axios";
 import { jsx } from "react/jsx-runtime";
 // 변수명 임시 지정
-const DOMAIN =
-  "http://wooriarte-front-ALB-232140650.ap-northeast-2.elb.amazonaws.com:80/api"; // TODO: 도메인 주소 확인 필요
+const DOMAIN = "http://localhost:8080/api"; // TODO: 도메인 주소 확인 필요
 
 //?----------------------------- 작가 url
 // 로그인
 const LoginAuthor_URL = () => `${DOMAIN}/project-managers/login`; //! 수정 완
+const LoginJwtAuthor_URL = () => `${DOMAIN}/project-managers/jwtlogin`; //! 수정 완
 // 회원가입
 const SignupAuthor_URL = () => `${DOMAIN}/project-managers`; //! 수정 완
 
@@ -74,6 +74,25 @@ export const LoginAuthorRequest = async ({ id, pwd }) => {
   console.log("리퀘안" + id + pwd);
   const result = await axios
     .post(LoginAuthor_URL(), { id: id, pwd: pwd })
+    .then((response) => {
+      console.log(response.status);
+      return response; // 응답 데이터를 그대로 반환
+    })
+    .catch((error) => {
+      console.log("실패" + error);
+      if (!error.response || !error.response.data) return null; // 에러 응답이 없거나 데이터가 없는 경우 null 반환
+      return error.response; // 에러 응답의 데이터 반환
+      // 에러 DTO api 반환시
+    });
+  // console.log("result" + result.data);
+  return result;
+};
+//!----------------------------- 작가 jwt로그인
+export const LoginJwtAuthorRequest = async ({ id, pwd }) => {
+  console.log("작가 LoginRequest실행");
+  console.log("리퀘안" + id + pwd);
+  const result = await axios
+    .post(LoginJwtAuthor_URL(), { id: id, pwd: pwd })
     .then((response) => {
       console.log(response.status);
       return response; // 응답 데이터를 그대로 반환

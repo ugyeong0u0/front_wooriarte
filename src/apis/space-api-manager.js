@@ -3,11 +3,11 @@
 import axios from "axios";
 import { jsx } from "react/jsx-runtime";
 // 변수명 임시 지정
-const DOMAIN =
-  "http://wooriarte-front-ALB-232140650.ap-northeast-2.elb.amazonaws.com:80/api"; // TODO: 도메인 주소 확인 필요
+const DOMAIN = "http://localhost:8080/api"; // TODO: 도메인 주소 확인 필요
 
 //?----------------------------- 공간대여자 url
 const LoginSpace_URL = () => `${DOMAIN}/space-rentals/login`; //! url수정 완
+const LoginJwtSpace_URL = () => `${DOMAIN}/space-rentals/jwtlogin`; //! url수정 완
 const SignupSpace_URL = () => `${DOMAIN}/space-rentals`; //! 수정 완
 const FindSpaceId_URL = () => `${DOMAIN}/space-rentals/find-id`;
 
@@ -65,6 +65,25 @@ export const LoginSpaceRequest = async ({ id, pwd }) => {
   console.log("리퀘안" + id + pwd);
   const result = await axios
     .post(LoginSpace_URL(), { id: id, pwd: pwd })
+    .then((response) => {
+      console.log(response.status);
+      return response; // 응답 데이터를 그대로 반환
+    })
+    .catch((error) => {
+      console.log("실패" + error);
+      if (!error.response || !error.response.data) return null; // 에러 응답이 없거나 데이터가 없는 경우 null 반환
+      return error.response; // 에러 응답의 데이터 반환
+      // 에러 DTO api 반환시
+    });
+  // console.log("result" + result.data);
+  return result;
+};
+//!----------------------------- 공간 jwt로그인
+export const LoginJwtSpaceRequest = async ({ id, pwd }) => {
+  console.log("공간 LoginRequest실행");
+  console.log("리퀘안" + id + pwd);
+  const result = await axios
+    .post(LoginJwtSpace_URL(), { id: id, pwd: pwd })
     .then((response) => {
       console.log(response.status);
       return response; // 응답 데이터를 그대로 반환

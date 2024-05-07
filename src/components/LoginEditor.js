@@ -4,9 +4,18 @@ import { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 
 // api
-import { onLoginButtonHandler } from "../apis/servicehandeler/ApiHandler";
-import { onLoginAuthorHandler } from "../apis/servicehandeler/AuthorApiHandler";
-import { onLoginSpaceHandler } from "../apis/servicehandeler/SpaceApiHandler";
+import {
+  onLoginButtonHandler,
+  onLogInJwtRequestHandler,
+} from "../apis/servicehandeler/ApiHandler";
+import {
+  onLoginAuthorHandler,
+  onLoginJwtAuthorHandler,
+} from "../apis/servicehandeler/AuthorApiHandler";
+import {
+  onLoginSpaceHandler,
+  onLoginSpaceJwtHandler,
+} from "../apis/servicehandeler/SpaceApiHandler";
 
 import { loginContext } from "../App";
 import * as React from "react";
@@ -14,7 +23,7 @@ import TextField from "@mui/material/TextField";
 import Box from "@mui/material/Box";
 import Stack from "@mui/material/Stack";
 import Button from "@mui/material/Button";
-import {ThemeProvider, createTheme } from '@mui/material';
+import { ThemeProvider, createTheme } from "@mui/material";
 
 import MuiDialog from "../libs/MuiDialog";
 // whatUser 프롭은 개인, 작가, 프로젝트 매니저 알기 위함 -> todo("부모 컴포넌트에서 값 나누기")
@@ -38,24 +47,24 @@ const LoginEditor = ({ whatUser }) => {
     });
   };
 
-  // 비밀번호입력란 설정!!!!! ******************************************* 
+  // 비밀번호입력란 설정!!!!! *******************************************
   const theme = createTheme({
-    typography:{
-      fontFamily: 'Pretendard-Regular'
+    typography: {
+      fontFamily: "Pretendard-Regular",
     },
     components: {
       MuiInput: {
         styleOverrides: {
           underline: {
-            '&:before': {
-              borderBottom: '1px solid #e0e0e0',
+            "&:before": {
+              borderBottom: "1px solid #e0e0e0",
             },
-            '&:hover:not(.Mui-disabled):before': {
-              borderBottom: '2px solid rgba(0, 0, 0, 0.87)',
+            "&:hover:not(.Mui-disabled):before": {
+              borderBottom: "2px solid rgba(0, 0, 0, 0.87)",
             },
-            '&:after': {
-              borderBottom: '1px solid black',
-            }
+            "&:after": {
+              borderBottom: "1px solid black",
+            },
           },
         },
       },
@@ -64,9 +73,10 @@ const LoginEditor = ({ whatUser }) => {
         styleOverrides: {
           // 'standard' variant를 사용하는 경우
           root: {
-            '&.Mui-focused': { // 포커스 상태일 때
-              color: 'gray', // 레이블 색상을 검정으로 변경
-            }
+            "&.Mui-focused": {
+              // 포커스 상태일 때
+              color: "gray", // 레이블 색상을 검정으로 변경
+            },
           },
         },
       },
@@ -105,7 +115,7 @@ const LoginEditor = ({ whatUser }) => {
       switch (whatUser) {
         case "user": {
           // 유저 로그인
-          onLoginButtonHandler({ id: state.id, pw: state.pw }, (result) => {
+          onLogInJwtRequestHandler({ id: state.id, pw: state.pw }, (result) => {
             if (result) {
               changeUserLoginState(true);
               let userType = localStorage.getItem("userId");
@@ -125,7 +135,7 @@ const LoginEditor = ({ whatUser }) => {
           return;
         }
         case "space": {
-          onLoginSpaceHandler({ id: state.id, pwd: state.pw }, (result) => {
+          onLoginSpaceJwtHandler({ id: state.id, pwd: state.pw }, (result) => {
             if (result) {
               changeUserLoginState(true);
               let userType = localStorage.getItem("userId");
@@ -145,7 +155,7 @@ const LoginEditor = ({ whatUser }) => {
         }
         case "author": {
           // 작가 로그인
-          onLoginAuthorHandler({ id: state.id, pwd: state.pw }, (result) => {
+          onLoginJwtAuthorHandler({ id: state.id, pwd: state.pw }, (result) => {
             if (result) {
               changeUserLoginState(true);
               let userType = localStorage.getItem("userId");
@@ -279,7 +289,7 @@ const LoginEditor = ({ whatUser }) => {
         autoComplete="off"
       >
         <div>
-        <Stack spacing={0} direction="row">
+          <Stack spacing={0} direction="row">
             <Button color="inherit" size="medium" onClick={goFindId}>
               아이디 찾기
             </Button>
@@ -289,7 +299,7 @@ const LoginEditor = ({ whatUser }) => {
           </Stack>
         </div>
       </Box>
-      
+
       <div>
         <Box
           sx={{
@@ -304,7 +314,12 @@ const LoginEditor = ({ whatUser }) => {
         >
           <button
             type="button"
-            style={{ border: '1px solid #000', borderRadius: '0', width: '100px', height: '40px' }}
+            style={{
+              border: "1px solid #000",
+              borderRadius: "0",
+              width: "100px",
+              height: "40px",
+            }}
             class="btn btn-dark"
             onClick={registerClick}
           >
@@ -312,7 +327,12 @@ const LoginEditor = ({ whatUser }) => {
           </button>
           <button
             type="button"
-            style={{ border: '1px solid #000', borderRadius: '0', width: '100px', height: '40px' }}
+            style={{
+              border: "1px solid #000",
+              borderRadius: "0",
+              width: "100px",
+              height: "40px",
+            }}
             class="btn btn-dark"
             onClick={handleLoginClick}
           >

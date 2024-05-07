@@ -50,6 +50,8 @@ const Header = ({ isLoginState, isLoginHandler }) => {
     nav(`/`); // 예매자 홈으로 가기
     localStorage.removeItem("userId"); // 유저 id 지우기
     localStorage.removeItem("userType"); // 유저 타입 지우기
+    localStorage.removeItem("accessToken"); // 유저 타입 지우기
+    localStorage.removeItem("refreshToken"); // 유저 타입 지우기
     isLoginHandler(false);
   };
 
