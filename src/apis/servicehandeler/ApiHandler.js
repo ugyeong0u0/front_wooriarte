@@ -11,6 +11,7 @@ import {
   findPassByEmailRequest,
   confirmEmailAuthRequest,
   resetPassRequest,
+  LogInJwtRequest,
 } from "../api-manger";
 
 //!----------------------------유저 로그인
@@ -41,6 +42,38 @@ export const onLoginButtonHandler = ({ id, pw }, callback) => {
   };
   LogInRequest({ id, pw }).then((response) =>
     SignInResponse(response, callback)
+  );
+};
+//!----------------------------유저 jwt 로그인
+// 유저 로그인 결과값
+export const LogInJwtResponse = (response, callback) => {
+  if (!response) {
+    callback(false);
+    return;
+  }
+  if (response.status >= 200 && response.status < 300) {
+    console.log("유저 id : " + response.data);
+    // 임시로 localhost저장
+    localStorage.setItem("userId", response.data.entityId);
+    localStorage.setItem("accessToken", response.data.accessToken); // todo
+    localStorage.setItem("refreshToken", response.data.refreshToken); // todo
+    localStorage.setItem("userType", "user"); // 유저 타입으로 저장
+    callback(true);
+    return;
+  } else {
+    callback(false);
+    console.log(response.status);
+    return;
+  }
+};
+// 유저 로그인 editor에서 로그인 누를 시
+export const onLogInJwtRequestHandler = ({ id, pw }, callback) => {
+  const requestBody = {
+    id,
+    pw,
+  };
+  LogInJwtRequest({ id, pw }).then((response) =>
+    LogInJwtResponse(response, callback)
   );
 };
 //!----------------------------유저 회원가입

@@ -25,6 +25,7 @@ import {
   deleteAuthorPhoto,
   getAuthorPhoto,
   updateAuthorPhoto,
+  LoginJwtAuthorRequest,
 } from "../author-api-manager";
 
 //!----------------------------작가 로그인
@@ -56,6 +57,39 @@ export const onLoginAuthorHandler = ({ id, pwd }, callback) => {
   };
   LoginAuthorRequest({ id, pwd }).then((response) =>
     LoginAuthorResponse(response, callback)
+  );
+};
+//!----------------------------작가 jwt 로그인
+
+export const LoginJwtAuthorResponse = (response, callback) => {
+  if (!response) {
+    callback(false);
+    return;
+  }
+  if (response.status >= 200 && response.status < 300) {
+    console.log("작가 id : " + response.data);
+    // 임시로 localhost저장
+    localStorage.setItem("userId", response.data.entityId);
+    localStorage.setItem("accessToken", response.data.accessToken); // todo
+    localStorage.setItem("refreshToken", response.data.refreshToken); // todo
+    localStorage.setItem("userType", "author"); // 유저 타입으로 저장
+
+    callback(true);
+    return;
+  } else {
+    callback(false);
+    console.log(response.status);
+    return;
+  }
+};
+// 유저 로그인 editor에서 로그인 누를 시
+export const onLoginJwtAuthorHandler = ({ id, pwd }, callback) => {
+  const requestBody = {
+    id,
+    pwd,
+  };
+  LoginJwtAuthorRequest({ id, pwd }).then((response) =>
+    LoginJwtAuthorResponse(response, callback)
   );
 };
 //!----------------------------작가 회원가입

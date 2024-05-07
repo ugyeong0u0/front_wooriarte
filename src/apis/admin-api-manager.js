@@ -1,8 +1,8 @@
 import axios from "axios";
 import { jsx } from "react/jsx-runtime";
 // 변수명 임시 지정
-const DOMAIN =
-  "http://localhost:8080/api"; // TODO: 도메인 주소 확인 필요
+
+const DOMAIN = "https://www.wooriarte.store/api"; // TODO: 도메인 주소 확인 필요
 
 //!--------------api
 // 모든 매칭 조회
@@ -31,6 +31,9 @@ const UpdateExhibit_URL = ({ id }) => `${DOMAIN}/exhibits/admin/${id}`;
 // 모든 아이템 보기 - 승인 거절용
 const GetAllItemAccDeny_URL = () => `${DOMAIN}/admin/manage-item-approval`;
 
+// 어드민 로그인
+const AdminLogin_URL = () => `${DOMAIN}/admin/jwtlogin`;
+
 // todo 아이템 승인 거절
 const AcceptDenySingleItem_URL = ({ id }) =>
   `${DOMAIN}/admin/matchings/${id}/exhibits`;
@@ -43,6 +46,26 @@ const AcceptForSpace_URL = ({ id }) =>
 const DenyForAuthor_URL = ({ id }) =>
   `${DOMAIN}/admin/refuse-project-item/${id}`;
 const DenyForSpace_URL = ({ id }) => `${DOMAIN}/admin/refuse-space-item/${id}`;
+
+//!----------------------------- 어드민 로그인
+export const adminLogIn = async ({ id, pw }) => {
+  console.log("어드민 LoginRequest실행");
+  console.log("리퀘안" + id + pw);
+  const result = await axios
+    .post(AdminLogin_URL(), { id: id, pwd: pw })
+    .then((response) => {
+      console.log(response.status);
+      return response; // 응답 데이터를 그대로 반환
+    })
+    .catch((error) => {
+      console.log("실패" + error);
+      if (!error.response || !error.response.data) return null; // 에러 응답이 없거나 데이터가 없는 경우 null 반환
+      return error.response; // 에러 응답의 데이터 반환
+      // 에러 DTO api 반환시
+    });
+  // console.log("result" + result.data);
+  return result;
+};
 
 // //!----------------------------관리자 모든 매칭 조회
 export const getAllMatchingsForAdmin = async () => {

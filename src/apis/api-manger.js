@@ -1,11 +1,11 @@
 import axios from "axios";
 import { jsx } from "react/jsx-runtime";
 // 변수명 임시 지정
-const DOMAIN =
-  "http://localhost:8080/api"; // TODO: 도메인 주소 확인 필요
+const DOMAIN = "https://www.wooriarte.store/api"; // TODO: 도메인 주소 확인 필요!!!!
 
 //?----------------------------- 유저 url
 const LoginSpace_URL = () => `${DOMAIN}/users/login`; //! 로그인 수정완
+const LoginJwtSpace_URL = () => `${DOMAIN}/users/jwtlogin`; //! 로그인 수정완
 const SignupUser_URL = () => `${DOMAIN}/users`; //! 회원가입 수정완
 const FindUserId_URL = () => `${DOMAIN}/users/find-id`; //! 아이디 찾기 수정완
 const FindPassId_URL = () => `${DOMAIN}/user/find-pw`; // 비번 찾기
@@ -26,6 +26,25 @@ export const LogInRequest = async ({ id, pw }) => {
   console.log("리퀘안" + id + pw);
   const result = await axios
     .post(LoginSpace_URL(), { id: id, pwd: pw })
+    .then((response) => {
+      console.log(response.status);
+      return response; // 응답 데이터를 그대로 반환
+    })
+    .catch((error) => {
+      console.log("실패" + error);
+      if (!error.response || !error.response.data) return null; // 에러 응답이 없거나 데이터가 없는 경우 null 반환
+      return error.response; // 에러 응답의 데이터 반환
+      // 에러 DTO api 반환시
+    });
+  // console.log("result" + result.data);
+  return result;
+};
+//!----------------------------- 유저 jwt 로그인
+export const LogInJwtRequest = async ({ id, pw }) => {
+  console.log("유저 jwt LoginRequest실행");
+  console.log("리퀘안" + id + pw);
+  const result = await axios
+    .post(LoginJwtSpace_URL(), { id: id, pwd: pw })
     .then((response) => {
       console.log(response.status);
       return response; // 응답 데이터를 그대로 반환
