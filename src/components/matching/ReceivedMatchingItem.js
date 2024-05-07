@@ -38,7 +38,7 @@ const ReceivedMatchingItem = ({ text, matchingId, setUpdateCount, id }) => {
       <Stack
         spacing={0.9}
         direction="row"
-        sx={{ display: "flex", justifyContent: "space-between", width: "90%" }}
+        sx={{ display: "flex", justifyContent: "space-between", width: "100%" }}
       >
         <span> {text}</span>
         <div style={{ display: "flex", alignItems: "center" }}>

@@ -109,26 +109,27 @@ const MypageUser = () => {
           value={value}
           display="flex"
           onChange={handleChange}
-          textColor="black"
           sx={{
             borderRight: 1,
             borderColor: "black",
             '.Mui-selected': {
               fontWeight: 'bold',
+              color: "black !important"
             },
             '.MuiTab-root': {
               justifyContent: "center",
               textTransform: "none",
               alignItems: "flex-start",
               padding: "0 0",
+              color: "gray"
             },
             flex: 2,
           }}
           TabIndicatorProps={{ style: { display: "none" } }}
         >
-          <Tab style={{fontSize: "16px"}} label="개인정보수정" {...a11yProps(0)} />
-          <Tab style={{fontSize: "16px"}} label="예매내역 " {...a11yProps(1)} />
-          <Tab style={{fontSize: "16px"}} label="탈퇴하기" {...a11yProps(2)} />
+          <Tab style={{fontSize: "20px", margin: "10px 0"}} label="개인정보수정" {...a11yProps(0)} />
+          <Tab style={{fontSize: "20px", margin: "10px 0"}} label="예매내역 " {...a11yProps(1)} />
+          <Tab style={{fontSize: "20px", margin: "10px 0"}} label="탈퇴하기" {...a11yProps(2)} />
         </Tabs>
         {/* 개인정보수정 */}
         <Box sx={{ flex: 8, display: 'flex', flexDirection: 'column' }}>

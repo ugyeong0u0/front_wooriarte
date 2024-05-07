@@ -20,22 +20,21 @@ const Matching = () => {
   const [updateCount, setUpdateCount] = useState(0);
 
   return (
-    <React.Fragment>
-      <CssBaseline />
-      <Container maxWidth="80%">
-        <Box sx={{ bgcolor: "#00000000", width: "86%" }}>
+    <div className="matching">
+      <Container>
+        <Box sx={{display: "flex", flexDirection: "column", width: "100%"}}>
           <h2>
             <span style={{ fontSize: 22, fontWeight: "bold"}}>받은 제안</span>
           </h2>
           <div
-            style={{ backgroundColor: "white", width: 300, height: 1 }}
+            style={{ backgroundColor: "white"}}
           ></div>
           <Stack
             alignItems="center" // 세로 방향으로 중앙 정렬
             spacing={2}
             sx={{
               display: "flex",
-
+              width: "100%",
               marginBottom: 3,
             }}
             // 요소들을 가로 방향으로 배치
@@ -53,7 +52,7 @@ const Matching = () => {
           <Stack
             alignItems="center" // 세로 방향으로 중앙 정렬
             spacing={2}
-            style={{ display: "flex", marginTop: 5, marginBottom: 20 }}
+            style={{ display: "flex" }}
           >
             {/* 대기 매칭 리스트  */}
             <WaitingMatchingList />
@@ -73,7 +72,7 @@ const Matching = () => {
           </Stack>
         </Box>
       </Container>
-    </React.Fragment>
+    </div>
   );
 };
 export default Matching;

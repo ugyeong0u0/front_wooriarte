@@ -57,10 +57,10 @@ const AuthorMyPage = () => {
     <div
       className="parentContainer"
       style={{
-        width: "100%",
-        height: "80%",
-        marginTop: 50,
-        marginLeft: 70,
+        width: "70%",
+        marginLeft: "15%",
+        marginTop: 40,
+        marginBottom: 40,
       }}
     >
       <Box
@@ -69,67 +69,58 @@ const AuthorMyPage = () => {
           bgcolor: "background.paper",
           display: "flex",
           height: "100%",
-          width: "100%",
-          justifyContent: "flex-start",
+          width: "auto",
         }}
       >
         <Tabs
           orientation="vertical"
-          height= "80%"
           variant="scrollable"
           value={value}
+          display="flex"
           onChange={handleChange}
-          aria-label="Vertical tabs example"
           sx={{
             borderRight: 1,
-            borderColor: "divider",
-            width: "190px", // Tabs 너비 고정
-            minWidth: "190px", // 최소 너비 설정
-            marginLeft: 22, // 왼쪽에 20px 공간 추가
-            "& .MuiTab-textColorSecondary": {
-              // 선택된 탭의 스타일
-              color: "black", // 선택된 탭의 글자 색상 변경
+            borderColor: "black",
+            '.Mui-selected': {
+              fontWeight: 'bold',
+              color: "black !important"
             },
-            "&& .MuiTab-root": {
-              ///탭 왼쪽정렬
-              alignItems: "baseline",
+            '.MuiTab-root': {
+              justifyContent: "center",
+              textTransform: "none",
+              alignItems: "flex-start",
+              padding: "0 0",
+              color: "gray"
             },
+            flex: 2,
           }}
-          TabIndicatorProps={{
-            style: {
-              backgroundColor: "white",
-            },
-          }}
+          TabIndicatorProps={{ style: { display: "none" } }}
         >
-          <Tab
-            label="아이템 관리"
-            {...a11yProps(0)}
-            sx={{ fontSize: 22, "&.Mui-selected": { color: "black", fontWeight: "bold"}, marginTop: 1, marginBottom: 1}}
-          />
-          <Tab
-            label="매칭신청 현황"
-            {...a11yProps(1)}
-            sx={{ fontSize: 22, "&.Mui-selected": { color: "black", fontWeight: "bold" }, marginTop: 1, marginBottom: 1 }}
-          />
-          <Tab
-            label="개인정보 수정"
-            {...a11yProps(2)}
-            sx={{ fontSize: 22, "&.Mui-selected": { color: "black", fontWeight: "bold" }, marginTop: 1, marginBottom: 1 }}
-          />
-          <Tab
-            label="회원탈퇴"
-            {...a11yProps(3)}
-            sx={{ fontSize: 22, "&.Mui-selected": { color: "black", fontWeight: "bold" } }}
-          />
+          <Tab style={{fontSize: "20px", margin: "10px 0"}} label="아이템 관리" {...a11yProps(0)} />
+          <Tab style={{fontSize: "20px", margin: "10px 0"}} label="매칭신청 현황" {...a11yProps(1)} />
+          <Tab style={{fontSize: "20px", margin: "10px 0"}} label="개인정보 수정" {...a11yProps(2)} />
+          <Tab style={{fontSize: "20px", margin: "10px 0"}} label="탈퇴하기" {...a11yProps(3)} />
         </Tabs>
-
+        <Box sx={{ flex: 8, display: 'flex', flexDirection: 'column' }}>
         <TabPanel value={value} index={0}>
           {/*todo 사업자용 만들기 아이템관리  */}
           {/* <MyPosterForBusiness whatType={"author"} /> */}
           <BusinessItemList whatType={"author"} />
-
-          {/* 개인정보 수정 */}
         </TabPanel>
+
+        <TabPanel
+          value={value}
+          index={1}
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            height: "100%", // 필요한 높이 지정
+            width: "100%", // 필요한 너비 지정
+          }}
+        >
+          <Matching/>
+        </TabPanel>
+
         <TabPanel
           value={value}
           index={2}
@@ -138,33 +129,17 @@ const AuthorMyPage = () => {
             flexDirection: "column",
             justifyContent: "center",
             alignItems: "center",
-            marginBottom: 180,
-            marginTop: 30,
-            marginLeft: -150,
-            height: "200%", // 필요한 높이 지정
-            width: "100%", // 필요한 너비 지정
+            height: "100%",
+            width: "100%",
           }}
         >
           <ModifyAuthorInfo />
         </TabPanel>
-        <TabPanel
-          value={value}
-          index={1}
-          style={{
-            display: "flex",
-            flexDirection: "column",
 
-            marginBottom: 180,
-
-            height: "100%", // 필요한 높이 지정
-            width: "100%", // 필요한 너비 지정
-          }}
-        >
-          <Matching />
-        </TabPanel>
         <TabPanel value={value} index={3}>
           <WithDrawalUser />
         </TabPanel>
+        </Box>
       </Box>
     </div>
   );
