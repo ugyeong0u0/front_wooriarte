@@ -15,6 +15,9 @@ import BusinessItemList from "../../components/business/BusinessItemList";
 import WithDrawalUser from "../../components/user/Withdrawal";
 
 import { loginContext } from "../../App";
+import { useEffect } from "react";
+
+import MuiDialog from "../../libs/MuiDialog";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -53,20 +56,29 @@ const SpaceMyPage = () => {
   const [value, setValue] = React.useState(0);
 
   const setIsLoginStateState = useContext(loginContext);
+  const [enableDialog, setEnableDialog] = React.useState(false); //  다이어로그
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
 
+  // 유효한 회원인지 확인
+  useEffect(() => {
+    let userType = localStorage.getItem("userType");
+    if (userType !== "space") {
+      setEnableDialog(true);
+    }
+  }, []);
+
   return (
     <div
-    className="parentContainer"
-    style={{
-      width: "70%",
-      marginLeft: "15%",
-      marginTop: 40,
-      marginBottom: 40,
-    }}
+      className="parentContainer"
+      style={{
+        width: "70%",
+        marginLeft: "15%",
+        marginTop: 40,
+        marginBottom: 40,
+      }}
     >
       <Box
         sx={{
@@ -86,30 +98,46 @@ const SpaceMyPage = () => {
           sx={{
             borderRight: 1,
             borderColor: "black",
-            '.Mui-selected': {
-              fontWeight: 'bold',
-              color: "black !important"
+            ".Mui-selected": {
+              fontWeight: "bold",
+              color: "black !important",
             },
-            '.MuiTab-root': {
+            ".MuiTab-root": {
               justifyContent: "center",
               textTransform: "none",
               alignItems: "flex-start",
               padding: "0 0",
-              color: "gray"
+              color: "gray",
             },
             flex: 2,
           }}
           TabIndicatorProps={{ style: { display: "none" } }}
         >
-          <Tab style={{fontSize: "20px", margin: "10px 0"}} label="아이템 관리" {...a11yProps(0)} />
-          <Tab style={{fontSize: "20px", margin: "10px 0"}} label="매칭신청 현황" {...a11yProps(1)} />
-          <Tab style={{fontSize: "20px", margin: "10px 0"}} label="개인정보 수정" {...a11yProps(2)} />
-          <Tab style={{fontSize: "20px", margin: "10px 0"}} label="탈퇴하기" {...a11yProps(3)} />
+          <Tab
+            style={{ fontSize: "20px", margin: "10px 0" }}
+            label="아이템 관리"
+            {...a11yProps(0)}
+          />
+          <Tab
+            style={{ fontSize: "20px", margin: "10px 0" }}
+            label="매칭신청 현황"
+            {...a11yProps(1)}
+          />
+          <Tab
+            style={{ fontSize: "20px", margin: "10px 0" }}
+            label="개인정보 수정"
+            {...a11yProps(2)}
+          />
+          <Tab
+            style={{ fontSize: "20px", margin: "10px 0" }}
+            label="탈퇴하기"
+            {...a11yProps(3)}
+          />
         </Tabs>
-        <Box sx={{ flex: 8, display: 'flex', flexDirection: 'column' }}>
-        <TabPanel value={value} index={0}>
-          {/*todo 사업자용 만들기 아이템관리  */}
-          {/* <Stack
+        <Box sx={{ flex: 8, display: "flex", flexDirection: "column" }}>
+          <TabPanel value={value} index={0}>
+            {/*todo 사업자용 만들기 아이템관리  */}
+            {/* <Stack
             justifyContent="center" // 가로 방향으로 중앙 정렬
             alignItems="center" // 세로 방향으로 중앙 정렬
             style={{ height: "100vh" }}
@@ -131,44 +159,53 @@ const SpaceMyPage = () => {
             </ImageList>
           </Stack> */}
 
-          <BusinessItemList whatType={"space"} />
+            <BusinessItemList whatType={"space"} />
 
-          {/* 개인정보 수정 */}
-        </TabPanel>
-        <TabPanel
-          value={value}
-          index={2}
-          style={{
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "center",
-            alignItems: "center",
-            marginBottom: 180,
-            marginTop: 30,
-            marginLeft: -150,
-            height: "200%", // 필요한 높이 지정
-            width: "100%", // 필요한 너비 지정
-          }}
-        >
-          <ModifySpaceInfo />
-        </TabPanel>
-        <TabPanel
-          value={value}
-          index={1}
-          style={{
-            display: "flex",
-            flexDirection: "column",
-            height: "100%", // 필요한 높이 지정
-            width: "100%", // 필요한 너비 지정
-          }}
-        >
-          <Matching />
-        </TabPanel>
-        <TabPanel value={value} index={3}>
-          <WithDrawalUser />
-        </TabPanel>
+            {/* 개인정보 수정 */}
+          </TabPanel>
+          <TabPanel
+            value={value}
+            index={2}
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "center",
+              alignItems: "center",
+              marginBottom: 180,
+              marginTop: 30,
+
+              height: "200%", // 필요한 높이 지정
+              width: "100%", // 필요한 너비 지정
+            }}
+          >
+            <ModifySpaceInfo />
+          </TabPanel>
+          <TabPanel
+            value={value}
+            index={1}
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              height: "100%", // 필요한 높이 지정
+              width: "100%", // 필요한 너비 지정
+            }}
+          >
+            <Matching />
+          </TabPanel>
+          <TabPanel value={value} index={3}>
+            <WithDrawalUser />
+          </TabPanel>
+        </Box>
       </Box>
-      </Box>
+      {enableDialog && (
+        <MuiDialog
+          title={"알림"}
+          content={"접근 불가능한 페이지입니다."}
+          result={true}
+          page={"goUserMain"}
+          parentClick={setEnableDialog}
+        />
+      )}
     </div>
   );
 };

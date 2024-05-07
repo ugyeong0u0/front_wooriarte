@@ -15,6 +15,9 @@ import Box from "@mui/material/Box";
 import WithDrawalUser from "../components/user/Withdrawal";
 import { Margin } from "@mui/icons-material";
 
+import MuiDialog from "../libs/MuiDialog";
+import { useEffect } from "react";
+
 // 탭관련함수
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -51,6 +54,7 @@ function a11yProps(index) {
 
 const MypageUser = () => {
   const [componentState, setState] = useState("modify");
+  const [enableDialog, setEnableDialog] = useState(false); //  다이어로그
   const nav = useNavigate();
 
   const [value, setValue] = React.useState(0);
@@ -58,6 +62,14 @@ const MypageUser = () => {
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
+
+  // 유효한 회원인지 확인
+  useEffect(() => {
+    let userType = localStorage.getItem("userType");
+    if (userType !== "user") {
+      setEnableDialog(true);
+    }
+  }, []);
 
   // id, pw 입력이 달라지면 상태 감지
   const handleChangeState = (value) => {
@@ -112,69 +124,90 @@ const MypageUser = () => {
           sx={{
             borderRight: 1,
             borderColor: "black",
-            '.Mui-selected': {
-              fontWeight: 'bold',
-              color: "black !important"
+            ".Mui-selected": {
+              fontWeight: "bold",
+              color: "black !important",
             },
-            '.MuiTab-root': {
+            ".MuiTab-root": {
               justifyContent: "center",
               textTransform: "none",
               alignItems: "flex-start",
               padding: "0 0",
-              color: "gray"
+              color: "gray",
             },
             flex: 2,
           }}
           TabIndicatorProps={{ style: { display: "none" } }}
         >
-          <Tab style={{fontSize: "20px", margin: "10px 0"}} label="개인정보수정" {...a11yProps(0)} />
-          <Tab style={{fontSize: "20px", margin: "10px 0"}} label="예매내역 " {...a11yProps(1)} />
-          <Tab style={{fontSize: "20px", margin: "10px 0"}} label="탈퇴하기" {...a11yProps(2)} />
+          <Tab
+            style={{ fontSize: "20px", margin: "10px 0" }}
+            label="개인정보수정"
+            {...a11yProps(0)}
+          />
+          <Tab
+            style={{ fontSize: "20px", margin: "10px 0" }}
+            label="예매내역 "
+            {...a11yProps(1)}
+          />
+          <Tab
+            style={{ fontSize: "20px", margin: "10px 0" }}
+            label="탈퇴하기"
+            {...a11yProps(2)}
+          />
         </Tabs>
         {/* 개인정보수정 */}
-        <Box sx={{ flex: 8, display: 'flex', flexDirection: 'column' }}>
-        <TabPanel
-          value={value}
-          index={0}
-          style={{
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "center",
-            alignItems: "center",
-            height: "100%",
-            width: "100%",
-          }}
-        >
-          <ModifyUserInfo />
-        </TabPanel>
-        {/* 예매내역 */}
-        <TabPanel value={value} index={1}>
-          <Box sx={{ width: "100%", bgcolor: "background.paper"}}>
-            <Tabs
-              value={widthValue}
-              onChange={widthHandleChange}
-              centered
-              textColor="black"
-              sx={{
-                '.Mui-selected': {  
-                fontWeight: 'bold',
-              },
-              }}
-              TabIndicatorProps={{ style: { display: "none" } }}
-            >
-              <Tab style={{fontSize: "20px"}} label="관람예정"/>
-              <Tab style={{fontSize: "20px"}} label="관람완료" />
-            </Tabs>
+        <Box sx={{ flex: 8, display: "flex", flexDirection: "column" }}>
+          <TabPanel
+            value={value}
+            index={0}
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "center",
+              alignItems: "center",
+              height: "100%",
+              width: "100%",
+            }}
+          >
+            <ModifyUserInfo />
+          </TabPanel>
+          {/* 예매내역 */}
+          <TabPanel value={value} index={1}>
+            <Box sx={{ width: "100%", bgcolor: "background.paper" }}>
+              <Tabs
+                value={widthValue}
+                onChange={widthHandleChange}
+                centered
+                textColor="black"
+                sx={{
+                  ".Mui-selected": {
+                    fontWeight: "bold",
+                  },
+                }}
+                TabIndicatorProps={{ style: { display: "none" } }}
+              >
+                <Tab style={{ fontSize: "20px" }} label="관람예정" />
+                <Tab style={{ fontSize: "20px" }} label="관람완료" />
+              </Tabs>
 
-            <TicketHistory whatTab={widthValue} />
-          </Box>
-        </TabPanel>
-        {/* 탈퇴하기 */}
-        <TabPanel value={value} index={2}>
-          <WithDrawalUser/>
-        </TabPanel>
+              <TicketHistory whatTab={widthValue} />
+            </Box>
+          </TabPanel>
+          {/* 탈퇴하기 */}
+          <TabPanel value={value} index={2}>
+            <WithDrawalUser />
+          </TabPanel>
+        </Box>
       </Box>
-      </Box>
+      {enableDialog && (
+        <MuiDialog
+          title={"알림"}
+          content={"접근 불가능한 페이지입니다."}
+          result={true}
+          page={"goUserMain"}
+          parentClick={setEnableDialog}
+        />
+      )}
     </div>
   );
 };

@@ -13,6 +13,9 @@ import { Business } from "@mui/icons-material";
 import BusinessItem from "../../components/business/BusinessItem";
 import BusinessItemList from "../../components/business/BusinessItemList";
 
+import MuiDialog from "../../libs/MuiDialog";
+import { useEffect } from "react";
+
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
 
@@ -48,10 +51,18 @@ function a11yProps(index) {
 
 const AuthorMyPage = () => {
   const [value, setValue] = React.useState(0);
-
+  const [enableDialog, setEnableDialog] = React.useState(false); //  다이어로그
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
+
+  // 유효한 회원인지 확인
+  useEffect(() => {
+    let userType = localStorage.getItem("userType");
+    if (userType !== "author") {
+      setEnableDialog(true);
+    }
+  }, []);
 
   return (
     <div
@@ -81,66 +92,91 @@ const AuthorMyPage = () => {
           sx={{
             borderRight: 1,
             borderColor: "black",
-            '.Mui-selected': {
-              fontWeight: 'bold',
-              color: "black !important"
+            ".Mui-selected": {
+              fontWeight: "bold",
+              color: "black !important",
             },
-            '.MuiTab-root': {
+            ".MuiTab-root": {
               justifyContent: "center",
               textTransform: "none",
               alignItems: "flex-start",
               padding: "0 0",
-              color: "gray"
+              color: "gray",
             },
             flex: 2,
           }}
           TabIndicatorProps={{ style: { display: "none" } }}
         >
-          <Tab style={{fontSize: "20px", margin: "10px 0"}} label="아이템 관리" {...a11yProps(0)} />
-          <Tab style={{fontSize: "20px", margin: "10px 0"}} label="매칭신청 현황" {...a11yProps(1)} />
-          <Tab style={{fontSize: "20px", margin: "10px 0"}} label="개인정보 수정" {...a11yProps(2)} />
-          <Tab style={{fontSize: "20px", margin: "10px 0"}} label="탈퇴하기" {...a11yProps(3)} />
+          <Tab
+            style={{ fontSize: "20px", margin: "10px 0" }}
+            label="아이템 관리"
+            {...a11yProps(0)}
+          />
+          <Tab
+            style={{ fontSize: "20px", margin: "10px 0" }}
+            label="매칭신청 현황"
+            {...a11yProps(1)}
+          />
+          <Tab
+            style={{ fontSize: "20px", margin: "10px 0" }}
+            label="개인정보 수정"
+            {...a11yProps(2)}
+          />
+          <Tab
+            style={{ fontSize: "20px", margin: "10px 0" }}
+            label="탈퇴하기"
+            {...a11yProps(3)}
+          />
         </Tabs>
-        <Box sx={{ flex: 8, display: 'flex', flexDirection: 'column' }}>
-        <TabPanel value={value} index={0}>
-          {/*todo 사업자용 만들기 아이템관리  */}
-          {/* <MyPosterForBusiness whatType={"author"} /> */}
-          <BusinessItemList whatType={"author"} />
-        </TabPanel>
+        <Box sx={{ flex: 8, display: "flex", flexDirection: "column" }}>
+          <TabPanel value={value} index={0}>
+            {/*todo 사업자용 만들기 아이템관리  */}
+            {/* <MyPosterForBusiness whatType={"author"} /> */}
+            <BusinessItemList whatType={"author"} />
+          </TabPanel>
 
-        <TabPanel
-          value={value}
-          index={1}
-          style={{
-            display: "flex",
-            flexDirection: "column",
-            height: "100%", // 필요한 높이 지정
-            width: "100%", // 필요한 너비 지정
-          }}
-        >
-          <Matching/>
-        </TabPanel>
+          <TabPanel
+            value={value}
+            index={1}
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              height: "100%", // 필요한 높이 지정
+              width: "100%", // 필요한 너비 지정
+            }}
+          >
+            <Matching />
+          </TabPanel>
 
-        <TabPanel
-          value={value}
-          index={2}
-          style={{
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "center",
-            alignItems: "center",
-            height: "100%",
-            width: "100%",
-          }}
-        >
-          <ModifyAuthorInfo />
-        </TabPanel>
+          <TabPanel
+            value={value}
+            index={2}
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "center",
+              alignItems: "center",
+              height: "100%",
+              width: "100%",
+            }}
+          >
+            <ModifyAuthorInfo />
+          </TabPanel>
 
-        <TabPanel value={value} index={3}>
-          <WithDrawalUser />
-        </TabPanel>
+          <TabPanel value={value} index={3}>
+            <WithDrawalUser />
+          </TabPanel>
         </Box>
       </Box>
+      {enableDialog && (
+        <MuiDialog
+          title={"알림"}
+          content={"접근 불가능한 페이지입니다."}
+          result={true}
+          page={"goUserMain"}
+          parentClick={setEnableDialog}
+        />
+      )}
     </div>
   );
 };

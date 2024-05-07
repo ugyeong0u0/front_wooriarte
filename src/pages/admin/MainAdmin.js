@@ -21,6 +21,9 @@ import { useState } from "react";
 import BootModalForAdmin from "../../libs/BootModalForAdmin";
 import AdminExhibitList from "../../components/admin/AdminExhibitList";
 
+import MuiDialog from "../../libs/MuiDialog";
+import { useEffect } from "react";
+
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
 
@@ -57,6 +60,16 @@ function a11yProps(index) {
 const MainAdmin = () => {
   const [modalShow, setModalShow] = useState(false);
   const [value, setValue] = useState(0);
+
+  const [enableDialog, setEnableDialog] = useState(false); //  다이어로그
+
+  // 유효한 회원인지 확인
+  useEffect(() => {
+    let userType = localStorage.getItem("userType");
+    if (userType !== "admin") {
+      setEnableDialog(true);
+    }
+  }, []);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -148,6 +161,15 @@ const MainAdmin = () => {
           <AdminExhibitList />
         </TabPanel>
       </Box>
+      {enableDialog && (
+        <MuiDialog
+          title={"알림"}
+          content={"접근 불가능한 페이지입니다."}
+          result={true}
+          page={"goUserMain"}
+          parentClick={setEnableDialog}
+        />
+      )}
     </div>
   );
 };

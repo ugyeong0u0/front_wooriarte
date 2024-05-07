@@ -46,12 +46,15 @@ import {
 import { useNavigate } from "react-router-dom";
 import { DataSaverOnTwoTone } from "@mui/icons-material";
 
+import MuiDialog from "../../libs/MuiDialog";
+
 const MainBusiness = () => {
   const [projectButtonType, setProjectButtonType] = useState("bold");
   const [spaceButtonType, setSpaceButtonType] = useState("thin");
   const [exhibitsType, setExhibitsType] = useState("author");
   const [data, setData] = useState([{}]); // 받는 형식이 배열 안 객체라
   const [enableDialog, setEnableDialog] = useState(false); // 검색결과가 없을때 띄울이미자
+  const [isBusinessDialog, setIsBusinessDialog] = useState(false); // 검색결과가 없을때 띄울이미자
   // todo 달력에 디폴트값 널기
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
@@ -140,6 +143,13 @@ const MainBusiness = () => {
   };
 
   const nav = useNavigate();
+
+  useEffect(() => {
+    let userType = localStorage.getItem("userType");
+    if (userType !== "author" && userType !== "space") {
+      setIsBusinessDialog(true);
+    }
+  }, []);
 
   useEffect(() => {
     if (exhibitsType == "author") {
@@ -389,6 +399,15 @@ const MainBusiness = () => {
           )}
         </Stack>
       </React.Fragment>
+      {isBusinessDialog && (
+        <MuiDialog
+          title={"알림"}
+          content={"접근 불가능한 페이지입니다."}
+          result={true}
+          page={"goUserMain"}
+          parentClick={setEnableDialog}
+        />
+      )}
     </div>
   );
 };
