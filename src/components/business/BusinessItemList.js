@@ -61,7 +61,7 @@ const BusinessItemList = ({ whatType }) => {
       <Stack
         justifyContent="center" // 가로 방향으로 중앙 정렬
         alignItems="center" // 세로 방향으로 중앙 정렬
-        style={{ marginTop: -23, marginBottom: 75, marginLeft: 30}}
+        style={{ marginTop: -23, marginBottom: 75, marginLeft: 5 }}
       >
         <ImageList
           sx={{ width: "100%", height: "auto", overflowY: "hidden" }}
@@ -104,11 +104,9 @@ const BusinessItemList = ({ whatType }) => {
               },
             }}
             style={{
+              height: 380,
+              width: 230,
               fontSize: 18,
-              paddingRight: 80,
-              paddingLeft: 80,
-              paddingBottom: 120,
-              paddingTop: 120,
             }}
             endIcon={<AddIcon />}
             onClick={addPoster}
