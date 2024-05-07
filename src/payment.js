@@ -26,10 +26,13 @@ const Payment = ({ exhibitId, ticketNumber }) => {
 
   const fetchMerchantUid = async (exhibitId, amount) => {
     try {
-      const response = await axios.post("http://127.0.0.1:8080/api/payment", {
-        exhibit_id: exhibitId,
-        amount: amount,
-      });
+      const response = await axios.post(
+        "https://www.wooriarte.store/api/payment",
+        {
+          exhibit_id: exhibitId,
+          amount: amount,
+        }
+      );
       return {
         merchantUid: response.data.merchant_uid,
         amount: response.data.amount,
@@ -71,7 +74,8 @@ const Payment = ({ exhibitId, ticketNumber }) => {
       async (rsp) => {
         try {
           const { data } = await axios.post(
-            "http://127.0.0.1:8080/api/payment/verifyIamport/" + rsp.imp_uid
+            "https://www.wooriarte.store/api/payment/verifyIamport/" +
+              rsp.imp_uid
           );
           console.log(data.verified);
           if (data.verified) {
@@ -79,7 +83,7 @@ const Payment = ({ exhibitId, ticketNumber }) => {
             setEnableCheckDialog(true);
 
             const { ticket } = await axios.post(
-              "http://127.0.0.1:8080/api/tickets",
+              "https://www.wooriarte.store/api/tickets",
               {
                 amount: ticketNumber,
                 exhibitId: exhibitId,
@@ -96,7 +100,8 @@ const Payment = ({ exhibitId, ticketNumber }) => {
         } catch (error) {
           console.error("결제 검증 중 에러 발생:", error);
           await axios.post(
-            "http://127.0.0.1:8080/api/payment/cancel/" + orderInfo.merchantUid
+            "https://www.wooriarte.store/api/payment/cancel/" +
+              orderInfo.merchantUid
           );
           setEnableTxt("결제 실패하였습니다. 다시 해주세요");
           setEnableCheckDialog(true);

@@ -44,10 +44,13 @@ const PosterItem = ({
   const cancelTicket = async () => {
     if (window.confirm("취소하시겠습니까?")) {
       console.log("취소o");
-      const refund = await axios.post("http://localhost:8080/refund", {
-        ticketId: ticketId,
-        reason: "",
-      });
+      const refund = await axios.post(
+        "https://www.wooriarte.store/api/refund",
+        {
+          ticketId: ticketId,
+          reason: "",
+        }
+      );
       console.log(refund);
       console.log(refund.status);
       if (refund.status >= 200 && refund.status < 300) {
@@ -115,7 +118,7 @@ const PosterItem = ({
         }
       }}
     >
-      <div style={{margin: "15px"}}>
+      <div style={{ margin: "15px" }}>
         <ImageListItem key={ticketId}>
           <img src={url} />
           <ImageListItemBar
@@ -123,12 +126,49 @@ const PosterItem = ({
               <span>
                 {
                   <div>
-                    <p style={{fontSize: "12px", marginBottom: "5px"}}> {city}</p>
-                    <p style={{fontSize: "20px", fontWeight: "bold", marginBottom: "5px"}}> {name}</p>
-                    <p style={{fontSize: "12px", color: "gray", marginBottom: "5px"}}> {startDate}~{endDate}</p>
-                    <div style={{display: "flex", justifyContent: "space-between", alignItems: "center"}}>
+                    <p style={{ fontSize: "12px", marginBottom: "5px" }}>
+                      {" "}
+                      {city}
+                    </p>
+                    <p
+                      style={{
+                        fontSize: "20px",
+                        fontWeight: "bold",
+                        marginBottom: "5px",
+                      }}
+                    >
+                      {" "}
+                      {name}
+                    </p>
+                    <p
+                      style={{
+                        fontSize: "12px",
+                        color: "gray",
+                        marginBottom: "5px",
+                      }}
+                    >
+                      {" "}
+                      {startDate}~{endDate}
+                    </p>
+                    <div
+                      style={{
+                        display: "flex",
+                        justifyContent: "space-between",
+                        alignItems: "center",
+                      }}
+                    >
                       <span> 예매수: {amount}</span>
-                      <ButtonBoot style={{ borderColor: 'black', color: 'black', background: '#FFFFFF', borderRadius: '0', justifyContent: "flex-end", padding: "3px 6px"}} onClick={cancelTicket}>
+                      <ButtonBoot
+                        style={{
+                          borderColor: "black",
+                          color: "black",
+                          background: "#FFFFFF",
+                          borderRadius: "0",
+                          justifyContent: "flex-end",
+                          padding: "3px 6px",
+                        }}
+                        onClick={cancelTicket}
+                      >
                         예매취소
                       </ButtonBoot>{" "}
                     </div>

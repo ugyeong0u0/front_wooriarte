@@ -22,20 +22,18 @@ const Matching = () => {
   return (
     <div className="matching">
       <Container>
-        <Box sx={{display: "flex", flexDirection: "column", width: "100%"}}>
+        <Box sx={{ display: "flex", flexDirection: "column", width: "100%" }}>
           <h2>
-            <span style={{ fontSize: 22, fontWeight: "bold"}}>받은 제안</span>
+            <span style={{ fontSize: 22, fontWeight: "bold" }}>받은 제안</span>
           </h2>
-          <div
-            style={{ backgroundColor: "white"}}
-          ></div>
+          <div style={{ backgroundColor: "white" }}></div>
           <Stack
             alignItems="center" // 세로 방향으로 중앙 정렬
             spacing={2}
             sx={{
               display: "flex",
               width: "100%",
-              marginBottom: 3,
+              marginBottom: 1,
             }}
             // 요소들을 가로 방향으로 배치
           >
@@ -45,21 +43,23 @@ const Matching = () => {
             />
           </Stack>
           <h2>
-          <span style={{ fontSize: 22, fontWeight: "bold"}}>신청 현황</span>
+            <span style={{ fontSize: 22, fontWeight: "bold" }}>신청 현황</span>
           </h2>
 
           <div />
           <Stack
             alignItems="center" // 세로 방향으로 중앙 정렬
             spacing={2}
-            style={{ display: "flex" }}
+            style={{ display: "flex", marginBottom: 7 }}
           >
             {/* 대기 매칭 리스트  */}
             <WaitingMatchingList />
           </Stack>
 
           <h2>
-          <span style={{ fontSize: 22, fontWeight: "bold"}}>성사된 매칭</span>
+            <span style={{ fontSize: 22, fontWeight: "bold" }}>
+              성사된 매칭
+            </span>
           </h2>
 
           <Stack
