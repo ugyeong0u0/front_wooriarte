@@ -43,7 +43,7 @@ const Payment = ({ exhibitId, exhibitName, ticketNumber }) => {
     }
   };
 
-  const requestPay = async (exhibitId, amount) => {
+  const requestPay = async (exhibitId, exhibitName, amount) => {
     if (amount == 0) {
       setEnableDialog(true);
       return;
