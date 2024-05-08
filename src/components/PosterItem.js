@@ -120,49 +120,55 @@ const PosterItem = ({
         }
       }}
     >
-      <div style={{ margin: "15px" }}>
+      <div>
         <ImageListItem key={ticketId}>
           <img
             src={url}
-            style={{ width: 230, height: 380, objectFit: "cover" }}
+            style={{ width: 270, height: 380, objectFit: "cover" }}
           />
           <ImageListItemBar
+
+title={
+  <span
+    style={{
+      fontWeight: "bold",
+      fontSize: "18px",
+      textAlign: "left", // 왼쪽 정렬
+      display: "block", // span을 블록 요소로 만들어 줄 전체를 차지하게 함
+      width: "100%", // 너비 100%로 설정
+    }}
+  >
+      {name}
+  </span>
+}
+
+
+
+
+
+
+
             subtitle={
-              <span>
-                {
-                  <div>
-                    <p style={{ fontSize: "12px", marginBottom: "5px" }}>
-                      {" "}
-                      {city}
-                    </p>
-                    <p
-                      style={{
-                        fontSize: "20px",
-                        fontWeight: "bold",
-                        marginBottom: "5px",
-                      }}
-                    >
-                      {" "}
-                      {name}
-                    </p>
-                    <p
-                      style={{
-                        fontSize: "12px",
-                        color: "gray",
-                        marginBottom: "5px",
-                      }}
-                    >
-                      {" "}
-                      {/* {startDate}~{endDate} */}
-                    </p>
+             
                     <div
                       style={{
                         display: "flex",
-                        justifyContent: "space-between",
+                    
                         alignItems: "center",
+                        justifyContent: "space-between",
+                        marginTop:8,
+                        width: "80%", // 너비 100%로 설정
                       }}
                     >
-                      <span> 예매수: {amount}</span>
+                      <span   style={{
+                  color: "gray",
+              
+                    
+                  fontSize: "15px",
+                  textAlign: "left", // 왼쪽 정렬
+                  display: "block", // span을 블록 요소로 만들어 줄 전체를 차지하게 함
+               
+                }}> 예매수: {amount}</span>
                       {whatTab === 0 && (
                         <ButtonBoot
                           style={{
@@ -171,7 +177,22 @@ const PosterItem = ({
                             background: "#FFFFFF",
                             borderRadius: "0",
                             justifyContent: "flex-end",
-                            padding: "3px 6px",
+                            padding: "2px",
+                          }}
+                          onClick={cancelTicket}
+                        >
+                          예매취소
+                        </ButtonBoot>
+                      )}
+                      {whatTab === 1 && (
+                        <ButtonBoot
+                          style={{
+                            borderColor: "white",
+                            color: "white",
+                            background: "#FFFFFF",
+                            borderRadius: "0",
+                            justifyContent: "flex-end",
+                            padding: "2px",
                           }}
                           onClick={cancelTicket}
                         >
@@ -179,9 +200,9 @@ const PosterItem = ({
                         </ButtonBoot>
                       )}
                     </div>
-                  </div>
-                }
-              </span>
+                 
+                
+              
             }
             position="below"
           />

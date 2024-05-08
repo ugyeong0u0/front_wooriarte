@@ -72,7 +72,12 @@ const Exhibits = ({ type, cancelBtnVisible, isEditable, whatTab }) => {
 
   return (
     <>
-      <ImageList sx={{ width: "100%", height: "100%", marginTop: 5 }} cols={3}>
+      <ImageList sx={{ width: "100%", height: "auto", marginTop: 5 ,overflowY: "hidden"
+        
+       }} cols={3}
+       gap={8} // 이미지 사이의 간격 설정
+       
+       >
         {!enableDialog &&
           mockData.map((item) => {
             return (
