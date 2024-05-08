@@ -85,21 +85,32 @@ const ExhibitItemInfo = () => {
   };
 
   return (
-    <div>
+ 
       <React.Fragment>
         <CssBaseline />
-        <Container
-          maxWidth="80%"
-          style={{
-            marginTop: 30,
-            marginLeft: 229, 
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "flex-start",
+        <Container maxWidth="100%" sx={{ display: "flex"}}>
+         
+          <Box
+          sx={{
+            width: "70%", // Box의 너비를 전체의 80%로 설정
+            height: "100%",
+           
+          
+            marginX: "auto", // 좌우 마진을 auto로 설정하여 중앙 정렬
           }}
         >
-          <Stack direction="row" spacing={10}>
-          <div>
+
+
+<Stack
+            spacing={10}
+            direction="row"
+            sx={{
+              marginTop:5,
+              display: "flex",
+              justifyContent: "space-between", // 요소들을 양쪽 끝으로 정렬
+              width: "100%", // Stack의 너비를 Box와 같게 100%로 설정
+            }}
+          >
           <CustomCarousel isInfo={true}>
             {exhibitInfoState.urls.map((url, index) => (
               <img
@@ -107,7 +118,7 @@ const ExhibitItemInfo = () => {
                 src={url}
                 alt={`Image ${index}`}
                 style={{
-                  width: 405,
+                
                   height: 576,
                   objectFit: "cover",
                 }}
@@ -115,21 +126,14 @@ const ExhibitItemInfo = () => {
             ))}
           </CustomCarousel>
             
-            <img
-              src={exhibitInfoState.urls[0]}
-              style={{ height: 480, width: 337.5, objectFit: 'cover' }}
-            />
-          </div>
+        
+        
 
-            <Stack
-              direction="col"
-              spacing={0}
-              style={{ alignItems: "flex-start", marginRight: 10 }}
-            >
-              <div className="exhibitInfoContainer">
-                <div>
+          
+              <div   style={{ width: "60%", height: "100%" }}>
+              <Stack spacing={0}>
                   <h1 style={{ fontSize: 36, fontWeight: 'bold' }}>{exhibitInfoState.name}</h1>
-                </div> 
+             
                 {/* <br></br>
                 <div style={{ display: 'flex', alignItems: 'center' }}>
                 <div className="selector-item1">
@@ -144,33 +148,46 @@ const ExhibitItemInfo = () => {
                 </div>
                   <span className="value" style={{ marginLeft: '10px' }}>{exhibitInfoState.hostName}</span>
                 </div> */}
+               
+                <Stack direction={"row"} spacing={0} style={{marginTop:8}}>
+            
                 <br></br>
-                <div style={{ display: 'flex', alignItems: 'center' }}>
-                <div className="selector-item3">
-                  <div className="label">관람장소</div>
-                </div>
+                  <span style={{fontWeight:"bold"}}>관람장소</span>
+            
                   <span className="value" style={{ marginLeft: '15px' }}>{exhibitInfoState.address}</span>
-                </div>
+              
+                </Stack>
                 <br></br>
-                <div style={{ display: 'flex', alignItems: 'center', flexWrap: 'nowrap', minWidth: 0, justifyContent: 'flex-start' }}>
-                <div className="selector-item3">
-                  <div className="label">관람기간 </div>
-                </div>
+                <Stack direction={"row"} spacing={0}>
+              
+                  <span style={{fontWeight:"bold"}} >관람기간 </span>
+              
                 <span className="value" style={{ marginLeft: '15px', whiteSpace: 'nowrap', textOverflow: 'ellipsis' }}>
                     {exhibitInfoState.startDate +
                       "~" +
                       exhibitInfoState.endDate}
                   </span>
-                </div>
+                </Stack>
+
+
+
+
+
                 <br></br>
-                <div style={{ display: 'flex', alignItems: 'center' }}>
-                <div className="selector-item3">
-                  <div className="label">관람료 </div>
-                </div>
-                  <span className="value" style={{ marginLeft: '15px' }}>{exhibitInfoState.price}원</span>
-                </div>
+
+                <Stack direction={"row"} spacing={0}>
+                
+                  <span style={{fontWeight:"bold"}} >관람료 </span>
+              
+                  <span  style={{ marginLeft: '15px' }}>{exhibitInfoState.price}원</span>
+       </Stack>
+
+
+
+
+
                 <br></br>
-                <div>
+               
                   {/* <div style={{ marginBottom: 20 }}>
                     <span>총 결제 금액 : </span>
                     <span>
@@ -181,30 +198,35 @@ const ExhibitItemInfo = () => {
                   <div class="gray-line" style={{ maxWidth: 40, marginTop: 100 }}></div>
                     <h2 style={{ marginTop: 20 }}>전시 소개 </h2>
                   <div class="gray-line" style={{ maxWidth: 40 }}></div> */}
-                  <div
-                    style={{
-                      fontSize: 15,
-                      marginBottom: 10,
-                      display: "flex",
-                      alignItems: "flex-start",
-                      justifyContent: "flex-start",
-                      maxWidth: "calc(100% - 600px)", // `header-right-section`과 버튼들이 차지하는 공간을 고려하여 조정
-                    }}
-                  >
+                  <span>
+
                     {exhibitInfoState.intro}
-                  </div>
-                  <br></br>
+                  </span>
+             
+                
                   <Stack
-                    direction="row"
-                    spacing={2}
-                    style={{ alignItems: "center" }}
-                  >
+  direction="row"
+  spacing={2}
+  style={{
+    position: "relative", // 버튼을 뷰포트에 고정
+    marginTop: 100,
+    borderRadius: "0",
+    display: "flex",
+    alignItems: "center", // 여기에 alignItems을 추가
+  
+    paddingRight: 30,
+    paddingTop: 10,
+    paddingBottom: 10,
+   
+    float: "right", // 버튼을 왼쪽으로 정렬
+  }}
+>
                     <Tooltip title="Minus">
                       <IconButton onClick={minusTicket}>
                         <RemoveIcon />
                       </IconButton>
                     </Tooltip>
-                    <span>{ticketNumber}</span>
+                    <span style={{alignItems:"center"}}>{ticketNumber}</span>
                     <Tooltip title="Plus">
                       <IconButton onClick={plusTicket}>
                         <AddIcon />
@@ -216,15 +238,18 @@ const ExhibitItemInfo = () => {
                     ticketNumber={ticketNumber}
                     ></Payment>
                   </Stack>
-                </div>
+            
+                </Stack>
               </div>
+          
             </Stack>
-          </Stack>
+            </Box>
+         
 
           {/* 구분선 */}
         </Container>
       </React.Fragment>
-    </div>
+
   );
 };
 export default ExhibitItemInfo;
