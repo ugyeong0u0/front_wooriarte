@@ -50,6 +50,7 @@ import {
   onUpdateSpacePhotoHandler,
 } from "../apis/servicehandeler/SpaceApiHandler";
 import MuiDialog from "./MuiDialog";
+import dayjs from "dayjs";
 
 //!------------ 작가랑 공간대여자 마이페이지에서 아이템 수정, 조회
 export default function MyVerticallyCenteredModal({
@@ -206,8 +207,8 @@ export default function MyVerticallyCenteredModal({
           phoneNumber: response.data.phone, // 전화번호
           explanation: response.data.intro, // 전시 소개
           // intro: response.data.intro, // 전시소개
-          startDate: response.data.startDate, // 시작날짜
-          endDate: response.data.endDate, // 끝날짜
+          startDate: dayjs(response.data.startDate).format("YYYY.MM.DD"), // 시작날짜
+          endDate: dayjs(response.data.endDate).format("YYYY.MM.DD"), // 끝날짜
           // artistName: response.data.artistName, // 직가명
           // hostName: response.data.hostName, // 주최자명
           // price: response.data.price, // 가격

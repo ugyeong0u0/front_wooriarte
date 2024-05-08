@@ -17,6 +17,7 @@ export default function DateRangePickerValue({
   // 날짜 유효성 상태
   const [isDateValid, setIsDateValid] = useState(true);
   const [value, setValue] = useState(() => [dayjs(), dayjs().add(1, "month")]);
+  console.log("dateRangePicker 안" + value);
 
   const handleDateChange = (newValue) => {
     setValue(newValue);
@@ -37,16 +38,16 @@ export default function DateRangePickerValue({
     }
   }, [startDate, endDate]);
 
-  useEffect(() => {
-    // 추가하기
-    console.log("유효날자", isDateValid);
-    if (isDateValid) {
-      onDateChange(
-        value[0].format("YYYY.MM.DD"),
-        value[1].format("YYYY.MM.DD")
-      );
-    }
-  }, [isDateValid, value]); //! >> ??? 왜 startDate도 들어가야하지?
+  // useEffect(() => {
+  //   // 추가하기
+  //   console.log("유효날자", isDateValid);
+  //   if (isDateValid) {
+  //     onDateChange(
+  //       value[0].format("YYYY.MM.DD"),
+  //       value[1].format("YYYY.MM.DD")
+  //     );
+  //   }
+  // }, [isDateValid, value]); //! >> ??? 왜 startDate도 들어가야하지?
 
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs}>
