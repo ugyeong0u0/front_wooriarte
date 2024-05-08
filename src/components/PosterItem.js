@@ -53,7 +53,7 @@ const PosterItem = ({
           reason: "",
         }
       );
-      console.log(refund);
+      console.log("환불" + refund);
       console.log(refund.status);
       if (refund.status >= 200 && refund.status < 300) {
         setEnableDialog(true);

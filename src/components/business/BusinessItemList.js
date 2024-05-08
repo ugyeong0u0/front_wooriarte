@@ -104,8 +104,8 @@ const BusinessItemList = ({ whatType }) => {
               },
             }}
             style={{
-              height: 380,
-              width: 230,
+              height: 480,
+              width: 337,
               fontSize: 18,
             }}
             endIcon={<AddIcon />}
