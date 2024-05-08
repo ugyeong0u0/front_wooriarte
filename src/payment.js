@@ -13,9 +13,9 @@ const Payment = ({ exhibitId, ticketNumber }) => {
   const [enableTxt, setEnableTxt] = useState(""); // 결제 실패, 성공
   useEffect(() => {
     const jquery = document.createElement("script");
-    jquery.src = "http://code.jquery.com/jquery-1.12.4.min.js";
+    jquery.src = "https://code.jquery.com/jquery-1.12.4.min.js";
     const iamport = document.createElement("script");
-    iamport.src = "http://cdn.iamport.kr/js/iamport.payment-1.1.7.js";
+    iamport.src = "https://cdn.iamport.kr/js/iamport.payment-1.1.7.js";
     document.head.appendChild(jquery);
     document.head.appendChild(iamport);
     return () => {
