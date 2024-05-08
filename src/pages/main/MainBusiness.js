@@ -58,7 +58,7 @@ const MainBusiness = () => {
   // todo 달력에 디폴트값 널기
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
-  const [address, setAddress] = useState("");
+  const [address, setAddress] = useState("서울");
 
   //?-------------------------달력
   const handleStartDateChange = (newDate) => {
