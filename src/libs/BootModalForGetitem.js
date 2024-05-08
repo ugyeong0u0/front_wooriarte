@@ -94,8 +94,8 @@ export default function MyVerticallyCenteredModal({
     phoneNumber: " ",
     explanation: " ",
     address: "서울",
-    startDate: "",
-    endDate: "",
+    startDate: dayjs().format("YYYY.MM.DD"),
+    endDate: dayjs().add(1, "month").format("YYYY.MM.DD"),
     title: "",
   });
 
