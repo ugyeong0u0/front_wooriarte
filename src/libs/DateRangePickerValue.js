@@ -36,6 +36,7 @@ export default function DateRangePickerValue({
       setValue([startDay, endDay]);
     }
   }, [startDate, endDate]);
+
   useEffect(() => {
     // 추가하기
     console.log("유효날자", isDateValid);
@@ -54,7 +55,6 @@ export default function DateRangePickerValue({
       >
         <div className="SingleInputDateRangeFieldCustom">
           <SingleInputDateRangeField
-            format="YYYY.MM.DD"
             label="전시 희망 날짜"
             value={value}
             onChange={handleDateChange}
