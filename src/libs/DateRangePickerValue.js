@@ -42,8 +42,8 @@ export default function DateRangePickerValue({
     console.log("유효날자", isDateValid);
     if (isDateValid) {
       onDateChange(
-        value[0].format("YYYY-MM-DD"),
-        value[1].format("YYYY-MM-DD")
+        value[0].format("YYYY.MM.DD"),
+        value[1].format("YYYY.MM.DD")
       );
     }
   }, [isDateValid, value]); //! >> ??? 왜 startDate도 들어가야하지?
@@ -55,6 +55,7 @@ export default function DateRangePickerValue({
       >
         <div className="SingleInputDateRangeFieldCustom">
           <SingleInputDateRangeField
+            format="YYYY.MM.DD"
             label="전시 희망 날짜"
             value={value}
             onChange={handleDateChange}
