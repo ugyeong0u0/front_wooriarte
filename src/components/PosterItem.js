@@ -36,8 +36,10 @@ const PosterItem = ({
   startDate,
   endDate,
   updateCount,
+  whatTab,
 }) => {
   console.log("ExhibitsItem 유저 타입" + whatType);
+  console.log("시작" + startDate + endDate);
   const nav = useNavigate();
   const [enableDialog, setEnableDialog] = useState(false); //  다이어로그
   const [enableDialog2, setEnableDialog2] = useState(false); //  다이어로그
@@ -120,7 +122,10 @@ const PosterItem = ({
     >
       <div style={{ margin: "15px" }}>
         <ImageListItem key={ticketId}>
-          <img src={url} />
+          <img
+            src={url}
+            style={{ width: 230, height: 380, objectFit: "cover" }}
+          />
           <ImageListItemBar
             subtitle={
               <span>
@@ -148,7 +153,7 @@ const PosterItem = ({
                       }}
                     >
                       {" "}
-                      {startDate}~{endDate}
+                      {/* {startDate}~{endDate} */}
                     </p>
                     <div
                       style={{
@@ -158,19 +163,21 @@ const PosterItem = ({
                       }}
                     >
                       <span> 예매수: {amount}</span>
-                      <ButtonBoot
-                        style={{
-                          borderColor: "black",
-                          color: "black",
-                          background: "#FFFFFF",
-                          borderRadius: "0",
-                          justifyContent: "flex-end",
-                          padding: "3px 6px",
-                        }}
-                        onClick={cancelTicket}
-                      >
-                        예매취소
-                      </ButtonBoot>{" "}
+                      {whatTab === 0 && (
+                        <ButtonBoot
+                          style={{
+                            borderColor: "black",
+                            color: "black",
+                            background: "#FFFFFF",
+                            borderRadius: "0",
+                            justifyContent: "flex-end",
+                            padding: "3px 6px",
+                          }}
+                          onClick={cancelTicket}
+                        >
+                          예매취소
+                        </ButtonBoot>
+                      )}
                     </div>
                   </div>
                 }

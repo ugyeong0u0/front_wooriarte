@@ -85,6 +85,7 @@ const Exhibits = ({ type, cancelBtnVisible, isEditable, whatTab }) => {
                 isEditable={isEditable}
                 setUpdateCount={setUpdateCount}
                 updateCount={updateCount}
+                whatTab={whatTab}
               />
             );
           })}
