@@ -40,7 +40,7 @@ const BusinessItem = ({
           src={url}
           style={{ width: 230, height: 380, objectFit: "cover" }}
         />
-        <hr style={{ margin: "5px 0" }} />{" "}
+        <hr style={{ margin: "5px 0" , width:230}} />{" "}
         <ImageListItemBar
           title={
             <span
