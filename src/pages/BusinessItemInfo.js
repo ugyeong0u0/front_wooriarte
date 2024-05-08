@@ -262,6 +262,29 @@ const BusinessItemInfo = () => {
     return String(date).replace(/-/g, ".");
   };
 
+  const labelStyle = {
+    padding: 10,
+    color: "black",
+    fontWeight: "bold",
+  };
+  
+  const valueStyle1 = {
+    color: "black",
+    padding: 10,
+    marginLeft: 17
+  };
+
+  const valueStyle2 = {
+    color: "black",
+    padding: 10,
+  };
+
+  const valueStyle3 = {
+    color: "black",
+    padding: 10,
+    marginLeft: 29
+  };
+  
   return (
     <React.Fragment>
       <CssBaseline />
@@ -270,7 +293,7 @@ const BusinessItemInfo = () => {
           sx={{
             width: "72%", // Box의 너비를 전체의 80%로 설정
             height: "100%",
-            marginTop: 10,
+            marginTop: 5,
             marginX: "auto", // 좌우 마진을 auto로 설정하여 중앙 정렬
           }}
         >
@@ -390,110 +413,65 @@ const BusinessItemInfo = () => {
             {exhibitsType === "unpage" ? (
               userType === "author" ? (
                 <div style={{ width: "100%", height: "100%" }}>
-                  <Stack spacing={3}>
-                    <Stack direction={"row"} spacing={3}>
+                  <Stack spacing={0}>
+                    <Stack direction={"row"} spacing={0}>
                       <span
-                        style={{
-                          backgroundColor: "#EBEBF0",
-                          padding: 10,
-                          color: "black",
-                          fontWeight: "bold",
-                        }}
+                        style={labelStyle}
                       >
                         작가명
                       </span>
                       <span
-                        style={{
-                          color: "black",
-                          fontWeight: "bold",
-                          padding: 10,
-                        }}
+                        style={valueStyle1}
                       >
                         {projectInfo.artistName}
                       </span>{" "}
                     </Stack>
-                    <Stack direction={"row"} spacing={3}>
+                    <Stack direction={"row"} spacing={0}>
                       <span
-                        style={{
-                          backgroundColor: "#EBEBF0",
-                          padding: 10,
-                          color: "black",
-                          fontWeight: "bold",
-                        }}
+                        style={labelStyle}
                       >
                         연락처
                       </span>
                       <span
-                        style={{
-                          color: "black",
-                          fontWeight: "bold",
-                          padding: 10,
-                        }}
+                        style={valueStyle1}
                       >
                         {projectInfo.phone}
                       </span>{" "}
                     </Stack>
 
-                    <Stack direction={"row"} spacing={3}>
+                    <Stack direction={"row"} spacing={0}>
                       <span
-                        style={{
-                          backgroundColor: "#EBEBF0",
-                          padding: 10,
-                          color: "black",
-                          fontWeight: "bold",
-                        }}
+                        style={labelStyle}
                       >
                         작품명
                       </span>
                       <span
-                        style={{
-                          color: "black",
-                          fontWeight: "bold",
-                          padding: 10,
-                        }}
+                        style={valueStyle1}
                       >
                         {projectInfo.title}
                       </span>{" "}
                     </Stack>
 
-                    <Stack direction={"row"} spacing={3}>
+                    <Stack direction={"row"} spacing={0}>
                       <span
-                        style={{
-                          backgroundColor: "#EBEBF0",
-                          padding: 10,
-                          color: "black",
-                          fontWeight: "bold",
-                        }}
+                        style={labelStyle}
                       >
-                        전시 희망 지역
+                        전시 지역
                       </span>
                       <span
-                        style={{
-                          color: "black",
-                          fontWeight: "bold",
-                          padding: 10,
-                        }}
+                        style={valueStyle2}
                       >
                         {projectInfo.city}
                       </span>{" "}
                     </Stack>
-                    <Stack direction={"row"} spacing={3}>
+                    <Stack direction={"row"} spacing={0}>
                       <span
-                        style={{
-                          backgroundColor: "#EBEBF0",
-                          padding: 10,
-                          color: "black",
-                          fontWeight: "bold",
-                        }}
+                        style={labelStyle}
                       >
-                        전시 희망 기간
+                        전시 기간
                       </span>
                       <span
-                        style={{
-                          color: "black",
-                          fontWeight: "bold",
-                          padding: 10,
-                        }}
+                        style={valueStyle2}
                       >
                         {formatDate(projectInfo.startDate)} ~{" "}
                         {formatDate(projectInfo.endDate)}
@@ -501,13 +479,7 @@ const BusinessItemInfo = () => {
                     </Stack>
 
                     <span
-                      style={{
-                        backgroundColor: "#EBEBF0",
-                        padding: "10px", // 위, 아래, 좌, 우에 10px의 패딩
-                        color: "black",
-                        fontWeight: "bold",
-                        width: 60,
-                      }}
+                      style={labelStyle}
                     >
                       소개글
                     </span>
@@ -520,182 +492,103 @@ const BusinessItemInfo = () => {
               ) : (
                 <div style={{ width: "100%", height: "100%" }}>
                   <Stack spacing={3}>
-                    <Stack direction={"row"} spacing={5}>
-                      <Stack direction={"row"} spacing={3}>
-                        <span
-                          style={{
-                            backgroundColor: "#EBEBF0",
-                            padding: 10,
-                            color: "black",
-                            fontWeight: "bold",
-                          }}
-                        >
-                          건물주
-                        </span>
-                        <span
-                          style={{
-                            color: "black",
-                            fontWeight: "bold",
-                            padding: 10,
-                          }}
-                        >
-                          {spaceInfo.hostName}
-                        </span>{" "}
-                      </Stack>
-                      <Stack direction={"row"} spacing={3}>
-                        <span
-                          style={{
-                            backgroundColor: "#EBEBF0",
-                            padding: 10,
-                            color: "black",
-                            fontWeight: "bold",
-                          }}
-                        >
-                          연락처
-                        </span>
-                        <span
-                          style={{
-                            color: "black",
-                            fontWeight: "bold",
-                            padding: 10,
-                          }}
-                        >
-                          {spaceInfo.phone}
-                        </span>{" "}
-                      </Stack>
+                    <Stack direction={"row"} spacing={0}>
+                      <span
+                        style={labelStyle}
+                      >
+                        건물주
+                      </span>
+                      <span
+                        style={valueStyle1}
+                      >
+                        {spaceInfo.hostName}
+                      </span>{" "}
+                    </Stack>
+                    
+                    <Stack direction={"row"} spacing={0}>
+                      <span
+                        style={labelStyle}
+                      >
+                        연락처
+                      </span>
+                      <span
+                        style={valueStyle1}
+                      >
+                        {spaceInfo.phone}
+                      </span>{" "}
                     </Stack>
 
-                    <Stack direction={"row"} spacing={3}>
+                    <Stack direction={"row"} spacing={0}>
                       <span
-                        style={{
-                          backgroundColor: "#EBEBF0",
-                          padding: 10,
-                          color: "black",
-                          fontWeight: "bold",
-                        }}
+                        style={labelStyle}
                       >
                         건물명
                       </span>
                       <span
-                        style={{
-                          color: "black",
-                          fontWeight: "bold",
-                          padding: 10,
-                        }}
+                        style={valueStyle1}
                       >
                         {spaceInfo.title}
                       </span>{" "}
                     </Stack>
 
-                    <Stack direction={"row"} spacing={6}>
-                      <Stack direction={"row"} spacing={3}>
-                        <span
-                          style={{
-                            backgroundColor: "#EBEBF0",
-                            padding: 10,
-                            color: "black",
-                            fontWeight: "bold",
-                            width: 60,
-                            textAlign: "center",
-                          }}
-                        >
-                          면적
-                        </span>
-                        <span
-                          style={{
-                            color: "black",
-                            fontWeight: "bold",
-                            padding: 10,
-                          }}
-                        >
-                          {spaceInfo.size}
-                        </span>{" "}
-                      </Stack>
-                      <Stack direction={"row"} spacing={3}>
-                        <span
-                          style={{
-                            backgroundColor: "#EBEBF0",
-                            padding: 10,
-                            color: "black",
-                            fontWeight: "bold",
-                          }}
-                        >
-                          임대료
-                        </span>
-                        <span
-                          style={{
-                            color: "black",
-                            fontWeight: "bold",
-                            padding: 10,
-                          }}
-                        >
-                          {spaceInfo.fee}원
-                        </span>{" "}
-                      </Stack>
+                    <Stack direction={"row"} spacing={0}>
+                      <span
+                        style={labelStyle}
+                      >
+                        면적
+                      </span>
+                      <span
+                        style={valueStyle3}
+                      >
+                        {spaceInfo.size}
+                      </span>{" "}
+                    </Stack>
+                    <Stack direction={"row"} spacing={0}>
+                      <span
+                        style={labelStyle}
+                      >
+                        임대료
+                      </span>
+                      <span
+                        style={valueStyle1}
+                      >
+                        {spaceInfo.fee}원
+                      </span>{" "}
                     </Stack>
 
-                    <Stack direction={"row"} spacing={3}>
+                    <Stack direction={"row"} spacing={0}>
                       <span
-                        style={{
-                          backgroundColor: "#EBEBF0",
-                          padding: 10,
-                          color: "black",
-                          fontWeight: "bold",
-                          width: 60,
-                          textAlign: "center",
-                        }}
+                        style={labelStyle}
                       >
                         주차
                       </span>
                       <span
-                        style={{
-                          color: "black",
-                          fontWeight: "bold",
-                          padding: 10,
-                        }}
+                        style={valueStyle3}
                       >
                         {spaceInfo.parking ? "가능" : "불가능"}
                       </span>{" "}
                     </Stack>
 
-                    <Stack direction={"row"} spacing={3}>
+                    <Stack direction={"row"} spacing={0}>
                       <span
-                        style={{
-                          backgroundColor: "#EBEBF0",
-                          padding: 10,
-                          color: "black",
-                          fontWeight: "bold",
-                        }}
+                        style={labelStyle}
                       >
-                        전시 희망 지역
+                        전시 지역
                       </span>
                       <span
-                        style={{
-                          color: "black",
-                          fontWeight: "bold",
-                          padding: 10,
-                        }}
+                        style={valueStyle2}
                       >
                         {spaceInfo.city}
                       </span>{" "}
                     </Stack>
-                    <Stack direction={"row"} spacing={3}>
+                    <Stack direction={"row"} spacing={0}>
                       <span
-                        style={{
-                          backgroundColor: "#EBEBF0",
-                          padding: 10,
-                          color: "black",
-                          fontWeight: "bold",
-                        }}
+                        style={labelStyle}
                       >
-                        전시 희망 기간
+                        전시 기간
                       </span>
                       <span
-                        style={{
-                          color: "black",
-                          fontWeight: "bold",
-                          padding: 10,
-                        }}
+                        style={valueStyle2}
                       >
                         {formatDate(spaceInfo.startDate)} ~{" "}
                         {formatDate(spaceInfo.endDate)}
@@ -703,17 +596,11 @@ const BusinessItemInfo = () => {
                     </Stack>
 
                     <span
-                      style={{
-                        backgroundColor: "#EBEBF0",
-                        padding: "10px", // 위, 아래, 좌, 우에 10px의 패딩
-                        color: "black",
-                        fontWeight: "bold",
-                        width: 60,
-                      }}
+                      style={labelStyle}
                     >
                       소개글
                     </span>
-                    <span style={{ wordBreak: "break-all" }}>
+                    <span style={{ wordBreak: "break-all", padding: 10 }}>
                       {" "}
                       {formatTextWithLineBreaks(spaceInfo.intro, 60)}
                     </span>
@@ -722,110 +609,65 @@ const BusinessItemInfo = () => {
               )
             ) : exhibitsType === "author" ? (
               <div style={{ width: "100%", height: "100%" }}>
-                <Stack spacing={3}>
-                  <Stack direction={"row"} spacing={3}>
+                <Stack spacing={0}>
+                  <Stack direction={"row"} spacing={0}>
                     <span
-                      style={{
-                        backgroundColor: "#EBEBF0",
-                        padding: 10,
-                        color: "black",
-                        fontWeight: "bold",
-                      }}
+                      style={labelStyle}
                     >
                       작가명
                     </span>
                     <span
-                      style={{
-                        color: "black",
-                        fontWeight: "bold",
-                        padding: 10,
-                      }}
+                      style={valueStyle1}
                     >
                       {projectInfo.artistName}
                     </span>{" "}
                   </Stack>
-                  <Stack direction={"row"} spacing={3}>
+                  <Stack direction={"row"} spacing={0}>
                     <span
-                      style={{
-                        backgroundColor: "#EBEBF0",
-                        padding: 10,
-                        color: "black",
-                        fontWeight: "bold",
-                      }}
+                      style={labelStyle}
                     >
                       연락처
                     </span>
                     <span
-                      style={{
-                        color: "black",
-                        fontWeight: "bold",
-                        padding: 10,
-                      }}
+                      style={valueStyle1}
                     >
                       {projectInfo.phone}
                     </span>{" "}
                   </Stack>
 
-                  <Stack direction={"row"} spacing={3}>
+                  <Stack direction={"row"} spacing={0}>
                     <span
-                      style={{
-                        backgroundColor: "#EBEBF0",
-                        padding: 10,
-                        color: "black",
-                        fontWeight: "bold",
-                      }}
+                      style={labelStyle}
                     >
                       작품명
                     </span>
                     <span
-                      style={{
-                        color: "black",
-                        fontWeight: "bold",
-                        padding: 10,
-                      }}
+                      style={valueStyle1}
                     >
                       {projectInfo.title}
                     </span>{" "}
                   </Stack>
 
-                  <Stack direction={"row"} spacing={3}>
+                  <Stack direction={"row"} spacing={0}>
                     <span
-                      style={{
-                        backgroundColor: "#EBEBF0",
-                        padding: 10,
-                        color: "black",
-                        fontWeight: "bold",
-                      }}
+                      style={labelStyle}
                     >
-                      전시 희망 지역
+                      전시 지역
                     </span>
                     <span
-                      style={{
-                        color: "black",
-                        fontWeight: "bold",
-                        padding: 10,
-                      }}
+                      style={valueStyle2}
                     >
                       {projectInfo.city}
                     </span>{" "}
                   </Stack>
-                  <Stack direction={"row"} spacing={3}>
+                  <Stack direction={"row"} spacing={0}>
                     <span
-                      style={{
-                        backgroundColor: "#EBEBF0",
-                        padding: 10,
-                        color: "black",
-                        fontWeight: "bold",
-                      }}
+                      style={labelStyle}
                     >
-                      전시 희망 기간
+                      전시 기간
                     </span>
                     <span
-                      style={{
-                        color: "black",
-                        fontWeight: "bold",
-                        padding: 10,
-                      }}
+                      style={valueStyle2}
                     >
                       {formatDate(projectInfo.startDate)} ~{" "}
                       {formatDate(projectInfo.endDate)}
@@ -833,17 +675,11 @@ const BusinessItemInfo = () => {
                   </Stack>
 
                   <span
-                    style={{
-                      backgroundColor: "#EBEBF0",
-                      padding: "10px", // 위, 아래, 좌, 우에 10px의 패딩
-                      color: "black",
-                      fontWeight: "bold",
-                      width: 60,
-                    }}
+                    style={labelStyle}
                   >
                     소개글
                   </span>
-                  <span style={{ wordBreak: "break-all" }}>
+                  <span style={{ wordBreak: "break-all", padding: 10 }}>
                     {" "}
                     {formatTextWithLineBreaks(projectInfo.intro, 60)}
                   </span>
@@ -880,183 +716,103 @@ const BusinessItemInfo = () => {
               </div>
             ) : (
               <div style={{ width: "100%", height: "100%" }}>
-                <Stack spacing={3}>
-                  <Stack direction={"row"} spacing={5}>
-                    <Stack direction={"row"} spacing={3}>
-                      <span
-                        style={{
-                          backgroundColor: "#EBEBF0",
-                          padding: 10,
-                          color: "black",
-                          fontWeight: "bold",
-                        }}
-                      >
-                        건물주
-                      </span>
-                      <span
-                        style={{
-                          color: "black",
-                          fontWeight: "bold",
-                          padding: 10,
-                        }}
-                      >
-                        {spaceInfo.hostName}
-                      </span>{" "}
-                    </Stack>
-                    <Stack direction={"row"} spacing={3}>
-                      <span
-                        style={{
-                          backgroundColor: "#EBEBF0",
-                          padding: 10,
-                          color: "black",
-                          fontWeight: "bold",
-                        }}
-                      >
-                        연락처
-                      </span>
-                      <span
-                        style={{
-                          color: "black",
-                          fontWeight: "bold",
-                          padding: 10,
-                        }}
-                      >
-                        {spaceInfo.phone}
-                      </span>{" "}
-                    </Stack>
+                <Stack spacing={0}>
+                  <Stack direction={"row"} spacing={0}>
+                    <span
+                      style={labelStyle}
+                    >
+                      건물주
+                    </span>
+                    <span
+                      style={valueStyle1}
+                    >
+                      {spaceInfo.hostName}
+                    </span>{" "}
+                  </Stack>
+                  <Stack direction={"row"} spacing={0}>
+                    <span
+                      style={labelStyle}
+                    >
+                      연락처
+                    </span>
+                    <span
+                      style={valueStyle1}
+                    >
+                      {spaceInfo.phone}
+                    </span>{" "}
                   </Stack>
 
-                  <Stack direction={"row"} spacing={3}>
+                  <Stack direction={"row"} spacing={0}>
                     <span
-                      style={{
-                        backgroundColor: "#EBEBF0",
-                        padding: 10,
-                        color: "black",
-                        fontWeight: "bold",
-                      }}
+                      style={labelStyle}
                     >
                       건물명
                     </span>
                     <span
-                      style={{
-                        color: "black",
-                        fontWeight: "bold",
-                        padding: 10,
-                      }}
+                      style={valueStyle1}
                     >
                       {spaceInfo.title}
                     </span>{" "}
                   </Stack>
 
-                  <Stack direction={"row"} spacing={6}>
-                    <Stack direction={"row"} spacing={3}>
-                      <span
-                        style={{
-                          backgroundColor: "#EBEBF0",
-                          padding: 10,
-                          color: "black",
-                          fontWeight: "bold",
-                          width: 60,
-                          textAlign: "center",
-                        }}
-                      >
-                        면적
-                      </span>
-                      <span
-                        style={{
-                          color: "black",
-                          fontWeight: "bold",
-                          padding: 10,
-                        }}
-                      >
-                        {spaceInfo.size}
-                      </span>{" "}
-                    </Stack>
-                    <Stack direction={"row"} spacing={3}>
-                      <span
-                        style={{
-                          backgroundColor: "#EBEBF0",
-                          padding: 10,
-                          color: "black",
-                          fontWeight: "bold",
-                        }}
-                      >
-                        임대료
-                      </span>
-                      <span
-                        style={{
-                          color: "black",
-                          fontWeight: "bold",
-                          padding: 10,
-                        }}
-                      >
-                        {spaceInfo.fee}원
-                      </span>{" "}
-                    </Stack>
+                  <Stack direction={"row"} spacing={0}>
+                    <span
+                      style={labelStyle}
+                    >
+                      면적
+                    </span>
+                    <span
+                      style={valueStyle3}
+                    >
+                      {spaceInfo.size}
+                    </span>{" "}
+                  </Stack>
+                  <Stack direction={"row"} spacing={0}>
+                    <span
+                      style={labelStyle}
+                    >
+                      임대료
+                    </span>
+                    <span
+                      style={valueStyle1}
+                    >
+                      {spaceInfo.fee}원
+                    </span>{" "}
                   </Stack>
 
-                  <Stack direction={"row"} spacing={3}>
+                  <Stack direction={"row"} spacing={0}>
                     <span
-                      style={{
-                        backgroundColor: "#EBEBF0",
-                        padding: 10,
-                        color: "black",
-                        fontWeight: "bold",
-                        width: 60,
-                        textAlign: "center",
-                      }}
+                      style={labelStyle}
                     >
                       주차
                     </span>
                     <span
-                      style={{
-                        color: "black",
-                        fontWeight: "bold",
-                        padding: 10,
-                      }}
+                      style={valueStyle3}
                     >
                       {spaceInfo.parking ? "가능" : "불가능"}
                     </span>{" "}
                   </Stack>
 
-                  <Stack direction={"row"} spacing={3}>
+                  <Stack direction={"row"} spacing={0}>
                     <span
-                      style={{
-                        backgroundColor: "#EBEBF0",
-                        padding: 10,
-                        color: "black",
-                        fontWeight: "bold",
-                      }}
+                      style={labelStyle}
                     >
-                      전시 희망 지역
+                      전시 지역
                     </span>
                     <span
-                      style={{
-                        color: "black",
-                        fontWeight: "bold",
-                        padding: 10,
-                      }}
+                      style={valueStyle2}
                     >
                       {spaceInfo.city}
                     </span>{" "}
                   </Stack>
-                  <Stack direction={"row"} spacing={3}>
+                  <Stack direction={"row"} spacing={0}>
                     <span
-                      style={{
-                        backgroundColor: "#EBEBF0",
-                        padding: 10,
-                        color: "black",
-                        fontWeight: "bold",
-                      }}
+                      style={labelStyle}
                     >
-                      전시 희망 기간
+                      전시 기간
                     </span>
                     <span
-                      style={{
-                        color: "black",
-                        fontWeight: "bold",
-                        padding: 10,
-                      }}
+                      style={valueStyle2}
                     >
                       {formatDate(spaceInfo.startDate)} ~{" "}
                       {formatDate(spaceInfo.endDate)}
@@ -1064,17 +820,11 @@ const BusinessItemInfo = () => {
                   </Stack>
 
                   <span
-                    style={{
-                      backgroundColor: "#EBEBF0",
-                      padding: "10px", // 위, 아래, 좌, 우에 10px의 패딩
-                      color: "black",
-                      fontWeight: "bold",
-                      width: 60,
-                    }}
+                    style={labelStyle}
                   >
                     소개글
                   </span>
-                  <span style={{ wordBreak: "break-all" }}>
+                  <span style={{ wordBreak: "break-all", padding: 10 }}>
                     {" "}
                     {formatTextWithLineBreaks(spaceInfo.intro, 60)}
                   </span>
@@ -1086,8 +836,8 @@ const BusinessItemInfo = () => {
                   class="btn btn-dark"
                   style={{
                     position: "relative", // 버튼을 뷰포트에 고정
-
-                    marginTop: 100,
+                    marginRight: 22,
+                    marginTop: 50,
                     border: "1px solid #000",
                     borderRadius: "0",
                     paddingLeft: 30,

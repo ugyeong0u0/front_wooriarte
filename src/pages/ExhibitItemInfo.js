@@ -101,7 +101,7 @@ const ExhibitItemInfo = () => {
           <div>
             <img
               src={exhibitInfoState.urls[0]}
-              style={{ height: 489, width: 289, marginTop: 15, objectFit: 'cover' }}
+              style={{ height: 480, width: 337.2, objectFit: 'cover' }}
             />
           </div>
 
@@ -112,7 +112,7 @@ const ExhibitItemInfo = () => {
             >
               <div className="exhibitInfoContainer">
                 <div>
-                  <h1 style={{ fontSize: '4em', fontWeight: 'bold' }}>{exhibitInfoState.name}</h1>
+                  <h1 style={{ fontSize: 36, fontWeight: 'bold' }}>{exhibitInfoState.name}</h1>
                 </div> 
                 {/* <br></br>
                 <div style={{ display: 'flex', alignItems: 'center' }}>
@@ -167,7 +167,7 @@ const ExhibitItemInfo = () => {
                   <div class="gray-line" style={{ maxWidth: 40 }}></div> */}
                   <div
                     style={{
-                      fontSize: 16,
+                      fontSize: 15,
                       marginBottom: 10,
                       display: "flex",
                       alignItems: "flex-start",

@@ -322,7 +322,7 @@ const MainBusiness = () => {
             <ImageList
               sx={{ maxWidth: "70%", height: "auto", overflowY: "hidden" }}
               cols={3}
-              gap={18} // 이미지 사이의 간격 설정
+              gap={110} // 이미지 사이의 간격 설정
             >
               {data.map((item) => (
                 <ImageListItem

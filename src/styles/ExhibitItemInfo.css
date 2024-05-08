@@ -1,30 +1,20 @@
 .selector-item1, .selector-item2, .selector-item3 {
-    /* width: 30%; 기존 코드를 주석 처리 */
-    width: 90px; /* 고정된 너비로 변경 */
-    height: 40px;
-    background: #EBEBF0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-}
+    padding: 10;
+    color: "black";
+    font-size: 15px;
+  }
 
 
 .label {
-    font-family: 'Inter';
-    font-style: normal;
-    font-weight: 700;
-    font-size: 17px;
-    line-height: 30px;
-    color: #111111;
-    padding: 0 10px; /* 좌우 여백 조정 */
+    padding: 10;
+    font-size: 15px;
+    font-weight: 1000;
+    color: "black";
 }
 
 .value {
-    font-family: 'Noto Sans KR';
-    font-style: normal;
-    font-weight: 700;
-    font-size: 17px;
-    line-height: 22px;
-    color: #000000;
+    font-size: 15px;
+    color: "black";
+    padding: 10;
+    margin-left: 17;
 }
