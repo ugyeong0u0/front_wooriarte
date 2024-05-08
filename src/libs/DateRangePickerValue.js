@@ -25,6 +25,13 @@ export default function DateRangePickerValue({
     const [start, end] = newValue;
     const isValid = end.isAfter(start);
     setIsDateValid(isValid); // 부모 컴포넌트에 유효성 결과 전달
+
+    if (isDateValid) {
+      onDateChange(
+        value[0].format("YYYY.MM.DD"),
+        value[1].format("YYYY.MM.DD")
+      );
+    }
   };
   useEffect(() => {
     if (isEdit) {
