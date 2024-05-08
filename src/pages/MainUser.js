@@ -82,6 +82,12 @@ const MainUser = () => {
     setVisibleData(mockData.slice(0, 3));
   }, [mockData]);
 
+  useEffect(() => {
+    console.log("*********************************");
+    console.log(visibleData);
+  }, [visibleData]);
+  
+
   const handleShowAll = () => {
     setVisibleData(mockData);
     setShowAll(true); // 전체 데이터가 표시되고 있음을 상태로 관리
@@ -180,16 +186,16 @@ const MainUser = () => {
                     key={item.exhibitId}
                     onClick={() => handleItemInfo(item.exhibitId)}
                     style={{
-                      height: 550,
+                      height: 480,
                       display: 'inline',
                       lexDirection: 'column', // 자식 요소를 세로 방향으로 정렬
                       justifyContent: 'center', // 세로 방향 중앙 정렬
-                    }}    
+                    }}
                   >
                     <img
-                      src={`${item.url}`}
+                      src={item.urls}
                       alt={item.name}
-                      loading="lazy"
+                      loading="eager"
                       style={{
                         width: 281,
                         height: 400,

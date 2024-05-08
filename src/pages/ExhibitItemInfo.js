@@ -4,6 +4,7 @@ import "../styles/ExhibitItemInfo.css";
 import { useLocation, useParams } from "react-router-dom";
 import image1 from "../assets/image 1.png";
 import { useNavigate } from "react-router-dom";
+import CustomCarousel from "../libs/CustomCarousel";
 
 // + - 아이콘
 import * as React from "react";
@@ -39,7 +40,7 @@ const ExhibitItemInfo = () => {
     hostName: "", // 주최자명
     price: "", // 가격
     address: "", // 주소
-    urls: "",
+    urls: [],
   });
 
   useEffect(() => {
@@ -99,9 +100,24 @@ const ExhibitItemInfo = () => {
         >
           <Stack direction="row" spacing={10}>
           <div>
+          <CustomCarousel isInfo={true}>
+            {exhibitInfoState.urls.map((url, index) => (
+              <img
+                key={index}
+                src={url}
+                alt={`Image ${index}`}
+                style={{
+                  width: 405,
+                  height: 576,
+                  objectFit: "cover",
+                }}
+              />
+            ))}
+          </CustomCarousel>
+            
             <img
               src={exhibitInfoState.urls[0]}
-              style={{ height: 480, width: 337.2, objectFit: 'cover' }}
+              style={{ height: 480, width: 337.5, objectFit: 'cover' }}
             />
           </div>
 

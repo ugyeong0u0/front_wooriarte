@@ -288,10 +288,10 @@ const BusinessItemInfo = () => {
   return (
     <React.Fragment>
       <CssBaseline />
-      <Container maxWidth="100%" sx={{}}>
+      <Container maxWidth="80%" sx={{}}>
         <Box
           sx={{
-            width: "72%", // Box의 너비를 전체의 80%로 설정
+            width: "100%", // Box의 너비를 전체의 80%로 설정
             height: "100%",
             marginTop: 5,
             marginX: "auto", // 좌우 마진을 auto로 설정하여 중앙 정렬
@@ -314,8 +314,8 @@ const BusinessItemInfo = () => {
                     src={`${item.previewUrl}`}
                     alt={item.title}
                     style={{
-                      width: 500, // 캐로셀의 전체 너비를 사용
-                      height: 580, // 캐로셀의 전체 높이를 사용
+                      width: 405, // 캐로셀의 전체 너비를 사용
+                      height: 576, // 캐로셀의 전체 높이를 사용
                       objectFit: "cover", // 이미지가 캐로셀의 크기에 맞춰 비율을 유지하며 채워짐
                     }}
                   />

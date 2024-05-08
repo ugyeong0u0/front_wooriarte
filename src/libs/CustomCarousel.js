@@ -57,7 +57,7 @@ function CustomCarousel({ children, isInfo }) {
       className="container__sliderForInfo"
       onMouseEnter={AutoPlayStop}
       onMouseLeave={AutoPlayStart}
-      style={{ width: isInfo ? "80%" : "80%" }} // isInfo가 true일 경우 넓이를 200px로 설정
+      style={{ width: 410, height: 576 }} // isInfo가 true일 경우 넓이를 200px로 설정
     >
       {children.map((item, index) => {
         return (
