@@ -212,6 +212,7 @@ const ExhibitItemInfo = () => {
                     </Tooltip>
                     <Payment
                     exhibitId={exhibitId}
+                    exhibitName={exhibitInfoState.name}
                     ticketNumber={ticketNumber}
                     ></Payment>
                   </Stack>

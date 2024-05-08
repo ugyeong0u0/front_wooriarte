@@ -5,7 +5,7 @@ import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
 
 import MuiDialog from "./libs/MuiDialog";
 
-const Payment = ({ exhibitId, ticketNumber }) => {
+const Payment = ({ exhibitId, exhibitName, ticketNumber }) => {
   const [enableDialog, setEnableDialog] = useState(false); //  빈 다이어로그
   const [enableLoginDialog, setEnableLoginDialog] = useState(false); //  로그인 다이어로그
   const [enableNotInfoDialog, setEnableNotInfoDialog] = useState(false); //  결제정보 가져오기 실패 다이어로그
@@ -68,7 +68,7 @@ const Payment = ({ exhibitId, ticketNumber }) => {
       {
         pg: "html5_inicis.INIpayTest",
         merchant_uid: orderInfo.merchantUid,
-        name: "사탕이 녹는 시간 1매",
+        name: exhibitName + " " + amount + "매",
         amount: orderInfo.amount,
       },
       async (rsp) => {
@@ -114,7 +114,7 @@ const Payment = ({ exhibitId, ticketNumber }) => {
     <div>
       <Button
         variant="contained"
-        onClick={() => requestPay(exhibitId, ticketNumber)}
+        onClick={() => requestPay(exhibitId, exhibitName, ticketNumber)}
         style={{
           width: 90,
           height: 40,
