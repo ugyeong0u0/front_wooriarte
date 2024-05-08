@@ -9,7 +9,7 @@
   align-items: flex-start; /* 이미지가 컨테이너의 상단에서 시작하도록 조정 */
   flex-direction: row;
   flex-wrap: nowrap;
-  background-color: white; /* 배경색을 흰색으로 설정 */
+  background-color: black; /* 배경색을 흰색으로 설정 */
 }
 
 .container__sliderForInfo > button {
