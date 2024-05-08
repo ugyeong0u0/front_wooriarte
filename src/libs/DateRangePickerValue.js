@@ -24,12 +24,15 @@ export default function DateRangePickerValue({
     // 날짜 유효성 검사
     const [start, end] = newValue;
     const isValid = end.isAfter(start);
+    console.log("날짜 전" + isValid);
     setIsDateValid(isValid); // 부모 컴포넌트에 유효성 결과 전달
+    console.log("날짜 후" + isValid);
 
     if (isDateValid) {
+      console.log("날짜들어옴");
       onDateChange(
-        value[0].format("YYYY.MM.DD"),
-        value[1].format("YYYY.MM.DD")
+        value[0].format("YYYY-MM-DD"),
+        value[1].format("YYYY-MM-DD")
       );
     }
   };
@@ -45,16 +48,18 @@ export default function DateRangePickerValue({
     }
   }, [startDate, endDate]);
 
-  // useEffect(() => {
-  //   // 추가하기
-  //   console.log("유효날자", isDateValid);
-  //   if (isDateValid) {
-  //     onDateChange(
-  //       value[0].format("YYYY.MM.DD"),
-  //       value[1].format("YYYY.MM.DD")
-  //     );
-  //   }
-  // }, [isDateValid, value]); //! >> ??? 왜 startDate도 들어가야하지?
+  useEffect(() => {
+    // isEdit 은 수정이 아닐경우 추가하기
+    console.log("유효날자", isDateValid);
+    if (!isEdit) {
+      if (isDateValid) {
+        onDateChange(
+          value[0].format("YYYY-MM-DD"),
+          value[1].format("YYYY-MM-DD")
+        );
+      }
+    }
+  }, [isDateValid, value]); //! >> ??? 왜 startDate도 들어가야하지?
 
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs}>
@@ -63,7 +68,7 @@ export default function DateRangePickerValue({
       >
         <div className="SingleInputDateRangeFieldCustom">
           <SingleInputDateRangeField
-            format="YYYY.MM.DD"
+            format="YYYY-MM-DD"
             label="전시 희망 날짜"
             value={value}
             onChange={handleDateChange}

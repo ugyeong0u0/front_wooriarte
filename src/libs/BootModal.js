@@ -132,6 +132,8 @@ export default function MyVerticallyCenteredModal(props) {
     explanation: "",
     address: "서울",
     title: "",
+    startDate: "",
+    endDate: "",
   });
 
   // 공간대여자용
@@ -226,6 +228,7 @@ export default function MyVerticallyCenteredModal(props) {
 
   //? 등록 생성 하기 api
   const submitAuthorItem = () => {
+    console.log(authorInfoState);
     if (props.type === "author" && imgList.length > 0) {
       let authorId = localStorage.getItem("userId");
 

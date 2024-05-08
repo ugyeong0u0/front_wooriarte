@@ -94,8 +94,8 @@ export default function MyVerticallyCenteredModal({
     phoneNumber: " ",
     explanation: " ",
     address: "서울",
-    startDate: dayjs().format("YYYY.MM.DD"),
-    endDate: dayjs().add(1, "month").format("YYYY.MM.DD"),
+    startDate: dayjs().format("YYYY-MM-DD"),
+    endDate: dayjs().add(1, "month").format("YYYY-MM-DD"),
     title: "",
   });
 
@@ -109,8 +109,8 @@ export default function MyVerticallyCenteredModal({
     phoneNumber: " ",
     parking: true,
     fee: "",
-    startDate: "",
-    endDate: "",
+    startDate: dayjs().format("YYYY-MM-DD"),
+    endDate: dayjs().add(1, "month").format("YYYY-MM-DD"),
   });
 
   const onImgSelected = (e) => {
@@ -207,8 +207,8 @@ export default function MyVerticallyCenteredModal({
           phoneNumber: response.data.phone, // 전화번호
           explanation: response.data.intro, // 전시 소개
           // intro: response.data.intro, // 전시소개
-          startDate: dayjs(response.data.startDate).format("YYYY.MM.DD"), // 시작날짜
-          endDate: dayjs(response.data.endDate).format("YYYY.MM.DD"), // 끝날짜
+          startDate: dayjs(response.data.startDate).format("YYYY-MM-DD"), // 시작날짜
+          endDate: dayjs(response.data.endDate).format("YYYY-MM-DD"), // 끝날짜
           // artistName: response.data.artistName, // 직가명
           // hostName: response.data.hostName, // 주최자명
           // price: response.data.price, // 가격
@@ -321,6 +321,7 @@ export default function MyVerticallyCenteredModal({
           city: authorInfoState.address,
         },
         (responseStatus) => {
+          console.log(" 작가아이템 정보다보기" + authorInfoState);
           if (responseStatus) {
             console.log("작가 아이템 수정 성공");
             const formData = new FormData();
