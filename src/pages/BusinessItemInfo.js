@@ -288,25 +288,27 @@ const BusinessItemInfo = () => {
   return (
     <React.Fragment>
       <CssBaseline />
-      <Container maxWidth="80%" sx={{}}>
+      <Container maxWidth="100%" sx={{ display: "flex"}}>
         <Box
           sx={{
-            width: "100%", // Box의 너비를 전체의 80%로 설정
+            width: "70%", // Box의 너비를 전체의 80%로 설정
             height: "100%",
-            marginTop: 5,
+           
+          
             marginX: "auto", // 좌우 마진을 auto로 설정하여 중앙 정렬
           }}
         >
           <Stack
-            spacing={5}
+            spacing={10}
             direction="row"
             sx={{
+                marginTop:5,
               display: "flex",
               justifyContent: "space-between", // 요소들을 양쪽 끝으로 정렬
               width: "100%", // Stack의 너비를 Box와 같게 100%로 설정
             }}
           >
-            <CustomCarousel isInfo={true}>
+            <CustomCarousel isInfo={true} >
               {imgList.map((item, index) => {
                 return (
                   <img
@@ -314,7 +316,8 @@ const BusinessItemInfo = () => {
                     src={`${item.previewUrl}`}
                     alt={item.title}
                     style={{
-                      width: 405, // 캐로셀의 전체 너비를 사용
+                     
+                       // 캐로셀의 전체 너비를 사용
                       height: 576, // 캐로셀의 전체 높이를 사용
                       objectFit: "cover", // 이미지가 캐로셀의 크기에 맞춰 비율을 유지하며 채워짐
                     }}
@@ -412,7 +415,7 @@ const BusinessItemInfo = () => {
 
             {exhibitsType === "unpage" ? (
               userType === "author" ? (
-                <div style={{ width: "100%", height: "100%" }}>
+                <div style={{ width: "60%", height: "100%" }}>
                   <Stack spacing={0}>
                     <Stack direction={"row"} spacing={0}>
                       <span
@@ -490,7 +493,7 @@ const BusinessItemInfo = () => {
                   </Stack>
                 </div>
               ) : (
-                <div style={{ width: "100%", height: "100%" }}>
+                <div style={{ width: "60%", height: "100%" }}>
                   <Stack spacing={3}>
                     <Stack direction={"row"} spacing={0}>
                       <span
@@ -608,7 +611,7 @@ const BusinessItemInfo = () => {
                 </div>
               )
             ) : exhibitsType === "author" ? (
-              <div style={{ width: "100%", height: "100%" }}>
+              <div style={{ width: "60%", height: "100%" }}>
                 <Stack spacing={0}>
                   <Stack direction={"row"} spacing={0}>
                     <span
@@ -692,7 +695,7 @@ const BusinessItemInfo = () => {
                     position: "relative", // 버튼을 뷰포트에 고정
 
                     marginTop: 100,
-                    border: "1px solid #000",
+                 
                     borderRadius: "0",
 
                     paddingLeft: 30,
@@ -715,7 +718,7 @@ const BusinessItemInfo = () => {
                 </button>
               </div>
             ) : (
-              <div style={{ width: "100%", height: "100%" }}>
+              <div style={{ width: "60%", height: "100%" }}>
                 <Stack spacing={0}>
                   <Stack direction={"row"} spacing={0}>
                     <span

@@ -20,7 +20,7 @@ const Matching = () => {
   const [updateCount, setUpdateCount] = useState(0);
 
   return (
-    <div className="matching">
+    <>
       <Container>
         <Box sx={{ display: "flex", flexDirection: "column", width: "100%" }}>
           <h2>
@@ -32,7 +32,7 @@ const Matching = () => {
             spacing={2}
             sx={{
               display: "flex",
-              width: "100%",
+            
               marginBottom: 1,
             }}
             // 요소들을 가로 방향으로 배치
@@ -72,7 +72,7 @@ const Matching = () => {
           </Stack>
         </Box>
       </Container>
-    </div>
+    </>
   );
 };
 export default Matching;
