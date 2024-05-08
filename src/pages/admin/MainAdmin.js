@@ -78,7 +78,7 @@ const MainAdmin = () => {
   return (
     <div
       style={{
-        width: "100%",
+        width: "96%",
 
         marginTop: 50,
       }}
@@ -102,13 +102,15 @@ const MainAdmin = () => {
             borderRight: 1,
             borderColor: "divider",
             marginLeft: 12,
-            width: "150px", // Tabs 너비 고정
-            minWidth: "150px", // 최소 너비 설정
-            marginLeft: 21,
+            width: "230px", // Tabs 너비 고정
+            minWidth: "250px", // 최소 너비 설정
+            marginLeft: 34,
+            borderColor: "black",
             ".MuiTab-root": {
               // 모든 탭에 적용되는 기본 스타일
-              color: "#000", // 탭의 기본 글자색을 검정으로 설정
+              color: "gray",
               display: "flex",
+              alignItems: "flex-start",
             },
             ".Mui-selected": {
               // 선택된 탭에만 적용되는 스타일
@@ -122,13 +124,13 @@ const MainAdmin = () => {
             },
           }}
         >
-          <Tab style={{ marginRight: 50 }} label="매칭관리" {...a11yProps(0)} />
+          <Tab   style={{ fontSize: "20px", margin: "10px 0" }} label="매칭관리" {...a11yProps(0)} />
           <Tab
-            style={{ marginRight: 40 }}
+              style={{ fontSize: "20px", margin: "10px 0" }}
             label="아이템승인 "
             {...a11yProps(1)}
           />
-          <Tab style={{ marginRight: 53 }} label="전시정보" {...a11yProps(2)} />
+          <Tab   style={{ fontSize: "20px", margin: "10px 0" }} label="전시정보" {...a11yProps(2)} />
         </Tabs>
 
         <TabPanel

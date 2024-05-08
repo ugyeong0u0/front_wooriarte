@@ -41,7 +41,7 @@ const AdminExhibitList = () => {
         <ImageList
           sx={{ maxWidth: "100%", height: "auto", overflowY: "hidden" }}
           cols={3}
-          gap={20} // 이미지 사이의 간격 설정
+          gap={30} // 이미지 사이의 간격 설정
         >
           {mockData.map((item) => {
             return (
