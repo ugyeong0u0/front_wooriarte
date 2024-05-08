@@ -86,7 +86,6 @@ const MainUser = () => {
     console.log("*********************************");
     console.log(visibleData);
   }, [visibleData]);
-  
 
   const handleShowAll = () => {
     setVisibleData(mockData);
@@ -187,13 +186,13 @@ const MainUser = () => {
                     onClick={() => handleItemInfo(item.exhibitId)}
                     style={{
                       height: 480,
-                      display: 'inline',
-                      lexDirection: 'column', // 자식 요소를 세로 방향으로 정렬
-                      justifyContent: 'center', // 세로 방향 중앙 정렬
+                      display: "inline",
+                      lexDirection: "column", // 자식 요소를 세로 방향으로 정렬
+                      justifyContent: "center", // 세로 방향 중앙 정렬
                     }}
                   >
                     <img
-                      src={item.urls}
+                      src={Array.isArray(item.urls) ? item.urls[0] : "없음"}
                       alt={item.name}
                       loading="eager"
                       style={{
@@ -214,7 +213,7 @@ const MainUser = () => {
                               width: "100%", // 너비 100%로 설정
                             }}
                           >
-                            {item.city}
+                            {/* {item.city } */}
                           </span>
                           <div></div>
                           <span
