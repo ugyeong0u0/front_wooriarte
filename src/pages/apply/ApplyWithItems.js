@@ -189,9 +189,9 @@ const ApplyWithItems = () => {
     <div style={{ marginTop: 40 }}>
       <span
         style={{
-          marginLeft: 193,
+          marginLeft: 280,
 
-          fontSize: "20px",
+          fontSize: "24px",
         }}
       >
         {" "}
@@ -202,6 +202,9 @@ const ApplyWithItems = () => {
           justifyContent: "center",
           alignItems: "center",
           marginTop: 20,
+          marginLeft: 23,
+          display: "flex",
+          
         }}
       >
         <ImageList
